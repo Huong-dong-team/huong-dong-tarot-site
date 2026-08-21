@@ -37,9 +37,36 @@ export function seoHead({ site, title, description, path, image, type = "website
 export function analyticsSnippet(site = {}) {
   const id = String(site.ga4Id || "").trim();
   if (!/^G-[A-Z0-9]{4,}$/.test(id)) return "";
+  /* Nạp trễ. gtag.js nặng 156KB, 68KB trong đó không được dùng, và nó chặn
+     ~700ms trên đường tới khung hình đầu tiên. Không có lý do để nó chạy trước
+     khi người dùng chạm vào trang.
+
+     Số liệu vẫn đủ: dataLayer được tạo và gtag() đẩy vào hàng đợi ngay từ lần
+     tải, nên page_view mang timestamp lúc mở trang chứ không phải lúc script về.
+     gtag.js đọc lại toàn bộ hàng đợi khi nạp xong.
+
+     Đánh đổi: người rời trang trong 5 giây đầu mà không tương tác gì sẽ không
+     được ghi nhận. Cần đo chính xác tỉ lệ rời sớm thì hạ 5000 xuống 2000. */
   return `
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${id}');</script>`;
+    <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js',new Date());
+    gtag('config','${id}');
+    (function(){
+      var loaded=false;
+      function load(){
+        if(loaded)return; loaded=true;
+        var s=document.createElement('script');
+        s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id=${id}';
+        document.head.appendChild(s);
+      }
+      ['pointerdown','keydown','scroll','touchstart'].forEach(function(e){
+        addEventListener(e,load,{once:true,passive:true});
+      });
+      setTimeout(load,5000);
+    })();
+    </script>`;
 }
 
 export function breadcrumbSchema(site, items) {

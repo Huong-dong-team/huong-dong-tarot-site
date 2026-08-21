@@ -129,6 +129,14 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   width: min(120vh, 160vw);
   aspect-ratio: 1;
   pointer-events: none;
+  /* Giấu cho tới khi positionHeroSun đặt xong toạ độ.
+
+     Không có dòng này, phần tử nằm ở góc trên trái rồi nhảy vào tâm mặt trời khi
+     JS chạy — cú nhảy đó là toàn bộ CLS 0,178 đo được. Đặt sẵn vị trí bằng phần
+     trăm cũng không cứu được: trên màn hình dọc, cover math cắt ảnh mạnh nên tâm
+     mặt trời không rơi vào 68,7% bề ngang hero, và cú nhảy vẫn còn (thử rồi,
+     CLS lên 0,234). Phần tử xuất hiện tại chỗ thì không tính là dịch chuyển. */
+  visibility: hidden;
 }
 
 /* Quầng sáng ở tâm mặt trời. Phủ đúng hộp vuông của cụm nên tâm quầng luôn
