@@ -1,0 +1,262 @@
+{
+  "origin": "https://huongdong.id.vn",
+  "scannedAt": "2026-08-20",
+  "cards": [
+    {
+      "slug": "the-fool",
+      "roman": "0",
+      "rwsName": "The Fool",
+      "currentName": "Mai An Tiêm",
+      "targetName": "Mai An Tiêm",
+      "aliases": [],
+      "needsRename": false,
+      "error": null
+    },
+    {
+      "slug": "the-magician",
+      "roman": "I",
+      "rwsName": "The Magician",
+      "currentName": "Kinh Dương Vương",
+      "targetName": "Kinh Dương Vương",
+      "aliases": [],
+      "needsRename": false,
+      "error": null
+    },
+    {
+      "slug": "the-high-priestess",
+      "roman": "II",
+      "rwsName": "The High Priestess",
+      "currentName": "Người giữ ký ức",
+      "targetName": "Ma Cô",
+      "aliases": [
+        "Người giữ ký ức"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-empress",
+      "roman": "III",
+      "rwsName": "The Empress",
+      "currentName": "Âu Cơ",
+      "targetName": "Âu Cơ",
+      "aliases": [],
+      "needsRename": false,
+      "error": null
+    },
+    {
+      "slug": "the-emperor",
+      "roman": "IV",
+      "rwsName": "The Emperor",
+      "currentName": "Hùng Vương",
+      "targetName": "Hùng Vương đầu triều",
+      "aliases": [
+        "Hùng Vương"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-hierophant",
+      "roman": "V",
+      "rwsName": "The Hierophant",
+      "currentName": "Chủ lễ truyền tục",
+      "targetName": "Già La Đồ Lê",
+      "aliases": [
+        "Chủ lễ truyền tục"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-lovers",
+      "roman": "VI",
+      "rwsName": "The Lovers",
+      "currentName": "Trầu Cau",
+      "targetName": "Tân, Lang và nàng họ Lưu",
+      "aliases": [
+        "Trầu Cau"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-chariot",
+      "roman": "VII",
+      "rwsName": "The Chariot",
+      "currentName": "Thánh Gióng",
+      "targetName": "Thánh Gióng",
+      "aliases": [],
+      "needsRename": false,
+      "error": null
+    },
+    {
+      "slug": "strength",
+      "roman": "VIII",
+      "rwsName": "Strength",
+      "currentName": "Sơn Tinh",
+      "targetName": "Sơn Tinh",
+      "aliases": [
+        "Tản Viên Sơn Thánh",
+        "Sơn Tinh (Tản Viên)"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-hermit",
+      "roman": "IX",
+      "rwsName": "The Hermit",
+      "currentName": "Chử Đồng Tử tìm đạo",
+      "targetName": "Dương Không Lộ",
+      "aliases": [
+        "Chử Đồng Tử tìm đạo",
+        "Chử Đồng Tử"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "wheel-of-fortune",
+      "roman": "X",
+      "rwsName": "Wheel of Fortune",
+      "currentName": "Sơn Tinh – Thủy Tinh",
+      "targetName": "Thủy Tinh",
+      "aliases": [
+        "Sơn Tinh – Thủy Tinh"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "justice",
+      "roman": "XI",
+      "rwsName": "Justice",
+      "currentName": "Lang Liêu",
+      "targetName": "Tô Lịch Giang Thần / Long Đỗ",
+      "aliases": [
+        "Lang Liêu"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-hanged-man",
+      "roman": "XII",
+      "rwsName": "The Hanged Man",
+      "currentName": "Chử Đồng Tử bên bãi cát",
+      "targetName": "Từ Đạo Hạnh nhập định",
+      "aliases": [
+        "Chử Đồng Tử bên bãi cát"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "death",
+      "roman": "XIII",
+      "rwsName": "Death",
+      "currentName": "Lạc Long Quân trừ Hồ Tinh",
+      "targetName": "Xương Cuồng / Mộc Tinh",
+      "aliases": [
+        "Lạc Long Quân trừ Hồ Tinh"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "temperance",
+      "roman": "XIV",
+      "rwsName": "Temperance",
+      "currentName": "Núi và biển chung nguồn",
+      "targetName": "Lang Liêu",
+      "aliases": [
+        "Núi và biển chung nguồn"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-devil",
+      "roman": "XV",
+      "rwsName": "The Devil",
+      "currentName": "Mị Châu – Trọng Thủy",
+      "targetName": "Trọng Thủy; Mỵ Châu hỗ trợ",
+      "aliases": [
+        "Mị Châu – Trọng Thủy"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-tower",
+      "roman": "XVI",
+      "rwsName": "The Tower",
+      "currentName": "Cổ Loa thất thủ",
+      "targetName": "An Dương Vương",
+      "aliases": [
+        "Cổ Loa thất thủ"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-star",
+      "roman": "XVII",
+      "rwsName": "The Star",
+      "currentName": "Mẫu Liễu Hạnh",
+      "targetName": "Mẫu Liễu Hạnh",
+      "aliases": [],
+      "needsRename": false,
+      "error": null
+    },
+    {
+      "slug": "the-moon",
+      "roman": "XVIII",
+      "rwsName": "The Moon",
+      "currentName": "Dấu lông ngỗng dưới trăng",
+      "targetName": "Mỵ Châu",
+      "aliases": [
+        "Dấu lông ngỗng dưới trăng"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-sun",
+      "roman": "XIX",
+      "rwsName": "The Sun",
+      "currentName": "Ngày hội Văn Lang",
+      "targetName": "Man Nương",
+      "aliases": [
+        "Ngày hội Văn Lang"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "judgement",
+      "roman": "XX",
+      "rwsName": "Judgement",
+      "currentName": "Phán quyết bên bờ biển",
+      "targetName": "Sứ Thanh Giang / Rùa Vàng",
+      "aliases": [
+        "Phán quyết bên bờ biển"
+      ],
+      "needsRename": true,
+      "error": null
+    },
+    {
+      "slug": "the-world",
+      "roman": "XXI",
+      "rwsName": "The World",
+      "currentName": "Trăm con chung một cõi",
+      "targetName": "Việt Thường và thiên hạ",
+      "aliases": [
+        "Trăm con chung một cõi"
+      ],
+      "needsRename": true,
+      "error": null
+    }
+  ]
+}

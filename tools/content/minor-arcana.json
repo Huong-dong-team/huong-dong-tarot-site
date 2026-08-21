@@ -1,0 +1,2178 @@
+{
+  "$schema": "minor-arcana/v1",
+  "source": "Huong-Dong-Tarot-78-Art-Direction-Storytelling.docx · v2.1 · 16/08/2026",
+  "parsedAt": "2026-08-20",
+  "cards": [
+    {
+      "id": "wands-ace",
+      "slug": "ace-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "ace",
+      "rankVi": "Át",
+      "rankEn": "Ace",
+      "number": 1,
+      "viName": "Át Cây Tre",
+      "enName": "Ace of Wands",
+      "subject": "Bàn tay vô danh và mầm tre lửa",
+      "sceneTitle": "Mầm tre đón tia sét đầu mùa",
+      "uprightMeaning": "Tia lửa khởi đầu, cảm hứng và động lực muốn được thử ngay.",
+      "scene": "Một bàn tay nâng đốt tre non đúng lúc sét chạm xuống; bên trong ống tre, ngọn lửa hình chim thức dậy.",
+      "shortStory": "Sau nhiều ngày ẩm lạnh, người giữ rừng bắt được tia lửa đầu tiên và mang về làng. Chưa ai biết nó sẽ thành bếp, đuốc hay vũ khí.",
+      "reversedMeaning": "Ngọn lửa bị úp trong ống kín, khói không tìm được lối ra.",
+      "props": [
+        "một mầm tre",
+        "tia sét",
+        "bàn tay xăm thủy quái"
+      ],
+      "palette": [
+        "đỏ son",
+        "vàng lửa",
+        "xanh tre non"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21",
+        "S02"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-two",
+      "slug": "two-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "two",
+      "rankVi": "Hai",
+      "rankEn": "Two",
+      "number": 2,
+      "viName": "Hai Cây Tre",
+      "enName": "Two of Wands",
+      "subject": "Người giữ vọng tre",
+      "sceneTitle": "Hai ngọn đuốc, hai đường chân trời",
+      "uprightMeaning": "Lập kế hoạch, nhìn xa và cân nhắc bước ra khỏi vùng quen thuộc.",
+      "scene": "Một người đứng trên vọng lâu, hai tay giữ hai đuốc: một hướng soi ra biển, hướng kia soi vào dãy núi chưa có đường.",
+      "shortStory": "Làng đã an toàn nhưng chân trời gọi người canh đi xa hơn. Anh phải chọn nơi gửi ngọn lửa thứ hai.",
+      "reversedMeaning": "Cả hai đuốc cháy thấp vì người giữ mãi không ra hiệu.",
+      "props": [
+        "hai đuốc",
+        "bản đồ da",
+        "núi và biển"
+      ],
+      "palette": [
+        "đỏ gạch",
+        "lam xa",
+        "nâu tre"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-three",
+      "slug": "three-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "three",
+      "rankVi": "Ba",
+      "rankEn": "Three",
+      "number": 3,
+      "viName": "Ba Cây Tre",
+      "enName": "Three of Wands",
+      "subject": "Ba người mở cảng",
+      "sceneTitle": "Ba cột buồm qua Cảng Phật Đào",
+      "uprightMeaning": "Mở rộng, chờ kết quả đầu tiên và phối hợp với thế giới bên ngoài.",
+      "scene": "Ba thuyền tre vượt khe đá vừa mở, người dẫn đường đứng trên mũi nhìn những cánh chim bay ngược gió.",
+      "shortStory": "Đường biển đã thông; đoàn thuyền không còn nhìn bờ cũ mà chờ tín hiệu từ phía xa. Một cánh buồm đang quay về là thành quả đầu tiên.",
+      "reversedMeaning": "Gió đổi hướng, ba thuyền chen nhau trong cửa hẹp.",
+      "props": [
+        "ba cột buồm",
+        "khe đá",
+        "chim biển",
+        "lửa hiệu"
+      ],
+      "palette": [
+        "cam bình minh",
+        "xanh biển",
+        "đen đá"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-four",
+      "slug": "four-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "four",
+      "rankVi": "Bốn",
+      "rankEn": "Four",
+      "number": 4,
+      "viName": "Bốn Cây Tre",
+      "enName": "Four of Wands",
+      "subject": "Bốn gia đình dựng cổng hội",
+      "sceneTitle": "Cổng tre khép thành mái nhà chung",
+      "uprightMeaning": "Cột mốc vui, nền tảng ổn định và cảm giác thuộc về một cộng đồng.",
+      "scene": "Bốn cột tre buộc thành cổng treo vải đỏ; bên trong là lễ mừng nhỏ quanh trống đồng và bếp mới.",
+      "shortStory": "Sau mùa mở đất, bốn gia đình dựng cổng không để ngăn người ngoài mà để đánh dấu nơi có thể trở về.",
+      "reversedMeaning": "Dải đỏ vẫn treo nhưng một nút buộc đã lỏng, báo hiệu niềm vui chưa trọn.",
+      "props": [
+        "bốn cột tre",
+        "dây đỏ",
+        "bếp",
+        "trống nhỏ"
+      ],
+      "palette": [
+        "đỏ hội",
+        "vàng rơm",
+        "xanh lá"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-five",
+      "slug": "five-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "five",
+      "rankVi": "Năm",
+      "rankEn": "Five",
+      "number": 5,
+      "viName": "Năm Cây Tre",
+      "enName": "Five of Wands",
+      "subject": "Năm trai làng tranh lửa",
+      "sceneTitle": "Cuộc đấu gậy tre giữa sân sấm",
+      "uprightMeaning": "Cạnh tranh, va chạm quan điểm và năng lượng hỗn độn cần được điều phối.",
+      "scene": "Năm người trẻ dùng gậy tre chạm nhau dưới quả cầu lửa; mỗi người muốn dẫn nhịp trống theo cách riêng.",
+      "shortStory": "Cuộc tranh tài không nhằm loại đối thủ mà tìm đội hình mạnh nhất. Chỉ khi va chạm thành nhịp chung, quả cầu lửa mới đứng yên.",
+      "reversedMeaning": "Gậy quấn vào nhau thành nút, không ai còn nhớ mục tiêu.",
+      "props": [
+        "năm gậy tre",
+        "quả cầu lửa",
+        "trống thi đấu"
+      ],
+      "palette": [
+        "đỏ cam",
+        "vàng bụi",
+        "xanh đậm"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-six",
+      "slug": "six-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "six",
+      "rankVi": "Sáu",
+      "rankEn": "Six",
+      "number": 6,
+      "viName": "Sáu Cây Tre",
+      "enName": "Six of Wands",
+      "subject": "Người mang cờ chiến thắng",
+      "sceneTitle": "Sáu lá cờ qua cổng làng",
+      "uprightMeaning": "Được công nhận, chiến thắng và tiến lên nhờ niềm tin tập thể.",
+      "scene": "Người cưỡi ngựa trở về, trên giáo tre là vòng lá; sáu cờ lửa nghiêng một hướng, dân làng nâng trống chào.",
+      "shortStory": "Người trở về hiểu uy tín mới chỉ là vốn cho chặng tiếp. Anh trao vòng lá cho đứa trẻ giữ cổng thay vì đội lên đầu.",
+      "reversedMeaning": "Cờ quá lớn che khuất người đi cùng, lời khen biến thành mặt nạ.",
+      "props": [
+        "sáu cờ",
+        "ngựa",
+        "vòng lá",
+        "trống đồng"
+      ],
+      "palette": [
+        "đỏ son",
+        "vàng đồng",
+        "trắng khói"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-seven",
+      "slug": "seven-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "seven",
+      "rankVi": "Bảy",
+      "rankEn": "Seven",
+      "number": 7,
+      "viName": "Bảy Cây Tre",
+      "enName": "Seven of Wands",
+      "subject": "Người giữ đèo",
+      "sceneTitle": "Bảy bậc tre trước bóng chồn",
+      "uprightMeaning": "Giữ vị trí, bảo vệ giá trị và kiên định trước áp lực.",
+      "scene": "Một người đứng trên bậc cao nhất của lũy tre bảy tầng, chống gậy lửa trước nhiều bóng người áo trắng có đuôi chồn.",
+      "shortStory": "Không phải mọi kẻ tiến tới đều là yêu quái, nhưng người giữ đèo phải bảo vệ ranh giới cho đến khi phân biệt thật - giả.",
+      "reversedMeaning": "Người giữ quay gậy về mọi phía và mắc kẹt trong chính lũy.",
+      "props": [
+        "bảy bậc lũy",
+        "gậy lửa",
+        "bóng chín đuôi"
+      ],
+      "palette": [
+        "đỏ tối",
+        "trắng lạnh",
+        "xanh đen"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-eight",
+      "slug": "eight-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "eight",
+      "rankVi": "Tám",
+      "rankEn": "Eight",
+      "number": 8,
+      "viName": "Tám Cây Tre",
+      "enName": "Eight of Wands",
+      "subject": "Đội truyền hỏa",
+      "sceneTitle": "Tám tên lửa vượt sông",
+      "uprightMeaning": "Tiến triển nhanh, thông tin tới dồn dập và thời điểm hành động đã chín.",
+      "scene": "Tám mũi tên tre mang dải lệnh cháy sáng bay chéo qua trời; các trạm gác bên dưới đồng loạt đánh trống.",
+      "shortStory": "Tin quan trọng vượt núi sông nhanh hơn người cưỡi ngựa. Mỗi trạm chỉ giữ thông điệp đủ lâu để chuyển tiếp.",
+      "reversedMeaning": "Hai tín hiệu giao cắt khiến các trạm mở cổng sai thời điểm.",
+      "props": [
+        "tám tên lửa",
+        "trạm gác",
+        "trống truyền tin"
+      ],
+      "palette": [
+        "cam rực",
+        "lam trời",
+        "nâu đất"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-nine",
+      "slug": "nine-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "nine",
+      "rankVi": "Chín",
+      "rankEn": "Nine",
+      "number": 9,
+      "viName": "Chín Cây Tre",
+      "enName": "Nine of Wands",
+      "subject": "Lính canh bị thương",
+      "sceneTitle": "Chín đốt tre còn đứng",
+      "uprightMeaning": "Sức bền, cảnh giác và nỗ lực cuối trước khi chạm đích.",
+      "scene": "Một lính canh băng vai tựa vào giáo; sau lưng là chín thân tre cháy sém nhưng chưa gãy, trước mặt bão vừa lùi.",
+      "shortStory": "Anh vẫn đủ sức giữ cổng, miễn biết nghỉ và tin người thay ca. Kinh nghiệm không được biến thành nghi ngờ mọi tiếng lá.",
+      "reversedMeaning": "Vết thương cũ khiến anh dựng thêm lũy dù ngoài rừng đã yên.",
+      "props": [
+        "chín thân tre",
+        "băng vải",
+        "lửa tàn"
+      ],
+      "palette": [
+        "nâu cháy",
+        "đỏ tối",
+        "vàng tro"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-ten",
+      "slug": "ten-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "ten",
+      "rankVi": "Mười",
+      "rankEn": "Ten",
+      "number": 10,
+      "viName": "Mười Cây Tre",
+      "enName": "Ten of Wands",
+      "subject": "Người gánh đuốc",
+      "sceneTitle": "Mười bó tre trên đường ngập",
+      "uprightMeaning": "Gánh nhiều trách nhiệm, thành quả đi kèm trọng lượng và nhu cầu phân bổ lại.",
+      "scene": "Một người cúi dưới mười bó tre và lồng đèn, lội qua đường nước dâng; phía xa có nhiều bàn tay chờ nhận việc.",
+      "shortStory": "Anh gom mọi nhiệm vụ vì sợ lửa chung tắt. Nhìn thấy những bàn tay, anh hiểu chia tải không phải bỏ trách nhiệm.",
+      "reversedMeaning": "Dây gánh siết thành xiềng, vài bó tre vốn không thuộc về anh.",
+      "props": [
+        "mười bó tre",
+        "đòn gánh",
+        "nước lũ",
+        "bàn tay"
+      ],
+      "palette": [
+        "đỏ nâu",
+        "xám mưa",
+        "vàng đèn"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-page",
+      "slug": "page-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "page",
+      "rankVi": "Tiểu Đồng",
+      "rankEn": "Page",
+      "number": 11,
+      "viName": "Tiểu Đồng Cây Tre",
+      "enName": "Page of Wands",
+      "subject": "Tân Hỏa - người học lửa",
+      "sceneTitle": "Con chim xanh trong ống tre",
+      "uprightMeaning": "Tin vui, tò mò sáng tạo và người học sẵn sàng khám phá.",
+      "scene": "Một thiếu niên mở ống tre và ngạc nhiên khi chim lửa xanh bay lên; cậu ghi hình cánh vào thẻ tre.",
+      "shortStory": "Tân Hỏa chưa biết con chim dẫn tới đâu nhưng đủ tò mò để theo dấu. Sai lầm đầu tiên chỉ cháy một góc áo, không tắt ham học.",
+      "reversedMeaning": "Cậu khoe ngọn lửa quá sớm, để gió cuốn mất trước khi hiểu cách giữ.",
+      "props": [
+        "ống tre",
+        "chim lửa xanh",
+        "thẻ ghi",
+        "túi hạt"
+      ],
+      "palette": [
+        "xanh ngọc",
+        "cam nhỏ",
+        "vàng tre"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-knight",
+      "slug": "knight-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "knight",
+      "rankVi": "Kỵ Sĩ",
+      "rankEn": "Knight",
+      "number": 12,
+      "viName": "Kỵ Sĩ Cây Tre",
+      "enName": "Knight of Wands",
+      "subject": "Kỵ mã Sóc Sơn",
+      "sceneTitle": "Ngựa lửa qua sườn núi",
+      "uprightMeaning": "Hành động táo bạo, phiêu lưu và sức hút của tốc độ.",
+      "scene": "Kỵ mã nghiêng người trên ngựa, giáo tre bốc lửa kéo vệt dài; dấu chân cháy sau lưng như những ao nhỏ.",
+      "shortStory": "Người đưa lệnh có tốc độ của bão. Chuyến đi chỉ thành công khi anh nhớ ngọn giáo cần một đích đến, không chỉ một đường lao đẹp.",
+      "reversedMeaning": "Ngựa vượt quá trạm nhận lệnh; tốc độ biến thành lạc hướng.",
+      "props": [
+        "ngựa",
+        "giáo tre",
+        "dấu chân lửa",
+        "cờ ngắn"
+      ],
+      "palette": [
+        "cam lửa",
+        "đen sắt",
+        "xanh núi"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-queen",
+      "slug": "queen-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "queen",
+      "rankVi": "Hoàng Hậu",
+      "rankEn": "Queen",
+      "number": 13,
+      "viName": "Hoàng Hậu Cây Tre",
+      "enName": "Queen of Wands",
+      "subject": "Nữ chủ Lửa Làng",
+      "sceneTitle": "Người giữ bếp giữa đêm chồn",
+      "uprightMeaning": "Tự tin ấm áp, độc lập và khả năng truyền lửa cho người khác.",
+      "scene": "Một nữ chủ ngồi thẳng bên bếp, tay cầm quạt tre; ngoài vòng sáng, bóng chín đuôi không bước qua hàng muối.",
+      "shortStory": "Bà giữ lửa bằng cách làm cho ai cũng thấy mình có chỗ quanh bếp. Sự ấm áp trở thành ranh giới mạnh hơn tường đá.",
+      "reversedMeaning": "Bà giữ hết củi trong tay, khiến bếp chung thành sân khấu của mình.",
+      "props": [
+        "bếp tròn",
+        "quạt tre",
+        "hàng muối",
+        "mèo đen"
+      ],
+      "palette": [
+        "đỏ than",
+        "vàng ấm",
+        "trắng muối"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "wands-king",
+      "slug": "king-of-wands",
+      "suit": "wands",
+      "suitVi": "Cây Tre",
+      "suitShort": "Tre",
+      "suitEn": "Wands",
+      "element": "Lửa",
+      "rank": "king",
+      "rankVi": "Quốc Vương",
+      "rankEn": "King",
+      "number": 14,
+      "viName": "Quốc Vương Cây Tre",
+      "enName": "King of Wands",
+      "subject": "Vua Mở Cõi",
+      "sceneTitle": "Gậy tre chỉ đường cho đoàn khai phá",
+      "uprightMeaning": "Tầm nhìn lớn, lãnh đạo sáng tạo và dám chịu trách nhiệm cho hướng đi.",
+      "scene": "Người đứng đầu trên mỏm cao cắm gậy tre vào bản đồ; thợ, nông dân và người chèo thuyền theo ba tuyến đã phân công.",
+      "shortStory": "Tầm nhìn lớn được chứng minh bằng hệ thống để người khác cùng đi. Ông giữ lửa ở đầu gậy nhưng trao từng đuốc xuống đoàn người.",
+      "reversedMeaning": "Ông đốt bản đồ cũ để ép mọi người chỉ nhìn theo hướng mình.",
+      "props": [
+        "gậy tre",
+        "bản đồ",
+        "ba tuyến đường",
+        "đuốc chia"
+      ],
+      "palette": [
+        "đỏ son",
+        "đồng vàng",
+        "xanh rừng"
+      ],
+      "sourceIds": [
+        "S03",
+        "S06",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-ace",
+      "slug": "ace-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "ace",
+      "rankVi": "Át",
+      "rankEn": "Ace",
+      "number": 1,
+      "viName": "Át Hoa Sen",
+      "enName": "Ace of Cups",
+      "subject": "Bàn tay nâng chén sen",
+      "sceneTitle": "Chén nước tràn từ giếng cổ",
+      "uprightMeaning": "Cảm xúc mới, lòng trắc ẩn và một dòng kết nối được mở ra.",
+      "scene": "Một chén hình sen nổi lên từ miệng giếng, nước tràn thành hai dòng sáng; trong đáy chén có một mặt trăng nhỏ.",
+      "shortStory": "Sau thời gian khô cạn, nguồn nước tự tìm đường lên khi người nhận biết mở tay. Cảm xúc mới chưa cần bị ép thành tên.",
+      "reversedMeaning": "Chén bị úp bởi nắp đồng, nước dâng bên trong nhưng không ai uống được.",
+      "props": [
+        "một chén sen",
+        "giếng",
+        "trăng nước",
+        "ngải cứu"
+      ],
+      "palette": [
+        "xanh ngọc",
+        "bạc",
+        "hồng sen"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-two",
+      "slug": "two-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "two",
+      "rankVi": "Hai",
+      "rankEn": "Two",
+      "number": 2,
+      "viName": "Hai Hoa Sen",
+      "enName": "Two of Cups",
+      "subject": "Tiên Dung và Chử Đồng Tử",
+      "sceneTitle": "Hai chén bên bãi cát",
+      "uprightMeaning": "Gặp gỡ bình đẳng, hấp dẫn lẫn nhau và thỏa thuận từ thiện chí.",
+      "scene": "Hai người ngang tầm trao chén nước trước tấm màn lụa; giữa hai chén, một bông sen mọc từ cát.",
+      "shortStory": "Cuộc gặp bất ngờ chỉ thành mối liên kết khi cả hai cùng lựa chọn. Chiếc chén được trao và nhận ở cùng độ cao.",
+      "reversedMeaning": "Một chén đầy, một chén cạn; ánh mắt không còn gặp nhau.",
+      "props": [
+        "hai chén",
+        "sen từ cát",
+        "gậy và nón đặt bên"
+      ],
+      "palette": [
+        "hồng sen",
+        "vàng cát",
+        "xanh sông"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-three",
+      "slug": "three-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "three",
+      "rankVi": "Ba",
+      "rankEn": "Three",
+      "number": 3,
+      "viName": "Ba Hoa Sen",
+      "enName": "Three of Cups",
+      "subject": "Ba người bạn bến trăng",
+      "sceneTitle": "Ba thuyền sen chạm mũi",
+      "uprightMeaning": "Bạn bè, chia vui và sức nâng đỡ của cộng đồng.",
+      "scene": "Ba người đứng trên ba thuyền nhỏ, nâng chén ở nơi các mũi thuyền chạm nhau; đèn hoa đăng tạo vòng tròn.",
+      "shortStory": "Mỗi người đi từ một nhánh sông nhưng cùng đến đúng đêm hội. Niềm vui đủ rộng để gọi thêm người trên bờ bước xuống.",
+      "reversedMeaning": "Thuyền xoay lưng ra ngoài, cuộc vui thành nhóm kín.",
+      "props": [
+        "ba chén",
+        "ba thuyền",
+        "hoa đăng",
+        "vòng sóng"
+      ],
+      "palette": [
+        "hồng",
+        "xanh lục",
+        "vàng đèn"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-four",
+      "slug": "four-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "four",
+      "rankVi": "Bốn",
+      "rankEn": "Four",
+      "number": 4,
+      "viName": "Bốn Hoa Sen",
+      "enName": "Four of Cups",
+      "subject": "Người ngồi bên giếng",
+      "sceneTitle": "Bông sen thứ tư dưới mặt nước",
+      "uprightMeaning": "Chán nản, hướng nội và chưa nhận ra một cơ hội đang được đưa tới.",
+      "scene": "Một người tựa cột giếng nhìn ba chén rỗng trước mặt, không nhận ra bàn tay nước đang nâng bông sen thứ tư sau lưng.",
+      "shortStory": "Sau nhiều lời mời không phù hợp, người ấy khép lòng. Cơ hội mới chỉ hiện khi ánh mắt rời khỏi ba chiếc chén cũ.",
+      "reversedMeaning": "Người ấy nhận sen chỉ vì sợ bỏ lỡ, chưa chắc vì thật sự muốn.",
+      "props": [
+        "ba chén rỗng",
+        "sen chìm",
+        "bàn tay nước"
+      ],
+      "palette": [
+        "xanh xám",
+        "hồng nhạt",
+        "nâu đá"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-five",
+      "slug": "five-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "five",
+      "rankVi": "Năm",
+      "rankEn": "Five",
+      "number": 5,
+      "viName": "Năm Hoa Sen",
+      "enName": "Five of Cups",
+      "subject": "Người sống sót Đầm Một Đêm",
+      "sceneTitle": "Ba chén chìm, hai chén còn",
+      "uprightMeaning": "Mất mát, tiếc nuối và sự chú ý bị giữ ở phần đã đổ vỡ.",
+      "scene": "Một người quỳ bên mép đầm nhìn ba chén vỡ chìm; sau lưng còn hai chén nguyên đặt cạnh gậy và nón.",
+      "shortStory": "Thành quách biến mất sau một đêm. Khi đủ sức quay lại, người ấy sẽ thấy hai điều chưa mất vẫn có thể mang đi.",
+      "reversedMeaning": "Nước rút lộ đường về; tiếc nuối bắt đầu nhường chỗ cho lựa chọn.",
+      "props": [
+        "năm chén",
+        "đầm chìm",
+        "gậy",
+        "nón"
+      ],
+      "palette": [
+        "lam đen",
+        "trắng sương",
+        "vàng cũ"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-six",
+      "slug": "six-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "six",
+      "rankVi": "Sáu",
+      "rankEn": "Six",
+      "number": 6,
+      "viName": "Sáu Hoa Sen",
+      "enName": "Six of Cups",
+      "subject": "Hai trẻ làng sen",
+      "sceneTitle": "Sáu thuyền lá mang ký ức",
+      "uprightMeaning": "Ký ức, sự hồn nhiên và điều tốt từ quá khứ quay lại.",
+      "scene": "Hai đứa trẻ thả sáu thuyền lá sen xuống mương; trên mỗi thuyền là một vật nhỏ của mùa cũ.",
+      "shortStory": "Ký ức tuổi thơ trở về không để giữ người lớn ở lại, mà nhắc họ từng biết vui bằng những thứ rất ít.",
+      "reversedMeaning": "Các thuyền mắc ở rễ cây; hoài niệm không còn chảy sang hiện tại.",
+      "props": [
+        "sáu thuyền lá",
+        "kẹo gừng",
+        "con giống đất",
+        "mương"
+      ],
+      "palette": [
+        "xanh non",
+        "vàng nắng",
+        "hồng nhạt"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-seven",
+      "slug": "seven-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "seven",
+      "rankVi": "Bảy",
+      "rankEn": "Seven",
+      "number": 7,
+      "viName": "Bảy Hoa Sen",
+      "enName": "Seven of Cups",
+      "subject": "Người mơ bên hồ",
+      "sceneTitle": "Bảy hoa sen mang bảy ảo ảnh",
+      "uprightMeaning": "Nhiều lựa chọn, tưởng tượng phong phú và nguy cơ bị mê bởi vẻ ngoài.",
+      "scene": "Bảy bông sen mở trên sương, hiện hồ chín đuôi, nỏ vàng, chim trĩ, cung điện, rồng, kho báu và khuôn mặt vô danh.",
+      "shortStory": "Mọi lựa chọn đều lấp lánh vì chưa phải trả giá. Người mơ phải chạm một bông và chấp nhận sáu ảo ảnh khép xuống.",
+      "reversedMeaning": "Các ảo ảnh tranh nhau phản chiếu, làm mặt hồ mất hình thật.",
+      "props": [
+        "bảy sen",
+        "bảy ảo ảnh",
+        "sương"
+      ],
+      "palette": [
+        "tím",
+        "xanh ngọc",
+        "vàng ảo"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-eight",
+      "slug": "eight-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "eight",
+      "rankVi": "Tám",
+      "rankEn": "Eight",
+      "number": 8,
+      "viName": "Tám Hoa Sen",
+      "enName": "Eight of Cups",
+      "subject": "Người rời bến cũ",
+      "sceneTitle": "Tám chén dưới trăng khuyết",
+      "uprightMeaning": "Rời điều không còn đủ ý nghĩa để tìm một chiều sâu khác.",
+      "scene": "Một người khoác áo đi khỏi tám chén xếp thành bậc bên bến; phía trước là đường núi dẫn tới hồ trăng khác.",
+      "shortStory": "Các chén không vỡ và không ai đuổi người ấy đi. Chính vì mọi thứ có vẻ đủ mà cuộc rời đi trở nên khó.",
+      "reversedMeaning": "Người ấy quay lại quá sớm vì sợ con đường chưa có tên.",
+      "props": [
+        "tám chén",
+        "trăng khuyết",
+        "bến vắng",
+        "gậy"
+      ],
+      "palette": [
+        "xanh đêm",
+        "bạc",
+        "nâu tím"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-nine",
+      "slug": "nine-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "nine",
+      "rankVi": "Chín",
+      "rankEn": "Nine",
+      "number": 9,
+      "viName": "Chín Hoa Sen",
+      "enName": "Nine of Cups",
+      "subject": "Người chữa nước",
+      "sceneTitle": "Chín bát thuốc quanh nụ cười",
+      "uprightMeaning": "Mãn nguyện, điều ước thành hình và sự thoải mái đáng tận hưởng.",
+      "scene": "Một người chữa lành ngồi trước chín bát nước ngải, mỗi bát phản chiếu một gương mặt đã khỏe lại; phía sau là rèm sen tròn.",
+      "shortStory": "Điều ước thành hình khi niềm vui không chỉ nằm trong bát của riêng mình. Người chữa nước cho phép mình hài lòng sau một mùa dài.",
+      "reversedMeaning": "Các bát chỉ phản chiếu một gương mặt; mãn nguyện hóa tự mãn.",
+      "props": [
+        "chín bát",
+        "ngải cứu",
+        "rèm sen",
+        "trăng tròn"
+      ],
+      "palette": [
+        "xanh ngải",
+        "vàng ấm",
+        "trắng sứ"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-ten",
+      "slug": "ten-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "ten",
+      "rankVi": "Mười",
+      "rankEn": "Ten",
+      "number": 10,
+      "viName": "Mười Hoa Sen",
+      "enName": "Ten of Cups",
+      "subject": "Gia đình bến Rồng",
+      "sceneTitle": "Mười chén dưới cầu vồng nước",
+      "uprightMeaning": "Hòa thuận, hạnh phúc được chia sẻ và cảm giác gia đình/cộng đồng trọn vẹn.",
+      "scene": "Ba thế hệ đứng bên nhà sàn, mười chén sen treo thành vòm; cầu vồng nước nối mái nhà với con rồng hiền ngoài sông.",
+      "shortStory": "Hạnh phúc không phải không có giông mà là biết mình thuộc về đâu khi giông đến. Mỗi chén mang dấu tay của một người.",
+      "reversedMeaning": "Vòm chén còn đẹp từ xa nhưng hai chiếc đã quay miệng vào tường.",
+      "props": [
+        "mười chén",
+        "nhà sàn",
+        "cầu vồng nước",
+        "rồng"
+      ],
+      "palette": [
+        "đủ sắc nhưng nền xanh dịu"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-page",
+      "slug": "page-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "page",
+      "rankVi": "Tiểu Đồng",
+      "rankEn": "Page",
+      "number": 11,
+      "viName": "Tiểu Đồng Hoa Sen",
+      "enName": "Page of Cups",
+      "subject": "Đồng tử Bên Giếng",
+      "sceneTitle": "Cá nhỏ nói trong chén sen",
+      "uprightMeaning": "Thông điệp cảm xúc, trực giác non trẻ và sự ngạc nhiên dịu dàng.",
+      "scene": "Một thiếu niên nhìn con cá có mặt người bật khỏi chén sen; thay vì sợ, cậu cúi gần để nghe thông điệp.",
+      "shortStory": "Tin nhắn từ cảm xúc thường đến dưới hình dạng kỳ quặc. Cậu học ghi nhận điều mình cảm thấy trước khi quyết định nó có hợp lý.",
+      "reversedMeaning": "Cậu kể thông điệp cho cả chợ trước khi hiểu nó.",
+      "props": [
+        "chén sen",
+        "cá nói",
+        "dây ngải",
+        "vỏ ốc"
+      ],
+      "palette": [
+        "xanh ngọc",
+        "hồng",
+        "bạc"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-knight",
+      "slug": "knight-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "knight",
+      "rankVi": "Kỵ Sĩ",
+      "rankEn": "Knight",
+      "number": 12,
+      "viName": "Kỵ Sĩ Hoa Sen",
+      "enName": "Knight of Cups",
+      "subject": "Sứ giả Dòng Lam",
+      "sceneTitle": "Lời mời đi trên lưng rồng nước",
+      "uprightMeaning": "Lãng mạn, theo đuổi lý tưởng và lời mời xuất phát từ trái tim.",
+      "scene": "Một sứ giả cưỡi rồng nước hiền, nâng chén có phong thư cuộn bên trong; áo choàng kéo thành dòng sông.",
+      "shortStory": "Anh mang lời cầu hòa, không mang chiến thư. Đường đi chậm vì mỗi bến đều cần được lắng nghe, nhưng chén vẫn đầy khi đến nơi.",
+      "reversedMeaning": "Sứ giả say mê vẻ đẹp của lời mời đến mức quên kiểm tra nó có thật lòng.",
+      "props": [
+        "rồng nước",
+        "chén thư",
+        "áo choàng sông"
+      ],
+      "palette": [
+        "xanh lam",
+        "trắng",
+        "hồng sen"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-queen",
+      "slug": "queen-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "queen",
+      "rankVi": "Hoàng Hậu",
+      "rankEn": "Queen",
+      "number": 13,
+      "viName": "Hoàng Hậu Hoa Sen",
+      "enName": "Queen of Cups",
+      "subject": "Bà Chúa Sen",
+      "sceneTitle": "Nghe tiếng người dưới mặt đầm",
+      "uprightMeaning": "Thấu cảm sâu, trực giác và khả năng giữ không gian an toàn cho cảm xúc.",
+      "scene": "Bà Chúa Sen ngồi trên thuyền thấp, ôm chén có nắp khắc mặt người; quanh thuyền là những gương mặt nước hiện rồi tan.",
+      "shortStory": "Bà hiểu cảm xúc người khác mà không để mọi nỗi buồn tràn vào thuyền. Lòng trắc ẩn có bờ nên mới đi xa.",
+      "reversedMeaning": "Nắp chén mở quá lâu; nước của cả đầm tràn vào lòng bà.",
+      "props": [
+        "chén có nắp",
+        "thuyền sen",
+        "gương mặt nước"
+      ],
+      "palette": [
+        "xanh sâu",
+        "bạc",
+        "tím sen"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "cups-king",
+      "slug": "king-of-cups",
+      "suit": "cups",
+      "suitVi": "Hoa Sen",
+      "suitShort": "Sen",
+      "suitEn": "Cups",
+      "element": "Nước",
+      "rank": "king",
+      "rankVi": "Quốc Vương",
+      "rankEn": "King",
+      "number": 14,
+      "viName": "Quốc Vương Hoa Sen",
+      "enName": "King of Cups",
+      "subject": "Chúa Bến Nước",
+      "sceneTitle": "Ngai thuyền giữa hai dòng",
+      "uprightMeaning": "Trưởng thành cảm xúc, bình tĩnh và biết dùng lòng trắc ẩn trong quyết định.",
+      "scene": "Người lãnh đạo ngồi trên thuyền vững giữa hai dòng giao nhau; một bên bão, một bên tĩnh, chén sen vẫn ngang.",
+      "shortStory": "Ông không dập tắt bão cũng không giả vờ mọi thứ yên. Năng lực là giữ quyết định ổn định trong khi cho phép cảm xúc được gọi tên.",
+      "reversedMeaning": "Ông khóa nắp chén bằng vàng, biến bình tĩnh thành xa cách.",
+      "props": [
+        "thuyền ngai",
+        "chén ngang",
+        "hai dòng nước",
+        "cá rồng"
+      ],
+      "palette": [
+        "xanh sâu",
+        "đồng",
+        "trắng sóng"
+      ],
+      "sourceIds": [
+        "S05",
+        "S11",
+        "S12",
+        "S13"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-ace",
+      "slug": "ace-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "ace",
+      "rankVi": "Át",
+      "rankEn": "Ace",
+      "number": 1,
+      "viName": "Át Dâu Tằm",
+      "enName": "Ace of Swords",
+      "subject": "Bàn tay cắt kén",
+      "sceneTitle": "Lưỡi sáng mở kén tằm",
+      "uprightMeaning": "Ý tưởng sắc rõ, sự thật mới và quyết định cắt qua mơ hồ.",
+      "scene": "Một bàn tay dùng lưỡi đồng mảnh cắt dọc chiếc kén khổng lồ; sợi tơ bay lên thành một chữ sáng giữa gió.",
+      "shortStory": "Một sự thật rõ ràng thoát khỏi lớp bọc lâu ngày. Nhát cắt đúng chỗ giải phóng sự sống thay vì phá hủy.",
+      "reversedMeaning": "Lưỡi cắt quay vào tay người cầm; sự thật bị dùng như vũ khí tự trừng phạt.",
+      "props": [
+        "một lưỡi đồng",
+        "kén",
+        "chữ gió",
+        "cành dâu"
+      ],
+      "palette": [
+        "trắng tơ",
+        "xanh chàm",
+        "đồng sáng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-two",
+      "slug": "two-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "two",
+      "rankVi": "Hai",
+      "rankEn": "Two",
+      "number": 2,
+      "viName": "Hai Dâu Tằm",
+      "enName": "Two of Swords",
+      "subject": "Người giữ hai thoi",
+      "sceneTitle": "Hai thoi dệt chặn trước mắt",
+      "uprightMeaning": "Bế tắc, cân nhắc hai phía và tạm hoãn khi chưa đủ dữ kiện.",
+      "scene": "Một phụ nữ bịt mắt giữa nương dâu, cầm hai thoi dệt chéo nhau; phía sau, hai con đường gió thổi ngược.",
+      "shortStory": "Cô trì hoãn vì cả hai lựa chọn đều có mất mát. Hạ hai thoi xuống, tiếng lá dâu sẽ cho biết hướng gió thật.",
+      "reversedMeaning": "Khăn đã lỏng nhưng cô vẫn nhắm mắt để khỏi phải chọn.",
+      "props": [
+        "hai thoi",
+        "khăn bịt mắt",
+        "trăng lưỡi liềm"
+      ],
+      "palette": [
+        "chàm",
+        "bạc",
+        "xanh xám"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-three",
+      "slug": "three-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "three",
+      "rankVi": "Ba",
+      "rankEn": "Three",
+      "number": 3,
+      "viName": "Ba Dâu Tằm",
+      "enName": "Three of Swords",
+      "subject": "Người giữ lời thề đứt",
+      "sceneTitle": "Ba kim đồng xuyên dải lụa đỏ",
+      "uprightMeaning": "Đau lòng, chia cách và một sự thật khó nhưng cần được thừa nhận.",
+      "scene": "Ba kim đồng ghim một dải lụa đỏ trước mưa; phía sau là ba bóng người rời về ba hướng.",
+      "shortStory": "Điều đau nhất không phải khoảng cách mà là sự thật cuối cùng được nói ra. Dải lụa rách cho phép các số phận ngừng giả vờ vẫn nguyên.",
+      "reversedMeaning": "Kim được rút ra; vết thủng còn nhưng lụa bắt đầu khô.",
+      "props": [
+        "ba kim",
+        "lụa đỏ",
+        "mưa",
+        "ba bóng"
+      ],
+      "palette": [
+        "đỏ thẫm",
+        "xám mưa",
+        "đồng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-four",
+      "slug": "four-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "four",
+      "rankVi": "Bốn",
+      "rankEn": "Four",
+      "number": 4,
+      "viName": "Bốn Dâu Tằm",
+      "enName": "Four of Swords",
+      "subject": "Người lính trong nhà tơ",
+      "sceneTitle": "Bốn cờ lụa canh giấc ngủ",
+      "uprightMeaning": "Nghỉ ngơi, phục hồi tinh thần và tạm rời cuộc tranh đấu.",
+      "scene": "Một người lính nằm nghỉ trên phản gỗ, bốn lá cờ lụa treo im; bướm tằm đậu trên chuôi kiếm đã bọc.",
+      "shortStory": "Tạm rời trận tuyến là một phần của chiến lược. Trong khoảng yên, trí óc sắp lại điều không thể thấy giữa tiếng trống.",
+      "reversedMeaning": "Người lính nằm nhưng mắt vẫn mở, tiếp tục đánh trận trong đầu.",
+      "props": [
+        "bốn cờ",
+        "kiếm bọc",
+        "bướm tằm",
+        "cửa sổ"
+      ],
+      "palette": [
+        "trắng ngà",
+        "chàm nhạt",
+        "nâu gỗ"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-five",
+      "slug": "five-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "five",
+      "rankVi": "Năm",
+      "rankEn": "Five",
+      "number": 5,
+      "viName": "Năm Dâu Tằm",
+      "enName": "Five of Swords",
+      "subject": "Kẻ thắng trong xưởng dệt",
+      "sceneTitle": "Năm chiếc kéo sau cuộc tranh phần",
+      "uprightMeaning": "Xung đột thắng-thua, chiến thắng đắt giá và lời nói để lại hậu quả.",
+      "scene": "Một người nhặt năm chiếc kéo đồng, phía sau hai thợ dệt bỏ đi và khung cửi bị cắt nát.",
+      "shortStory": "Anh thắng quyền sở hữu công cụ nhưng mất người biết vận hành. Chiến thắng buộc người xem hỏi: còn lại điều gì đáng dùng?",
+      "reversedMeaning": "Người thắng đặt kéo xuống và gọi hai người quay lại, nhưng chưa chắc họ nhận lời.",
+      "props": [
+        "năm kéo",
+        "khung cửi hỏng",
+        "sợi tơ rối"
+      ],
+      "palette": [
+        "đồng lạnh",
+        "chàm tối",
+        "đỏ nâu"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-six",
+      "slug": "six-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "six",
+      "rankVi": "Sáu",
+      "rankEn": "Six",
+      "number": 6,
+      "viName": "Sáu Dâu Tằm",
+      "enName": "Six of Swords",
+      "subject": "Gia đình qua sông gió",
+      "sceneTitle": "Sáu cờ tơ trên thuyền lặng",
+      "uprightMeaning": "Rời vùng hỗn loạn, chuyển tiếp khó nhưng hướng tới nơi yên hơn.",
+      "scene": "Một người chèo đưa hai mẹ con qua sông; sáu dải tơ cắm dọc mạn thuyền như ký ức không thể bỏ lại.",
+      "shortStory": "Họ chưa đến nơi vui, chỉ rời vùng nguy hiểm sang nơi có thể hồi phục. Con thuyền mang nỗi buồn nhưng không để nó cầm lái.",
+      "reversedMeaning": "Thuyền quay vòng vì người chèo chỉ nhìn bờ cũ.",
+      "props": [
+        "sáu dải tơ",
+        "thuyền",
+        "mái chèo",
+        "bờ sương"
+      ],
+      "palette": [
+        "xám lam",
+        "trắng tơ",
+        "nâu nước"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-seven",
+      "slug": "seven-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "seven",
+      "rankVi": "Bảy",
+      "rankEn": "Seven",
+      "number": 7,
+      "viName": "Bảy Dâu Tằm",
+      "enName": "Seven of Swords",
+      "subject": "Người lấy trộm mật đồ",
+      "sceneTitle": "Bảy thẻ tre dưới áo lụa",
+      "uprightMeaning": "Chiến lược kín, hành động độc lập hoặc né tránh trách nhiệm.",
+      "scene": "Một người lẻn qua nương dâu với năm thẻ tre giấu trong áo, hai thẻ còn bên lều canh; bóng của anh mang đuôi chồn.",
+      "shortStory": "Mưu trí giúp tránh đối đầu, nhưng mỗi thứ mang đi để lại dấu vết. Câu hỏi không chỉ là có thoát được hay không, mà kế hoạch phục vụ ai.",
+      "reversedMeaning": "Anh quay lại lấy nốt hai thẻ và gặp chính người đang chờ mình.",
+      "props": [
+        "bảy thẻ",
+        "áo lụa",
+        "dấu chân chồn",
+        "trăng"
+      ],
+      "palette": [
+        "chàm đêm",
+        "trắng lạnh",
+        "nâu tre"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19",
+        "S03"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-eight",
+      "slug": "eight-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "eight",
+      "rankVi": "Tám",
+      "rankEn": "Eight",
+      "number": 8,
+      "viName": "Tám Dâu Tằm",
+      "enName": "Eight of Swords",
+      "subject": "Người bị trói bằng tơ",
+      "sceneTitle": "Tám sợi tơ quanh cọc dâu",
+      "uprightMeaning": "Cảm giác bị kẹt, giới hạn do niềm tin và nỗi sợ làm hẹp lựa chọn.",
+      "scene": "Một phụ nữ bị tám dải tơ quấn lỏng giữa vòng cọc; mắt bị che nhưng một bàn chân đã chạm khoảng trống không có dây.",
+      "shortStory": "Sợi tơ mỏng trông như vách đá khi cô tin mình không được phép bước. Lối ra bắt đầu từ một chuyển động nhỏ.",
+      "reversedMeaning": "Dây thật sự siết lại khi cô vùng mạnh mà không nhìn cấu trúc nút.",
+      "props": [
+        "tám dải tơ",
+        "cọc dâu",
+        "khăn mắt",
+        "khe sáng"
+      ],
+      "palette": [
+        "trắng tơ",
+        "chàm",
+        "xanh dâu"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-nine",
+      "slug": "nine-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "nine",
+      "rankVi": "Chín",
+      "rankEn": "Nine",
+      "number": 9,
+      "viName": "Chín Dâu Tằm",
+      "enName": "Nine of Swords",
+      "subject": "Người thợ thức đêm",
+      "sceneTitle": "Chín bướm đen trên màn ngủ",
+      "uprightMeaning": "Lo âu, mất ngủ và tâm trí lặp lại viễn cảnh tệ nhất.",
+      "scene": "Người thợ ngồi bật dậy, chín bóng bướm tằm khổng lồ đậu trên màn; dưới giường, guồng tơ vẫn tự quay.",
+      "shortStory": "Lo lắng biến những sợi việc nhỏ thành đàn cánh đen. Bình minh sẽ cho thấy chỉ một guồng tơ đang thật sự mắc.",
+      "reversedMeaning": "Một cánh bướm hóa cửa sổ; người thợ bắt đầu phân biệt nỗi sợ với việc thật.",
+      "props": [
+        "chín bướm",
+        "guồng tơ",
+        "màn",
+        "trăng mỏng"
+      ],
+      "palette": [
+        "đen chàm",
+        "trắng nhợt",
+        "vàng đèn"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-ten",
+      "slug": "ten-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "ten",
+      "rankVi": "Mười",
+      "rankEn": "Ten",
+      "number": 10,
+      "viName": "Mười Dâu Tằm",
+      "enName": "Ten of Swords",
+      "subject": "Người giữ cờ thất thủ",
+      "sceneTitle": "Mười kim đồng và bình minh",
+      "uprightMeaning": "Một kết thúc đau nhưng dứt khoát; điều cũ không thể kéo dài thêm.",
+      "scene": "Một lá cờ lụa cũ nằm trên đất, mười kim đồng ghim quanh chứ không xuyên thân người; sau núi, mặt trời đỏ bắt đầu lên.",
+      "shortStory": "Một chiến tuyến đã kết thúc và không thể giữ bằng thêm lời thề. Khi cờ được tháo khỏi đất, vải có thể may thành vật khác.",
+      "reversedMeaning": "Một bàn tay rút chiếc kim đầu tiên; kết thúc chuyển thành hồi phục.",
+      "props": [
+        "mười kim",
+        "cờ đổ",
+        "bình minh",
+        "chim bay"
+      ],
+      "palette": [
+        "chàm đen",
+        "đỏ sớm",
+        "đồng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-page",
+      "slug": "page-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "page",
+      "rankVi": "Tiểu Đồng",
+      "rankEn": "Page",
+      "number": 11,
+      "viName": "Tiểu Đồng Dâu Tằm",
+      "enName": "Page of Swords",
+      "subject": "Thư đồng Nương Dâu",
+      "sceneTitle": "Đọc chữ trong hướng bay của lá",
+      "uprightMeaning": "Tò mò trí tuệ, quan sát nhanh và tin tức cần được kiểm chứng.",
+      "scene": "Một thư đồng cầm thẻ tre và dao nhỏ giữa lá dâu xoáy trong gió; cậu đối chiếu hướng lá với ký hiệu vừa ghi.",
+      "shortStory": "Cậu chưa đủ kinh nghiệm để kết luận nhanh, nên sức mạnh nằm ở câu hỏi và quan sát. Mỗi lời đồn phải qua hai nguồn.",
+      "reversedMeaning": "Cậu thích phát hiện hơn sự thật, biến mọi tiếng lá thành âm mưu.",
+      "props": [
+        "thẻ tre",
+        "dao nhỏ",
+        "lá dâu",
+        "chim báo"
+      ],
+      "palette": [
+        "xanh dâu",
+        "chàm",
+        "đồng sáng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-knight",
+      "slug": "knight-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "knight",
+      "rankVi": "Kỵ Sĩ",
+      "rankEn": "Knight",
+      "number": 12,
+      "viName": "Kỵ Sĩ Dâu Tằm",
+      "enName": "Knight of Swords",
+      "subject": "Kỵ sĩ Cờ Lụa",
+      "sceneTitle": "Phi ngựa theo lời thề trong gió",
+      "uprightMeaning": "Quyết liệt, tốc độ trí tuệ và lao thẳng vào mục tiêu.",
+      "scene": "Kỵ sĩ lao vào gió ngược, cờ lụa dài quấn quanh giáo; chữ trên cờ tách thành chim bay phía trước.",
+      "shortStory": "Anh bảo vệ lập trường bằng tốc độ và lý lẽ sắc. Để không thành tàn phá, anh phải nhìn người phía trước là đối thủ hay sứ giả.",
+      "reversedMeaning": "Cờ quấn vào mắt ngựa; lý tưởng che mất địa hình thật.",
+      "props": [
+        "ngựa",
+        "giáo",
+        "cờ chữ",
+        "gió mạnh"
+      ],
+      "palette": [
+        "trắng lụa",
+        "chàm",
+        "xám thép"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-queen",
+      "slug": "queen-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "queen",
+      "rankVi": "Hoàng Hậu",
+      "rankEn": "Queen",
+      "number": 13,
+      "viName": "Hoàng Hậu Dâu Tằm",
+      "enName": "Queen of Swords",
+      "subject": "Nữ quan Cắt Tơ",
+      "sceneTitle": "Một nhát kéo tháo nút oan",
+      "uprightMeaning": "Sáng suốt, độc lập và giao tiếp thẳng với ranh giới rõ.",
+      "scene": "Nữ quan ngồi trước bàn xử, tay nâng kéo đồng mở một nút tơ rối; phía sau là rèm trắng cho ánh sáng xuyên qua.",
+      "shortStory": "Bà dành lòng trắc ẩn cho sự thật hơn cho câu chuyện dễ nghe. Nhát cắt chỉ đến sau khi từng sợi đã được gọi tên.",
+      "reversedMeaning": "Bà cắt cả những sợi có thể gỡ, biến ranh giới thành cô lập.",
+      "props": [
+        "kéo đồng",
+        "nút tơ",
+        "rèm trắng",
+        "thẻ chứng"
+      ],
+      "palette": [
+        "trắng",
+        "chàm nhạt",
+        "đồng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "swords-king",
+      "slug": "king-of-swords",
+      "suit": "swords",
+      "suitVi": "Dâu Tằm",
+      "suitShort": "Dâu tằm",
+      "suitEn": "Swords",
+      "element": "Khí",
+      "rank": "king",
+      "rankVi": "Quốc Vương",
+      "rankEn": "King",
+      "number": 14,
+      "viName": "Quốc Vương Dâu Tằm",
+      "enName": "King of Swords",
+      "subject": "Quan Trưởng Luật Tơ",
+      "sceneTitle": "Đo sợi trước khi phán",
+      "uprightMeaning": "Tư duy hệ thống, thẩm quyền và quyết định dựa trên nguyên tắc.",
+      "scene": "Người chủ tọa cầm thước đo tơ, tay kia đặt kiếm bọc trên bàn; gió làm điều luật treo phía sau rung nhẹ.",
+      "shortStory": "Quyền lực đến từ chuẩn mực nhất quán và khả năng sửa luật khi thực tế chứng minh nó sai. Kiếm vẫn trong vỏ.",
+      "reversedMeaning": "Ông đo con người bằng một sợi chuẩn duy nhất và gọi cứng nhắc là công bằng.",
+      "props": [
+        "thước tơ",
+        "kiếm bọc",
+        "luật tre",
+        "chim ưng"
+      ],
+      "palette": [
+        "chàm đậm",
+        "đồng",
+        "trắng"
+      ],
+      "sourceIds": [
+        "S04",
+        "S10",
+        "S15",
+        "S19"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-ace",
+      "slug": "ace-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "ace",
+      "rankVi": "Át",
+      "rankEn": "Ace",
+      "number": 1,
+      "viName": "Át Bông Lúa",
+      "enName": "Ace of Pentacles",
+      "subject": "Bàn tay nhận hạt lúa đồng",
+      "sceneTitle": "Hạt giống trong vòng trống",
+      "uprightMeaning": "Cơ hội vật chất, hạt giống ổn định và một nền tảng có thể đo được.",
+      "scene": "Một bàn tay từ mây trao hạt lúa vàng nằm giữa vòng hoa văn trống đồng; bên dưới là thửa ruộng mới có nước.",
+      "shortStory": "Cơ hội vật chất đến dưới dạng thứ nhỏ, nặng và có thể gieo. Giá trị chỉ thành thật khi hạt rời lòng bàn tay để chạm đất.",
+      "reversedMeaning": "Hạt bị khóa trong hộp ngọc để giữ giá trị và vì thế không nảy mầm.",
+      "props": [
+        "một hạt lúa",
+        "vòng trống",
+        "ruộng nước",
+        "cổng tre"
+      ],
+      "palette": [
+        "vàng lúa",
+        "xanh non",
+        "đồng"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-two",
+      "slug": "two-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "two",
+      "rankVi": "Hai",
+      "rankEn": "Two",
+      "number": 2,
+      "viName": "Hai Bông Lúa",
+      "enName": "Two of Pentacles",
+      "subject": "Người cân hai thúng",
+      "sceneTitle": "Hai thúng lúa trên bến sóng",
+      "uprightMeaning": "Cân nhiều việc, linh hoạt nguồn lực và giữ nhịp giữa thay đổi.",
+      "scene": "Một người bước trên cầu thuyền, đòn gánh hai thúng lúa nối thành vòng vô tận; hai con thuyền lên xuống trái nhịp.",
+      "shortStory": "Người buôn không làm sóng dừng, chỉ học bước theo nhịp để hàng không đổ. Khéo xoay xở vẫn cần biết lúc bỏ bớt chuyến.",
+      "reversedMeaning": "Vòng gánh siết chặt; mọi việc đều giữ nhưng không việc nào làm tốt.",
+      "props": [
+        "hai thúng",
+        "đòn gánh vòng",
+        "hai thuyền"
+      ],
+      "palette": [
+        "vàng rơm",
+        "xanh sông",
+        "nâu gỗ"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-three",
+      "slug": "three-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "three",
+      "rankVi": "Ba",
+      "rankEn": "Three",
+      "number": 3,
+      "viName": "Ba Bông Lúa",
+      "enName": "Three of Pentacles",
+      "subject": "Ba người dựng kho",
+      "sceneTitle": "Kho lúa ba nghề",
+      "uprightMeaning": "Hợp tác tay nghề, học từ phản hồi và xây thứ có tiêu chuẩn.",
+      "scene": "Một thợ mộc, một người đúc đồng và một người đo thóc cùng dựng kho; bản vẽ trên đất tạo hình ba vòng Cổ Loa giản lược.",
+      "shortStory": "Không ai đủ nghề để hoàn thành công trình một mình. Chất lượng xuất hiện khi ba người tôn trọng phần việc không thuộc chuyên môn mình.",
+      "reversedMeaning": "Mỗi người dựng theo kích thước riêng; ba bức tường đẹp nhưng không gặp nhau.",
+      "props": [
+        "ba người",
+        "kho",
+        "bản vẽ ba vòng",
+        "thước dây"
+      ],
+      "palette": [
+        "nâu gỗ",
+        "đồng",
+        "vàng lúa"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-four",
+      "slug": "four-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "four",
+      "rankVi": "Bốn",
+      "rankEn": "Four",
+      "number": 4,
+      "viName": "Bốn Bông Lúa",
+      "enName": "Four of Pentacles",
+      "subject": "Người giữ bốn chum",
+      "sceneTitle": "Bốn chum lúa khóa dưới thân",
+      "uprightMeaning": "Giữ chặt nguồn lực, tìm an toàn và sợ mất điều đã tích lũy.",
+      "scene": "Một người ngồi ôm chìa khóa trên bốn chum thóc, chân đặt lên nắp kho; ngoài cửa, chuột tinh và người làng cùng nhìn vào.",
+      "shortStory": "Giữ nguồn lực có thể bảo vệ mùa sau, nhưng nỗi sợ thiếu biến kho thành pháo đài. Thóc kín quá lâu cũng sẽ mốc.",
+      "reversedMeaning": "Một chum mở hé; chia có điều kiện bắt đầu thay nắm giữ tuyệt đối.",
+      "props": [
+        "bốn chum",
+        "chìa khóa",
+        "kho",
+        "chuột"
+      ],
+      "palette": [
+        "nâu tối",
+        "vàng cũ",
+        "xanh rêu"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-five",
+      "slug": "five-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "five",
+      "rankVi": "Năm",
+      "rankEn": "Five",
+      "number": 5,
+      "viName": "Năm Bông Lúa",
+      "enName": "Five of Pentacles",
+      "subject": "Hai người qua mùa rét",
+      "sceneTitle": "Năm bông lúa sáng sau cửa đình",
+      "uprightMeaning": "Thiếu thốn, bị bỏ lại và giai đoạn cần sự hỗ trợ thực tế.",
+      "scene": "Hai người áo rách đi trong mưa lạnh, ngoài cửa đình có ô sáng hình năm bông lúa nhưng họ cúi đầu chưa thấy.",
+      "shortStory": "Khó khăn làm thế giới thu hẹp thành từng bước chân. Sự giúp đỡ ở gần, nhưng cần một người ngẩng lên và cộng đồng mở cửa.",
+      "reversedMeaning": "Cửa mở nhưng người trong đình chỉ nhìn, không bước ra đỡ.",
+      "props": [
+        "năm bông sáng",
+        "cửa đình",
+        "nạng",
+        "mưa"
+      ],
+      "palette": [
+        "xanh xám",
+        "vàng cửa",
+        "nâu đất"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-six",
+      "slug": "six-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "six",
+      "rankVi": "Sáu",
+      "rankEn": "Six",
+      "number": 6,
+      "viName": "Sáu Bông Lúa",
+      "enName": "Six of Pentacles",
+      "subject": "Người chia sáu đấu thóc",
+      "sceneTitle": "Cân thóc dưới bóng trống",
+      "uprightMeaning": "Cho và nhận, phân bổ nguồn lực và quyền lực nằm trong sự giúp đỡ.",
+      "scene": "Người giữ kho dùng cân đồng chia sáu đấu thóc cho hai gia đình; bóng trống đồng tạo vòng cân bằng.",
+      "shortStory": "Cho và nhận đều có phẩm giá khi tiêu chí minh bạch. Người chia giữ lại phần giống cho vụ sau để lòng tốt không phá tương lai.",
+      "reversedMeaning": "Bàn cân nghiêng về người biết cúi thấp hơn, biến ân huệ thành quyền lực.",
+      "props": [
+        "sáu đấu thóc",
+        "cân",
+        "sổ tre",
+        "trống"
+      ],
+      "palette": [
+        "vàng lúa",
+        "đồng",
+        "xanh rêu"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-seven",
+      "slug": "seven-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "seven",
+      "rankVi": "Bảy",
+      "rankEn": "Seven",
+      "number": 7,
+      "viName": "Bảy Bông Lúa",
+      "enName": "Seven of Pentacles",
+      "subject": "Người chờ bảy thửa",
+      "sceneTitle": "Bảy ruộng bậc dưới mây rồng",
+      "uprightMeaning": "Đánh giá tiến độ, kiên nhẫn và xem công sức đã sinh kết quả gì.",
+      "scene": "Một nông dân tựa cuốc nhìn bảy thửa ruộng ở bảy độ chín khác nhau; mây rồng mang mưa còn ở phía núi.",
+      "shortStory": "Công sức đã vào đất nhưng thời gian không thể kéo bằng ý chí. Người nông dân dùng lúc chờ để sửa bờ và chăm đúng thửa.",
+      "reversedMeaning": "Anh nhổ lúa non để kiểm tra hạt, làm hỏng điều chỉ cần thêm thời gian.",
+      "props": [
+        "bảy thửa",
+        "cuốc",
+        "mây rồng",
+        "bờ nước"
+      ],
+      "palette": [
+        "xanh lúa",
+        "vàng non",
+        "xám mây"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-eight",
+      "slug": "eight-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "eight",
+      "rankVi": "Tám",
+      "rankEn": "Eight",
+      "number": 8,
+      "viName": "Tám Bông Lúa",
+      "enName": "Eight of Pentacles",
+      "subject": "Nghệ nhân đúc tám đồng lúa",
+      "sceneTitle": "Tám lần gõ thành một hoa văn",
+      "uprightMeaning": "Rèn nghề, lặp lại có chủ đích và nâng chất lượng qua từng phiên bản.",
+      "scene": "Một nghệ nhân cúi trên khuôn, tám đồng nhỏ xếp theo mức hoàn thiện; mỗi đồng có hoa văn bông lúa rõ hơn chiếc trước.",
+      "shortStory": "Tài nghệ hình thành từ lặp lại có quan sát, không từ cảm hứng nhất thời. Sai khác nhỏ giữa tám chiếc là dấu vết học tập.",
+      "reversedMeaning": "Người thợ lặp đúng một lỗi trên cả tám chiếc vì không dừng so sánh.",
+      "props": [
+        "tám đồng",
+        "khuôn đất",
+        "búa",
+        "kính nước"
+      ],
+      "palette": [
+        "đồng sáng",
+        "nâu đất",
+        "đen than"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-nine",
+      "slug": "nine-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "nine",
+      "rankVi": "Chín",
+      "rankEn": "Nine",
+      "number": 9,
+      "viName": "Chín Bông Lúa",
+      "enName": "Nine of Pentacles",
+      "subject": "Nữ chủ vườn lúa",
+      "sceneTitle": "Chim trĩ trong khu vườn tự gây dựng",
+      "uprightMeaning": "Độc lập, thành quả chín và sự đủ đầy do kỷ luật tạo nên.",
+      "scene": "Một phụ nữ đứng trong vườn lúa-dâu, chim trĩ trắng đậu trên găng tay; chín bông lúa kết thành cổng nhỏ sau lưng.",
+      "shortStory": "Sự sung túc của bà có dấu tay lao động và hệ sinh thái tự vận hành. Bà tận hưởng khoảng riêng mà không cần chứng minh.",
+      "reversedMeaning": "Tường vườn cao dần; tự chủ biến thành không cho ai đến gần.",
+      "props": [
+        "chín bông",
+        "chim trĩ",
+        "hàng dâu",
+        "chìa khóa vườn"
+      ],
+      "palette": [
+        "vàng chín",
+        "trắng chim",
+        "xanh sâu"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21",
+        "S09"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-ten",
+      "slug": "ten-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "ten",
+      "rankVi": "Mười",
+      "rankEn": "Ten",
+      "number": 10,
+      "viName": "Mười Bông Lúa",
+      "enName": "Ten of Pentacles",
+      "subject": "Gia đình giữ kho tổ",
+      "sceneTitle": "Mười bông lúa quanh trống gia phả",
+      "uprightMeaning": "Di sản, ổn định dài hạn và nguồn lực đi qua nhiều thế hệ.",
+      "scene": "Ba thế hệ quây quanh kho; mười bông lúa tạo cây gia phả trên trống đồng, chó và trẻ nhỏ đi giữa các chân người.",
+      "shortStory": "Tài sản bền không chỉ là chum thóc mà là cách truyền nghề, trách nhiệm và quyền thuộc về. Người già trao chìa khóa cùng sổ nợ đã xóa.",
+      "reversedMeaning": "Kho còn đầy nhưng chìa khóa không được trao, khiến di sản hóa tranh chấp.",
+      "props": [
+        "mười bông",
+        "trống gia phả",
+        "chìa khóa",
+        "chó"
+      ],
+      "palette": [
+        "vàng lúa",
+        "đồng",
+        "đỏ nâu"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-page",
+      "slug": "page-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "page",
+      "rankVi": "Tiểu Đồng",
+      "rankEn": "Page",
+      "number": 11,
+      "viName": "Tiểu Đồng Bông Lúa",
+      "enName": "Page of Pentacles",
+      "subject": "Tiểu đồng Hạt Giống",
+      "sceneTitle": "Đọc lịch mùa trên hạt lúa",
+      "uprightMeaning": "Người học thực tế, kế hoạch mới và tin tức về học tập/công việc/tiền bạc.",
+      "scene": "Một tiểu đồng nâng hạt lúa lớn, phía sau là bảng lịch khắc trăng, nước và dấu chân chim.",
+      "shortStory": "Cậu học biến tò mò thành kỹ năng: đo đất, ghi nước, giữ giống. Ước mơ đầu tiên có trọng lượng vừa bằng một hạt thật.",
+      "reversedMeaning": "Cậu mê bản vẽ mùa mà chưa từng đặt tay xuống bùn.",
+      "props": [
+        "hạt lúa",
+        "lịch mùa",
+        "túi giống",
+        "thẻ ghi"
+      ],
+      "palette": [
+        "vàng non",
+        "xanh lá",
+        "nâu đất"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-knight",
+      "slug": "knight-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "knight",
+      "rankVi": "Kỵ Sĩ",
+      "rankEn": "Knight",
+      "number": 12,
+      "viName": "Kỵ Sĩ Bông Lúa",
+      "enName": "Knight of Pentacles",
+      "subject": "Kỵ sĩ Trâu Mộng",
+      "sceneTitle": "Chuyến giống qua mưa dài",
+      "uprightMeaning": "Bền bỉ, đáng tin và tiến đều theo quy trình.",
+      "scene": "Một người cưỡi trâu chậm qua mưa, giữ túi giống dưới áo; bánh xe thóc để lại đường thẳng chắc trên bùn.",
+      "shortStory": "Anh không đến nhanh nhất nhưng chưa từng bỏ trạm. Khi người khác đuổi điềm lạ trên trời, anh bảo vệ thứ phải tới ruộng đúng ngày.",
+      "reversedMeaning": "Sự đều đặn thành quán tính; anh đi đường cũ dù cây cầu đã gãy.",
+      "props": [
+        "trâu",
+        "túi giống",
+        "xe thóc",
+        "áo mưa lá"
+      ],
+      "palette": [
+        "nâu bùn",
+        "xanh rêu",
+        "vàng kín"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-queen",
+      "slug": "queen-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "queen",
+      "rankVi": "Hoàng Hậu",
+      "rankEn": "Queen",
+      "number": 13,
+      "viName": "Hoàng Hậu Bông Lúa",
+      "enName": "Queen of Pentacles",
+      "subject": "Nữ chủ Lúa Vàng",
+      "sceneTitle": "Bếp, ruộng và kho cùng một nhịp",
+      "uprightMeaning": "Chăm sóc thực tế, quản lý nguồn lực và tạo một môi trường đủ đầy.",
+      "scene": "Một nữ chủ ngồi bên bếp, nâng bông lúa trong vòng trống; qua cửa mở thấy người làm ruộng, trẻ nhỏ và kho ngăn nắp.",
+      "shortStory": "Bà chăm người và nguồn lực như cùng một hệ thống sống. Sự thực tế của bà ấm, nhưng không ôm hết việc của mọi người.",
+      "reversedMeaning": "Bà chăm tất cả đến mức quên cơ thể mình cũng là một phần mùa vụ.",
+      "props": [
+        "bông lúa",
+        "bếp",
+        "vòng trống",
+        "thỏ đồng"
+      ],
+      "palette": [
+        "vàng ấm",
+        "xanh rêu",
+        "đỏ bếp"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    },
+    {
+      "id": "pentacles-king",
+      "slug": "king-of-pentacles",
+      "suit": "pentacles",
+      "suitVi": "Bông Lúa",
+      "suitShort": "Lúa",
+      "suitEn": "Pentacles",
+      "element": "Đất",
+      "rank": "king",
+      "rankVi": "Quốc Vương",
+      "rankEn": "King",
+      "number": 14,
+      "viName": "Quốc Vương Bông Lúa",
+      "enName": "King of Pentacles",
+      "subject": "Chúa Kho Đồng",
+      "sceneTitle": "Kho mở giữa bốn dòng trao đổi",
+      "uprightMeaning": "Quản trị vững, thịnh vượng có trách nhiệm và năng lực tạo giá trị lâu dài.",
+      "scene": "Người quản trị ngồi trước kho đồng, bốn đường đưa lúa, muối, vải và cá đến; dưới chân, đồng tiền trống đang nảy mầm.",
+      "shortStory": "Thịnh vượng được đo bằng số người sống ổn định quanh hệ thống, không bằng số khóa. Ông dùng của cải làm đường, giữ giống và chống mùa xấu.",
+      "reversedMeaning": "Ông cân mọi giá trị bằng lợi tức và không nhận ra thứ không thể mua.",
+      "props": [
+        "kho",
+        "bốn tuyến hàng",
+        "tiền trống",
+        "bò mộng"
+      ],
+      "palette": [
+        "đồng vàng",
+        "xanh đất",
+        "đỏ nâu"
+      ],
+      "sourceIds": [
+        "S02",
+        "S07",
+        "S08",
+        "S14",
+        "S21"
+      ],
+      "adaptationLevel": "EDITORIAL_FANTASY_INSPIRED"
+    }
+  ]
+}

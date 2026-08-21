@@ -120,7 +120,7 @@
     "slug": "the-high-priestess",
     "nameVi": "Nữ Tư Tế",
     "nameEn": "The High Priestess",
-    "nameFolk": "Người giữ ký ức",
+    "nameFolk": "Ma Cô",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -164,7 +164,7 @@
     "question": "Thông điệp của The High Priestess đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Nữ Tư Tế – The High Priestess",
-      "description": "The High Priestess: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Người giữ ký ức trong Hường Đông Tarot.",
+      "description": "The High Priestess: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Ma Cô trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-02-the-high-priestess.webp",
       "canonical": "/la-bai/the-high-priestess/"
     },
@@ -236,20 +236,20 @@
     "slug": "the-emperor",
     "nameVi": "Hoàng Đế",
     "nameEn": "The Emperor",
-    "nameFolk": "Hùng Vương",
+    "nameFolk": "Hùng Vương đầu triều",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
       "url": "/assets/img/cards/major-04-the-emperor.webp",
-      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang",
+      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương đầu triều ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
       "url": "/assets/img/cards/major-04-the-emperor.webp",
-      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang"
+      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương đầu triều ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang"
     },
     "keywordsUpright": [
       "cấu trúc",
@@ -280,7 +280,7 @@
     "question": "Thông điệp của The Emperor đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Hoàng Đế – The Emperor",
-      "description": "The Emperor: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Hùng Vương trong Hường Đông Tarot.",
+      "description": "The Emperor: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Hùng Vương đầu triều trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-04-the-emperor.webp",
       "canonical": "/la-bai/the-emperor/"
     },
@@ -294,7 +294,7 @@
     "slug": "the-hierophant",
     "nameVi": "Giáo Hoàng",
     "nameEn": "The Hierophant",
-    "nameFolk": "Chủ lễ truyền tục",
+    "nameFolk": "Già La Đồ Lê",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -324,7 +324,7 @@
     ],
     "meaningUpright": "<p>Truyền thống, người hướng dẫn, học qua một hệ thống và các giá trị chung.</p><p>Có lúc cần học đúng nền tảng trước; có lúc cần hiểu nền tảng đủ sâu để cải tiến nó.</p>",
     "meaningReversed": "<p>Tự tìm con đường khác, chất vấn giáo điều hoặc không còn phù hợp với khuôn cũ.</p>",
-    "story": "<p><strong>Chủ lễ truyền tục</strong> — Trao truyền tri thức cộng đồng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "story": "<p><strong>Già La Đồ Lê</strong> — Trao truyền tri thức cộng đồng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
     "symbols": [
       {
         "name": "Chủ lễ truyền tục",
@@ -338,7 +338,7 @@
     "question": "Thông điệp của The Hierophant đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Giáo Hoàng – The Hierophant",
-      "description": "The Hierophant: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chủ lễ truyền tục trong Hường Đông Tarot.",
+      "description": "The Hierophant: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Già La Đồ Lê trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-05-the-hierophant.webp",
       "canonical": "/la-bai/the-hierophant/"
     },
@@ -352,7 +352,7 @@
     "slug": "the-lovers",
     "nameVi": "Tình Nhân",
     "nameEn": "The Lovers",
-    "nameFolk": "Trầu Cau",
+    "nameFolk": "Tân, Lang và nàng họ Lưu",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -396,7 +396,7 @@
     "question": "Thông điệp của The Lovers đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Tình Nhân – The Lovers",
-      "description": "The Lovers: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trầu Cau trong Hường Đông Tarot.",
+      "description": "The Lovers: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tân, Lang và nàng họ Lưu trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-06-the-lovers.webp",
       "canonical": "/la-bai/the-lovers/"
     },
@@ -526,20 +526,20 @@
     "slug": "the-hermit",
     "nameVi": "Ẩn Sĩ",
     "nameEn": "The Hermit",
-    "nameFolk": "Chử Đồng Tử tìm đạo",
+    "nameFolk": "Dương Không Lộ",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
       "url": "/assets/img/cards/major-09-the-hermit.webp",
-      "alt": "Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo",
+      "alt": "Minh họa nguyên bản The Hermit: Dương Không Lộ cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
       "url": "/assets/img/cards/major-09-the-hermit.webp",
-      "alt": "Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo"
+      "alt": "Minh họa nguyên bản The Hermit: Dương Không Lộ cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo"
     },
     "keywordsUpright": [
       "chiêm nghiệm",
@@ -570,7 +570,7 @@
     "question": "Thông điệp của The Hermit đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Ẩn Sĩ – The Hermit",
-      "description": "The Hermit: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử tìm đạo trong Hường Đông Tarot.",
+      "description": "The Hermit: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dương Không Lộ trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-09-the-hermit.webp",
       "canonical": "/la-bai/the-hermit/"
     },
@@ -584,7 +584,7 @@
     "slug": "wheel-of-fortune",
     "nameVi": "Bánh Xe Số Phận",
     "nameEn": "Wheel of Fortune",
-    "nameFolk": "Sơn Tinh – Thủy Tinh",
+    "nameFolk": "Thủy Tinh",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -628,7 +628,7 @@
     "question": "Thông điệp của Wheel of Fortune đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Bánh Xe Số Phận – Wheel of Fortune",
-      "description": "Wheel of Fortune: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sơn Tinh – Thủy Tinh trong Hường Đông Tarot.",
+      "description": "Wheel of Fortune: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Thủy Tinh trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-10-wheel-of-fortune.webp",
       "canonical": "/la-bai/wheel-of-fortune/"
     },
@@ -642,20 +642,20 @@
     "slug": "justice",
     "nameVi": "Công Lý",
     "nameEn": "Justice",
-    "nameFolk": "Lang Liêu",
+    "nameFolk": "Tô Lịch Giang Thần / Long Đỗ",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
       "url": "/assets/img/cards/major-11-justice.webp",
-      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàng tử",
+      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Tô Lịch Giang Thần / Long Đỗ và mâm cao cỗ đầy của các hoàng tử",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
       "url": "/assets/img/cards/major-11-justice.webp",
-      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàng tử"
+      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Tô Lịch Giang Thần / Long Đỗ và mâm cao cỗ đầy của các hoàng tử"
     },
     "keywordsUpright": [
       "công bằng",
@@ -686,7 +686,7 @@
     "question": "Thông điệp của Justice đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Công Lý – Justice",
-      "description": "Justice: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lang Liêu trong Hường Đông Tarot.",
+      "description": "Justice: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tô Lịch Giang Thần / Long Đỗ trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-11-justice.webp",
       "canonical": "/la-bai/justice/"
     },
@@ -700,7 +700,7 @@
     "slug": "the-hanged-man",
     "nameVi": "Người Treo Ngược",
     "nameEn": "The Hanged Man",
-    "nameFolk": "Chử Đồng Tử bên bãi cát",
+    "nameFolk": "Từ Đạo Hạnh nhập định",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -744,7 +744,7 @@
     "question": "Thông điệp của The Hanged Man đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Người Treo Ngược – The Hanged Man",
-      "description": "The Hanged Man: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử bên bãi cát trong Hường Đông Tarot.",
+      "description": "The Hanged Man: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Từ Đạo Hạnh nhập định trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-12-the-hanged-man.webp",
       "canonical": "/la-bai/the-hanged-man/"
     },
@@ -758,7 +758,7 @@
     "slug": "death",
     "nameVi": "Chuyển Hóa",
     "nameEn": "Death",
-    "nameFolk": "Lạc Long Quân trừ Hồ Tinh",
+    "nameFolk": "Xương Cuồng / Mộc Tinh",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -802,7 +802,7 @@
     "question": "Thông điệp của Death đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Chuyển Hóa – Death",
-      "description": "Death: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lạc Long Quân trừ Hồ Tinh trong Hường Đông Tarot.",
+      "description": "Death: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Xương Cuồng / Mộc Tinh trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-13-death.webp",
       "canonical": "/la-bai/death/"
     },
@@ -816,7 +816,7 @@
     "slug": "temperance",
     "nameVi": "Tiết Chế",
     "nameEn": "Temperance",
-    "nameFolk": "Núi và biển chung nguồn",
+    "nameFolk": "Lang Liêu",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -860,7 +860,7 @@
     "question": "Thông điệp của Temperance đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Tiết Chế – Temperance",
-      "description": "Temperance: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Núi và biển chung nguồn trong Hường Đông Tarot.",
+      "description": "Temperance: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lang Liêu trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-14-temperance.webp",
       "canonical": "/la-bai/temperance/"
     },
@@ -874,7 +874,7 @@
     "slug": "the-devil",
     "nameVi": "Quỷ Dữ",
     "nameEn": "The Devil",
-    "nameFolk": "Mị Châu – Trọng Thủy",
+    "nameFolk": "Trọng Thủy; Mỵ Châu hỗ trợ",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -918,7 +918,7 @@
     "question": "Thông điệp của The Devil đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Quỷ Dữ – The Devil",
-      "description": "The Devil: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mị Châu – Trọng Thủy trong Hường Đông Tarot.",
+      "description": "The Devil: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trọng Thủy; Mỵ Châu hỗ trợ trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-15-the-devil.webp",
       "canonical": "/la-bai/the-devil/"
     },
@@ -932,7 +932,7 @@
     "slug": "the-tower",
     "nameVi": "Tòa Tháp",
     "nameEn": "The Tower",
-    "nameFolk": "Cổ Loa thất thủ",
+    "nameFolk": "An Dương Vương",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -976,7 +976,7 @@
     "question": "Thông điệp của The Tower đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Tòa Tháp – The Tower",
-      "description": "The Tower: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Cổ Loa thất thủ trong Hường Đông Tarot.",
+      "description": "The Tower: nghĩa xuôi, nghĩa ngược và lớp liên tưởng An Dương Vương trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-16-the-tower.webp",
       "canonical": "/la-bai/the-tower/"
     },
@@ -1048,7 +1048,7 @@
     "slug": "the-moon",
     "nameVi": "Mặt Trăng",
     "nameEn": "The Moon",
-    "nameFolk": "Dấu lông ngỗng dưới trăng",
+    "nameFolk": "Mỵ Châu",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -1092,7 +1092,7 @@
     "question": "Thông điệp của The Moon đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Mặt Trăng – The Moon",
-      "description": "The Moon: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dấu lông ngỗng dưới trăng trong Hường Đông Tarot.",
+      "description": "The Moon: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mỵ Châu trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-18-the-moon.webp",
       "canonical": "/la-bai/the-moon/"
     },
@@ -1106,7 +1106,7 @@
     "slug": "the-sun",
     "nameVi": "Mặt Trời",
     "nameEn": "The Sun",
-    "nameFolk": "Ngày hội Văn Lang",
+    "nameFolk": "Man Nương",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -1150,7 +1150,7 @@
     "question": "Thông điệp của The Sun đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Mặt Trời – The Sun",
-      "description": "The Sun: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Ngày hội Văn Lang trong Hường Đông Tarot.",
+      "description": "The Sun: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Man Nương trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-19-the-sun.webp",
       "canonical": "/la-bai/the-sun/"
     },
@@ -1164,7 +1164,7 @@
     "slug": "judgement",
     "nameVi": "Phán Xét",
     "nameEn": "Judgement",
-    "nameFolk": "Phán quyết bên bờ biển",
+    "nameFolk": "Sứ Thanh Giang / Rùa Vàng",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -1208,7 +1208,7 @@
     "question": "Thông điệp của Judgement đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Phán Xét – Judgement",
-      "description": "Judgement: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Phán quyết bên bờ biển trong Hường Đông Tarot.",
+      "description": "Judgement: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sứ Thanh Giang / Rùa Vàng trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-20-judgement.webp",
       "canonical": "/la-bai/judgement/"
     },
@@ -1222,7 +1222,7 @@
     "slug": "the-world",
     "nameVi": "Thế Giới",
     "nameEn": "The World",
-    "nameFolk": "Trăm con chung một cõi",
+    "nameFolk": "Việt Thường và thiên hạ",
     "arcana": "major",
     "suit": null,
     "folkStyle": "hang-trong",
@@ -1266,7 +1266,7 @@
     "question": "Thông điệp của The World đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
     "seo": {
       "title": "Thế Giới – The World",
-      "description": "The World: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trăm con chung một cõi trong Hường Đông Tarot.",
+      "description": "The World: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Việt Thường và thiên hạ trong Hường Đông Tarot.",
       "ogImage": "/assets/img/cards/major-21-the-world.webp",
       "canonical": "/la-bai/the-world/"
     },

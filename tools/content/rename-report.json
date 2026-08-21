@@ -1,0 +1,885 @@
+{
+  "dir": "/home/asus/output/dot-0/newrepo",
+  "ranAt": "2026-08-21T10:54:36.364Z",
+  "write": true,
+  "loose": false,
+  "filesScanned": 70,
+  "filesChanged": 3,
+  "anchored": [
+    {
+      "file": "seed/cards.json",
+      "line": 761,
+      "roman": "XIII",
+      "from": "Lạc Long Quân trừ Hồ Tinh",
+      "to": "Xương Cuồng / Mộc Tinh",
+      "why": null,
+      "text": "\"nameFolk\": \"Lạc Long Quân trừ Hồ Tinh\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 805,
+      "roman": "XIII",
+      "from": "Lạc Long Quân trừ Hồ Tinh",
+      "to": "Xương Cuồng / Mộc Tinh",
+      "why": null,
+      "text": "\"description\": \"Death: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lạc Long Quân trừ Hồ Tinh trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1051,
+      "roman": "XVIII",
+      "from": "Dấu lông ngỗng dưới trăng",
+      "to": "Mỵ Châu",
+      "why": null,
+      "text": "\"nameFolk\": \"Dấu lông ngỗng dưới trăng\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1095,
+      "roman": "XVIII",
+      "from": "Dấu lông ngỗng dưới trăng",
+      "to": "Mỵ Châu",
+      "why": null,
+      "text": "\"description\": \"The Moon: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dấu lông ngỗng dưới trăng trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 703,
+      "roman": "XII",
+      "from": "Chử Đồng Tử bên bãi cát",
+      "to": "Từ Đạo Hạnh nhập định",
+      "why": null,
+      "text": "\"nameFolk\": \"Chử Đồng Tử bên bãi cát\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 747,
+      "roman": "XII",
+      "from": "Chử Đồng Tử bên bãi cát",
+      "to": "Từ Đạo Hạnh nhập định",
+      "why": null,
+      "text": "\"description\": \"The Hanged Man: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử bên bãi cát trong Hường Đông Tarot"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 819,
+      "roman": "XIV",
+      "from": "Núi và biển chung nguồn",
+      "to": "Lang Liêu",
+      "why": null,
+      "text": "\"nameFolk\": \"Núi và biển chung nguồn\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 863,
+      "roman": "XIV",
+      "from": "Núi và biển chung nguồn",
+      "to": "Lang Liêu",
+      "why": null,
+      "text": "\"description\": \"Temperance: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Núi và biển chung nguồn trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1167,
+      "roman": "XX",
+      "from": "Phán quyết bên bờ biển",
+      "to": "Sứ Thanh Giang / Rùa Vàng",
+      "why": null,
+      "text": "\"nameFolk\": \"Phán quyết bên bờ biển\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1211,
+      "roman": "XX",
+      "from": "Phán quyết bên bờ biển",
+      "to": "Sứ Thanh Giang / Rùa Vàng",
+      "why": null,
+      "text": "\"description\": \"Judgement: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Phán quyết bên bờ biển trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1225,
+      "roman": "XXI",
+      "from": "Trăm con chung một cõi",
+      "to": "Việt Thường và thiên hạ",
+      "why": null,
+      "text": "\"nameFolk\": \"Trăm con chung một cõi\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1269,
+      "roman": "XXI",
+      "from": "Trăm con chung một cõi",
+      "to": "Việt Thường và thiên hạ",
+      "why": null,
+      "text": "\"description\": \"The World: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trăm con chung một cõi trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 587,
+      "roman": "X",
+      "from": "Sơn Tinh – Thủy Tinh",
+      "to": "Thủy Tinh",
+      "why": null,
+      "text": "\"nameFolk\": \"Sơn Tinh – Thủy Tinh\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 631,
+      "roman": "X",
+      "from": "Sơn Tinh – Thủy Tinh",
+      "to": "Thủy Tinh",
+      "why": null,
+      "text": "\"description\": \"Wheel of Fortune: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sơn Tinh – Thủy Tinh trong Hường Đông Tarot."
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 877,
+      "roman": "XV",
+      "from": "Mị Châu – Trọng Thủy",
+      "to": "Trọng Thủy; Mỵ Châu hỗ trợ",
+      "why": null,
+      "text": "\"nameFolk\": \"Mị Châu – Trọng Thủy\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 921,
+      "roman": "XV",
+      "from": "Mị Châu – Trọng Thủy",
+      "to": "Trọng Thủy; Mỵ Châu hỗ trợ",
+      "why": null,
+      "text": "\"description\": \"The Devil: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mị Châu – Trọng Thủy trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 529,
+      "roman": "IX",
+      "from": "Chử Đồng Tử tìm đạo",
+      "to": "Dương Không Lộ",
+      "why": null,
+      "text": "\"nameFolk\": \"Chử Đồng Tử tìm đạo\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 573,
+      "roman": "IX",
+      "from": "Chử Đồng Tử tìm đạo",
+      "to": "Dương Không Lộ",
+      "why": null,
+      "text": "\"description\": \"The Hermit: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử tìm đạo trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 297,
+      "roman": "V",
+      "from": "Chủ lễ truyền tục",
+      "to": "Già La Đồ Lê",
+      "why": null,
+      "text": "\"nameFolk\": \"Chủ lễ truyền tục\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 327,
+      "roman": "V",
+      "from": "Chủ lễ truyền tục",
+      "to": "Già La Đồ Lê",
+      "why": null,
+      "text": "\"story\": \"<p><strong>Chủ lễ truyền tục</strong> — Trao truyền tri thức cộng đồng. Đây là lớp liên tưởng Việt hóa đang đư"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 341,
+      "roman": "V",
+      "from": "Chủ lễ truyền tục",
+      "to": "Già La Đồ Lê",
+      "why": null,
+      "text": "\"description\": \"The Hierophant: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chủ lễ truyền tục trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1109,
+      "roman": "XIX",
+      "from": "Ngày hội Văn Lang",
+      "to": "Man Nương",
+      "why": null,
+      "text": "\"nameFolk\": \"Ngày hội Văn Lang\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1153,
+      "roman": "XIX",
+      "from": "Ngày hội Văn Lang",
+      "to": "Man Nương",
+      "why": null,
+      "text": "\"description\": \"The Sun: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Ngày hội Văn Lang trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 123,
+      "roman": "II",
+      "from": "Người giữ ký ức",
+      "to": "Ma Cô",
+      "why": null,
+      "text": "\"nameFolk\": \"Người giữ ký ức\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 167,
+      "roman": "II",
+      "from": "Người giữ ký ức",
+      "to": "Ma Cô",
+      "why": null,
+      "text": "\"description\": \"The High Priestess: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Người giữ ký ức trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 935,
+      "roman": "XVI",
+      "from": "Cổ Loa thất thủ",
+      "to": "An Dương Vương",
+      "why": null,
+      "text": "\"nameFolk\": \"Cổ Loa thất thủ\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 979,
+      "roman": "XVI",
+      "from": "Cổ Loa thất thủ",
+      "to": "An Dương Vương",
+      "why": null,
+      "text": "\"description\": \"The Tower: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Cổ Loa thất thủ trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 535,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 542,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo\""
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 239,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "\"nameFolk\": \"Hùng Vương\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 245,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Vă"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 252,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Vă"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 283,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "\"description\": \"The Emperor: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Hùng Vương trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 645,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": null,
+      "text": "\"nameFolk\": \"Lang Liêu\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 651,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàn"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 658,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": null,
+      "text": "\"alt\": \"Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàn"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 689,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": null,
+      "text": "\"description\": \"Justice: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lang Liêu trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 355,
+      "roman": "VI",
+      "from": "Trầu Cau",
+      "to": "Tân, Lang và nàng họ Lưu",
+      "why": null,
+      "text": "\"nameFolk\": \"Trầu Cau\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 399,
+      "roman": "VI",
+      "from": "Trầu Cau",
+      "to": "Tân, Lang và nàng họ Lưu",
+      "why": null,
+      "text": "\"description\": \"The Lovers: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trầu Cau trong Hường Đông Tarot.\","
+    },
+    {
+      "file": "templates/healing.html",
+      "line": 5,
+      "roman": "X",
+      "from": "Sơn Tinh – Thủy Tinh",
+      "to": "Thủy Tinh",
+      "why": null,
+      "text": "<section class=\"v2-prose\" id=\"phan-tu\"><p class=\"eyebrow\">4.1</p><h2>Phản tư</h2><p><strong>Nhìn lại một việc đã xảy ra,"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 32,
+      "roman": "VIII",
+      "from": "Sơn Tinh (Tản Viên)",
+      "to": "Sơn Tinh",
+      "why": null,
+      "text": "<tr><td>VIII · Strength</td><td><strong>Sơn Tinh (Tản Viên)</strong></td><td>S14 · Truyện Núi Tản Viên</td></tr>"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 28,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "<tr><td>IV · The Emperor</td><td>Hùng Vương đầu triều</td><td>S02 · Truyện họ Hồng Bàng</td></tr>"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 30,
+      "roman": "VI",
+      "from": "Trầu Cau",
+      "to": "Tân, Lang và nàng họ Lưu",
+      "why": null,
+      "text": "<tr><td>VI · The Lovers</td><td>Tân, Lang và nàng họ Lưu</td><td>S04 · Truyện Trầu Cau</td></tr>"
+    }
+  ],
+  "unanchored": [
+    {
+      "file": "data/lncq-22.json",
+      "line": 7,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"quote\": \"Về đời Hùng Vương có viên quan tên là Mai Tiêm vốn người ngoại quốc, khi lên 7, 8 tuổi, vua mua từ thương thuy"
+    },
+    {
+      "file": "data/lncq-22.json",
+      "line": 33,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"summary\": \"Người con cả lên làm vua, hiệu Hùng Vương, đặt tên nước Văn Lang, chia làm 15 bộ, đặt lạc hầu lạc tướng, qua"
+    },
+    {
+      "file": "data/lncq-22.json",
+      "line": 35,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"quote\": \"Âu Cơ và năm mươi con lên ở đất Phong Châu suy phục lẫn nhau, cùng tôn người con cả lên làm vua, hiệu là Hùng "
+    },
+    {
+      "file": "data/lncq-22.json",
+      "line": 147,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"quote\": \"Về đời vua Thành Vương nhà Chu, Hùng Vương sai bề tôi tự xưng là họ Việt Thường đem chim bạch trĩ sang tiến cố"
+    },
+    {
+      "file": "data/lncq-22.json",
+      "line": 103,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"summary\": \"Giữa các lễ vật quý các anh em tìm khắp rừng bể, Lang Liêu nằm mơ thấy thần bảo trong trời đất không gì quý "
+    },
+    {
+      "file": "data/lncq-chapters.json",
+      "line": 1,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "file một dòng (100358 ký tự/dòng) — không neo theo dòng được",
+      "text": "[{\"n\": 1, \"slug\": \"hong-bang-thi\", \"title\": \"Truyện Hồng Bàng Thị\", \"paras\": [\"Đế Minh cháu ba đời họ Viêm Đế Thần Nông "
+    },
+    {
+      "file": "data/lncq-chapters.json",
+      "line": 1,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "file một dòng (100358 ký tự/dòng) — không neo theo dòng được",
+      "text": "[{\"n\": 1, \"slug\": \"hong-bang-thi\", \"title\": \"Truyện Hồng Bàng Thị\", \"paras\": [\"Đế Minh cháu ba đời họ Viêm Đế Thần Nông "
+    },
+    {
+      "file": "data/lncq-chapters.json",
+      "line": 1,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "file một dòng (100358 ký tự/dòng) — không neo theo dòng được",
+      "text": "[{\"n\": 1, \"slug\": \"hong-bang-thi\", \"title\": \"Truyện Hồng Bàng Thị\", \"paras\": [\"Đế Minh cháu ba đời họ Viêm Đế Thần Nông "
+    },
+    {
+      "file": "public/assets/js/deck-data.js",
+      "line": 2,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "file một dòng (2681 ký tự/dòng) — không neo theo dòng được",
+      "text": "window.HD_DECK = [{\"slug\": \"the-fool\", \"roman\": \"0\", \"en\": \"The Fool\", \"img\": \"/assets/img/cards/major-00-the-fool.webp\""
+    },
+    {
+      "file": "public/assets/js/deck-data.js",
+      "line": 2,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "file một dòng (2681 ký tự/dòng) — không neo theo dòng được",
+      "text": "window.HD_DECK = [{\"slug\": \"the-fool\", \"roman\": \"0\", \"en\": \"The Fool\", \"img\": \"/assets/img/cards/major-00-the-fool.webp\""
+    },
+    {
+      "file": "scripts/build.js",
+      "line": 172,
+      "roman": "VIII",
+      "from": "Tản Viên Sơn Thánh",
+      "to": "Sơn Tinh",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "{ slug: \"strength\", roman: \"I\", cardLabel: \"VIII · STRENGTH\", name: \"Tản Viên Sơn Thánh\", power: \"Điều hòa sức mạnh\", po"
+    },
+    {
+      "file": "scripts/build.js",
+      "line": 174,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "{ slug: \"the-hermit\", roman: \"III\", cardLabel: \"IX · THE HERMIT\", name: \"Chử Đồng Tử\", power: \"Khai mở minh triết\", port"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 791,
+      "roman": "XIII",
+      "from": "Lạc Long Quân trừ Hồ Tinh",
+      "to": "Xương Cuồng / Mộc Tinh",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Lạc Long Quân trừ Hồ Tinh</strong> — Khép hang tối, mở dòng sống mới. Đây là lớp liên tưởng Việt hó"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 794,
+      "roman": "XIII",
+      "from": "Lạc Long Quân trừ Hồ Tinh",
+      "to": "Xương Cuồng / Mộc Tinh",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Lạc Long Quân trừ Hồ Tinh\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1081,
+      "roman": "XVIII",
+      "from": "Dấu lông ngỗng dưới trăng",
+      "to": "Mỵ Châu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Dấu lông ngỗng dưới trăng</strong> — Mơ hồ, tin lầm và con đường rời Cổ Loa. Đây là lớp liên tưởng "
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1084,
+      "roman": "XVIII",
+      "from": "Dấu lông ngỗng dưới trăng",
+      "to": "Mỵ Châu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Dấu lông ngỗng dưới trăng\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 733,
+      "roman": "XII",
+      "from": "Chử Đồng Tử bên bãi cát",
+      "to": "Từ Đạo Hạnh nhập định",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Chử Đồng Tử bên bãi cát</strong> — Đảo ngược thân phận để nhìn đời bằng mắt mới. Đây là lớp liên tư"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 736,
+      "roman": "XII",
+      "from": "Chử Đồng Tử bên bãi cát",
+      "to": "Từ Đạo Hạnh nhập định",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Chử Đồng Tử bên bãi cát\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 849,
+      "roman": "XIV",
+      "from": "Núi và biển chung nguồn",
+      "to": "Lang Liêu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Núi và biển chung nguồn</strong> — Lạc Long Quân – Âu Cơ điều hòa hai miền. Đây là lớp liên tưởng V"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 852,
+      "roman": "XIV",
+      "from": "Núi và biển chung nguồn",
+      "to": "Lang Liêu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Núi và biển chung nguồn\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1197,
+      "roman": "XX",
+      "from": "Phán quyết bên bờ biển",
+      "to": "Sứ Thanh Giang / Rùa Vàng",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Phán quyết bên bờ biển</strong> — An Dương Vương đối diện trách nhiệm và hệ quả. Đây là lớp liên tư"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1200,
+      "roman": "XX",
+      "from": "Phán quyết bên bờ biển",
+      "to": "Sứ Thanh Giang / Rùa Vàng",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Phán quyết bên bờ biển\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1255,
+      "roman": "XXI",
+      "from": "Trăm con chung một cõi",
+      "to": "Việt Thường và thiên hạ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Trăm con chung một cõi</strong> — Núi, sông, đồng bằng và biển khép vòng hành trình. Đây là lớp liê"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1258,
+      "roman": "XXI",
+      "from": "Trăm con chung một cõi",
+      "to": "Việt Thường và thiên hạ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Trăm con chung một cõi\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 617,
+      "roman": "X",
+      "from": "Sơn Tinh – Thủy Tinh",
+      "to": "Thủy Tinh",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Sơn Tinh – Thủy Tinh</strong> — Chu kỳ nước dâng quanh bánh xe trống đồng. Đây là lớp liên tưởng Vi"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 620,
+      "roman": "X",
+      "from": "Sơn Tinh – Thủy Tinh",
+      "to": "Thủy Tinh",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Sơn Tinh – Thủy Tinh\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 907,
+      "roman": "XV",
+      "from": "Mị Châu – Trọng Thủy",
+      "to": "Trọng Thủy; Mỵ Châu hỗ trợ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Mị Châu – Trọng Thủy</strong> — Sợi ràng buộc có thể tháo và bí mật bị đánh tráo. Đây là lớp liên t"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 910,
+      "roman": "XV",
+      "from": "Mị Châu – Trọng Thủy",
+      "to": "Trọng Thủy; Mỵ Châu hỗ trợ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Mị Châu – Trọng Thủy\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 562,
+      "roman": "IX",
+      "from": "Chử Đồng Tử tìm đạo",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Chử Đồng Tử tìm đạo\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 330,
+      "roman": "V",
+      "from": "Chủ lễ truyền tục",
+      "to": "Già La Đồ Lê",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Chủ lễ truyền tục\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1139,
+      "roman": "XIX",
+      "from": "Ngày hội Văn Lang",
+      "to": "Man Nương",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Ngày hội Văn Lang</strong> — Niềm vui cộng đồng dưới mặt trời trống đồng. Đây là lớp liên tưởng Việ"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 1142,
+      "roman": "XIX",
+      "from": "Ngày hội Văn Lang",
+      "to": "Man Nương",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Ngày hội Văn Lang\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 153,
+      "roman": "II",
+      "from": "Người giữ ký ức",
+      "to": "Ma Cô",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Người giữ ký ức</strong> — Tĩnh lặng giữa hai cột âm dương. Đây là lớp liên tưởng Việt hóa đang đượ"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 156,
+      "roman": "II",
+      "from": "Người giữ ký ức",
+      "to": "Ma Cô",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Người giữ ký ức\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 965,
+      "roman": "XVI",
+      "from": "Cổ Loa thất thủ",
+      "to": "An Dương Vương",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Cổ Loa thất thủ</strong> — Cấu trúc sai nền sụp khi nỏ thần mất linh lực. Đây là lớp liên tưởng Việ"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 968,
+      "roman": "XVI",
+      "from": "Cổ Loa thất thủ",
+      "to": "An Dương Vương",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Cổ Loa thất thủ\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 562,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Chử Đồng Tử tìm đạo\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 709,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"alt\": \"Minh họa nguyên bản The Hanged Man: Chử Đồng Tử ẩn dưới bãi cát, hình phản chiếu đảo ngược trên mặt nước khi thu"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 716,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"alt\": \"Minh họa nguyên bản The Hanged Man: Chử Đồng Tử ẩn dưới bãi cát, hình phản chiếu đảo ngược trên mặt nước khi thu"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 733,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Chử Đồng Tử bên bãi cát</strong> — Đảo ngược thân phận để nhìn đời bằng mắt mới. Đây là lớp liên tư"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 736,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Chử Đồng Tử bên bãi cát\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 269,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Hùng Vương</strong> — Dựng trật tự Văn Lang. Đây là lớp liên tưởng Việt hóa đang được biên tập; ngh"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 272,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Hùng Vương\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 501,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "\"story\": \"<p>Thần núi Ba Vì, đứng đầu Tứ Bất Tử. Truyện kể Hùng Vương thứ mười tám kén rể cho Mỵ Nương, hẹn ai mang sính"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 675,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Lang Liêu</strong> — Phán xét công bằng trước lễ vật từ hạt gạo. Đây là lớp liên tưởng Việt hóa đan"
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 678,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Lang Liêu\","
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 385,
+      "roman": "VI",
+      "from": "Trầu Cau",
+      "to": "Tân, Lang và nàng họ Lưu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"story\": \"<p><strong>Trầu Cau</strong> — Lời thề, lựa chọn và tình nghĩa. Đây là lớp liên tưởng Việt hóa đang được biên "
+    },
+    {
+      "file": "seed/cards.json",
+      "line": 388,
+      "roman": "VI",
+      "from": "Trầu Cau",
+      "to": "Tân, Lang và nàng họ Lưu",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "\"name\": \"Trầu Cau\","
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 6,
+      "roman": "VIII",
+      "from": "Tản Viên Sơn Thánh",
+      "to": "Sơn Tinh",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "<div class=\"v2-two\"><article class=\"v2-card\"><h3>Tản Viên Sơn Thánh — <em>giữ</em></h3><p>Nước dâng bao nhiêu, núi cao l"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 5,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "<section class=\"v2-prose\" id=\"tu-bat-tu\"><p class=\"eyebrow\">5.1</p><h2>Tứ Bất Tử trong văn hóa Việt</h2><p>Bốn vị bất tử"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 8,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "<article class=\"v2-card\"><h3>Chử Đồng Tử — <em>thương</em></h3><p>Nhà nghèo đến mức hai cha con chung một chiếc khố; cha"
+    },
+    {
+      "file": "templates/huyen-su.html",
+      "line": 38,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "<tr><td>XIV · Temperance</td><td>Lang Liêu</td><td>S07 · Truyện Bánh chưng</td></tr>"
+    },
+    {
+      "file": "tests/hero-carousel.test.mjs",
+      "line": 11,
+      "roman": "VIII",
+      "from": "Tản Viên Sơn Thánh",
+      "to": "Sơn Tinh",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "{ slug: \"strength\", portrait: \"tan-vien\", name: \"Tản Viên Sơn Thánh\" },"
+    },
+    {
+      "file": "tests/hero-carousel.test.mjs",
+      "line": 13,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "{ slug: \"the-hermit\", portrait: \"chu-dong-tu\", name: \"Chử Đồng Tử\" },"
+    }
+  ]
+}
