@@ -43,15 +43,46 @@ lần, xem có nội dung nào chỉ tồn tại ở Firestore mà seed sẽ xo�
 
 ---
 
+## 0b · Đã làm xong trong Đợt 0 (cập nhật 21/08/2026)
+
+| # | Việc | Kết quả đo được |
+|---|---|---|
+| 0.1 | So Firestore với seed | **Không có trường nào chỉ tồn tại trên Firestore** — seed không xoá mất gì. 346 chỗ bị đè, đều cố ý. |
+| 0.2 | Sinh `seed/cards.json` từ nguồn chuẩn | 78/78 lá, cổng chặn 8 trường bất biến |
+| 0.4 | Patch hiệu năng | xem bảng dưới |
+| 0.5 | Tối ưu ảnh | toàn bộ **19,6 MB → 2,5 MB (87%)**; trang chủ **7,97 MB → 1,80 MB (77%)** |
+| 0.8 | Spec cho ChatGPT | `tools/SPEC-0.8-an-phu-tren-trang-la.md` |
+
+### A/B trên cùng một server cục bộ
+
+| | perf | LCP | TBT | CLS |
+|---|---|---|---|---|
+| Bản cũ | 42 | 11,3 s | 970 ms | 0 |
+| **Bản mới** | **78** | **5,0 s** | **180 ms** | 0,003 |
+
+Bản cũ đo cục bộ ra 11,3s trong khi production là 11,9s — server cục bộ đại diện khá sát,
+nên phép so này tin được.
+
+**LCP 5,0s vẫn chưa đạt cổng < 2,5s.** Phần còn lại nằm ở CSS chặn render: `main.css` 35KB
++ `theme-dark.css` 22KB. Muốn xuống dưới 2,5s phải tách critical CSS nhúng thẳng vào HTML —
+việc riêng, có rủi ro hồi quy, nên tách thành 0.9 chứ không nhét vào đợt này.
+
+Đã thử giảm preload font từ 4 xuống 2 để nhường băng thông cho ảnh hero: **không cải thiện**
+(LCP 5,0s cả hai), nên giữ 4.
+
+### Ghi chú về đo đạc
+
+TBT dao động 180 → 410 → 1.080 ms giữa các lần chạy trên cùng một bản build, vì máy chạy
+song song nhiều việc. Đừng tin một lần đo đơn lẻ; chạy lại khi máy rảnh.
+
+---
+
 ## 1 · Đợt 0 còn lại
 
 | # | Việc | Ai | Vì sao người đó |
 |---|---|---|---|
-| 0.1 | So Firestore với `seed/cards.json`, liệt kê trường sẽ bị đè | Claude | Cần gọi Firestore thật và đối chiếu, không phải viết code mới |
-| 0.2 | Nối `major-arcana.mjs` → sinh `seed/cards.json` | Claude | Phải khớp đúng schema Firestore đang chạy, đọc từ code thật |
-| 0.3 | Seed + deploy, đo lại bằng `verify-live-names.mjs` | Claude | Cần chạy và đo |
-| 0.4 | Áp patch hiệu năng (`tools/patches/01-03`) | Claude | Patch neo vào file thật; ba bug ở phần này chỉ lộ khi chạy |
-| 0.5 | Chạy `build-images.mjs`, đo lại Lighthouse | Claude | Cần `sharp` và đo LCP thật |
+| 0.3 | **Seed + deploy** — cần bạn cho phép | Người bấm | Ghi vào Firestore production và xuất bản |
+| 0.9 | Tách critical CSS nhúng vào HTML | Claude | Việc còn lại để LCP xuống dưới 2,5s |
 | 0.6 | Đọc 54 chỗ "cần người đọc" trong `rename-report.json` | Người | Quyết định biên tập, máy không thay được |
 | 0.7 | Duyệt 23 lá trong `folk-conflicts.md` | Người | Như trên |
 | 0.8 | Nối 56 Ẩn Phụ vào trang lá | **ChatGPT** | Spec viết đủ được; xem §3 |
