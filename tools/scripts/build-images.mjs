@@ -16,7 +16,11 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const WRITE = process.argv.includes("--write");
-const IMG = "assets/img";
+/* Thư mục gốc chứa assets. Trong repo này ảnh nằm ở public/assets/img, nhưng
+   script vẫn chạy được ở cây khác nên để thành tham số. */
+const rootIdx = process.argv.indexOf("--root");
+const ROOT = rootIdx > -1 ? process.argv[rootIdx + 1] : ".";
+const IMG = `${ROOT}/assets/img`;
 
 /* Chất lượng: AVIF 50 tương đương WebP 75 về cảm nhận nhưng nhỏ hơn ~30%.
    Hai hoa văn dùng q=35 vì chúng hiển thị ở độ mờ 4,5–5,5% — không ai nhìn
@@ -35,8 +39,15 @@ const JOBS = [
   // desktop và ~full width trên di động.
   { src: `${IMG}/default-og.webp`, out: `${IMG}/news-binh-minh`, widths: [400, 800], formats: ["avif", "webp"],
     note: "thumbnail tin — thay việc dùng thẳng ảnh OG 335KB" },
-  { src: `${IMG}/suits/suit-tre.png`, out: `${IMG}/suits/suit-tre`, widths: [400, 800], formats: ["avif", "webp"],
-    note: "PNG 2,6MB → thumbnail; đây là tài sản nặng nhất trang chủ" },
+  /* Bốn phù hiệu nhà, mỗi cái 2,4–2,8MB PNG. Chúng là thumbnail của cả 56 lá
+     Ẩn Phụ trong thư viện, nên đây là khối nặng nhất toàn site: 10,4MB. */
+  ...["tre", "sen", "dau-tam", "lua"].map((suit) => ({
+    src: `${IMG}/suits/suit-${suit}.png`,
+    out: `${IMG}/suits/suit-${suit}`,
+    widths: [400, 800],
+    formats: ["avif", "webp"],
+    note: `phù hiệu nhà ${suit} — thumbnail của 14 lá`,
+  })),
 
   // ── Hoa văn nền. Bị phủ hơn 94% độ mờ nên 640px là quá đủ.
   { src: `${IMG}/trong-dong.png`, out: `${IMG}/trong-dong`, widths: [640], formats: ["avif", "webp"], q: "low",
@@ -50,6 +61,33 @@ const JOBS = [
   { src: `${IMG}/chim-lac.png`, out: `${IMG}/chim-lac`, widths: [220], formats: ["avif", "webp"],
     note: "hình 110×74 ở footer — đang tải cả 355KB" },
 ];
+
+/* Quét thêm mọi ảnh còn lại nặng hơn ngưỡng. Danh sách JOBS ở trên là các ca
+   đặc biệt (đổi khổ, đổi mục đích); phần này lo phần còn lại một cách đều tay:
+   tranh 22 lá, chân dung Tứ Bất Tử, tranh trang trí các mục. */
+const AUTO_DIRS = ["", "/cards", "/immortals"];
+const AUTO_MIN_BYTES = 150 * 1024;
+const already = new Set(JOBS.map((j) => j.src));
+
+for (const sub of AUTO_DIRS) {
+  let entries = [];
+  try { entries = await readdir(`${IMG}${sub}`); } catch { continue; }
+  for (const name of entries) {
+    if (!/\.(png|jpe?g|webp)$/i.test(name)) continue;
+    if (/-\d+\.(avif|webp)$/i.test(name)) continue;          // biến thể đã sinh
+    const src = `${IMG}${sub}/${name}`;
+    if (already.has(src)) continue;
+    let st; try { st = await stat(src); } catch { continue; }
+    if (st.size < AUTO_MIN_BYTES) continue;
+    JOBS.push({
+      src,
+      out: src.replace(/\.(png|jpe?g|webp)$/i, ""),
+      widths: [400, 800],
+      formats: ["avif"],
+      note: `tự quét · ${(st.size / 1024).toFixed(0)}KB`,
+    });
+  }
+}
 
 const kb = (n) => (n / 1024).toFixed(0).padStart(6) + " KB";
 const rows = [];

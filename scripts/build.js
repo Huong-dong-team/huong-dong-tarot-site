@@ -195,7 +195,7 @@ const immortals = immortalSpecs.map((spec, index) => {
   if (!card) throw new Error(`Thiếu lá ${spec.slug} cho mục Tứ Bất Tử.`);
   return {
     ...spec,
-    image: `/assets/img/immortals/${spec.portrait}.webp`,
+    image: `/assets/img/immortals/${spec.portrait}-800.avif`,
     alt: `Chân dung ${spec.name} trong bộ tranh Tứ Bất Tử của Hường Đông`,
     href: `/la-bai/${card.slug}/`,
     storyHtml: card.story || "",

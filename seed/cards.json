@@ -80,14 +80,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-01-the-magician.webp",
+      "url": "/assets/img/cards/major-01-the-magician-400.avif",
       "alt": "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-01-the-magician.webp",
+      "url": "/assets/img/cards/major-01-the-magician-400.avif",
       "alt": "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống"
     },
     "keywordsUpright": [
@@ -151,14 +151,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-02-the-high-priestess.webp",
+      "url": "/assets/img/cards/major-02-the-high-priestess-400.avif",
       "alt": "Lá The High Priestess trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-02-the-high-priestess.webp",
+      "url": "/assets/img/cards/major-02-the-high-priestess-400.avif",
       "alt": "Lá The High Priestess trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -222,14 +222,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-03-the-empress.webp",
+      "url": "/assets/img/cards/major-03-the-empress-800.avif",
       "alt": "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng",
       "width": 1024,
       "height": 1536,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-03-the-empress.webp",
+      "url": "/assets/img/cards/major-03-the-empress-400.avif",
       "alt": "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng"
     },
     "keywordsUpright": [
@@ -293,14 +293,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-04-the-emperor.webp",
+      "url": "/assets/img/cards/major-04-the-emperor-400.avif",
       "alt": "Lá The Emperor trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-04-the-emperor.webp",
+      "url": "/assets/img/cards/major-04-the-emperor-400.avif",
       "alt": "Lá The Emperor trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -364,14 +364,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-05-the-hierophant.webp",
+      "url": "/assets/img/cards/major-05-the-hierophant-400.avif",
       "alt": "Lá The Hierophant trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-05-the-hierophant.webp",
+      "url": "/assets/img/cards/major-05-the-hierophant-400.avif",
       "alt": "Lá The Hierophant trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -435,14 +435,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-06-the-lovers.webp",
+      "url": "/assets/img/cards/major-06-the-lovers-400.avif",
       "alt": "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-06-the-lovers.webp",
+      "url": "/assets/img/cards/major-06-the-lovers-400.avif",
       "alt": "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá"
     },
     "keywordsUpright": [
@@ -506,14 +506,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-07-the-chariot.webp",
+      "url": "/assets/img/cards/major-07-the-chariot-400.avif",
       "alt": "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-07-the-chariot.webp",
+      "url": "/assets/img/cards/major-07-the-chariot-400.avif",
       "alt": "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ"
     },
     "keywordsUpright": [
@@ -577,14 +577,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-08-strength.webp",
+      "url": "/assets/img/cards/major-08-strength-400.avif",
       "alt": "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-08-strength.webp",
+      "url": "/assets/img/cards/major-08-strength-400.avif",
       "alt": "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng"
     },
     "keywordsUpright": [
@@ -719,14 +719,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-10-wheel-of-fortune.webp",
+      "url": "/assets/img/cards/major-10-wheel-of-fortune-400.avif",
       "alt": "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-10-wheel-of-fortune.webp",
+      "url": "/assets/img/cards/major-10-wheel-of-fortune-400.avif",
       "alt": "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút"
     },
     "keywordsUpright": [
@@ -790,14 +790,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-11-justice.webp",
+      "url": "/assets/img/cards/major-11-justice-400.avif",
       "alt": "Lá Justice trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-11-justice.webp",
+      "url": "/assets/img/cards/major-11-justice-400.avif",
       "alt": "Lá Justice trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -861,14 +861,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-12-the-hanged-man.webp",
+      "url": "/assets/img/cards/major-12-the-hanged-man-400.avif",
       "alt": "Lá The Hanged Man trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-12-the-hanged-man.webp",
+      "url": "/assets/img/cards/major-12-the-hanged-man-400.avif",
       "alt": "Lá The Hanged Man trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -932,14 +932,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-13-death.webp",
+      "url": "/assets/img/cards/major-13-death-400.avif",
       "alt": "Lá Death trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-13-death.webp",
+      "url": "/assets/img/cards/major-13-death-400.avif",
       "alt": "Lá Death trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1003,14 +1003,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-14-temperance.webp",
+      "url": "/assets/img/cards/major-14-temperance-400.avif",
       "alt": "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-14-temperance.webp",
+      "url": "/assets/img/cards/major-14-temperance-400.avif",
       "alt": "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi"
     },
     "keywordsUpright": [
@@ -1145,14 +1145,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-16-the-tower.webp",
+      "url": "/assets/img/cards/major-16-the-tower-400.avif",
       "alt": "Lá The Tower trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-16-the-tower.webp",
+      "url": "/assets/img/cards/major-16-the-tower-400.avif",
       "alt": "Lá The Tower trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1216,14 +1216,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-17-the-star.webp",
+      "url": "/assets/img/cards/major-17-the-star-800.avif",
       "alt": "Lá The Star trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 1024,
       "height": 1536,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-17-the-star.webp",
+      "url": "/assets/img/cards/major-17-the-star-400.avif",
       "alt": "Lá The Star trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1293,14 +1293,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-18-the-moon.webp",
+      "url": "/assets/img/cards/major-18-the-moon-400.avif",
       "alt": "Lá The Moon trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-18-the-moon.webp",
+      "url": "/assets/img/cards/major-18-the-moon-400.avif",
       "alt": "Lá The Moon trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1364,14 +1364,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-19-the-sun.webp",
+      "url": "/assets/img/cards/major-19-the-sun-400.avif",
       "alt": "Lá The Sun trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-19-the-sun.webp",
+      "url": "/assets/img/cards/major-19-the-sun-400.avif",
       "alt": "Lá The Sun trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1435,14 +1435,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-20-judgement.webp",
+      "url": "/assets/img/cards/major-20-judgement-400.avif",
       "alt": "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-20-judgement.webp",
+      "url": "/assets/img/cards/major-20-judgement-400.avif",
       "alt": "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực"
     },
     "keywordsUpright": [
@@ -1506,14 +1506,14 @@
     "suit": null,
     "folkStyle": "hang-trong",
     "image": {
-      "url": "/assets/img/cards/major-21-the-world.webp",
+      "url": "/assets/img/cards/major-21-the-world-400.avif",
       "alt": "Lá The World trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1",
       "width": 768,
       "height": 1152,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/cards/major-21-the-world.webp",
+      "url": "/assets/img/cards/major-21-the-world-400.avif",
       "alt": "Lá The World trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
     },
     "keywordsUpright": [
@@ -1601,15 +1601,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Ace of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Ace of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "cảm hứng",
@@ -1685,15 +1685,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Two of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Two of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "tầm nhìn",
@@ -1763,15 +1763,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Three of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Three of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "mở rộng",
@@ -1841,15 +1841,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Four of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Four of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "ăn mừng",
@@ -1919,15 +1919,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Five of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Five of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "cạnh tranh",
@@ -1997,15 +1997,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Six of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Six of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "thành tựu",
@@ -2075,15 +2075,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Seven of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Seven of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "kiên định",
@@ -2153,15 +2153,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Eight of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Eight of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "tốc độ",
@@ -2231,15 +2231,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Nine of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Nine of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "bền bỉ",
@@ -2309,15 +2309,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Ten of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Ten of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "gánh nặng",
@@ -2387,15 +2387,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Page of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Page of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "tò mò",
@@ -2465,15 +2465,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Knight of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Knight of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "táo bạo",
@@ -2543,15 +2543,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá Queen of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá Queen of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "tự tin",
@@ -2621,15 +2621,15 @@
     "suit": "wands",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-tre.png",
+      "url": "/assets/img/suits/suit-tre-800.avif",
       "alt": "Phù hiệu Nhà Tre cho lá King of Wands",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-tre.png",
-      "alt": "Phù hiệu Nhà Tre cho lá King of Wands"
+      "url": "/assets/img/suits/suit-tre-400.avif",
+      "alt": "Phù hiệu Nhà Tre"
     },
     "keywordsUpright": [
       "tầm nhìn",
@@ -2699,15 +2699,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Ace of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Ace of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "tình cảm",
@@ -2783,15 +2783,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Two of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Two of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "kết đôi",
@@ -2867,15 +2867,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Three of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Three of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "bạn bè",
@@ -2951,15 +2951,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Four of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Four of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "thờ ơ",
@@ -3035,15 +3035,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Five of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Five of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "mất mát",
@@ -3119,15 +3119,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Six of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Six of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "ký ức",
@@ -3203,15 +3203,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Seven of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Seven of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "lựa chọn",
@@ -3287,15 +3287,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Eight of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Eight of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "rời bỏ",
@@ -3371,15 +3371,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Nine of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Nine of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "mãn nguyện",
@@ -3455,15 +3455,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Ten of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Ten of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "hòa thuận",
@@ -3539,15 +3539,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Page of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Page of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "nhạy cảm",
@@ -3623,15 +3623,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Knight of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Knight of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "lãng mạn",
@@ -3707,15 +3707,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá Queen of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá Queen of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "thấu cảm",
@@ -3791,15 +3791,15 @@
     "suit": "cups",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-sen.png",
+      "url": "/assets/img/suits/suit-sen-800.avif",
       "alt": "Phù hiệu Nhà Sen cho lá King of Cups",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-sen.png",
-      "alt": "Phù hiệu Nhà Sen cho lá King of Cups"
+      "url": "/assets/img/suits/suit-sen-400.avif",
+      "alt": "Phù hiệu Nhà Sen"
     },
     "keywordsUpright": [
       "điềm tĩnh",
@@ -3875,15 +3875,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Ace of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Ace of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "sự thật",
@@ -3959,15 +3959,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Two of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Two of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "bế tắc",
@@ -4043,15 +4043,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Three of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Three of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "đau lòng",
@@ -4127,15 +4127,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Four of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Four of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "nghỉ ngơi",
@@ -4211,15 +4211,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Five of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Five of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "xung đột",
@@ -4295,15 +4295,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Six of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Six of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "chuyển tiếp",
@@ -4379,15 +4379,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Seven of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Seven of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "chiến lược",
@@ -4469,15 +4469,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Eight of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Eight of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "mắc kẹt",
@@ -4553,15 +4553,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Nine of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Nine of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "lo âu",
@@ -4637,15 +4637,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Ten of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Ten of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "kết thúc",
@@ -4721,15 +4721,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Page of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Page of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "tò mò",
@@ -4805,15 +4805,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Knight of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Knight of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "quyết liệt",
@@ -4889,15 +4889,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá Queen of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá Queen of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "sáng suốt",
@@ -4973,15 +4973,15 @@
     "suit": "swords",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
+      "url": "/assets/img/suits/suit-dau-tam-800.avif",
       "alt": "Phù hiệu Nhà Dâu tằm cho lá King of Swords",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-dau-tam.png",
-      "alt": "Phù hiệu Nhà Dâu tằm cho lá King of Swords"
+      "url": "/assets/img/suits/suit-dau-tam-400.avif",
+      "alt": "Phù hiệu Nhà Dâu tằm"
     },
     "keywordsUpright": [
       "lý trí",
@@ -5057,15 +5057,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Ace of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Ace of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "cơ hội",
@@ -5147,15 +5147,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Two of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Two of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "cân bằng",
@@ -5237,15 +5237,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Three of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Three of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "hợp tác",
@@ -5327,15 +5327,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Four of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Four of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "kiểm soát",
@@ -5417,15 +5417,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Five of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Five of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "khó khăn",
@@ -5507,15 +5507,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Six of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Six of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "hào phóng",
@@ -5597,15 +5597,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Seven of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Seven of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "kiên nhẫn",
@@ -5687,15 +5687,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Eight of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Eight of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "tay nghề",
@@ -5777,15 +5777,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Nine of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Nine of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "độc lập",
@@ -5873,15 +5873,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Ten of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Ten of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "di sản",
@@ -5963,15 +5963,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Page of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Page of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "học nghề",
@@ -6053,15 +6053,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Knight of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Knight of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "bền bỉ",
@@ -6143,15 +6143,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá Queen of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá Queen of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "vun vén",
@@ -6233,15 +6233,15 @@
     "suit": "pentacles",
     "folkStyle": "dong-ho",
     "image": {
-      "url": "/assets/img/suits/suit-lua.png",
+      "url": "/assets/img/suits/suit-lua-800.avif",
       "alt": "Phù hiệu Nhà Lúa cho lá King of Pentacles",
       "width": 1024,
       "height": 1024,
       "storagePath": ""
     },
     "thumbnail": {
-      "url": "/assets/img/suits/suit-lua.png",
-      "alt": "Phù hiệu Nhà Lúa cho lá King of Pentacles"
+      "url": "/assets/img/suits/suit-lua-400.avif",
+      "alt": "Phù hiệu Nhà Lúa"
     },
     "keywordsUpright": [
       "quản trị",

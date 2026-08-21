@@ -21,7 +21,7 @@
  * do TÊN sinh ra mới bị viết lại.
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { MAJOR_ARCANA } from "../content/major-arcana.mjs";
 import { MINOR_ARCANA } from "../content/minor-arcana.mjs";
 import { sourcesOf } from "../content/sources.mjs";
@@ -55,7 +55,7 @@ function altFor(card, old) {
   return `Lá ${card.rwsName} trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1`;
 }
 
-const changes = { nameFolk: 0, story: 0, symbols: 0, keywords: 0, seo: 0, alt: 0, altHeld: 0 };
+const changes = { nameFolk: 0, story: 0, symbols: 0, keywords: 0, seo: 0, alt: 0, imageUrl: 0, thumbUrl: 0, altHeld: 0 };
 const touched = new Set();
 
 const out = existing.map((old) => {
@@ -119,10 +119,30 @@ const out = existing.map((old) => {
   set("seo.description",
       `${en}: nghĩa xuôi, nghĩa ngược và lớp liên tưởng ${subject} trong Hường Đông Tarot.`, "seo");
 
+  /* Dùng biến thể đã tối ưu nếu build-images.mjs đã sinh ra. Kiểm bằng đĩa thay
+     vì đoán: phù hiệu bốn nhà là PNG 2,4–2,8MB dùng làm thumbnail cho cả 56 lá
+     Ẩn Phụ, đổi sang AVIF 800px giảm 95%. Tỉ lệ khung giữ nguyên nên width/height
+     đã khai vẫn đúng và CLS không đổi. */
+  const variant = (url, ...widths) => {
+    if (!url || !/\.(png|jpe?g|webp)$/i.test(url)) return url;
+    // Thử từ khổ lớn xuống nhỏ: ảnh gốc hẹp hơn 800px thì không có bản 800
+    // (script không phóng to), nhưng vẫn có bản 400 dùng được.
+    for (const w of widths) {
+      const cand = url.replace(/\.(png|jpe?g|webp)$/i, `-${w}.avif`);
+      if (existsSync(`../public${cand}`)) return cand;
+    }
+    return url;
+  };
+  if (next.image?.url) set("image.url", variant(next.image.url, 800, 400), "imageUrl");
+  if (next.thumbnail?.url) set("thumbnail.url", variant(next.thumbnail.url, 400), "thumbUrl");
+
   const alt = altFor(c, old.image);
   if (KEEPS_ART(c)) changes.altHeld++;
   if (next.image) set("image.alt", alt, "alt");
-  if (next.thumbnail) { next.thumbnail.alt = alt; }
+  /* thumbnail có alt riêng, ngắn hơn ("Phù hiệu Nhà Sen") vì nó hiện ở ô nhỏ
+     trong thư viện. Chỉ đồng bộ khi alt của ảnh lớn thật sự đổi — tức là lá phải
+     vẽ lại. Copy vô điều kiện sẽ ghi đè 68 alt viết tay bằng bản dài không cần. */
+  if (next.thumbnail && !KEEPS_ART(c)) next.thumbnail.alt = alt;
 
   /* Trạng thái duyệt đi kèm dữ liệu, để lớp giao diện tự quyết có gắn nhãn
      "đang biên tập" hay không — thay vì suy đoán từ chỗ khác. */
