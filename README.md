@@ -1,40 +1,60 @@
-# Hường Đông Tarot — bản bàn giao Firebase
+# Hường Đông Tarot — mã nguồn website
 
-Website dùng HTML tĩnh sinh sẵn để Facebook, Threads và công cụ tìm kiếm đọc đúng thẻ chia sẻ. Trang quản trị là JavaScript thuần kết nối Firebase.
+Repo này phục vụ **huongdong.id.vn**. Từ 21/08/2026 đây là repo duy nhất; repo cũ
+`Huong-Dong-Claude-Handover-2026-08-09-update` không còn dùng để phát hành.
 
-## Chạy thử không cần Firebase
+## Bố cục
 
-```bash
-npm install
-npm run build:local
-npm run test
-npm run serve
+```
+/                     mã nguồn site — build ra dist/ rồi deploy
+  templates/          14 template trang
+  data/               lncq-22.json, lncq-chapters.json — lớp dẫn nguồn LNCQ
+  public/assets/      css, js, ảnh, font tự host
+  scripts/            build.js, seed.js, serve.js
+  seed/               dữ liệu mẫu, dùng khi USE_SEED_DATA=true
+  tests/              chạy bằng npm test
+
+tools/                bộ công cụ dữ liệu 78 lá (KHÔNG chạy khi build site)
+archive/              toàn bộ repo cũ, giữ nguyên để tra cứu — không được build
 ```
 
-Mở `http://localhost:8080`. Chế độ này dùng dữ liệu trong `seed/` và không ghi dữ liệu thật.
+## Lệnh
 
-## Kết nối Firebase
+```bash
+npm run build:local   # dựng bằng dữ liệu seed, không cần khoá Firebase
+npm run build         # dựng từ Firestore thật
+npm test              # 22 kiểm thử
+npm run deploy        # build + firebase deploy --only hosting
+```
 
-1. Sao chép `.env.example` thành `.env` và điền cấu hình web Firebase.
-2. Đặt đường dẫn service account vào `GOOGLE_APPLICATION_CREDENTIALS`.
-3. Sao chép `.firebaserc.example` thành `.firebaserc`, thay project id.
-4. Chạy `npm run seed`, `npm run build`, `npm run test`.
-5. Chạy `firebase deploy --only hosting,firestore:rules,storage`.
+## Phát hành
 
-## Dữ liệu mẫu
+Bấm tay ở tab **Actions → "Xuất bản website (Firebase)"**. Thứ tự cố ý là
+build → test → deploy: kiểm thử hỏng thì workflow dừng và **không** triển khai,
+nên trang khách giữ bản cũ đang chạy tốt.
 
-`seed/cards.json` có đủ 78 lá để kiểm tra giao diện. Nghĩa Tarot là lớp tham chiếu RWS. Hai mươi hai liên tưởng Việt hóa lấy từ registry đang dùng trên website Hường Đông; đội nội dung vẫn phải biên tập, dẫn nguồn và duyệt trước khi coi là bản xuất bản chính thức.
+### Chốt an toàn trước khi build
 
-## Xuất bản sau khi biên tập
+Workflow kiểm 11 tệp bắt buộc và dừng ngay nếu thiếu:
 
-Trang khách là HTML sinh sẵn, nên lưu trong `/admin/` **chưa** làm thay đổi web. Cách xuất bản:
+`templates/` — `huyen-su`, `healing`, `tarot-la-gi`, `trai-bai`, `cua-hang`,
+`card-detail`, `card-list`, `home`, `_layout` · `data/` — `lncq-22.json`,
+`lncq-chapters.json`
 
-- Có GitHub Actions: `/admin/` → Tổng quan → **Xuất bản website** → **Run workflow**. Workflow build từ Firestore, chạy kiểm thử, chỉ triển khai khi kiểm thử đạt. Xem `HANDOVER.md` để biết danh sách secret cần thêm.
-- Trên máy vận hành: `npm run build && npm run deploy`.
+Lý do có bước này: ngày 16/08/2026 workflow từng phát hành từ một cây thiếu 5
+template và thiếu hẳn `data/`. Bản đó lên mạng mà không có `/huyen-su/`,
+`/healing/`, `/tarot-la-gi/`, `/trai-bai/`, `/cua-hang/`, và mất toàn bộ lớp dẫn
+nguồn Lĩnh Nam chích quái. Site chỉ có lại chúng vì ngày 18/08 có người deploy
+tay từ máy mình. Bước kiểm này để lỗi đó không lặp lại.
 
-## Nguyên tắc vận hành
+## `archive/` là gì
 
-- Chỉnh nội dung trong `/admin/`, sau đó xuất bản lại để sinh HTML mới.
-- Không commit `.env`, service account hoặc bất kỳ khóa riêng nào.
-- API key Firebase Web là cấu hình công khai; quyền thật nằm ở Rules.
-- Tarot chỉ phục vụ học tập và tự phản tư, không thay thế tư vấn chuyên môn.
+Toàn bộ nội dung repo cũ, chép nguyên trạng: nhánh Next.js (`archive/source/app`,
+`components`, `content`, `db`, `lib`), tài liệu dự án, ảnh tham chiếu. Không có
+gì trong `archive/` được build hay deploy. Giữ lại vì đó là công việc đã làm, và
+DOCX Big Update từng nhắm vào `source/app/tarot-rws/*` ở nhánh đó.
+
+## `tools/` là gì
+
+Đường ống dữ liệu 78 lá sinh từ DOCX Art Direction v2.1, cùng các cổng kiểm.
+Xem `tools/ROADMAP.md`. Chạy độc lập, không ảnh hưởng lúc build site.

@@ -1,0 +1,37 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "cards",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "stories",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "externalSources",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "displayOrder", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    { "collectionGroup": "cards", "fieldPath": "summary", "indexes": [] },
+    { "collectionGroup": "cards", "fieldPath": "uprightMeaning", "indexes": [] },
+    { "collectionGroup": "cards", "fieldPath": "reversedMeaning", "indexes": [] },
+    { "collectionGroup": "stories", "fieldPath": "narrative", "indexes": [] },
+    { "collectionGroup": "stories", "fieldPath": "factBoundary", "indexes": [] },
+    { "collectionGroup": "externalSources", "fieldPath": "quote", "indexes": [] },
+    { "collectionGroup": "externalSources", "fieldPath": "translation", "indexes": [] }
+  ]
+}

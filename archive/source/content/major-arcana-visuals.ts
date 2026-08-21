@@ -1,0 +1,220 @@
+export interface MajorArcanaVisual {
+  readonly slug: string;
+  readonly src: string;
+  readonly width: number;
+  readonly height: number;
+  readonly vietnameseTitle: string;
+  readonly inspiration: string;
+  readonly alt: string;
+}
+
+/**
+ * Bộ minh họa gồm đủ 22 lá Ẩn chính (0–XXI).
+ * Mười hai lá X–XXI được triển khai theo 3 đợt × 4 tranh để khóa phong cách.
+ * Giữ registry này độc lập để developer mới có thể thay ảnh, alt và liên tưởng
+ * mà không chạm vào dữ liệu nghĩa Tarot hoặc component giao diện.
+ */
+export const majorArcanaVisuals = [
+  {
+    slug: "the-fool",
+    src: "/images/major-00-the-fool.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Mai An Tiêm",
+    inspiration: "Hạt giống giữa đảo vắng",
+    alt: "Minh họa nguyên bản The Fool: Mai An Tiêm bước bên vách đảo lúc bình minh, cạnh quả dưa và cánh chim",
+  },
+  {
+    slug: "the-magician",
+    src: "/images/major-01-the-magician.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Kinh Dương Vương",
+    inspiration: "Gọi bốn nguồn lực về một mối",
+    alt: "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống",
+  },
+  {
+    slug: "the-high-priestess",
+    src: "/images/major-02-the-high-priestess.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Người giữ ký ức",
+    inspiration: "Tĩnh lặng giữa hai cột âm dương",
+    alt: "Minh họa nguyên bản The High Priestess: nữ tư tế Việt cổ ngồi giữa hai cột đá, trăng lưỡi liềm và làn nước mờ sương",
+  },
+  {
+    slug: "the-empress",
+    src: "/images/empress-au-co.webp",
+    width: 1024,
+    height: 1536,
+    vietnameseTitle: "Âu Cơ",
+    inspiration: "Người mẹ của bọc trăm trứng",
+    alt: "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng",
+  },
+  {
+    slug: "the-emperor",
+    src: "/images/major-04-the-emperor.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Hùng Vương",
+    inspiration: "Dựng trật tự Văn Lang",
+    alt: "Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang",
+  },
+  {
+    slug: "the-hierophant",
+    src: "/images/major-05-the-hierophant.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Chủ lễ truyền tục",
+    inspiration: "Trao truyền tri thức cộng đồng",
+    alt: "Minh họa nguyên bản The Hierophant: vị chủ lễ Việt cổ truyền dạy hai môn sinh trước bàn thờ tổ tiên và hoa văn trống đồng",
+  },
+  {
+    slug: "the-lovers",
+    src: "/images/major-06-the-lovers.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Trầu Cau",
+    inspiration: "Lời thề, lựa chọn và tình nghĩa",
+    alt: "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá",
+  },
+  {
+    slug: "the-chariot",
+    src: "/images/major-07-the-chariot.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Thánh Gióng",
+    inspiration: "Ý chí lên đường giữ nước",
+    alt: "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ",
+  },
+  {
+    slug: "strength",
+    src: "/images/major-08-strength.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Sơn Tinh",
+    inspiration: "Sức mạnh biết điều hòa",
+    alt: "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng",
+  },
+  {
+    slug: "the-hermit",
+    src: "/images/major-09-the-hermit.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Chử Đồng Tử tìm đạo",
+    inspiration: "Minh triết bên bờ sông",
+    alt: "Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo",
+  },
+  {
+    slug: "wheel-of-fortune",
+    src: "/images/major-10-wheel-of-fortune.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Sơn Tinh – Thủy Tinh",
+    inspiration: "Chu kỳ nước dâng quanh bánh xe trống đồng",
+    alt: "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút",
+  },
+  {
+    slug: "justice",
+    src: "/images/major-11-justice.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Lang Liêu",
+    inspiration: "Phán xét công bằng trước lễ vật từ hạt gạo",
+    alt: "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàng tử",
+  },
+  {
+    slug: "the-hanged-man",
+    src: "/images/major-12-the-hanged-man.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Chử Đồng Tử bên bãi cát",
+    inspiration: "Đảo ngược thân phận để nhìn đời bằng mắt mới",
+    alt: "Minh họa nguyên bản The Hanged Man: Chử Đồng Tử ẩn dưới bãi cát, hình phản chiếu đảo ngược trên mặt nước khi thuyền Tiên Dung đi tới",
+  },
+  {
+    slug: "death",
+    src: "/images/major-13-death.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Lạc Long Quân trừ Hồ Tinh",
+    inspiration: "Khép hang tối, mở dòng sống mới",
+    alt: "Minh họa nguyên bản Death: Lạc Long Quân bước qua cổng đá, bóng Hồ Tinh tan vào nước và bình minh mở ra xóm làng hồi sinh",
+  },
+  {
+    slug: "temperance",
+    src: "/images/major-14-temperance.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Núi và biển chung nguồn",
+    inspiration: "Lạc Long Quân – Âu Cơ điều hòa hai miền",
+    alt: "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi",
+  },
+  {
+    slug: "the-devil",
+    src: "/images/major-15-the-devil.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Mị Châu – Trọng Thủy",
+    inspiration: "Sợi ràng buộc có thể tháo và bí mật bị đánh tráo",
+    alt: "Minh họa nguyên bản The Devil: Mị Châu và Trọng Thủy nối với nhau bằng sợi chỉ đỏ và xiềng mở trước hai chiếc nỏ cùng bóng thành Cổ Loa",
+  },
+  {
+    slug: "the-tower",
+    src: "/images/major-16-the-tower.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Cổ Loa thất thủ",
+    inspiration: "Cấu trúc sai nền sụp khi nỏ thần mất linh lực",
+    alt: "Minh họa nguyên bản The Tower: thành Cổ Loa nhiều vòng sụp đổ dưới tia sét khi nỏ thần bị đánh tráo, không có cảnh thương tích",
+  },
+  {
+    slug: "the-star",
+    src: "/images/major-17-the-star.webp",
+    width: 1024,
+    height: 1536,
+    vietnameseTitle: "Mẫu Liễu Hạnh",
+    inspiration: "Ánh sao dẫn đường sau giông bão",
+    alt: "Minh họa nguyên bản The Star: Mẫu Liễu Hạnh nâng đèn dưới một sao lớn và bảy sao nhỏ, ban phúc xuống dòng nước giữa hồ sen lúc bình minh",
+  },
+  {
+    slug: "the-moon",
+    src: "/images/major-18-the-moon.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Dấu lông ngỗng dưới trăng",
+    inspiration: "Mơ hồ, tin lầm và con đường rời Cổ Loa",
+    alt: "Minh họa nguyên bản The Moon: Mị Châu rải lông ngỗng trên đường rời Cổ Loa, nỏ thật và nỏ giả hiện như hai bóng dưới trăng",
+  },
+  {
+    slug: "the-sun",
+    src: "/images/major-19-the-sun.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Ngày hội Văn Lang",
+    inspiration: "Niềm vui cộng đồng dưới mặt trời trống đồng",
+    alt: "Minh họa nguyên bản The Sun: trẻ em và cư dân Văn Lang vui hội mùa bên trâu, lúa, thuyền và trống đồng dưới mặt trời rạng rỡ",
+  },
+  {
+    slug: "judgement",
+    src: "/images/major-20-judgement.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Phán quyết bên bờ biển",
+    inspiration: "An Dương Vương đối diện trách nhiệm và hệ quả",
+    alt: "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực",
+  },
+  {
+    slug: "the-world",
+    src: "/images/major-21-the-world.webp",
+    width: 768,
+    height: 1152,
+    vietnameseTitle: "Trăm con chung một cõi",
+    inspiration: "Núi, sông, đồng bằng và biển khép vòng hành trình",
+    alt: "Minh họa nguyên bản The World: cộng đồng trăm con nối núi sông đồng bằng và biển trong vòng chim Lạc cùng hoa sen",
+  },
+] as const satisfies readonly MajorArcanaVisual[];
+
+export const majorArcanaVisualBySlug = new Map(
+  majorArcanaVisuals.map((visual) => [visual.slug, visual] as const),
+);

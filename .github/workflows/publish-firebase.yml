@@ -1,0 +1,99 @@
+# Xuất bản website Hường Đông lên Firebase Hosting.
+#
+# Chạy bằng tay: tab Actions trên GitHub -> "Xuất bản website (Firebase)"
+# -> Run workflow. Trang Tổng quan trong /admin/ có nút mở sẵn trang này.
+#
+# Thứ tự cố ý: build -> test -> deploy. Nếu kiểm thử thất bại, workflow dừng
+# và KHÔNG triển khai, nên trang khách vẫn giữ bản cũ đang chạy tốt.
+name: Xuất bản website (Firebase)
+
+on:
+  workflow_dispatch:
+
+# Không cho hai lần xuất bản chạy chồng lên nhau.
+concurrency:
+  group: publish-firebase
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Chốt an toàn. Ngày 16/08 workflow này từng deploy từ một cây thiếu 5
+      # template và thiếu hẳn data/, nên bản phát hành lúc đó không có
+      # /huyen-su/, /healing/, /tarot-la-gi/, /trai-bai/, /cua-hang/ và mất toàn
+      # bộ lớp dẫn nguồn Lĩnh Nam chích quái. Site chỉ có lại chúng vì ngày 18/08
+      # có người deploy tay từ máy mình.
+      #
+      # Bước này dừng workflow TRƯỚC khi build nếu thiếu bất kỳ tệp nào dưới đây,
+      # để lỗi đó không lặp lại. Thêm trang mới thì thêm vào danh sách.
+      - name: Kiểm tệp bắt buộc trước khi build
+        run: |
+          thieu=0
+          for f in \
+            templates/huyen-su.html \
+            templates/healing.html \
+            templates/tarot-la-gi.html \
+            templates/trai-bai.html \
+            templates/cua-hang.html \
+            templates/card-detail.html \
+            templates/card-list.html \
+            templates/home.html \
+            templates/_layout.html \
+            data/lncq-22.json \
+            data/lncq-chapters.json
+          do
+            if [ ! -f "$f" ]; then
+              echo "::error file=$f::Thiếu tệp bắt buộc: $f"
+              thieu=1
+            fi
+          done
+          if [ "$thieu" -ne 0 ]; then
+            echo "Dừng lại: cây mã nguồn không đủ để dựng site đầy đủ." >&2
+            exit 1
+          fi
+          echo "Đủ 11 tệp bắt buộc."
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci
+
+      # Service account chỉ tồn tại trong bộ nhớ tạm của runner, không bao giờ
+      # nằm trong repo. RUNNER_TEMP bị xóa khi job kết thúc.
+      - name: Ghi service account ra tệp tạm
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "Thiếu secret FIREBASE_SERVICE_ACCOUNT." >&2
+            exit 1
+          fi
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/service-account.json"
+
+      - name: Build từ Firestore thật
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/service-account.json
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          SITE_BASE_URL: ${{ secrets.SITE_BASE_URL }}
+          # Hai biến dưới dành cho App Check. Chưa đặt secret thì build ra trang
+          # không kèm App Check, form vẫn chạy như trước.
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+        run: npm run build
+
+      - name: Kiểm thử bản vừa build
+        run: npm test
+
+      - name: Triển khai Firebase Hosting
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/service-account.json
+        run: npx --yes firebase-tools@15 deploy --only hosting --project "${{ secrets.FIREBASE_PROJECT_ID }}" --non-interactive
