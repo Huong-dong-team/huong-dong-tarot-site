@@ -1,0 +1,11 @@
+{
+  "siteName": "Hường Đông Tarot",
+  "tagline": "Di sản Việt, soi đường qua 78 lá bài",
+  "description": "Bộ Tarot Việt kết nối hệ nghĩa Rider–Waite–Smith với huyền sử, biểu tượng và mỹ học Việt Nam.",
+  "defaultOgImage": "/assets/img/default-og.webp",
+  "baseUrl": "https://huongdong.vn",
+  "social": { "facebook": "", "threads": "", "tiktok": "" },
+  "ga4Id": "",
+  "contactEmail": "",
+  "publishWorkflowUrl": ""
+}

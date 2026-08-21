@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b332e">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/theme-dark.css">
+  {{{head}}}
+  {{{analytics}}}
+</head>
+<body class="{{bodyClass}}" data-firebase-project="{{firebaseProjectId}}" data-firebase-key="{{firebaseApiKey}}">
+  <a class="skip-link" href="#noi-dung-chinh">Đi đến nội dung chính</a>
+  <header class="site-header">
+    <a class="brand" href="/"><img src="/assets/img/trong-dong.png" width="46" height="46" alt=""><span>Hường Đông</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Mục lục</button>
+    <nav id="main-nav" aria-label="Điều hướng chính"><a href="/tarot-la-gi/">Tarot là gì</a><a href="/la-bai/">78 lá bài</a><a href="/trai-bai/">Trải bài</a><a href="/huyen-su/">Huyền sử</a><a href="/healing/">Healing</a><a href="/tin-tuc/">Chuyện Hường Đông</a><a href="/cua-hang/">Cửa hàng</a><a class="nav-cta" href="/#danh-sach-cho">Danh sách chờ</a></nav>
+  </header>
+  {{{content}}}
+  <footer class="site-footer"><img src="/assets/img/chim-lac.png" width="110" height="74" alt=""><p><strong>Hường Đông Tarot</strong><br>{{#if tagline}}{{tagline}}{{/if}}</p><p>Tarot là công cụ tự phản tư và học tập, không thay thế tư vấn y tế, pháp lý hoặc tài chính.<br><a href="/quyen-rieng-tu/">Quyền riêng tư</a>{{#if contactEmail}} · <a href="mailto:{{contactEmail}}">{{contactEmail}}</a>{{/if}}{{{socialHtml}}}</p><span>© 2026 Nguyễn Hồng Khang</span></footer>
+  <script type="module" src="/assets/js/site.js"></script>
+  <script src="/assets/js/light-journey.js" defer></script>
+</body>
+</html>

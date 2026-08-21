@@ -1,0 +1,11 @@
+import { collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { db } from "../firebase.js";
+import { toast } from "../components/toast.js";
+const esc = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+export async function usersView(root, params, context) {
+  if (context.profile.role !== "owner") { root.innerHTML = "<h1>Không đủ quyền</h1>"; return; }
+  const snapshot = await getDocs(collection(db, "admins")); const users = snapshot.docs.map((item) => ({ uid: item.id, ...item.data() }));
+  root.innerHTML = `<h1>Người dùng quản trị</h1><p class="page-lead">Firebase Auth không cho trình duyệt tạo mật khẩu cho người khác một cách an toàn. Hãy tạo user trong Firebase Console, sau đó dán UID tại đây để cấp vai trò editor.</p><form class="panel form-grid"><label class="field"><span>UID từ Firebase Auth</span><input name="uid" required></label><label class="field"><span>Email</span><input name="email" type="email" required></label><label class="field"><span>Tên hiển thị</span><input name="displayName" required></label><button class="button" type="submit">Cấp quyền editor</button></form><table class="data-table"><thead><tr><th>Người dùng</th><th>Vai trò</th><th></th></tr></thead><tbody>${users.map((user) => `<tr><td>${esc(user.displayName)}<br><small>${esc(user.email)}</small></td><td>${esc(user.role)}</td><td>${user.role === "editor" ? `<button type="button" data-remove="${user.uid}">Thu hồi</button>` : "Owner duy nhất"}</td></tr>`).join("")}</tbody></table>`;
+  root.querySelector("form").addEventListener("submit", async (event) => { event.preventDefault(); const data = Object.fromEntries(new FormData(event.currentTarget)); await setDoc(doc(db, "admins", data.uid), { email: data.email, displayName: data.displayName, role: "editor", createdAt: serverTimestamp() }); toast("Đã cấp quyền editor."); usersView(root, params, context); });
+  root.querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", async () => { if (confirm("Thu hồi quyền editor?")) { await deleteDoc(doc(db, "admins", button.dataset.remove)); usersView(root, params, context); } }));
+}

@@ -1,0 +1,4246 @@
+[
+  {
+    "number": 0,
+    "slug": "the-fool",
+    "nameVi": "Kẻ Khờ",
+    "nameEn": "The Fool",
+    "nameFolk": "Mai An Tiêm",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-00-the-fool.webp",
+      "alt": "Minh họa nguyên bản The Fool: Mai An Tiêm bước bên vách đảo lúc bình minh, cạnh quả dưa và cánh chim",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-00-the-fool.webp",
+      "alt": "Minh họa nguyên bản The Fool: Mai An Tiêm bước bên vách đảo lúc bình minh, cạnh quả dưa và cánh chim"
+    },
+    "keywordsUpright": [
+      "khởi đầu",
+      "tự do",
+      "dấn bước",
+      "Hạt giống giữa đảo vắng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Một khởi đầu mở, tinh thần thử nghiệm và niềm tin để bước vào điều chưa biết.</p><p>Lá này thường xuất hiện khi bạn cần học bằng trải nghiệm: chuẩn bị vừa đủ rồi bắt đầu.</p>",
+    "meaningReversed": "<p>Hấp tấp, né tránh bước đầu tiên hoặc đánh cược mà chưa nhìn rủi ro.</p>",
+    "story": "<p><strong>Mai An Tiêm</strong> — Hạt giống giữa đảo vắng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Mai An Tiêm",
+        "meaning": "Hạt giống giữa đảo vắng"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Fool đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Kẻ Khờ – The Fool",
+      "description": "The Fool: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mai An Tiêm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-00-the-fool.webp",
+      "canonical": "/la-bai/the-fool/"
+    },
+    "status": "published",
+    "order": 0,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 1,
+    "slug": "the-magician",
+    "nameVi": "Nhà Pháp Thuật",
+    "nameEn": "The Magician",
+    "nameFolk": "Kinh Dương Vương",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-01-the-magician.webp",
+      "alt": "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-01-the-magician.webp",
+      "alt": "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống"
+    },
+    "keywordsUpright": [
+      "năng lực",
+      "chủ động",
+      "biến ý thành hình",
+      "Gọi bốn nguồn lực về một mối"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Chủ động dùng kỹ năng, ý chí và nguồn lực đang có để tạo kết quả.</p><p>Bạn đã có nhiều công cụ hơn mình tưởng; việc cần làm là chọn một mục tiêu và phối hợp chúng.</p>",
+    "meaningReversed": "<p>Tài năng bị dùng sai hướng, thiếu tập trung hoặc lời hứa lớn hơn năng lực thực tế.</p>",
+    "story": "<p><strong>Kinh Dương Vương</strong> — Gọi bốn nguồn lực về một mối. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Kinh Dương Vương",
+        "meaning": "Gọi bốn nguồn lực về một mối"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Magician đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nhà Pháp Thuật – The Magician",
+      "description": "The Magician: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Kinh Dương Vương trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-01-the-magician.webp",
+      "canonical": "/la-bai/the-magician/"
+    },
+    "status": "published",
+    "order": 1,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 2,
+    "slug": "the-high-priestess",
+    "nameVi": "Nữ Tư Tế",
+    "nameEn": "The High Priestess",
+    "nameFolk": "Người giữ ký ức",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-02-the-high-priestess.webp",
+      "alt": "Minh họa nguyên bản The High Priestess: nữ tư tế Việt cổ ngồi giữa hai cột đá, trăng lưỡi liềm và làn nước mờ sương",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-02-the-high-priestess.webp",
+      "alt": "Minh họa nguyên bản The High Priestess: nữ tư tế Việt cổ ngồi giữa hai cột đá, trăng lưỡi liềm và làn nước mờ sương"
+    },
+    "keywordsUpright": [
+      "trực giác",
+      "tĩnh lặng",
+      "ẩn tri",
+      "Tĩnh lặng giữa hai cột âm dương"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Trực giác, điều chưa được nói ra và sự quan sát tĩnh trước khi hành động.</p><p>Chưa phải lúc ép một câu trả lời; hãy nghe điều dữ kiện và cảm nhận đang cùng chỉ về.</p>",
+    "meaningReversed": "<p>Bỏ qua tín hiệu bên trong, bí mật gây nhiễu hoặc im lặng quá lâu.</p>",
+    "story": "<p><strong>Người giữ ký ức</strong> — Tĩnh lặng giữa hai cột âm dương. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Người giữ ký ức",
+        "meaning": "Tĩnh lặng giữa hai cột âm dương"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The High Priestess đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nữ Tư Tế – The High Priestess",
+      "description": "The High Priestess: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Người giữ ký ức trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-02-the-high-priestess.webp",
+      "canonical": "/la-bai/the-high-priestess/"
+    },
+    "status": "published",
+    "order": 2,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 3,
+    "slug": "the-empress",
+    "nameVi": "Hoàng Hậu",
+    "nameEn": "The Empress",
+    "nameFolk": "Âu Cơ",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-03-the-empress.webp",
+      "alt": "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng",
+      "width": 1024,
+      "height": 1536,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-03-the-empress.webp",
+      "alt": "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng"
+    },
+    "keywordsUpright": [
+      "nuôi dưỡng",
+      "sinh sôi",
+      "dồi dào",
+      "Người mẹ của bọc trăm trứng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Nuôi dưỡng, sáng tạo, sự phong nhiêu và khả năng làm cho điều tốt đẹp lớn lên.</p><p>Hãy tạo điều kiện cho sự sống và ý tưởng phát triển, đồng thời nhớ chăm lại chính mình.</p>",
+    "meaningReversed": "<p>Cạn kiệt vì chăm người khác quá mức, trì trệ sáng tạo hoặc bao bọc quá chặt.</p>",
+    "story": "<p><strong>Âu Cơ</strong> — Người mẹ của bọc trăm trứng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Âu Cơ",
+        "meaning": "Người mẹ của bọc trăm trứng"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Empress đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hoàng Hậu – The Empress",
+      "description": "The Empress: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Âu Cơ trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-03-the-empress.webp",
+      "canonical": "/la-bai/the-empress/"
+    },
+    "status": "published",
+    "order": 3,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 4,
+    "slug": "the-emperor",
+    "nameVi": "Hoàng Đế",
+    "nameEn": "The Emperor",
+    "nameFolk": "Hùng Vương",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-04-the-emperor.webp",
+      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-04-the-emperor.webp",
+      "alt": "Minh họa nguyên bản The Emperor: Hùng Vương ngồi trên ngai gỗ, nhìn xuống ruộng đồng, trống đồng và cộng đồng Văn Lang"
+    },
+    "keywordsUpright": [
+      "cấu trúc",
+      "quyền hạn",
+      "ổn định",
+      "Dựng trật tự Văn Lang"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Trật tự, trách nhiệm, ranh giới và năng lực lãnh đạo bằng cấu trúc rõ ràng.</p><p>Lá bài hỏi ai chịu trách nhiệm, luật nào đang áp dụng và ranh giới nào cần được giữ.</p>",
+    "meaningReversed": "<p>Kiểm soát cứng nhắc, lạm quyền hoặc thiếu kỷ luật để giữ hệ thống đứng vững.</p>",
+    "story": "<p><strong>Hùng Vương</strong> — Dựng trật tự Văn Lang. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Hùng Vương",
+        "meaning": "Dựng trật tự Văn Lang"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Emperor đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hoàng Đế – The Emperor",
+      "description": "The Emperor: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Hùng Vương trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-04-the-emperor.webp",
+      "canonical": "/la-bai/the-emperor/"
+    },
+    "status": "published",
+    "order": 4,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 5,
+    "slug": "the-hierophant",
+    "nameVi": "Giáo Hoàng",
+    "nameEn": "The Hierophant",
+    "nameFolk": "Chủ lễ truyền tục",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-05-the-hierophant.webp",
+      "alt": "Minh họa nguyên bản The Hierophant: vị chủ lễ Việt cổ truyền dạy hai môn sinh trước bàn thờ tổ tiên và hoa văn trống đồng",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-05-the-hierophant.webp",
+      "alt": "Minh họa nguyên bản The Hierophant: vị chủ lễ Việt cổ truyền dạy hai môn sinh trước bàn thờ tổ tiên và hoa văn trống đồng"
+    },
+    "keywordsUpright": [
+      "truyền thống",
+      "học hỏi",
+      "niềm tin",
+      "Trao truyền tri thức cộng đồng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Truyền thống, người hướng dẫn, học qua một hệ thống và các giá trị chung.</p><p>Có lúc cần học đúng nền tảng trước; có lúc cần hiểu nền tảng đủ sâu để cải tiến nó.</p>",
+    "meaningReversed": "<p>Tự tìm con đường khác, chất vấn giáo điều hoặc không còn phù hợp với khuôn cũ.</p>",
+    "story": "<p><strong>Chủ lễ truyền tục</strong> — Trao truyền tri thức cộng đồng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Chủ lễ truyền tục",
+        "meaning": "Trao truyền tri thức cộng đồng"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Hierophant đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Giáo Hoàng – The Hierophant",
+      "description": "The Hierophant: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chủ lễ truyền tục trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-05-the-hierophant.webp",
+      "canonical": "/la-bai/the-hierophant/"
+    },
+    "status": "published",
+    "order": 5,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 6,
+    "slug": "the-lovers",
+    "nameVi": "Tình Nhân",
+    "nameEn": "The Lovers",
+    "nameFolk": "Trầu Cau",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-06-the-lovers.webp",
+      "alt": "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-06-the-lovers.webp",
+      "alt": "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá"
+    },
+    "keywordsUpright": [
+      "gắn kết",
+      "lựa chọn",
+      "đồng thuận",
+      "Lời thề, lựa chọn và tình nghĩa"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Sự hòa hợp, lựa chọn theo giá trị và một quan hệ đòi hỏi tính chân thật.</p><p>Không chỉ nói về tình yêu, lá này còn hỏi lựa chọn nào phản ánh đúng con người bạn muốn trở thành.</p>",
+    "meaningReversed": "<p>Lệch giá trị, bất hòa hoặc né tránh một lựa chọn có trách nhiệm.</p>",
+    "story": "<p><strong>Trầu Cau</strong> — Lời thề, lựa chọn và tình nghĩa. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Trầu Cau",
+        "meaning": "Lời thề, lựa chọn và tình nghĩa"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Lovers đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tình Nhân – The Lovers",
+      "description": "The Lovers: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trầu Cau trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-06-the-lovers.webp",
+      "canonical": "/la-bai/the-lovers/"
+    },
+    "status": "published",
+    "order": 6,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 7,
+    "slug": "the-chariot",
+    "nameVi": "Cỗ Xe",
+    "nameEn": "The Chariot",
+    "nameFolk": "Thánh Gióng",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-07-the-chariot.webp",
+      "alt": "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-07-the-chariot.webp",
+      "alt": "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ"
+    },
+    "keywordsUpright": [
+      "ý chí",
+      "tiến lên",
+      "tự chủ",
+      "Ý chí lên đường giữ nước"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Ý chí có định hướng, làm chủ các lực đối nghịch và tiến tới mục tiêu.</p><p>Tốc độ chỉ có ích khi tay lái vững và mục tiêu rõ.</p>",
+    "meaningReversed": "<p>Mất phương hướng, cưỡng ép tiến độ hoặc các phần trong bạn đang kéo ngược nhau.</p>",
+    "story": "<p>Cậu bé làng Phù Đổng lên ba vẫn chưa biết nói, biết cười. Nghe sứ giả nhà vua rao tìm người dẹp giặc Ân, cậu bật tiếng đầu đời: xin một con ngựa sắt, một cây roi sắt, một áo giáp sắt. Từ đó ăn bao nhiêu cũng không no, lớn nhanh như thổi, dân làng phải góp gạo nuôi. Ra trận, roi sắt gãy giữa chừng thì nhổ luôn bụi tre bên đường mà quật. Giặc tan, cậu cởi áo giáp, cưỡi ngựa bay về trời trên núi Sóc, không nhận một chức tước nào.</p><p>Ý chí lên đường giữ nước, và biết dừng đúng lúc. Nghĩa thực hành của lá bài vẫn theo hệ Rider–Waite–Smith.</p><p class=\"story-source\">Nguồn: <em>Lĩnh Nam chích quái</em>, truyện \"Đổng Thiên Vương\". Hội Gióng ở đền Phù Đổng và đền Sóc được UNESCO ghi danh Di sản văn hóa phi vật thể đại diện của nhân loại năm 2010.</p>",
+    "symbols": [
+      {
+        "name": "Thánh Gióng",
+        "meaning": "Ý chí lên đường giữ nước"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Chariot đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Cỗ Xe – The Chariot",
+      "description": "The Chariot: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Thánh Gióng trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-07-the-chariot.webp",
+      "canonical": "/la-bai/the-chariot/"
+    },
+    "status": "published",
+    "order": 7,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 8,
+    "slug": "strength",
+    "nameVi": "Sức Mạnh",
+    "nameEn": "Strength",
+    "nameFolk": "Sơn Tinh",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-08-strength.webp",
+      "alt": "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-08-strength.webp",
+      "alt": "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng"
+    },
+    "keywordsUpright": [
+      "can đảm",
+      "kiên nhẫn",
+      "tự chủ",
+      "Sức mạnh biết điều hòa"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Can đảm dịu dàng, kiên nhẫn và sức mạnh nội tâm biết điều tiết bản năng.</p><p>Sức mạnh ở đây không phải áp đảo mà là giữ được bình tĩnh khi năng lượng rất lớn xuất hiện.</p>",
+    "meaningReversed": "<p>Tự nghi ngờ, phản ứng bốc đồng hoặc cố tỏ ra mạnh khi bên trong đang kiệt sức.</p>",
+    "story": "<p>Thần núi Ba Vì, đứng đầu Tứ Bất Tử. Truyện kể Hùng Vương thứ mười tám kén rể cho Mỵ Nương, hẹn ai mang sính lễ tới trước thì được. Sơn Tinh đến trước, rước nàng về núi. Thủy Tinh đến sau, nổi giận dâng nước đuổi theo; nước dâng đến đâu, Sơn Tinh nâng núi cao đến đó. Năm nào cũng vậy, nên năm nào cũng có mùa lũ.</p><p>Đây là hình ảnh của sức mạnh biết điều hòa: không đè bẹp đối thủ, chỉ bền bỉ nâng mình lên trên mực nước. Nghĩa thực hành của lá bài vẫn theo hệ Rider–Waite–Smith.</p><p class=\"story-source\">Nguồn: <em>Lĩnh Nam chích quái</em> (khuyết danh, thế kỷ XIV), truyện \"Tản Viên\"; <em>Đại Việt sử ký toàn thư</em>, Ngoại kỷ, kỷ Hồng Bàng.</p>",
+    "symbols": [
+      {
+        "name": "Sơn Tinh",
+        "meaning": "Sức mạnh biết điều hòa"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Strength đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Sức Mạnh – Strength",
+      "description": "Strength: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sơn Tinh trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-08-strength.webp",
+      "canonical": "/la-bai/strength/"
+    },
+    "status": "published",
+    "order": 8,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 9,
+    "slug": "the-hermit",
+    "nameVi": "Ẩn Sĩ",
+    "nameEn": "The Hermit",
+    "nameFolk": "Chử Đồng Tử tìm đạo",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-09-the-hermit.webp",
+      "alt": "Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-09-the-hermit.webp",
+      "alt": "Minh họa nguyên bản The Hermit: Chử Đồng Tử cầm đèn đi một mình bên bờ sông mờ sương để tìm học đạo"
+    },
+    "keywordsUpright": [
+      "chiêm nghiệm",
+      "ẩn cư",
+      "minh triết",
+      "Minh triết bên bờ sông"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Lùi lại để suy ngẫm, tìm sự thật riêng và học từ trải nghiệm đã sống.</p><p>Một khoảng yên có chủ đích giúp bạn phân biệt điều mình thật sự biết với tiếng ồn xung quanh.</p>",
+    "meaningReversed": "<p>Cô lập quá lâu, trốn tránh thế giới hoặc chưa tìm được tiếng nói bên trong.</p>",
+    "story": "<p>Chàng trai nghèo ở Khoái Châu, hai cha con chung nhau một chiếc khố. Cha dặn giữ khố mà mặc, nhưng khi cha mất, chàng táng cả khố theo cha, để mình trần, ngày ngày vùi thân dưới cát bên sông kiếm ăn. Công chúa Tiên Dung du thuyền qua, cho quây màn tắm đúng chỗ ấy; nước dội trôi cát, lộ ra người. Nàng cho là duyên trời, xin kết làm vợ chồng, bỏ lại phú quý mà theo.</p><p>Về sau hai người học đạo, và trong một đêm cả lâu đài cùng bay lên trời, để lại vùng đầm nước dân gian gọi là Nhất Dạ Trạch — Đầm Một Đêm. Minh triết không tìm ở nơi cao sang, nó đến với người không còn gì để giữ. Nghĩa thực hành của lá bài vẫn theo hệ Rider–Waite–Smith.</p><p class=\"story-source\">Nguồn: <em>Lĩnh Nam chích quái</em>, truyện \"Nhất Dạ Trạch\".</p>",
+    "symbols": [
+      {
+        "name": "Chử Đồng Tử tìm đạo",
+        "meaning": "Minh triết bên bờ sông"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Hermit đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Ẩn Sĩ – The Hermit",
+      "description": "The Hermit: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử tìm đạo trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-09-the-hermit.webp",
+      "canonical": "/la-bai/the-hermit/"
+    },
+    "status": "published",
+    "order": 9,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 10,
+    "slug": "wheel-of-fortune",
+    "nameVi": "Bánh Xe Số Phận",
+    "nameEn": "Wheel of Fortune",
+    "nameFolk": "Sơn Tinh – Thủy Tinh",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-10-wheel-of-fortune.webp",
+      "alt": "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-10-wheel-of-fortune.webp",
+      "alt": "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút"
+    },
+    "keywordsUpright": [
+      "chu kỳ",
+      "bước ngoặt",
+      "thời vận",
+      "Chu kỳ nước dâng quanh bánh xe trống đồng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Chu kỳ đổi chiều, cơ hội mới và những yếu tố lớn hơn kế hoạch cá nhân.</p><p>Bạn không điều khiển được mọi biến số, nhưng có thể chọn cách phản ứng khi bánh xe chuyển động.</p>",
+    "meaningReversed": "<p>Trì hoãn, lặp lại một vòng cũ hoặc chống lại thay đổi không thể tránh.</p>",
+    "story": "<p><strong>Sơn Tinh – Thủy Tinh</strong> — Chu kỳ nước dâng quanh bánh xe trống đồng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sơn Tinh – Thủy Tinh",
+        "meaning": "Chu kỳ nước dâng quanh bánh xe trống đồng"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Wheel of Fortune đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Bánh Xe Số Phận – Wheel of Fortune",
+      "description": "Wheel of Fortune: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sơn Tinh – Thủy Tinh trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-10-wheel-of-fortune.webp",
+      "canonical": "/la-bai/wheel-of-fortune/"
+    },
+    "status": "published",
+    "order": 10,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 11,
+    "slug": "justice",
+    "nameVi": "Công Lý",
+    "nameEn": "Justice",
+    "nameFolk": "Lang Liêu",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-11-justice.webp",
+      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàng tử",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-11-justice.webp",
+      "alt": "Minh họa nguyên bản Justice: vua Hùng cân nhắc bánh chưng bánh giầy của Lang Liêu và mâm cao cỗ đầy của các hoàng tử"
+    },
+    "keywordsUpright": [
+      "công bằng",
+      "sự thật",
+      "hệ quả",
+      "Phán xét công bằng trước lễ vật từ hạt gạo"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Công bằng, trách nhiệm, hệ quả và quyết định dựa trên sự thật.</p><p>Hãy tách mong muốn khỏi bằng chứng và chấp nhận phần trách nhiệm thuộc về mình.</p>",
+    "meaningReversed": "<p>Thiên lệch, né trách nhiệm hoặc thông tin quan trọng chưa được nhìn nhận.</p>",
+    "story": "<p><strong>Lang Liêu</strong> — Phán xét công bằng trước lễ vật từ hạt gạo. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lang Liêu",
+        "meaning": "Phán xét công bằng trước lễ vật từ hạt gạo"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Justice đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Công Lý – Justice",
+      "description": "Justice: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lang Liêu trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-11-justice.webp",
+      "canonical": "/la-bai/justice/"
+    },
+    "status": "published",
+    "order": 11,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 12,
+    "slug": "the-hanged-man",
+    "nameVi": "Người Treo Ngược",
+    "nameEn": "The Hanged Man",
+    "nameFolk": "Chử Đồng Tử bên bãi cát",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-12-the-hanged-man.webp",
+      "alt": "Minh họa nguyên bản The Hanged Man: Chử Đồng Tử ẩn dưới bãi cát, hình phản chiếu đảo ngược trên mặt nước khi thuyền Tiên Dung đi tới",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-12-the-hanged-man.webp",
+      "alt": "Minh họa nguyên bản The Hanged Man: Chử Đồng Tử ẩn dưới bãi cát, hình phản chiếu đảo ngược trên mặt nước khi thuyền Tiên Dung đi tới"
+    },
+    "keywordsUpright": [
+      "tạm dừng",
+      "buông",
+      "đổi góc nhìn",
+      "Đảo ngược thân phận để nhìn đời bằng mắt mới"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tạm dừng, buông quyền kiểm soát và nhìn vấn đề từ một góc đảo ngược.</p><p>Không phải mọi lúc đều cần tiến; đôi khi điều đúng là dừng để cách hiểu mới xuất hiện.</p>",
+    "meaningReversed": "<p>Hy sinh vô ích, trì hoãn kéo dài hoặc bám vào góc nhìn cũ.</p>",
+    "story": "<p><strong>Chử Đồng Tử bên bãi cát</strong> — Đảo ngược thân phận để nhìn đời bằng mắt mới. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Chử Đồng Tử bên bãi cát",
+        "meaning": "Đảo ngược thân phận để nhìn đời bằng mắt mới"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Hanged Man đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Người Treo Ngược – The Hanged Man",
+      "description": "The Hanged Man: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Chử Đồng Tử bên bãi cát trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-12-the-hanged-man.webp",
+      "canonical": "/la-bai/the-hanged-man/"
+    },
+    "status": "published",
+    "order": 12,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 13,
+    "slug": "death",
+    "nameVi": "Chuyển Hóa",
+    "nameEn": "Death",
+    "nameFolk": "Lạc Long Quân trừ Hồ Tinh",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-13-death.webp",
+      "alt": "Minh họa nguyên bản Death: Lạc Long Quân bước qua cổng đá, bóng Hồ Tinh tan vào nước và bình minh mở ra xóm làng hồi sinh",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-13-death.webp",
+      "alt": "Minh họa nguyên bản Death: Lạc Long Quân bước qua cổng đá, bóng Hồ Tinh tan vào nước và bình minh mở ra xóm làng hồi sinh"
+    },
+    "keywordsUpright": [
+      "kết thúc",
+      "chuyển hóa",
+      "tái sinh",
+      "Khép hang tối, mở dòng sống mới"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Một giai đoạn kết thúc để chuyển hóa và nhường chỗ cho điều mới.</p><p>Lá này hiếm khi nói về cái chết thể chất; nó thường chỉ một cuộc thay da cần thiết.</p>",
+    "meaningReversed": "<p>Kháng cự thay đổi, kéo dài điều đã hết vai trò hoặc sợ mất bản sắc cũ.</p>",
+    "story": "<p><strong>Lạc Long Quân trừ Hồ Tinh</strong> — Khép hang tối, mở dòng sống mới. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lạc Long Quân trừ Hồ Tinh",
+        "meaning": "Khép hang tối, mở dòng sống mới"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Death đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Chuyển Hóa – Death",
+      "description": "Death: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lạc Long Quân trừ Hồ Tinh trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-13-death.webp",
+      "canonical": "/la-bai/death/"
+    },
+    "status": "published",
+    "order": 13,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 14,
+    "slug": "temperance",
+    "nameVi": "Tiết Chế",
+    "nameEn": "Temperance",
+    "nameFolk": "Núi và biển chung nguồn",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-14-temperance.webp",
+      "alt": "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-14-temperance.webp",
+      "alt": "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi"
+    },
+    "keywordsUpright": [
+      "điều độ",
+      "hòa hợp",
+      "kiên nhẫn",
+      "Lạc Long Quân – Âu Cơ điều hòa hai miền"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Điều hòa, vừa đủ, kết hợp khác biệt và tiến triển bền vững.</p><p>Tiến bộ đến từ nhịp đều và sự tinh chỉnh liên tục, không phải một cú bứt phá duy nhất.</p>",
+    "meaningReversed": "<p>Quá đà, mất cân bằng hoặc trộn nhiều thứ mà chưa tìm được tỷ lệ phù hợp.</p>",
+    "story": "<p><strong>Núi và biển chung nguồn</strong> — Lạc Long Quân – Âu Cơ điều hòa hai miền. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Núi và biển chung nguồn",
+        "meaning": "Lạc Long Quân – Âu Cơ điều hòa hai miền"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Temperance đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tiết Chế – Temperance",
+      "description": "Temperance: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Núi và biển chung nguồn trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-14-temperance.webp",
+      "canonical": "/la-bai/temperance/"
+    },
+    "status": "published",
+    "order": 14,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 15,
+    "slug": "the-devil",
+    "nameVi": "Quỷ Dữ",
+    "nameEn": "The Devil",
+    "nameFolk": "Mị Châu – Trọng Thủy",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-15-the-devil.webp",
+      "alt": "Minh họa nguyên bản The Devil: Mị Châu và Trọng Thủy nối với nhau bằng sợi chỉ đỏ và xiềng mở trước hai chiếc nỏ cùng bóng thành Cổ Loa",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-15-the-devil.webp",
+      "alt": "Minh họa nguyên bản The Devil: Mị Châu và Trọng Thủy nối với nhau bằng sợi chỉ đỏ và xiềng mở trước hai chiếc nỏ cùng bóng thành Cổ Loa"
+    },
+    "keywordsUpright": [
+      "ràng buộc",
+      "cám dỗ",
+      "bóng tối",
+      "Sợi ràng buộc có thể tháo và bí mật bị đánh tráo"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Sự ràng buộc, ham muốn, thói quen và quyền lực mà ta vô tình trao đi.</p><p>Lá bài không kết án; nó chỉ ra nơi bạn nói “không thể” dù vẫn còn một phần lựa chọn.</p>",
+    "meaningReversed": "<p>Nhìn ra chiếc xích, lấy lại quyền lựa chọn và bắt đầu thoát khỏi lệ thuộc.</p>",
+    "story": "<p><strong>Mị Châu – Trọng Thủy</strong> — Sợi ràng buộc có thể tháo và bí mật bị đánh tráo. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Mị Châu – Trọng Thủy",
+        "meaning": "Sợi ràng buộc có thể tháo và bí mật bị đánh tráo"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Devil đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Quỷ Dữ – The Devil",
+      "description": "The Devil: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mị Châu – Trọng Thủy trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-15-the-devil.webp",
+      "canonical": "/la-bai/the-devil/"
+    },
+    "status": "published",
+    "order": 15,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 16,
+    "slug": "the-tower",
+    "nameVi": "Tòa Tháp",
+    "nameEn": "The Tower",
+    "nameFolk": "Cổ Loa thất thủ",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-16-the-tower.webp",
+      "alt": "Minh họa nguyên bản The Tower: thành Cổ Loa nhiều vòng sụp đổ dưới tia sét khi nỏ thần bị đánh tráo, không có cảnh thương tích",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-16-the-tower.webp",
+      "alt": "Minh họa nguyên bản The Tower: thành Cổ Loa nhiều vòng sụp đổ dưới tia sét khi nỏ thần bị đánh tráo, không có cảnh thương tích"
+    },
+    "keywordsUpright": [
+      "đổ vỡ",
+      "thức tỉnh",
+      "tái cấu trúc",
+      "Cấu trúc sai nền sụp khi nỏ thần mất linh lực"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cấu trúc sai nền bị phá vỡ, sự thật xuất hiện đột ngột và buộc phải tái thiết.</p><p>Điều sụp xuống thường là phần không còn đủ thật để tiếp tục nâng đỡ cuộc sống.</p>",
+    "meaningReversed": "<p>Trì hoãn khủng hoảng, thay đổi âm ỉ hoặc tránh một sự thật đã quá rõ.</p>",
+    "story": "<p><strong>Cổ Loa thất thủ</strong> — Cấu trúc sai nền sụp khi nỏ thần mất linh lực. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Cổ Loa thất thủ",
+        "meaning": "Cấu trúc sai nền sụp khi nỏ thần mất linh lực"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Tower đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tòa Tháp – The Tower",
+      "description": "The Tower: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Cổ Loa thất thủ trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-16-the-tower.webp",
+      "canonical": "/la-bai/the-tower/"
+    },
+    "status": "published",
+    "order": 16,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 17,
+    "slug": "the-star",
+    "nameVi": "Ngôi Sao",
+    "nameEn": "The Star",
+    "nameFolk": "Mẫu Liễu Hạnh",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-17-the-star.webp",
+      "alt": "Minh họa nguyên bản The Star: Mẫu Liễu Hạnh trong áo choàng xanh đứng dưới một sao lớn và bảy sao nhỏ, trước cổng đền và đầm sen, sau lưng là vầng mặt trời đỏ",
+      "width": 1024,
+      "height": 1536,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-17-the-star.webp",
+      "alt": "Minh họa nguyên bản The Star: Mẫu Liễu Hạnh trong áo choàng xanh đứng dưới một sao lớn và bảy sao nhỏ, trước cổng đền và đầm sen, sau lưng là vầng mặt trời đỏ"
+    },
+    "keywordsUpright": [
+      "hy vọng",
+      "chữa lành",
+      "dẫn đường",
+      "Ánh sao dẫn đường sau giông bão"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Hy vọng có cơ sở, chữa lành, cảm hứng và kết nối lại với hướng đi dài hạn.</p><p>Sau biến động, lá này nhắc bạn phục hồi bằng những việc nhỏ và thật.</p>",
+    "meaningReversed": "<p>Mất niềm tin, so sánh khiến mình cạn sức hoặc không thấy tiến bộ nhỏ đang diễn ra.</p>",
+    "story": "<p>Tương truyền là công chúa Quỳnh Hoa con Ngọc Hoàng, vì lỡ tay đánh rơi chén ngọc mà bị đày xuống trần. Bà giáng sinh ba lần, lần đầu ở làng Vân Cát, Nam Định. Không lập đền đài bằng quyền uy, bà đi giữa chợ búa và đường quê, giúp người lành, trị kẻ ác, rồi trở về.</p><p>Người Việt thờ bà làm Thánh Mẫu, đứng đầu Tam phủ. Ánh sao dẫn đường sau giông bão: hy vọng không đến từ trên cao ban xuống, mà đến từ một người đã từng đi qua cõi người. Nghĩa thực hành của lá bài vẫn theo hệ Rider–Waite–Smith.</p><p class=\"story-source\">Nguồn: <em>Vân Cát thần nữ truyện</em> của Đoàn Thị Điểm trong <em>Truyền kỳ tân phả</em> (thế kỷ XVIII). \"Thực hành tín ngưỡng thờ Mẫu Tam phủ của người Việt\" được UNESCO ghi danh năm 2016.</p>",
+    "symbols": [
+      {
+        "name": "Mẫu Liễu Hạnh",
+        "meaning": "Ánh sao dẫn đường sau giông bão"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Star đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Ngôi Sao – The Star",
+      "description": "The Star: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Mẫu Liễu Hạnh trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-17-the-star.webp",
+      "canonical": "/la-bai/the-star/"
+    },
+    "status": "published",
+    "order": 17,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 18,
+    "slug": "the-moon",
+    "nameVi": "Mặt Trăng",
+    "nameEn": "The Moon",
+    "nameFolk": "Dấu lông ngỗng dưới trăng",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-18-the-moon.webp",
+      "alt": "Minh họa nguyên bản The Moon: Mị Châu rải lông ngỗng trên đường rời Cổ Loa, nỏ thật và nỏ giả hiện như hai bóng dưới trăng",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-18-the-moon.webp",
+      "alt": "Minh họa nguyên bản The Moon: Mị Châu rải lông ngỗng trên đường rời Cổ Loa, nỏ thật và nỏ giả hiện như hai bóng dưới trăng"
+    },
+    "keywordsUpright": [
+      "mơ hồ",
+      "tiềm thức",
+      "trực giác",
+      "Mơ hồ, tin lầm và con đường rời Cổ Loa"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Mơ hồ, tiềm thức, nỗi sợ và hành trình đi qua vùng chưa đủ ánh sáng.</p><p>Khi chưa đủ dữ kiện, hãy đi chậm, kiểm chứng và đừng coi mọi cảm giác là một sự thật.</p>",
+    "meaningReversed": "<p>Ảo tưởng dần tan, sự thật hé lộ hoặc lo âu làm méo cách nhìn.</p>",
+    "story": "<p><strong>Dấu lông ngỗng dưới trăng</strong> — Mơ hồ, tin lầm và con đường rời Cổ Loa. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dấu lông ngỗng dưới trăng",
+        "meaning": "Mơ hồ, tin lầm và con đường rời Cổ Loa"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Moon đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Mặt Trăng – The Moon",
+      "description": "The Moon: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dấu lông ngỗng dưới trăng trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-18-the-moon.webp",
+      "canonical": "/la-bai/the-moon/"
+    },
+    "status": "published",
+    "order": 18,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 19,
+    "slug": "the-sun",
+    "nameVi": "Mặt Trời",
+    "nameEn": "The Sun",
+    "nameFolk": "Ngày hội Văn Lang",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-19-the-sun.webp",
+      "alt": "Minh họa nguyên bản The Sun: trẻ em và cư dân Văn Lang vui hội mùa bên trâu, lúa, thuyền và trống đồng dưới mặt trời rạng rỡ",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-19-the-sun.webp",
+      "alt": "Minh họa nguyên bản The Sun: trẻ em và cư dân Văn Lang vui hội mùa bên trâu, lúa, thuyền và trống đồng dưới mặt trời rạng rỡ"
+    },
+    "keywordsUpright": [
+      "sáng rõ",
+      "sinh lực",
+      "thành công",
+      "Niềm vui cộng đồng dưới mặt trời trống đồng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Niềm vui rõ ràng, sinh lực, thành công và sự tự tin không cần che giấu.</p><p>Điều tốt đang hiện ra đủ rõ để được công nhận và chia sẻ.</p>",
+    "meaningReversed": "<p>Ánh sáng bị mây che, kỳ vọng quá cao hoặc khó cho phép mình tận hưởng thành quả.</p>",
+    "story": "<p><strong>Ngày hội Văn Lang</strong> — Niềm vui cộng đồng dưới mặt trời trống đồng. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Ngày hội Văn Lang",
+        "meaning": "Niềm vui cộng đồng dưới mặt trời trống đồng"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The Sun đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Mặt Trời – The Sun",
+      "description": "The Sun: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Ngày hội Văn Lang trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-19-the-sun.webp",
+      "canonical": "/la-bai/the-sun/"
+    },
+    "status": "published",
+    "order": 19,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 20,
+    "slug": "judgement",
+    "nameVi": "Phán Xét",
+    "nameEn": "Judgement",
+    "nameFolk": "Phán quyết bên bờ biển",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-20-judgement.webp",
+      "alt": "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-20-judgement.webp",
+      "alt": "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực"
+    },
+    "keywordsUpright": [
+      "thức tỉnh",
+      "đánh giá",
+      "lời gọi",
+      "An Dương Vương đối diện trách nhiệm và hệ quả"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Thức tỉnh, tổng kết quá khứ và đáp lại một lời gọi có ý nghĩa.</p><p>Đây là lúc nhìn toàn bộ chặng đường, nhận phần sai và chọn cách sống tiếp theo.</p>",
+    "meaningReversed": "<p>Tự phán xét quá nặng, trì hoãn quyết định hoặc chưa rút được bài học cốt lõi.</p>",
+    "story": "<p><strong>Phán quyết bên bờ biển</strong> — An Dương Vương đối diện trách nhiệm và hệ quả. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Phán quyết bên bờ biển",
+        "meaning": "An Dương Vương đối diện trách nhiệm và hệ quả"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của Judgement đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Phán Xét – Judgement",
+      "description": "Judgement: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Phán quyết bên bờ biển trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-20-judgement.webp",
+      "canonical": "/la-bai/judgement/"
+    },
+    "status": "published",
+    "order": 20,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 21,
+    "slug": "the-world",
+    "nameVi": "Thế Giới",
+    "nameEn": "The World",
+    "nameFolk": "Trăm con chung một cõi",
+    "arcana": "major",
+    "suit": null,
+    "folkStyle": "hang-trong",
+    "image": {
+      "url": "/assets/img/cards/major-21-the-world.webp",
+      "alt": "Minh họa nguyên bản The World: cộng đồng trăm con nối núi sông đồng bằng và biển trong vòng chim Lạc cùng hoa sen",
+      "width": 768,
+      "height": 1152,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/cards/major-21-the-world.webp",
+      "alt": "Minh họa nguyên bản The World: cộng đồng trăm con nối núi sông đồng bằng và biển trong vòng chim Lạc cùng hoa sen"
+    },
+    "keywordsUpright": [
+      "hoàn thành",
+      "toàn vẹn",
+      "mở rộng",
+      "Núi, sông, đồng bằng và biển khép vòng hành trình"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Hoàn tất một chu kỳ, hội nhập kinh nghiệm và bước vào phạm vi rộng hơn.</p><p>Hãy ghi nhận điều đã hoàn tất, đóng vòng cũ cho tử tế rồi mới bắt đầu vòng mới.</p>",
+    "meaningReversed": "<p>Việc gần xong nhưng còn mắt xích chưa khép, hoặc ngại rời một chặng đã quen.</p>",
+    "story": "<p><strong>Trăm con chung một cõi</strong> — Núi, sông, đồng bằng và biển khép vòng hành trình. Đây là lớp liên tưởng Việt hóa đang được biên tập; nghĩa thực hành vẫn theo cấu trúc RWS.</p>",
+    "symbols": [
+      {
+        "name": "Trăm con chung một cõi",
+        "meaning": "Núi, sông, đồng bằng và biển khép vòng hành trình"
+      },
+      {
+        "name": "Trống đồng",
+        "meaning": "Cội nguồn và ký ức cộng đồng"
+      }
+    ],
+    "question": "Thông điệp của The World đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Thế Giới – The World",
+      "description": "The World: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Trăm con chung một cõi trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/cards/major-21-the-world.webp",
+      "canonical": "/la-bai/the-world/"
+    },
+    "status": "published",
+    "order": 21,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "ace-of-wands",
+    "nameVi": "Át Tre",
+    "nameEn": "Ace of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Ace of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "cảm hứng",
+      "khởi sự",
+      "năng lượng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tia lửa khởi đầu, cảm hứng và động lực muốn được thử ngay.</p><p>Một cơ hội sáng tạo đang xuất hiện; hãy cho nó một hành động đầu tiên nhỏ nhưng thật.</p>",
+    "meaningReversed": "<p>Ý tưởng chưa bén, chậm khởi động hoặc năng lượng bị phân tán.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Ace of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Át Tre – Ace of Wands",
+      "description": "Ace of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ace-of-wands/"
+    },
+    "status": "published",
+    "order": 22,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 2,
+    "slug": "two-of-wands",
+    "nameVi": "2 Tre",
+    "nameEn": "Two of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Two of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "tầm nhìn",
+      "kế hoạch",
+      "lựa chọn"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Lập kế hoạch, nhìn xa và cân nhắc bước ra khỏi vùng quen thuộc.</p><p>Bạn đã có nền tảng; câu hỏi là sẽ dùng nó để đi xa đến đâu.</p>",
+    "meaningReversed": "<p>Sợ mở rộng, kế hoạch thiếu dữ kiện hoặc chọn an toàn vì thiếu tự tin.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Two of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "2 Tre – Two of Wands",
+      "description": "Two of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/two-of-wands/"
+    },
+    "status": "published",
+    "order": 23,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 3,
+    "slug": "three-of-wands",
+    "nameVi": "3 Tre",
+    "nameEn": "Three of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Three of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "mở rộng",
+      "tiến triển",
+      "viễn kiến"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Mở rộng, chờ kết quả đầu tiên và phối hợp với thế giới bên ngoài.</p><p>Việc đã rời bàn vẽ; giờ cần quan sát phản hồi và điều chỉnh đường đi.</p>",
+    "meaningReversed": "<p>Chậm trễ, tầm nhìn hẹp hoặc kế hoạch mở rộng thiếu chuẩn bị.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Three of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "3 Tre – Three of Wands",
+      "description": "Three of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/three-of-wands/"
+    },
+    "status": "published",
+    "order": 24,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 4,
+    "slug": "four-of-wands",
+    "nameVi": "4 Tre",
+    "nameEn": "Four of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Four of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "ăn mừng",
+      "ổn định",
+      "cộng đồng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cột mốc vui, nền tảng ổn định và cảm giác thuộc về một cộng đồng.</p><p>Hãy dừng lại ghi nhận cột mốc và những người đã giúp nó thành hình.</p>",
+    "meaningReversed": "<p>Niềm vui riêng tư, nền nhà chưa yên hoặc căng thẳng trong nhóm.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Four of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "4 Tre – Four of Wands",
+      "description": "Four of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/four-of-wands/"
+    },
+    "status": "published",
+    "order": 25,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 5,
+    "slug": "five-of-wands",
+    "nameVi": "5 Tre",
+    "nameEn": "Five of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Five of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "cạnh tranh",
+      "va chạm",
+      "thử sức"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cạnh tranh, va chạm quan điểm và năng lượng hỗn độn cần được điều phối.</p><p>Không phải mọi xung đột đều xấu; hãy biến nó thành luật chơi và bài học rõ ràng.</p>",
+    "meaningReversed": "<p>Né xung đột, hạ nhiệt tranh chấp hoặc bất đồng kéo dài trong im lặng.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Five of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "5 Tre – Five of Wands",
+      "description": "Five of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/five-of-wands/"
+    },
+    "status": "published",
+    "order": 26,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 6,
+    "slug": "six-of-wands",
+    "nameVi": "6 Tre",
+    "nameEn": "Six of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Six of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "thành tựu",
+      "ghi nhận",
+      "tự tin"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Được công nhận, chiến thắng và tiến lên nhờ niềm tin tập thể.</p><p>Bạn có quyền nhận công, nhưng nên dùng uy tín mới để phục vụ chặng tiếp theo.</p>",
+    "meaningReversed": "<p>Thiếu ghi nhận, cái tôi phụ thuộc lời khen hoặc thành công chưa bền.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Six of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "6 Tre – Six of Wands",
+      "description": "Six of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/six-of-wands/"
+    },
+    "status": "published",
+    "order": 27,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 7,
+    "slug": "seven-of-wands",
+    "nameVi": "7 Tre",
+    "nameEn": "Seven of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Seven of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "kiên định",
+      "ranh giới",
+      "bảo vệ"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Giữ vị trí, bảo vệ giá trị và kiên định trước áp lực.</p><p>Chọn trận đáng giữ; không phải lời phản đối nào cũng cần một cuộc chiến.</p>",
+    "meaningReversed": "<p>Quá tải, phòng thủ mọi phía hoặc không còn chắc điều mình đang bảo vệ.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Seven of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "7 Tre – Seven of Wands",
+      "description": "Seven of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/seven-of-wands/"
+    },
+    "status": "published",
+    "order": 28,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 8,
+    "slug": "eight-of-wands",
+    "nameVi": "8 Tre",
+    "nameEn": "Eight of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Eight of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "tốc độ",
+      "tin tức",
+      "chuyển động"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tiến triển nhanh, thông tin tới dồn dập và thời điểm hành động đã chín.</p><p>Mọi thứ đang chạy; hãy giữ thông điệp ngắn và ưu tiên điều cần quyết ngay.</p>",
+    "meaningReversed": "<p>Chậm trễ, tín hiệu chéo hoặc hành động nhanh nhưng lệch hướng.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Eight of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "8 Tre – Eight of Wands",
+      "description": "Eight of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/eight-of-wands/"
+    },
+    "status": "published",
+    "order": 29,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 9,
+    "slug": "nine-of-wands",
+    "nameVi": "9 Tre",
+    "nameEn": "Nine of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Nine of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "bền bỉ",
+      "cảnh giác",
+      "ranh giới"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Sức bền, cảnh giác và nỗ lực cuối trước khi chạm đích.</p><p>Bạn chưa thua; nhưng muốn đi tiếp thì phải bảo vệ năng lượng, không chỉ siết răng chịu đựng.</p>",
+    "meaningReversed": "<p>Kiệt sức, đa nghi hoặc lặp lại phòng thủ vì vết thương cũ.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Nine of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "9 Tre – Nine of Wands",
+      "description": "Nine of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/nine-of-wands/"
+    },
+    "status": "published",
+    "order": 30,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 10,
+    "slug": "ten-of-wands",
+    "nameVi": "10 Tre",
+    "nameEn": "Ten of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Ten of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "gánh nặng",
+      "trách nhiệm",
+      "quá tải"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Gánh nhiều trách nhiệm, thành quả đi kèm trọng lượng và nhu cầu phân bổ lại.</p><p>Hoàn thành không có nghĩa phải tự mang tất cả; hãy phân biệt trách nhiệm với thói ôm việc.</p>",
+    "meaningReversed": "<p>Buông bớt, ủy quyền hoặc gánh việc không thật sự thuộc về mình.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Ten of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "10 Tre – Ten of Wands",
+      "description": "Ten of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ten-of-wands/"
+    },
+    "status": "published",
+    "order": 31,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "page-of-wands",
+    "nameVi": "Tiểu đồng Tre",
+    "nameEn": "Page of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Page of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "tò mò",
+      "khám phá",
+      "thông điệp"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tin vui, tò mò sáng tạo và người học sẵn sàng khám phá.</p><p>Cho phép mình là người mới và thử một hướng khiến bạn thật sự có lửa.</p>",
+    "meaningReversed": "<p>Nóng hứng rồi bỏ, thiếu định hướng hoặc sợ bộc lộ ý tưởng non trẻ.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Page of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tiểu đồng Tre – Page of Wands",
+      "description": "Page of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/page-of-wands/"
+    },
+    "status": "published",
+    "order": 32,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "knight-of-wands",
+    "nameVi": "Hiệp sĩ Tre",
+    "nameEn": "Knight of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Knight of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "táo bạo",
+      "phiêu lưu",
+      "xung lực"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Hành động táo bạo, phiêu lưu và sức hút của tốc độ.</p><p>Dũng khí là lợi thế nếu nó có mục tiêu và một điểm dừng an toàn.</p>",
+    "meaningReversed": "<p>Bốc đồng, nóng nảy hoặc lao đi mà không tính hậu quả.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Knight of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hiệp sĩ Tre – Knight of Wands",
+      "description": "Knight of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/knight-of-wands/"
+    },
+    "status": "published",
+    "order": 33,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "queen-of-wands",
+    "nameVi": "Nữ vương Tre",
+    "nameEn": "Queen of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá Queen of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "tự tin",
+      "ấm áp",
+      "cuốn hút"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tự tin ấm áp, độc lập và khả năng truyền lửa cho người khác.</p><p>Hãy chiếm lấy không gian của mình mà không cần làm nhỏ ánh sáng của người khác.</p>",
+    "meaningReversed": "<p>Ghen tị, thu mình hoặc cần sự chú ý để xác nhận giá trị bản thân.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của Queen of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nữ vương Tre – Queen of Wands",
+      "description": "Queen of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/queen-of-wands/"
+    },
+    "status": "published",
+    "order": 34,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "king-of-wands",
+    "nameVi": "Quốc vương Tre",
+    "nameEn": "King of Wands",
+    "nameFolk": "Tre",
+    "arcana": "minor",
+    "suit": "wands",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre cho lá King of Wands",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-tre.png",
+      "alt": "Phù hiệu Nhà Tre"
+    },
+    "keywordsUpright": [
+      "tầm nhìn",
+      "lãnh đạo",
+      "doanh khí"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tầm nhìn lớn, lãnh đạo sáng tạo và dám chịu trách nhiệm cho hướng đi.</p><p>Người dẫn đường giỏi không chỉ thấy xa mà còn biến tầm nhìn thành hệ thống người khác đi cùng được.</p>",
+    "meaningReversed": "<p>Độc đoán, hứa quá tầm hoặc theo đuổi tầm nhìn mà bỏ quên con người.</p>",
+    "story": "<p>Nhà Tre chuyển dịch Wands sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Tre",
+        "meaning": "Biểu tượng bản địa của chất Wands"
+      }
+    ],
+    "question": "Thông điệp của King of Wands đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Quốc vương Tre – King of Wands",
+      "description": "King of Wands: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Tre trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/king-of-wands/"
+    },
+    "status": "published",
+    "order": 35,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "ace-of-cups",
+    "nameVi": "Át Sen",
+    "nameEn": "Ace of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Ace of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "tình cảm",
+      "mở lòng",
+      "trực giác"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cảm xúc mới, lòng trắc ẩn và một dòng kết nối được mở ra.</p><p>Một chiếc cốc chỉ trao đi tốt khi nó có nguồn để tự đầy.</p>",
+    "meaningReversed": "<p>Khép lòng, cảm xúc bị dồn nén hoặc cần tự nuôi dưỡng trước.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Ace of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Át Sen – Ace of Cups",
+      "description": "Ace of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ace-of-cups/"
+    },
+    "status": "published",
+    "order": 36,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 2,
+    "slug": "two-of-cups",
+    "nameVi": "2 Sen",
+    "nameEn": "Two of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Two of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "kết đôi",
+      "hòa hợp",
+      "trao đổi"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Gặp gỡ bình đẳng, hấp dẫn lẫn nhau và thỏa thuận từ thiện chí.</p><p>Điểm mạnh của mối nối này nằm ở sự tương hỗ, không phải một phía cố gắng nhiều hơn.</p>",
+    "meaningReversed": "<p>Lệch nhịp, hiểu lầm hoặc mối quan hệ thiếu sự đáp lại.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Two of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "2 Sen – Two of Cups",
+      "description": "Two of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/two-of-cups/"
+    },
+    "status": "published",
+    "order": 37,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 3,
+    "slug": "three-of-cups",
+    "nameVi": "3 Sen",
+    "nameEn": "Three of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Three of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "bạn bè",
+      "ăn mừng",
+      "cộng đồng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Bạn bè, chia vui và sức nâng đỡ của cộng đồng.</p><p>Niềm vui được nhân lên khi có người cùng chia, miễn là ranh giới vẫn rõ.</p>",
+    "meaningReversed": "<p>Quá đà, chuyện nhóm gây mệt hoặc cảm giác bị đứng ngoài.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Three of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "3 Sen – Three of Cups",
+      "description": "Three of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/three-of-cups/"
+    },
+    "status": "published",
+    "order": 38,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 4,
+    "slug": "four-of-cups",
+    "nameVi": "4 Sen",
+    "nameEn": "Four of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Four of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "thờ ơ",
+      "suy ngẫm",
+      "cơ hội"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Chán nản, hướng nội và chưa nhận ra một cơ hội đang được đưa tới.</p><p>Không cần nhận mọi lời mời, nhưng hãy chắc mình từ chối vì hiểu rõ chứ không vì tê mỏi.</p>",
+    "meaningReversed": "<p>Tỉnh lại khỏi trì trệ, mở lòng với khả năng mới hoặc chọn rút lui có ý thức.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Four of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "4 Sen – Four of Cups",
+      "description": "Four of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/four-of-cups/"
+    },
+    "status": "published",
+    "order": 39,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 5,
+    "slug": "five-of-cups",
+    "nameVi": "5 Sen",
+    "nameEn": "Five of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Five of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "mất mát",
+      "tiếc nuối",
+      "hồi phục"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Mất mát, tiếc nuối và sự chú ý bị giữ ở phần đã đổ vỡ.</p><p>Đau buồn cần được nhìn nhận, rồi mới có thể quay lại với những chiếc cốc chưa mất.</p>",
+    "meaningReversed": "<p>Chấp nhận, hồi phục và bắt đầu nhìn thấy điều vẫn còn.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Five of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "5 Sen – Five of Cups",
+      "description": "Five of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/five-of-cups/"
+    },
+    "status": "published",
+    "order": 40,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 6,
+    "slug": "six-of-cups",
+    "nameVi": "6 Sen",
+    "nameEn": "Six of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Six of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "ký ức",
+      "hồn nhiên",
+      "trở về"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Ký ức, sự hồn nhiên và điều tốt từ quá khứ quay lại.</p><p>Quá khứ có thể là nguồn nuôi dưỡng, miễn là nó không thay thế hiện tại.</p>",
+    "meaningReversed": "<p>Mắc kẹt trong hoài niệm, lý tưởng hóa quá khứ hoặc trưởng thành khỏi khuôn cũ.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Six of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "6 Sen – Six of Cups",
+      "description": "Six of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/six-of-cups/"
+    },
+    "status": "published",
+    "order": 41,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 7,
+    "slug": "seven-of-cups",
+    "nameVi": "7 Sen",
+    "nameEn": "Seven of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Seven of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "lựa chọn",
+      "ảo ảnh",
+      "khả năng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Nhiều lựa chọn, tưởng tượng phong phú và nguy cơ bị mê bởi vẻ ngoài.</p><p>Đừng chọn bằng cảm giác hấp dẫn đầu tiên; hãy kiểm tra cái giá và tính thực tế của từng phương án.</p>",
+    "meaningReversed": "<p>Thu hẹp lựa chọn, nhìn rõ ưu tiên hoặc tỉnh khỏi ảo tưởng.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Seven of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "7 Sen – Seven of Cups",
+      "description": "Seven of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/seven-of-cups/"
+    },
+    "status": "published",
+    "order": 42,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 8,
+    "slug": "eight-of-cups",
+    "nameVi": "8 Sen",
+    "nameEn": "Eight of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Eight of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "rời bỏ",
+      "tìm kiếm",
+      "chuyển hướng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Rời điều không còn đủ ý nghĩa để tìm một chiều sâu khác.</p><p>Rời đi có thể là hành động trưởng thành khi bạn biết rõ mình đang tìm điều gì hơn.</p>",
+    "meaningReversed": "<p>Sợ rời đi, quay lại bài học cũ hoặc bỏ cuộc trước khi hiểu điều mình cần.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Eight of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "8 Sen – Eight of Cups",
+      "description": "Eight of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/eight-of-cups/"
+    },
+    "status": "published",
+    "order": 43,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 9,
+    "slug": "nine-of-cups",
+    "nameVi": "9 Sen",
+    "nameEn": "Nine of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Nine of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "mãn nguyện",
+      "ước nguyện",
+      "hưởng thụ"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Mãn nguyện, điều ước thành hình và sự thoải mái đáng tận hưởng.</p><p>Hãy tận hưởng thành quả và đồng thời hỏi niềm vui này có thật sự nuôi mình lâu dài không.</p>",
+    "meaningReversed": "<p>Thỏa mãn bề mặt, nuông chiều quá mức hoặc có đủ mà vẫn thấy thiếu.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Nine of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "9 Sen – Nine of Cups",
+      "description": "Nine of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/nine-of-cups/"
+    },
+    "status": "published",
+    "order": 44,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 10,
+    "slug": "ten-of-cups",
+    "nameVi": "10 Sen",
+    "nameEn": "Ten of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Ten of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "hòa thuận",
+      "gia đình",
+      "viên mãn"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Hòa thuận, hạnh phúc được chia sẻ và cảm giác gia đình/cộng đồng trọn vẹn.</p><p>Sự ấm êm bền đến từ việc cùng xây và cùng sửa, không phải hình ảnh hoàn hảo bên ngoài.</p>",
+    "meaningReversed": "<p>Kỳ vọng gia đình quá đẹp, bất hòa kín hoặc giá trị chung cần được nói lại.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Ten of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "10 Sen – Ten of Cups",
+      "description": "Ten of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ten-of-cups/"
+    },
+    "status": "published",
+    "order": 45,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "page-of-cups",
+    "nameVi": "Tiểu đồng Sen",
+    "nameEn": "Page of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Page of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "nhạy cảm",
+      "tin nhắn",
+      "sáng tạo"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Thông điệp cảm xúc, trực giác non trẻ và sự ngạc nhiên dịu dàng.</p><p>Hãy đón cảm xúc như một thông tin mới, không vội coi nó là toàn bộ sự thật.</p>",
+    "meaningReversed": "<p>Nhạy cảm quá mức, trốn vào mơ mộng hoặc chưa biết diễn đạt cảm xúc.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Page of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tiểu đồng Sen – Page of Cups",
+      "description": "Page of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/page-of-cups/"
+    },
+    "status": "published",
+    "order": 46,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "knight-of-cups",
+    "nameVi": "Hiệp sĩ Sen",
+    "nameEn": "Knight of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Knight of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "lãng mạn",
+      "lý tưởng",
+      "lời mời"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Lãng mạn, theo đuổi lý tưởng và lời mời xuất phát từ trái tim.</p><p>Cảm hứng đẹp cần một hành động nhất quán để trở thành điều có thể tin.</p>",
+    "meaningReversed": "<p>Ảo tưởng tình cảm, thất thường hoặc lời đẹp không đi cùng hành động.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Knight of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hiệp sĩ Sen – Knight of Cups",
+      "description": "Knight of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/knight-of-cups/"
+    },
+    "status": "published",
+    "order": 47,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "queen-of-cups",
+    "nameVi": "Nữ vương Sen",
+    "nameEn": "Queen of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá Queen of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "thấu cảm",
+      "trực giác",
+      "chăm sóc"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Thấu cảm sâu, trực giác và khả năng giữ không gian an toàn cho cảm xúc.</p><p>Lắng nghe bằng trái tim nhưng giữ đôi chân trên mặt đất và ranh giới của mình.</p>",
+    "meaningReversed": "<p>Thấm cảm xúc người khác quá mức, lệ thuộc hoặc bỏ quên nhu cầu riêng.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của Queen of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nữ vương Sen – Queen of Cups",
+      "description": "Queen of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/queen-of-cups/"
+    },
+    "status": "published",
+    "order": 48,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "king-of-cups",
+    "nameVi": "Quốc vương Sen",
+    "nameEn": "King of Cups",
+    "nameFolk": "Sen",
+    "arcana": "minor",
+    "suit": "cups",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen cho lá King of Cups",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-sen.png",
+      "alt": "Phù hiệu Nhà Sen"
+    },
+    "keywordsUpright": [
+      "điềm tĩnh",
+      "trắc ẩn",
+      "cân bằng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Trưởng thành cảm xúc, bình tĩnh và biết dùng lòng trắc ẩn trong quyết định.</p><p>Làm chủ cảm xúc không phải không cảm thấy, mà là không để một cơn sóng quyết định thay mình.</p>",
+    "meaningReversed": "<p>Kìm nén, thao túng cảm xúc hoặc vẻ bình thản che một cơn sóng lớn.</p>",
+    "story": "<p>Nhà Sen chuyển dịch Cups sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Sen",
+        "meaning": "Biểu tượng bản địa của chất Cups"
+      }
+    ],
+    "question": "Thông điệp của King of Cups đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Quốc vương Sen – King of Cups",
+      "description": "King of Cups: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Sen trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/king-of-cups/"
+    },
+    "status": "published",
+    "order": 49,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "ace-of-swords",
+    "nameVi": "Át Dâu tằm",
+    "nameEn": "Ace of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Ace of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "sự thật",
+      "minh triết",
+      "quyết định"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Ý tưởng sắc rõ, sự thật mới và quyết định cắt qua mơ hồ.</p><p>Hãy gọi đúng tên vấn đề; sự rõ ràng là bước đầu của một lựa chọn công bằng.</p>",
+    "meaningReversed": "<p>Nhầm lẫn, lời nói gây hại hoặc sự thật bị dùng thiếu trách nhiệm.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Ace of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Át Dâu tằm – Ace of Swords",
+      "description": "Ace of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ace-of-swords/"
+    },
+    "status": "published",
+    "order": 50,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 2,
+    "slug": "two-of-swords",
+    "nameVi": "2 Dâu tằm",
+    "nameEn": "Two of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Two of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "bế tắc",
+      "cân nhắc",
+      "trì hoãn"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Bế tắc, cân nhắc hai phía và tạm hoãn khi chưa đủ dữ kiện.</p><p>Sự trung lập chỉ hữu ích trong một thời gian; hãy xác định dữ kiện nào còn thiếu để quyết.</p>",
+    "meaningReversed": "<p>Quá tải thông tin, bí mật lộ ra hoặc không thể trì hoãn thêm.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Two of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "2 Dâu tằm – Two of Swords",
+      "description": "Two of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/two-of-swords/"
+    },
+    "status": "published",
+    "order": 51,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 3,
+    "slug": "three-of-swords",
+    "nameVi": "3 Dâu tằm",
+    "nameEn": "Three of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Three of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "đau lòng",
+      "sự thật",
+      "hồi phục"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Đau lòng, chia cách và một sự thật khó nhưng cần được thừa nhận.</p><p>Đừng tô hồng mất mát; thành thật với vết thương là cách bắt đầu chữa lành.</p>",
+    "meaningReversed": "<p>Khâu lành, tha thứ hoặc nỗi đau vẫn mắc lại vì chưa được gọi tên.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Three of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "3 Dâu tằm – Three of Swords",
+      "description": "Three of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/three-of-swords/"
+    },
+    "status": "published",
+    "order": 52,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 4,
+    "slug": "four-of-swords",
+    "nameVi": "4 Dâu tằm",
+    "nameEn": "Four of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Four of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "nghỉ ngơi",
+      "phục hồi",
+      "tĩnh tâm"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Nghỉ ngơi, phục hồi tinh thần và tạm rời cuộc tranh đấu.</p><p>Nghỉ là một phần của chiến lược; tâm trí quá mệt sẽ biến mọi việc thành khẩn cấp.</p>",
+    "meaningReversed": "<p>Bồn chồn, kiệt sức kéo dài hoặc bị buộc phải dừng.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Four of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "4 Dâu tằm – Four of Swords",
+      "description": "Four of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/four-of-swords/"
+    },
+    "status": "published",
+    "order": 53,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 5,
+    "slug": "five-of-swords",
+    "nameVi": "5 Dâu tằm",
+    "nameEn": "Five of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Five of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "xung đột",
+      "thắng thua",
+      "hệ quả"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Xung đột thắng-thua, chiến thắng đắt giá và lời nói để lại hậu quả.</p><p>Hãy hỏi thắng cuộc này sẽ để lại mối quan hệ và danh dự như thế nào.</p>",
+    "meaningReversed": "<p>Hòa giải, buông cuộc đấu vô ích hoặc oán giận còn âm ỉ.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Five of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "5 Dâu tằm – Five of Swords",
+      "description": "Five of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/five-of-swords/"
+    },
+    "status": "published",
+    "order": 54,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 6,
+    "slug": "six-of-swords",
+    "nameVi": "6 Dâu tằm",
+    "nameEn": "Six of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Six of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "chuyển tiếp",
+      "rời đi",
+      "hồi phục"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Rời vùng hỗn loạn, chuyển tiếp khó nhưng hướng tới nơi yên hơn.</p><p>Không phải đã hết đau, nhưng bạn đang chọn một hướng giúp đau đớn có cơ hội lắng xuống.</p>",
+    "meaningReversed": "<p>Mang theo hành lý cũ, chậm chuyển hoặc chưa thể rời vấn đề.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Six of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "6 Dâu tằm – Six of Swords",
+      "description": "Six of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/six-of-swords/"
+    },
+    "status": "published",
+    "order": 55,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 7,
+    "slug": "seven-of-swords",
+    "nameVi": "7 Dâu tằm",
+    "nameEn": "Seven of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Seven of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "chiến lược",
+      "kín đáo",
+      "né tránh"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Chiến lược kín, hành động độc lập hoặc né tránh trách nhiệm.</p><p>Kế hoạch thông minh khác với gian dối; hãy kiểm tra ai đang phải trả giá cho cách đi vòng.</p>",
+    "meaningReversed": "<p>Sự thật lộ ra, thú nhận hoặc tự lừa mình không còn hiệu quả.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Seven of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "7 Dâu tằm – Seven of Swords",
+      "description": "Seven of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/seven-of-swords/"
+    },
+    "status": "published",
+    "order": 56,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 8,
+    "slug": "eight-of-swords",
+    "nameVi": "8 Dâu tằm",
+    "nameEn": "Eight of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Eight of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "mắc kẹt",
+      "giới hạn",
+      "tự giải phóng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cảm giác bị kẹt, giới hạn do niềm tin và nỗi sợ làm hẹp lựa chọn.</p><p>Tình thế có ràng buộc thật, nhưng thường vẫn còn một bước nhỏ bạn có thể chủ động.</p>",
+    "meaningReversed": "<p>Thấy lại quyền chọn, tháo gỡ niềm tin cũ hoặc lo âu vẫn níu chân.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Eight of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "8 Dâu tằm – Eight of Swords",
+      "description": "Eight of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/eight-of-swords/"
+    },
+    "status": "published",
+    "order": 57,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 9,
+    "slug": "nine-of-swords",
+    "nameVi": "9 Dâu tằm",
+    "nameEn": "Nine of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Nine of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "lo âu",
+      "mất ngủ",
+      "ám ảnh"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Lo âu, mất ngủ và tâm trí lặp lại viễn cảnh tệ nhất.</p><p>Hãy đưa nỗi sợ ra ánh sáng bằng dữ kiện và hỗ trợ thực tế; đừng một mình tranh luận với nó suốt đêm.</p>",
+    "meaningReversed": "<p>Bắt đầu hồi phục, tìm hỗ trợ hoặc nỗi sợ bị giấu ngày càng nặng.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Nine of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "9 Dâu tằm – Nine of Swords",
+      "description": "Nine of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/nine-of-swords/"
+    },
+    "status": "published",
+    "order": 58,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 10,
+    "slug": "ten-of-swords",
+    "nameVi": "10 Dâu tằm",
+    "nameEn": "Ten of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Ten of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "kết thúc",
+      "chạm đáy",
+      "bình minh"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Một kết thúc đau nhưng dứt khoát; điều cũ không thể kéo dài thêm.</p><p>Khi câu chuyện cũ đã kết thúc, năng lượng nên dành cho hồi phục và bài học, không phải phủ nhận.</p>",
+    "meaningReversed": "<p>Sống sót, phục hồi chậm hoặc chưa chịu khép một chương đã hết.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Ten of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "10 Dâu tằm – Ten of Swords",
+      "description": "Ten of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ten-of-swords/"
+    },
+    "status": "published",
+    "order": 59,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "page-of-swords",
+    "nameVi": "Tiểu đồng Dâu tằm",
+    "nameEn": "Page of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Page of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "tò mò",
+      "quan sát",
+      "tin tức"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tò mò trí tuệ, quan sát nhanh và tin tức cần được kiểm chứng.</p><p>Đặt câu hỏi sắc nhưng đừng vội biến giả thuyết thành kết luận.</p>",
+    "meaningReversed": "<p>Nói trước khi hiểu, theo dõi quá mức hoặc thông tin thiếu chín chắn.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Page of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tiểu đồng Dâu tằm – Page of Swords",
+      "description": "Page of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/page-of-swords/"
+    },
+    "status": "published",
+    "order": 60,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "knight-of-swords",
+    "nameVi": "Hiệp sĩ Dâu tằm",
+    "nameEn": "Knight of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Knight of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "quyết liệt",
+      "tốc độ",
+      "tham vọng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Quyết liệt, tốc độ trí tuệ và lao thẳng vào mục tiêu.</p><p>Một ý đúng vẫn có thể gây hại nếu cách triển khai không để ai kịp hiểu và chuẩn bị.</p>",
+    "meaningReversed": "<p>Cực đoan, hấp tấp hoặc tranh luận chỉ để thắng.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Knight of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hiệp sĩ Dâu tằm – Knight of Swords",
+      "description": "Knight of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/knight-of-swords/"
+    },
+    "status": "published",
+    "order": 61,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "queen-of-swords",
+    "nameVi": "Nữ vương Dâu tằm",
+    "nameEn": "Queen of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá Queen of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "sáng suốt",
+      "ranh giới",
+      "thẳng thắn"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Sáng suốt, độc lập và giao tiếp thẳng với ranh giới rõ.</p><p>Nói thật không cần tàn nhẫn; sự rõ ràng tốt nhất vẫn giữ phẩm giá cho cả hai bên.</p>",
+    "meaningReversed": "<p>Lạnh lùng, cay nghiệt hoặc nỗi đau biến thành phán xét.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của Queen of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nữ vương Dâu tằm – Queen of Swords",
+      "description": "Queen of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/queen-of-swords/"
+    },
+    "status": "published",
+    "order": 62,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "king-of-swords",
+    "nameVi": "Quốc vương Dâu tằm",
+    "nameEn": "King of Swords",
+    "nameFolk": "Dâu tằm",
+    "arcana": "minor",
+    "suit": "swords",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm cho lá King of Swords",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-dau-tam.png",
+      "alt": "Phù hiệu Nhà Dâu tằm"
+    },
+    "keywordsUpright": [
+      "lý trí",
+      "thẩm quyền",
+      "nguyên tắc"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Tư duy hệ thống, thẩm quyền và quyết định dựa trên nguyên tắc.</p><p>Quyền lực trí tuệ đi cùng trách nhiệm dùng tiêu chuẩn nhất quán, kể cả với chính mình.</p>",
+    "meaningReversed": "<p>Lạm dụng lý lẽ, độc đoán hoặc thông minh mà thiếu đạo đức.</p>",
+    "story": "<p>Nhà Dâu tằm chuyển dịch Swords sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Dâu tằm",
+        "meaning": "Biểu tượng bản địa của chất Swords"
+      }
+    ],
+    "question": "Thông điệp của King of Swords đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Quốc vương Dâu tằm – King of Swords",
+      "description": "King of Swords: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Dâu tằm trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/king-of-swords/"
+    },
+    "status": "published",
+    "order": 63,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "ace-of-pentacles",
+    "nameVi": "Át Lúa",
+    "nameEn": "Ace of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Ace of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "cơ hội",
+      "nguồn lực",
+      "nền tảng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cơ hội vật chất, hạt giống ổn định và một nền tảng có thể đo được.</p><p>Hãy biến tiềm năng thành một bước cụ thể: ngân sách, lịch, công cụ hoặc thỏa thuận rõ.</p>",
+    "meaningReversed": "<p>Cơ hội trôi qua, kế hoạch tài chính yếu hoặc đặt nền thiếu thực tế.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Ace of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Át Lúa – Ace of Pentacles",
+      "description": "Ace of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ace-of-pentacles/"
+    },
+    "status": "published",
+    "order": 64,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 2,
+    "slug": "two-of-pentacles",
+    "nameVi": "2 Lúa",
+    "nameEn": "Two of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Two of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "cân bằng",
+      "linh hoạt",
+      "ưu tiên"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cân nhiều việc, linh hoạt nguồn lực và giữ nhịp giữa thay đổi.</p><p>Bạn có thể xoay xở, nhưng cần biết việc nào sẽ rơi nếu tiếp tục thêm tải.</p>",
+    "meaningReversed": "<p>Quá tải, ưu tiên lộn xộn hoặc dòng tiền/thời gian mất cân bằng.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Two of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "2 Lúa – Two of Pentacles",
+      "description": "Two of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/two-of-pentacles/"
+    },
+    "status": "published",
+    "order": 65,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 3,
+    "slug": "three-of-pentacles",
+    "nameVi": "3 Lúa",
+    "nameEn": "Three of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Three of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "hợp tác",
+      "tay nghề",
+      "chất lượng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Hợp tác tay nghề, học từ phản hồi và xây thứ có tiêu chuẩn.</p><p>Kết quả tốt đến từ kỹ năng khác nhau gặp nhau trong một bản vẽ chung.</p>",
+    "meaningReversed": "<p>Làm việc rời rạc, chất lượng thấp hoặc vai trò trong nhóm không rõ.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Three of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "3 Lúa – Three of Pentacles",
+      "description": "Three of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/three-of-pentacles/"
+    },
+    "status": "published",
+    "order": 66,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 4,
+    "slug": "four-of-pentacles",
+    "nameVi": "4 Lúa",
+    "nameEn": "Four of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Four of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "kiểm soát",
+      "an toàn",
+      "giữ gìn"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Giữ chặt nguồn lực, tìm an toàn và sợ mất điều đã tích lũy.</p><p>Tiết kiệm giúp an toàn; bám giữ quá mức có thể làm nguồn lực ngừng lưu chuyển.</p>",
+    "meaningReversed": "<p>Nới tay, chi tiêu thiếu kiểm soát hoặc học cách chia sẻ có ranh giới.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Four of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "4 Lúa – Four of Pentacles",
+      "description": "Four of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/four-of-pentacles/"
+    },
+    "status": "published",
+    "order": 67,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 5,
+    "slug": "five-of-pentacles",
+    "nameVi": "5 Lúa",
+    "nameEn": "Five of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Five of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "khó khăn",
+      "thiếu thốn",
+      "hỗ trợ"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Thiếu thốn, bị bỏ lại và giai đoạn cần sự hỗ trợ thực tế.</p><p>Đừng để xấu hổ ngăn bạn nhìn thấy cánh cửa hỗ trợ đang có.</p>",
+    "meaningReversed": "<p>Phục hồi, tìm thấy nguồn giúp đỡ hoặc thoát dần tư duy khan hiếm.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Five of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "5 Lúa – Five of Pentacles",
+      "description": "Five of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/five-of-pentacles/"
+    },
+    "status": "published",
+    "order": 68,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 6,
+    "slug": "six-of-pentacles",
+    "nameVi": "6 Lúa",
+    "nameEn": "Six of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Six of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "hào phóng",
+      "trao đổi",
+      "cân bằng"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Cho và nhận, phân bổ nguồn lực và quyền lực nằm trong sự giúp đỡ.</p><p>Sự hỗ trợ lành mạnh phải tôn trọng người nhận và minh bạch kỳ vọng.</p>",
+    "meaningReversed": "<p>Món quà có điều kiện, nợ nần hoặc quan hệ cho-nhận mất cân bằng.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Six of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "6 Lúa – Six of Pentacles",
+      "description": "Six of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/six-of-pentacles/"
+    },
+    "status": "published",
+    "order": 69,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 7,
+    "slug": "seven-of-pentacles",
+    "nameVi": "7 Lúa",
+    "nameEn": "Seven of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Seven of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "kiên nhẫn",
+      "đánh giá",
+      "đầu tư"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Đánh giá tiến độ, kiên nhẫn và xem công sức đã sinh kết quả gì.</p><p>Đừng chỉ hỏi đã làm bao lâu; hãy hỏi dấu hiệu nào chứng minh cách làm đang hiệu quả.</p>",
+    "meaningReversed": "<p>Nóng ruột, đầu tư sai chỗ hoặc tiếp tục chỉ vì đã tốn quá nhiều.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Seven of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "7 Lúa – Seven of Pentacles",
+      "description": "Seven of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/seven-of-pentacles/"
+    },
+    "status": "published",
+    "order": 70,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 8,
+    "slug": "eight-of-pentacles",
+    "nameVi": "8 Lúa",
+    "nameEn": "Eight of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Eight of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "tay nghề",
+      "luyện tập",
+      "chăm chỉ"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Rèn nghề, lặp lại có chủ đích và nâng chất lượng qua từng phiên bản.</p><p>Tiến bộ đến từ vòng lặp làm–nhận phản hồi–sửa, không phải số giờ đơn thuần.</p>",
+    "meaningReversed": "<p>Làm cho xong, cầu toàn vô ích hoặc lặp lại mà không học.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Eight of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "8 Lúa – Eight of Pentacles",
+      "description": "Eight of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/eight-of-pentacles/"
+    },
+    "status": "published",
+    "order": 71,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 9,
+    "slug": "nine-of-pentacles",
+    "nameVi": "9 Lúa",
+    "nameEn": "Nine of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Nine of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "độc lập",
+      "thành quả",
+      "tinh tế"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Độc lập, thành quả chín và sự đủ đầy do kỷ luật tạo nên.</p><p>Hãy tận hưởng điều mình đã xây và bảo vệ năng lực tự đứng vững.</p>",
+    "meaningReversed": "<p>Phụ thuộc tài chính, làm việc quá mức hoặc thành công bề ngoài thiếu tự do thật.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Nine of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "9 Lúa – Nine of Pentacles",
+      "description": "Nine of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/nine-of-pentacles/"
+    },
+    "status": "published",
+    "order": 72,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 10,
+    "slug": "ten-of-pentacles",
+    "nameVi": "10 Lúa",
+    "nameEn": "Ten of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Ten of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "di sản",
+      "gia đình",
+      "bền vững"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Di sản, ổn định dài hạn và nguồn lực đi qua nhiều thế hệ.</p><p>Giá trị lâu dài gồm cả tài sản, tri thức, uy tín và cách một cộng đồng chăm nhau.</p>",
+    "meaningReversed": "<p>Mâu thuẫn tài sản, nền tảng gia đình lung lay hoặc chỉ giữ hình thức truyền thống.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Ten of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "10 Lúa – Ten of Pentacles",
+      "description": "Ten of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/ten-of-pentacles/"
+    },
+    "status": "published",
+    "order": 73,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "page-of-pentacles",
+    "nameVi": "Tiểu đồng Lúa",
+    "nameEn": "Page of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Page of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "học nghề",
+      "kế hoạch",
+      "cơ hội"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Người học thực tế, kế hoạch mới và tin tức về học tập/công việc/tiền bạc.</p><p>Bắt đầu bằng một kỹ năng có thể luyện và một mốc có thể kiểm chứng.</p>",
+    "meaningReversed": "<p>Trì hoãn, học không đi đôi làm hoặc mục tiêu vật chất thiếu kế hoạch.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Page of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Tiểu đồng Lúa – Page of Pentacles",
+      "description": "Page of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/page-of-pentacles/"
+    },
+    "status": "published",
+    "order": 74,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "knight-of-pentacles",
+    "nameVi": "Hiệp sĩ Lúa",
+    "nameEn": "Knight of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Knight of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "bền bỉ",
+      "quy trình",
+      "đáng tin"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Bền bỉ, đáng tin và tiến đều theo quy trình.</p><p>Không hào nhoáng nhưng hiệu quả: làm đúng việc cần thiết, đúng nhịp và lặp lại.</p>",
+    "meaningReversed": "<p>Trì trệ, quá bảo thủ hoặc chăm chỉ nhưng không còn xem lại mục tiêu.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Knight of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Hiệp sĩ Lúa – Knight of Pentacles",
+      "description": "Knight of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/knight-of-pentacles/"
+    },
+    "status": "published",
+    "order": 75,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "queen-of-pentacles",
+    "nameVi": "Nữ vương Lúa",
+    "nameEn": "Queen of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá Queen of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "vun vén",
+      "thực tế",
+      "đủ đầy"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Chăm sóc thực tế, quản lý nguồn lực và tạo một môi trường đủ đầy.</p><p>Sự quan tâm trở nên hữu ích khi nó có thời gian, ngân sách và ranh giới cụ thể.</p>",
+    "meaningReversed": "<p>Bỏ quên bản thân, bất an vật chất hoặc chăm lo thành kiểm soát.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của Queen of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Nữ vương Lúa – Queen of Pentacles",
+      "description": "Queen of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/queen-of-pentacles/"
+    },
+    "status": "published",
+    "order": 76,
+    "createdAt": null,
+    "updatedAt": null
+  },
+  {
+    "number": 0,
+    "slug": "king-of-pentacles",
+    "nameVi": "Quốc vương Lúa",
+    "nameEn": "King of Pentacles",
+    "nameFolk": "Lúa",
+    "arcana": "minor",
+    "suit": "pentacles",
+    "folkStyle": "dong-ho",
+    "image": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa cho lá King of Pentacles",
+      "width": 1024,
+      "height": 1024,
+      "storagePath": ""
+    },
+    "thumbnail": {
+      "url": "/assets/img/suits/suit-lua.png",
+      "alt": "Phù hiệu Nhà Lúa"
+    },
+    "keywordsUpright": [
+      "quản trị",
+      "thịnh vượng",
+      "bền vững"
+    ],
+    "keywordsReversed": [
+      "mất cân bằng",
+      "trì hoãn",
+      "cần xem lại",
+      "bài học",
+      "điều chỉnh"
+    ],
+    "meaningUpright": "<p>Quản trị vững, thịnh vượng có trách nhiệm và năng lực tạo giá trị lâu dài.</p><p>Thành công vật chất tốt nhất là thứ vận hành ổn định và nuôi được nhiều người hơn cái tôi của chủ sở hữu.</p>",
+    "meaningReversed": "<p>Tham lợi, bảo thủ hoặc đo mọi giá trị chỉ bằng tiền và địa vị.</p>",
+    "story": "<p>Nhà Lúa chuyển dịch Pentacles sang biểu tượng bản địa nhưng giữ nguyên logic RWS.</p>",
+    "symbols": [
+      {
+        "name": "Lúa",
+        "meaning": "Biểu tượng bản địa của chất Pentacles"
+      }
+    ],
+    "question": "Thông điệp của King of Pentacles đang mời bạn nhìn lại điều gì trong hoàn cảnh hiện tại?",
+    "seo": {
+      "title": "Quốc vương Lúa – King of Pentacles",
+      "description": "King of Pentacles: nghĩa xuôi, nghĩa ngược và lớp liên tưởng Lúa trong Hường Đông Tarot.",
+      "ogImage": "/assets/img/default-og.webp",
+      "canonical": "/la-bai/king-of-pentacles/"
+    },
+    "status": "published",
+    "order": 77,
+    "createdAt": null,
+    "updatedAt": null
+  }
+]

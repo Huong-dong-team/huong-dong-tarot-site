@@ -1,0 +1,8 @@
+import { collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { db } from "../firebase.js";
+const esc = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+export async function subscribersView(root) {
+  const snapshot = await getDocs(query(collection(db, "subscribers"), orderBy("createdAt", "desc"))); const rows = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+  root.innerHTML = `<div class="toolbar"><div><h1>Danh sách chờ</h1><p class="page-lead">${rows.length} email. Chỉ dùng đúng mục đích người đăng ký đã đồng ý.</p></div><button class="button" data-export>Xuất CSV</button></div><table class="data-table"><thead><tr><th>Email</th><th>Nguồn</th><th>Ngày</th></tr></thead><tbody>${rows.map((row) => `<tr><td>${esc(row.email)}</td><td>${esc(row.source)}</td><td>${row.createdAt?.toDate ? row.createdAt.toDate().toLocaleString("vi-VN") : ""}</td></tr>`).join("")}</tbody></table>`;
+  root.querySelector("[data-export]").addEventListener("click", () => { const quote = (value) => `"${String(value || "").replaceAll('"', '""')}"`; const csv = `email,source,note,createdAt\n${rows.map((row) => [row.email,row.source,row.note,row.createdAt?.toDate?.().toISOString() || ""].map(quote).join(",")).join("\n")}`; const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" })); link.download = `huong-dong-subscribers-${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href); });
+}

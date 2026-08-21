@@ -1,0 +1,16 @@
+node_modules/
+dist/
+# Cache của lệnh firebase deploy, sinh lại mỗi lần xuất bản.
+.firebase/
+.env
+# source/.gitignore loại mọi ".env*", nên phải nhận lại tệp mẫu này:
+# nó chỉ chứa tên biến và giá trị giả, không có bí mật.
+!.env.example
+firebase-debug.log
+service-account*.json
+*-firebase-adminsdk-*.json
+.DS_Store
+# Bản sao chép website tham khảo (313 MB, ~1900 tệp) do người dùng tải về để
+# tra cứu tư liệu lịch sử. Không phải mã nguồn dự án và không được commit —
+# vừa nặng, vừa là bản quyền của bên khác. Vẫn nằm trên đĩa để tra cứu.
+/luocsutocviet.com/

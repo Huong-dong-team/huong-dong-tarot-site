@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Quản trị Hường Đông Tarot</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+<body>
+  <a class="skip-link" href="#admin-main">Đi đến nội dung</a>
+  <div id="admin-shell" hidden>
+    <header class="admin-header"><a href="#/" class="admin-brand"><img src="/assets/img/trong-dong.png" width="40" height="40" alt="">Hường Đông</a><button type="button" id="sign-out">Đăng xuất</button></header>
+    <div class="admin-layout"><nav id="admin-nav" aria-label="Quản trị"><a href="#/">Tổng quan</a><a href="#/cards">Lá bài</a><a href="#/posts">Tin tức</a><a href="#/media">Thư viện ảnh</a><a href="#/subscribers">Danh sách chờ</a><a href="#/settings">Cấu hình</a><a href="#/users" data-owner-only hidden>Người dùng</a></nav><main id="admin-main" tabindex="-1"></main></div>
+  </div>
+  <main id="login-root"></main>
+  <div id="toast-root" aria-live="polite" aria-atomic="true"></div>
+  <script id="firebase-config" type="application/json">__FIREBASE_CONFIG__</script>
+  <script type="module" src="/admin/js/app.js"></script>
+</body>
+</html>

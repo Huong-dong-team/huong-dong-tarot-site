@@ -1,0 +1,29 @@
+<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Mục 3</p><h1>Trải bài</h1><p>Lá bài không nói thay tương lai. Nó chỉ đưa cho bạn một hình ảnh để nhìn hoàn cảnh của mình từ một góc khác.</p></section>
+
+<section class="v2-prose"><p>Trải bài ở đây không có phần “phán”. Bạn chọn kiểu trải, giữ câu hỏi trong đầu, rút bài, rồi đọc. Muốn ghi lại thì có chỗ ghi — xem mục <a class="v2-link" href="/healing/">Healing</a>.</p></section>
+
+<section class="v2-prose" id="nghi-thuc"><p class="eyebrow">3.1</p><h2>Nghi thức trước khi rút</h2><p>Không bước nào ở đây bắt buộc.</p><ol class="v2-list"><li><strong>Một câu hỏi đang chờ được gọi tên.</strong> Giữ nó trong tâm trí; không cần ép mình tìm câu trả lời ngay.</li><li><strong>Thở ba nhịp</strong> theo vòng sáng. Khi thấy đủ tĩnh thì đi tiếp.</li><li><strong>Chọn phạm vi bộ bài:</strong> cả bộ 78 lá · chỉ 22 Ẩn chính · chỉ 56 Ẩn Phụ.</li></ol><p class="v2-note">Người mới nên bắt đầu với <strong>chỉ Ẩn chính</strong> — 22 lá, chủ đề lớn, dễ đọc hơn.</p></section>
+
+<section class="v2-prose" id="kieu-trai"><p class="eyebrow">3.2</p><h2>Các kiểu trải</h2><table class="v2-table"><thead><tr><th>Kiểu</th><th>Số lá</th><th>Dùng khi</th></tr></thead><tbody><tr><td><strong>Một lá</strong></td><td>1</td><td>Câu hỏi trong ngày, hoặc chỉ muốn một hình ảnh để ngẫm</td></tr><tr><td><strong>Ba lá · Dòng chảy</strong></td><td>3</td><td>Quá khứ – hiện tại – hướng đi. Kiểu phổ biến nhất</td></tr><tr><td><strong>Ba lá · Soi chiếu</strong></td><td>3</td><td>Điều đang mang – điều cần buông – điều nâng đỡ</td></tr><tr><td><strong>Bốn nhà</strong></td><td>4</td><td>Một việc nhìn qua bốn chất: Tre · Sen · Dâu Tằm · Lúa</td></tr><tr><td><strong>Cây thập tự Celtic</strong></td><td>10</td><td>Trải kinh điển của RWS, cho người đã quen</td></tr></tbody></table></section>
+
+<section class="v2-prose" id="rut-bai"><p class="eyebrow">3.2 · thử ngay</p><h2>Rút bài</h2><p>Giữ câu hỏi trong đầu, chọn kiểu trải rồi bấm <strong>Xáo và rút</strong>. Bấm vào từng lá úp để lật.</p>
+<div class="hd-deck-wrap" id="hd-deck">
+  <div class="hd-controls">
+    <button type="button" data-draw>Xáo và rút</button>
+    <select data-spread aria-label="Kiểu trải"><option value="1">Một lá</option><option value="3" selected>Ba lá</option><option value="4">Bốn nhà</option><option value="10">Cây thập tự Celtic</option></select>
+    <button type="button" data-reversed aria-pressed="true">Đọc ngược: bật</button>
+    <button type="button" data-sound aria-pressed="true">🔊 Âm thanh: bật</button>
+  </div>
+  <div class="hd-deck" data-deck></div>
+  <p class="hd-hint" data-hint hidden>Bấm vào lá để lật</p>
+  <div class="hd-reading" data-reading></div>
+</div>
+<p class="v2-note">Bộ bài hiện dùng <strong>22 Ẩn chính</strong>. Mặt lưng đang là bản tạm — sẽ thay bằng art trống đồng thật ở đợt cập nhật hình ảnh.</p></section>
+
+<section class="v2-prose" id="hieu-ung"><p class="eyebrow">3.3</p><h2>Hiệu ứng lật bài</h2><p>Nền kỹ thuật lấy từ <strong>Mystic-Draw</strong> (đã có sẵn trong dự án), dùng bộ kỹ thuật lật 3D tiêu chuẩn: <code>perspective</code> tạo chiều sâu, <code>preserve-3d</code> giữ không gian, <code>rotateY(180deg)</code> là cú lật, <code>backface-visibility: hidden</code> giấu mặt sau khi quay.</p>
+<div class="v2-two"><article class="v2-card"><h3>Đã có sẵn</h3><ul class="v2-list"><li>Xáo bài <strong>Fisher–Yates</strong> (xáo đều, không thiên vị)</li><li>Âm thanh lật bài và xáo bài, có nút tắt tiếng</li><li>Phóng nhẹ khi rê chuột</li><li>Mở chi tiết lá trong modal</li></ul></article><article class="v2-card"><h3>Cần thêm cho Hường Đông</h3><ul class="v2-list"><li>Mặt lưng <strong>trống đồng làm tâm</strong>, đối xứng 180° để không lộ xuôi/ngược</li><li>Gắn dữ liệu 78 lá thật: tên Việt, truyện LNCQ, phân loại nguồn</li><li>Xử lý lá ngược + nút bật/tắt đọc ngược</li><li>Lưu kết quả sang Nhật ký ở mục Healing</li></ul></article></div>
+<p><span class="v2-pending">Chưa gắn dữ liệu thật</span></p></section>
+
+<section class="v2-prose"><p class="v2-note">Kết quả trải bài không phải lời tiên đoán. Nếu một lá làm bạn lo, hãy đọc phần nghĩa và nguồn của nó — gần như luôn có một cách hiểu điềm tĩnh hơn cảm giác đầu tiên. Tarot là công cụ tự phản tư và học tập, <strong>không thay thế tư vấn y tế, pháp lý hoặc tài chính.</strong></p></section></main>
+<script src="/assets/js/deck-data.js"></script>
+<script src="/assets/js/trai-bai.js" defer></script>
