@@ -21,9 +21,11 @@ test("carousel có đủ bốn vị Tứ Bất Tử, lá đầu hiện sẵn tro
   // Slide đầu phải mang .is-active ngay trong HTML: nếu chỉ JS mới gán, khách
   // vào lúc script chưa chạy sẽ thấy hero trống.
   assert.match(html, /class="hero-card hero-card--pack is-active"/);
-  assert.match(html, /hop-bai-portrait\.webp/, "slide mở đầu phải là ảnh hộp bài");
+  assert.match(html, /hop-bai-portrait[-.][\w.]+/, "slide mở đầu phải là ảnh hộp bài");
   for (const { portrait, name } of TU_BAT_TU) {
-    assert.match(html, new RegExp(`immortals/${portrait}\\.webp`), `thiếu ảnh ${portrait}`);
+    // Không khoá định dạng: ảnh đã chuyển sang AVIF có hậu tố khổ
+    // (tan-vien-800.avif). Điều cần bảo đảm là đúng chân dung, không phải đuôi file.
+    assert.match(html, new RegExp(`immortals/${portrait}[-.][\\w.]+`), `thiếu ảnh ${portrait}`);
     assert.match(html, new RegExp(name.replace(/\s/g, "\\s")), `thiếu tên ${name}`);
   }
   // Chỉ soi trong carousel: Âu Cơ vẫn hợp lệ ở lưới Thư viện nổi bật phía dưới,

@@ -3,11 +3,22 @@
     "slug": "vi-sao-huong-dong-giu-he-nghia-rws",
     "title": "Vì sao Hường Đông giữ hệ nghĩa RWS?",
     "excerpt": "Việt hóa hình ảnh không đồng nghĩa thay đổi cấu trúc sử dụng của Tarot.",
-    "coverImage": { "url": "/assets/img/default-og.webp", "alt": "Bình minh trên núi sông Việt Nam" },
+    "coverImage": {
+      "url": "/assets/img/news-binh-minh-800.avif",
+      "alt": "Bình minh trên núi sông Việt Nam"
+    },
     "contentHtml": "<p>Hường Đông dùng RWS như một ngữ pháp chung để người mới có thể học bằng tài liệu đã phổ biến, còn lớp Việt hóa giúp ghi nhớ bằng liên tưởng gần gũi.</p><p><a href=\"/la-bai/\">Khám phá thư viện 78 lá</a> để thấy hai lớp nghĩa vận hành song song.</p>",
-    "tags": ["RWS", "phương pháp", "người mới"],
+    "tags": [
+      "RWS",
+      "phương pháp",
+      "người mới"
+    ],
     "author": "Nhóm Hường Đông",
-    "seo": { "title": "Vì sao Hường Đông giữ hệ nghĩa RWS?", "description": "Cách Hường Đông Việt hóa Tarot mà vẫn giữ cấu trúc RWS để người mới dễ học, dễ kiểm chứng và dùng được.", "ogImage": "/assets/img/default-og.webp" },
+    "seo": {
+      "title": "Vì sao Hường Đông giữ hệ nghĩa RWS?",
+      "description": "Cách Hường Đông Việt hóa Tarot mà vẫn giữ cấu trúc RWS để người mới dễ học, dễ kiểm chứng và dùng được.",
+      "ogImage": "/assets/img/news-binh-minh-800.avif"
+    },
     "status": "published",
     "publishedAt": "2026-08-09T00:00:00.000Z",
     "createdAt": "2026-08-09T00:00:00.000Z",
@@ -17,11 +28,21 @@
     "slug": "bon-nha-an-phu-tre-dau-tam-sen-lua",
     "title": "Bốn nhà Ẩn Phụ: Tre, Dâu tằm, Sen và Lúa",
     "excerpt": "Bốn biểu tượng thực vật thay lớp hình ảnh phương Tây nhưng không phá cấu trúc bốn chất.",
-    "coverImage": { "url": "/assets/img/suits/suit-tre.png", "alt": "Phù hiệu Nhà Tre màu đồng trên nền ngọc" },
+    "coverImage": {
+      "url": "/assets/img/suits/suit-tre-800.avif",
+      "alt": "Phù hiệu Nhà Tre màu đồng trên nền ngọc"
+    },
     "contentHtml": "<p>Tre đại diện ý chí; Dâu tằm đại diện trí tuệ phân định; Sen đại diện cảm xúc; Lúa đại diện nguồn lực và sự vun trồng.</p><p><a href=\"/la-bai/?arcana=minor\">Xem đủ 56 lá Ẩn Phụ</a>.</p>",
-    "tags": ["Ẩn Phụ", "bốn chất"],
+    "tags": [
+      "Ẩn Phụ",
+      "bốn chất"
+    ],
     "author": "Nhóm Hường Đông",
-    "seo": { "title": "Bốn nhà Ẩn Phụ của Hường Đông Tarot", "description": "Tìm hiểu Tre, Dâu tằm, Sen và Lúa – bốn biểu tượng bản địa thay cho Wands, Swords, Cups và Pentacles.", "ogImage": "/assets/img/suits/suit-tre.png" },
+    "seo": {
+      "title": "Bốn nhà Ẩn Phụ của Hường Đông Tarot",
+      "description": "Tìm hiểu Tre, Dâu tằm, Sen và Lúa – bốn biểu tượng bản địa thay cho Wands, Swords, Cups và Pentacles.",
+      "ogImage": "/assets/img/suits/suit-tre-800.avif"
+    },
     "status": "published",
     "publishedAt": "2026-08-08T00:00:00.000Z",
     "createdAt": "2026-08-08T00:00:00.000Z",

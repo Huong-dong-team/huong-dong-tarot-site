@@ -57,6 +57,9 @@ function positionHeroSun() {
     const cy = (h - IMG_H * scale) / 2 + SUN_Y * IMG_H * scale;
     sun.style.left = `${Math.round(cx - size / 2)}px`;
     sun.style.top = `${Math.round(cy - size / 2)}px`;
+    // Hiện ra đúng chỗ thay vì nhảy vào chỗ. CSS để visibility:hidden nên trước
+    // dòng này phần tử chưa từng có vị trí nhìn thấy được — không có gì để dịch.
+    sun.style.visibility = "visible";
   };
   const schedule = () => { if (!raf) raf = requestAnimationFrame(place); };
   place();

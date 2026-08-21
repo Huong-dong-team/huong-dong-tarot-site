@@ -1,0 +1,22 @@
+{
+  "name": "huong-dong-dot-0",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Đợt 0 — nguồn dữ liệu chuẩn 78 lá và các cổng kiểm",
+  "scripts": {
+    "data:major": "node scripts/parse-v21.mjs \"$V21\" --out content/major-arcana.json && node scripts/gen-major-arcana.mjs",
+    "data:minor": "node scripts/parse-v21-minor.mjs \"$V21\" --out content/minor-arcana.json && node scripts/gen-minor-arcana.mjs --merge \"$AN_PHU\"",
+    "data": "npm run data:major && npm run data:minor",
+    "check:major": "node scripts/validate-major-arcana.mjs",
+    "check:deck": "node scripts/validate-deck.mjs",
+    "check": "npm run check:major && npm run check:deck",
+    "check:live": "node scripts/verify-live-names.mjs",
+    "images": "node scripts/build-images.mjs",
+    "clean:minor-data": "node scripts/clean-minor-data.mjs \"$CONTENT_56\"",
+    "scan:legacy": "node scripts/scan-legacy-names.mjs --out content/legacy-names.json",
+    "rename": "node scripts/apply-renames.mjs --dir \"$REPO\"",
+    "rename:write": "node scripts/apply-renames.mjs --dir \"$REPO\" --write",
+    "test": "node _test/motion-gate.test.mjs && node _test/rename.test.mjs"
+  }
+}

@@ -8,11 +8,20 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap&subset=vietnamese" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&display=swap&subset=vietnamese" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <!-- Ảnh hero: nói cho trình duyệt biết ngay từ HTML, trước cả khi CSS về.
+     media chia đôi để di động không phải tải bản 1536px. Chỉ trang chủ có hero,
+     các trang khác bỏ qua vì file không tồn tại trong DOM của chúng. -->
+<!-- Bốn file font dùng ở màn hình đầu. Phải preload cả dải Việt LẪN dải Latin:
+       tiêu đề "Di sản Việt, soi đường qua 78 lá bài." có cả hai loại ký tự, thiếu
+       một dải là chữ đổi mặt giữa chừng và đẩy CLS lên. -->
+  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/fonts.css">
+  <link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-800.avif" media="(max-width: 900px)">
+<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">
+<link rel="stylesheet" href="/assets/css/main.css">
   <link rel="stylesheet" href="/assets/css/theme-dark.css">
   {{{head}}}
   {{{analytics}}}
@@ -20,12 +29,12 @@
 <body class="{{bodyClass}}" data-firebase-project="{{firebaseProjectId}}" data-firebase-key="{{firebaseApiKey}}">
   <a class="skip-link" href="#noi-dung-chinh">Đi đến nội dung chính</a>
   <header class="site-header">
-    <a class="brand" href="/"><img src="/assets/img/trong-dong.png" width="46" height="46" alt=""><span>Hường Đông</span></a>
+    <a class="brand" href="/"><img src="/assets/img/trong-dong-96.avif" width="46" height="46" alt=""><span>Hường Đông</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Mục lục</button>
     <nav id="main-nav" aria-label="Điều hướng chính"><a href="/tarot-la-gi/">Tarot là gì</a><a href="/la-bai/">78 lá bài</a><a href="/trai-bai/">Trải bài</a><a href="/huyen-su/">Huyền sử</a><a href="/healing/">Healing</a><a href="/tin-tuc/">Chuyện Hường Đông</a><a href="/cua-hang/">Cửa hàng</a><a class="nav-cta" href="/#danh-sach-cho">Danh sách chờ</a></nav>
   </header>
   {{{content}}}
-  <footer class="site-footer"><img src="/assets/img/chim-lac.png" width="110" height="74" alt=""><p><strong>Hường Đông Tarot</strong><br>{{#if tagline}}{{tagline}}{{/if}}</p><p>Tarot là công cụ tự phản tư và học tập, không thay thế tư vấn y tế, pháp lý hoặc tài chính.<br><a href="/quyen-rieng-tu/">Quyền riêng tư</a>{{#if contactEmail}} · <a href="mailto:{{contactEmail}}">{{contactEmail}}</a>{{/if}}{{{socialHtml}}}</p><span>© 2026 Nguyễn Hồng Khang</span></footer>
+  <footer class="site-footer"><img src="/assets/img/chim-lac-220.avif" width="110" height="74" loading="lazy" alt=""><p><strong>Hường Đông Tarot</strong><br>{{#if tagline}}{{tagline}}{{/if}}</p><p>Tarot là công cụ tự phản tư và học tập, không thay thế tư vấn y tế, pháp lý hoặc tài chính.<br><a href="/quyen-rieng-tu/">Quyền riêng tư</a>{{#if contactEmail}} · <a href="mailto:{{contactEmail}}">{{contactEmail}}</a>{{/if}}{{{socialHtml}}}</p><span>© 2026 Nguyễn Hồng Khang</span></footer>
   <script type="module" src="/assets/js/site.js"></script>
   <script src="/assets/js/light-journey.js" defer></script>
 </body>

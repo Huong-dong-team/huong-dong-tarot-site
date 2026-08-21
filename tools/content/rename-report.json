@@ -1,0 +1,66 @@
+{
+  "dir": "_test/regress",
+  "ranAt": "2026-08-21T11:22:01.482Z",
+  "write": true,
+  "loose": false,
+  "filesScanned": 4,
+  "filesChanged": 1,
+  "anchored": [
+    {
+      "file": "src/done.html",
+      "line": 1,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "<tr><td>IV · The Emperor</td><td>Hùng Vương đầu triều</td></tr>"
+    },
+    {
+      "file": "src/done.html",
+      "line": 2,
+      "roman": "IV",
+      "from": "Hùng Vương",
+      "to": "Hùng Vương đầu triều",
+      "why": null,
+      "text": "<tr><td>IV · The Emperor</td><td>Hùng Vương đầu triều</td></tr>"
+    }
+  ],
+  "unanchored": [
+    {
+      "file": "src/blog.md",
+      "line": 1,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "không có mỏ neo lá gần đó",
+      "text": "Lang Liêu là người dâng bánh chưng cho vua Hùng."
+    },
+    {
+      "file": "src/cards.ts",
+      "line": 3,
+      "roman": "XI",
+      "from": "Lang Liêu",
+      "to": "Tô Lịch Giang Thần / Long Đỗ",
+      "why": "cửa sổ chứa mỏ neo của lá khác",
+      "text": "{ slug: \"temperance\", roman: \"XIV\", rws: \"Temperance\", vi: \"Lang Liêu\" },"
+    },
+    {
+      "file": "src/home.astro",
+      "line": 3,
+      "roman": "VIII",
+      "from": "Tản Viên Sơn Thánh",
+      "to": "Sơn Tinh",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "<li>Tản Viên Sơn Thánh</li>"
+    },
+    {
+      "file": "src/home.astro",
+      "line": 2,
+      "roman": "IX",
+      "from": "Chử Đồng Tử",
+      "to": "Dương Không Lộ",
+      "why": "khối Tứ Bất Tử / immortals — tên người, không phải nhãn lá",
+      "text": "<li>Chử Đồng Tử</li>"
+    }
+  ]
+}
