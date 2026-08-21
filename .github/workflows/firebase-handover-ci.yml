@@ -1,15 +1,23 @@
 name: firebase-handover CI
 
+# Mã nguồn site nằm ở GỐC repo này, không phải source/firebase-handover như repo
+# cũ. Bộ lọc paths phải theo đó, nếu không CI sẽ im lặng không chạy trên PR nào —
+# đúng lỗi đã xảy ra: PR đầu tiên có 0 check vì bộ lọc còn trỏ đường dẫn cũ.
+#
+# archive/ và tools/ cố ý nằm ngoài: chúng không được build và không ảnh hưởng
+# site, nên đổi ở đó không cần chạy lại CI.
 on:
   pull_request:
-    paths:
-      - "source/firebase-handover/**"
-      - ".github/workflows/firebase-handover-ci.yml"
+    paths-ignore:
+      - "archive/**"
+      - "tools/**"
+      - "**/*.md"
   push:
     branches: [main]
-    paths:
-      - "source/firebase-handover/**"
-      - ".github/workflows/firebase-handover-ci.yml"
+    paths-ignore:
+      - "archive/**"
+      - "tools/**"
+      - "**/*.md"
 
 jobs:
   build-and-test:
