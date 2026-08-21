@@ -17,3 +17,6 @@ service-account*.json
 
 # Bản dựng thử cục bộ bằng dữ liệu seed.
 /tools/node_modules/
+
+# File tạm của tools/scripts/fetch-fonts.mjs.
+/public/assets/fonts/_map.json
