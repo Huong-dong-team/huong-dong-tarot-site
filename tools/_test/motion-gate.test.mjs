@@ -26,7 +26,7 @@ globalThis.window = {
   }),
 };
 
-const { motionGate } = await import("../assets/js/motion-gate.js");
+const { motionGate } = await import("../../public/assets/js/motion-gate.js");
 
 let enters = 0, leaves = 0;
 const el = { tag: "canvas" };

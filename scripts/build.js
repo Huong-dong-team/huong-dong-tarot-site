@@ -79,6 +79,21 @@ const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII"
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
 const folkStyleLabel = { "dong-ho": "Đông Hồ", "hang-trong": "Hàng Trống", "kim-hoang": "Kim Hoàng" };
 
+// Chú thích tranh. Bản Art Direction 2.1 đổi nhân vật của 16 lá, nhưng tranh thì
+// chưa vẽ lại — bức đang phát hành vẫn là nhân vật cũ. Nói rõ điều đó ngay dưới
+// tranh còn hơn để người đọc tự phát hiện tên và hình không khớp. Chuỗi rỗng
+// nghĩa là tranh đã chốt, không hiện gì.
+const ART_NOTE = {
+  REDRAW: "Tranh đang được vẽ lại theo bản Art Direction 2.1; bức hiện tại là bản cũ.",
+  NEW_CONCEPT: "Tranh mới đang được phác theo bản Art Direction 2.1; bức hiện tại là bản cũ.",
+  EXPERIMENT: "Bố cục đang thử nghiệm; bức hiện tại chưa phải bản chốt.",
+  ADJUST: "Tranh đang được chỉnh theo bản Art Direction 2.1.",
+  ADJUST_MINOR: "Tranh đang được chỉnh nhẹ theo bản Art Direction 2.1.",
+  MISSING: "Chưa có tranh riêng cho lá này; đang dùng phù hiệu của nhà.",
+  KEEP: "",
+  KEEP_IMAGE_LOCK_NAME: "",
+};
+
 const cards = data.cards.map((card) => ({
   ...card,
   nameFolk: card.nameFolk || card.nameVi,
@@ -86,6 +101,7 @@ const cards = data.cards.map((card) => ({
   arcanaLabel: arcanaLabel(card),
   displayNumber: card.arcana === "major" ? roman(card.number) : card.nameVi.split(" ")[0],
   folkStyleLabel: folkStyleLabel[card.folkStyle] || "Mỹ thuật Việt",
+  artNote: ART_NOTE[card.imageStatus] ?? "",
   searchText: [card.nameVi, card.nameEn, card.nameFolk, ...(card.keywordsUpright || [])].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));

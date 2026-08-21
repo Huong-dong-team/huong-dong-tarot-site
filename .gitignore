@@ -14,3 +14,6 @@ service-account*.json
 # tra cứu tư liệu lịch sử. Không phải mã nguồn dự án và không được commit —
 # vừa nặng, vừa là bản quyền của bên khác. Vẫn nằm trên đĩa để tra cứu.
 /luocsutocviet.com/
+
+# Bản dựng thử cục bộ bằng dữ liệu seed.
+/tools/node_modules/

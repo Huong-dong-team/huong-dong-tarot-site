@@ -612,3 +612,16 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   .immortals-grid img { transition: none; }
   .hero-card-cue { opacity: 1; }
 }
+
+/* Chú thích tranh chưa chốt. Đặt ngay trong khung tranh để người đọc gặp nó
+   cùng lúc với bức hình, không phải cuộn xuống mới thấy. Dùng cỡ chữ nhỏ và
+   màu dịu vì đây là ghi chú trạng thái, không phải nội dung của lá. */
+.art-note {
+  margin: 8px 4px 0;
+  padding: 8px 10px;
+  border-left: 2px solid var(--brass);
+  background: rgb(232 201 140 / 10%);
+  color: #d6dfd9;
+  font-size: 12px;
+  line-height: 1.45;
+}
