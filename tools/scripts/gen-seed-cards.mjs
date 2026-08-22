@@ -146,6 +146,29 @@ const out = existing.map((old) => {
 
   /* Trạng thái duyệt đi kèm dữ liệu, để lớp giao diện tự quyết có gắn nhãn
      "đang biên tập" hay không — thay vì suy đoán từ chỗ khác. */
+  /* Lớp kể chuyện chi tiết. Ẩn Chính đã có sẵn trong story/symbols; Ẩn Phụ thì
+     chưa có gì ngoài một dòng chung, nên mang trọn bộ trường của v2.1 sang để
+     lớp giao diện dựng được khối chủ thể, khối theo lĩnh vực và lời khuyên.
+     Giữ nguyên tên trường như trong minor-arcana.mjs để không phải map hai lần. */
+  if (c.arcana === "minor") {
+    next.subject = c.subject;
+    next.sceneTitle = c.sceneTitle;
+    next.scene = c.scene;
+    next.shortStory = c.shortStory;
+    next.love = c.love;
+    next.career = c.career;
+    next.finance = c.finance;
+    next.health = c.health;
+    next.advice = c.advice;
+    next.warning = c.warning;
+    next.props = c.props;
+    next.palette = c.palette;
+    next.suitVi = c.suitVi;
+    next.suitShort = c.suitShort;
+    next.element = c.element;
+    next.rankVi = c.rankVi;
+  }
+
   next.imageStatus = c.imageStatus ?? "MISSING";
   next.culturalReviewStatus = c.culturalReviewStatus ?? "pending";
   next.sourceIds = c.sourceIds;
