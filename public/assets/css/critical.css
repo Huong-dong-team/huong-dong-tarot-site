@@ -119,6 +119,35 @@ button { cursor: pointer; }
   font-weight: 600;
 }
 #main-nav .nav-cta, #main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; }
+
+/* Menu con của Trải bài. Phải có Ở ĐÂY chứ không chỉ trong main.css: header nằm
+   trên màn hình đầu, mà main.css tải không chặn render. Thiếu luật ẩn trong
+   critical CSS thì lần sơn đầu tiên hiện nguyên một danh sách bốn mục giữa
+   thanh điều hướng, rồi biến mất khi main.css về — vừa nháy vừa làm tụt CLS. */
+/* .v2-prose là khung của mọi khối nội dung trên màn hình đầu ở /trai-bai/,
+   /huyen-su/, /healing/, /tarot-la-gi/, /cua-hang/ và ba trang trải bài mới —
+   nhưng trước nay chỉ có trong main.css. Vì main.css tải không chặn render,
+   lần sơn đầu vẽ khối đó không padding, không max-width, không cỡ chữ h2; khi
+   main.css về nó nở ra và đẩy mọi thứ bên dưới xuống 113px. Đo được trên
+   /trai-bai/: CLS 0,066, toàn bộ đến từ cú đẩy này.
+   Đo bằng cách tắt main.css rồi so vị trí #nghi-thuc trước và sau. */
+.v2-prose {
+  width: var(--shell);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--line);
+}
+.v2-prose:last-of-type { border-bottom: none; }
+.v2-prose p, .v2-prose li { font-size: 1.02rem; line-height: 1.75; }
+.v2-prose h2 { margin: 0 0 14px; font-size: clamp(1.5rem, 3.2vw, 2.1rem); }
+.v2-prose h3 { margin: 26px 0 8px; font-size: 1.12rem; color: var(--muted); }
+.v2-prose .eyebrow { margin: 0 0 6px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown); }
+
+.nav-group { position: relative; display: flex; align-items: center; }
+.nav-group > .nav-group-top { padding: 12px 0; }
+.nav-group > .nav-group-top::after { content: "▾"; margin-left: 5px; font-size: 0.8em; }
+.nav-sub { position: absolute; top: 100%; left: -14px; display: none; margin: 0; padding: 0; list-style: none; }
 .menu-toggle {
   display: none;
   padding: 8px 12px;
@@ -331,6 +360,10 @@ h3 { font-size: 30px; line-height: 1.08; }
 }
 @media (max-width: 900px) {
   .menu-toggle { display: block; }
+  /* Trên di động nav đã là một cột, nên menu con chỉ cần thụt vào và hiện sẵn —
+     không có hover để mà mở. */
+  .nav-group { display: block; }
+  .nav-sub { position: static; display: block; }
   .site-header nav {
     position: absolute;
     top: 76px;

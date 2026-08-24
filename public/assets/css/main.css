@@ -534,6 +534,42 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 #main-nav .nav-cta,
 #main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; }
 
+/* ---------- Menu con của Trải bài ---------- */
+/* Mở bằng :hover và :focus-within, không JS. Luật ẩn mặc định nằm cả trong
+   critical.css để không nháy khi sơn lần đầu. */
+.nav-group { position: relative; display: flex; align-items: center; }
+/* Đệm dọc của mục cha kéo dài vùng hover xuống tận đáy header, nên chuột đi từ
+   "Trải bài" xuống menu con không đi qua khoảng trống nào. */
+.nav-group > .nav-group-top { padding: 12px 0; }
+.nav-group > .nav-group-top::after { content: "▾"; margin-left: 5px; font-size: 0.8em; }
+
+.nav-sub {
+  position: absolute;
+  top: 100%;
+  left: -14px;
+  z-index: 70;
+  display: none;
+  min-width: 190px;
+  margin: 0;
+  padding: 6px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 14%, transparent);
+  list-style: none;
+}
+.nav-group:hover .nav-sub,
+.nav-group:focus-within .nav-sub { display: block; }
+#main-nav .nav-sub a {
+  display: block;
+  padding: 8px 16px;
+  border-bottom: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+#main-nav .nav-sub a:hover,
+#main-nav .nav-sub a:focus-visible { background: color-mix(in srgb, var(--gold) 22%, transparent); opacity: 1; }
+
 /* Ảnh nền mờ được hạ cường độ để hoa văn không tranh chấp với nội dung. */
 .drum-watermark::before,
 .lac-watermark::before { opacity: 0.05; }
@@ -656,7 +692,10 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   border: 1px solid var(--line);
   border-radius: 999px;
   background: color-mix(in srgb, var(--rose) 14%, transparent);
-  color: var(--magenta-ink);
+  /* Không dùng --magenta-ink ở đây: trên nền hồng 14% nó chỉ đạt tương phản
+     4,43 — dưới ngưỡng 4,5 của WCAG AA cho chữ 11px, và Lighthouse trang
+     /trai-bai/ tụt xuống a11y 96 vì đúng một nhãn này. Tông đậm hơn cho 4,9. */
+  color: #C41B57;
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -836,6 +875,26 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 /* ---------- Sửa header chật do nav tăng 4 → 7 mục ---------- */
 .brand span { white-space: nowrap; }              /* không cho "Hường Đông" gãy dòng */
 #main-nav a { white-space: nowrap; }              /* không cho "Tarot là gì" gãy dòng */
+
+/* Di động: nav là một cột, menu con thụt vào và hiện sẵn — không có hover. */
+@media (max-width: 900px) {
+  .nav-group { display: block; }
+  .nav-sub {
+    position: static;
+    display: block;
+    min-width: 0;
+    margin: 4px 0 6px 14px;
+    padding: 0;
+    border: 0;
+    border-left: 2px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  #main-nav .nav-sub a { padding: 7px 0 7px 14px; }
+  .nav-group > .nav-group-top { padding: 0; }
+  .nav-group > .nav-group-top::after { content: ""; margin: 0; }
+}
 
 @media (min-width: 861px) and (max-width: 1180px) {
   /* Khoảng giữa: siết chữ lại cho 7 mục vừa một hàng. */

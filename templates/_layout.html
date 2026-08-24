@@ -27,7 +27,9 @@
   <header class="site-header">
     <a class="brand" href="/"><img src="/assets/img/trong-dong-96.avif" width="46" height="46" alt=""><span>Hường Đông</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Mục lục</button>
-    <nav id="main-nav" aria-label="Điều hướng chính"><a href="/tarot-la-gi/">Tarot là gì</a><a href="/la-bai/">78 lá bài</a><a href="/trai-bai/">Trải bài</a><a href="/huyen-su/">Huyền sử</a><a href="/healing/">Healing</a><a href="/tin-tuc/">Chuyện Hường Đông</a><a href="/cua-hang/">Cửa hàng</a><a class="nav-cta" href="/#danh-sach-cho">Danh sách chờ</a></nav>
+    <!-- Menu con của Trải bài mở bằng :hover và :focus-within, không cần JS —
+         giữ progressive enhancement, và bàn phím tab vào là menu hiện ra. -->
+    <nav id="main-nav" aria-label="Điều hướng chính"><a href="/tarot-la-gi/">Tarot là gì</a><a href="/la-bai/">78 lá bài</a><div class="nav-group"><a class="nav-group-top" href="/trai-bai/">Trải bài</a><ul class="nav-sub"><li><a href="/trai-bai/co-khong/">Có hoặc Không</a></li><li><a href="/trai-bai/ba-la/">Ba Lá</a></li><li><a href="/trai-bai/tinh-yeu/">Tình Yêu</a></li><li><a href="/la-bai-hom-nay/">Lá Bài Hôm Nay</a></li></ul></div><a href="/huyen-su/">Huyền sử</a><a href="/healing/">Healing</a><a href="/tin-tuc/">Chuyện Hường Đông</a><a href="/cua-hang/">Cửa hàng</a><a class="nav-cta" href="/#danh-sach-cho">Danh sách chờ</a></nav>
   </header>
   {{{content}}}
   <footer class="site-footer"><img src="/assets/img/chim-lac-220.avif" width="110" height="74" loading="lazy" alt=""><p><strong>Hường Đông Tarot</strong><br>{{#if tagline}}{{tagline}}{{/if}}</p><p>Tarot là công cụ tự phản tư và học tập, không thay thế tư vấn y tế, pháp lý hoặc tài chính.<br><a href="/quyen-rieng-tu/">Quyền riêng tư</a>{{#if contactEmail}} · <a href="mailto:{{contactEmail}}">{{contactEmail}}</a>{{/if}}{{{socialHtml}}}</p><span>© 2026 Nguyễn Hồng Khang</span></footer>
