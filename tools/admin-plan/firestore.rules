@@ -1,0 +1,132 @@
+rules_version = '2';
+
+/* Hường Đông Tarot — Firestore Rules, bản dựa trên Custom Claims.
+ *
+ * ĐỌC TRƯỚC KHI DEPLOY
+ * Bản này kiểm quyền bằng request.auth.token, KHÔNG còn exists(/admins/$(uid)).
+ * Tài khoản nào chưa được gán claim sẽ mất quyền NGAY khi deploy — kể cả owner.
+ * Thứ tự bắt buộc: gán claim → đăng nhập lại xác nhận → mới deploy file này.
+ *
+ * Vì sao đổi: rules cũ gọi exists() ở mọi lần kiểm, mỗi lần là một lượt đọc tính
+ * tiền. Claim nằm sẵn trong JWT nên không tốn lượt đọc nào.
+ *
+ * /admins/{uid} vẫn giữ, nhưng đổi vai: từ nguồn kiểm quyền thành nguồn sự thật
+ * cho người đọc (ai là admin, vai trò gì, ai cấp, cấp khi nào). Cloud Function
+ * đồng bộ document đó sang claim.
+ */
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Nền tảng ──────────────────────────────────────────────────────────
+    function signedIn()  { return request.auth != null; }
+    function claims()    { return request.auth.token; }
+    function isAdmin()   { return signedIn() && claims().admin == true; }
+    function isOwner()   { return isAdmin() && claims().role == 'owner'; }
+    function isEditor()  { return isAdmin() && claims().role in ['owner', 'editor']; }
+
+    function incoming()  { return request.resource.data; }
+    function stored()    { return resource.data; }
+
+    // Chỉ cho phép đổi đúng những trường được liệt kê.
+    function onlyChanged(allowed) {
+      return incoming().diff(stored()).affectedKeys().hasOnly(allowed);
+    }
+
+    function isEmail(v) {
+      return v is string && v.size() <= 254
+        && v.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+    }
+
+    // ── 78 lá bài ─────────────────────────────────────────────────────────
+    // Khách đọc lá đã publish. Đây là đường mà build.js dùng để dựng site.
+    match /cards/{slug} {
+      allow read:   if stored().status == 'published' || isAdmin();
+      allow create: if isEditor() && incoming().slug == slug;
+      // Lõi RWS và định danh là bất biến. Muốn đổi nghĩa xuôi/ngược thì sửa ở
+      // DOCX v2.1 rồi chạy lại đường sinh dữ liệu, không sửa tay trong admin —
+      // sửa tay là tạo ra nguồn sự thật thứ hai.
+      allow update: if isEditor()
+                    && !incoming().diff(stored()).affectedKeys().hasAny([
+                         'slug', 'number', 'nameEn', 'meaningUpright', 'meaningReversed'
+                       ]);
+      allow delete: if isOwner();   // 78 lá là bộ cố định, xoá là bất thường
+    }
+
+    // ── Nhật ký dự án ─────────────────────────────────────────────────────
+    match /posts/{slug} {
+      allow read:   if stored().status == 'published' || isAdmin();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    // ── Danh sách chờ ─────────────────────────────────────────────────────
+    // Tên collection là `subscribers`, KHÔNG phải `waitlist` — form trên site
+    // đang ghi thẳng vào đây qua REST API. Đổi tên là phải sửa cả form đang chạy.
+    //
+    // Khách được create nhưng KHÔNG được read: nếu cho đọc thì toàn bộ danh sách
+    // email lộ ra ngoài.
+    match /subscribers/{id} {
+      allow create: if incoming().keys().hasOnly(['email', 'source', 'note', 'createdAt'])
+                    && isEmail(incoming().email)
+                    && incoming().source is string && incoming().source.size() <= 80
+                    && incoming().note is string   && incoming().note.size() <= 500
+                    && incoming().createdAt is timestamp
+                    // Chặn ghi lùi/tiến ngày để không bịa được thứ tự đăng ký.
+                    && incoming().createdAt <= request.time
+                    && incoming().createdAt > request.time - duration.value(10, 'm');
+
+      allow read:   if isAdmin();
+      // Admin chỉ được sửa ghi chú và nhãn, không sửa email — email là dữ liệu gốc.
+      allow update: if isAdmin() && onlyChanged(['note', 'tags', 'status']);
+      allow delete: if isOwner();   // xoá email là hành động không lùi được
+    }
+
+    // ── Đơn hàng ──────────────────────────────────────────────────────────
+    // Chứa dữ liệu cá nhân (tên, điện thoại, địa chỉ) nên chặt hơn hẳn.
+    // Khách KHÔNG tạo đơn trực tiếp — đơn phải đi qua Cloud Function để kiểm giá
+    // và tồn kho phía máy chủ. Client tự tạo đơn nghĩa là client tự đặt giá.
+    match /orders/{orderId} {
+      allow read:   if isAdmin()
+                    || (signedIn() && stored().customerUid == request.auth.uid);
+      allow create: if false;       // chỉ Admin SDK / Cloud Function
+      allow update: if isAdmin()
+                    && onlyChanged(['status', 'note', 'trackingCode', 'updatedAt'])
+                    && incoming().status in
+                       ['pending_payment', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'];
+      allow delete: if false;       // đơn hàng không xoá, chỉ chuyển cancelled
+    }
+
+    // ── Thư viện media ────────────────────────────────────────────────────
+    match /media/{mediaId} {
+      allow read:   if isAdmin();
+      allow create, update: if isEditor();
+      allow delete: if isOwner();
+    }
+
+    // ── Cấu hình site ─────────────────────────────────────────────────────
+    match /settings/{docId} {
+      allow read:  if true;         // build.js đọc lúc dựng site
+      allow write: if isOwner();
+    }
+
+    // ── Danh bạ quản trị ──────────────────────────────────────────────────
+    // Nguồn sự thật cho NGƯỜI. Cloud Function đọc document này rồi gán claim.
+    // Rules ở trên không đọc collection này nữa — không tốn lượt đọc.
+    match /admins/{uid} {
+      allow read:   if signedIn() && (request.auth.uid == uid || isOwner());
+      allow create, update: if isOwner()
+                    && incoming().role in ['owner', 'editor']
+                    && isEmail(incoming().email);
+      // Owner không tự xoá mình — tránh khoá cửa từ bên trong.
+      allow delete: if isOwner() && uid != request.auth.uid;
+    }
+
+    // ── Chặn mặc định ─────────────────────────────────────────────────────
+    // Collection nào chưa khai báo thì đóng. Thêm collection mới phải thêm rule,
+    // không có chuyện quên rồi mở toang.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
