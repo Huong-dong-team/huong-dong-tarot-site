@@ -34,13 +34,16 @@ test("carousel có đủ bốn vị Tứ Bất Tử, lá đầu hiện sẵn tro
   assert.doesNotMatch(carousel, /empress-au-co|major-03-the-empress/, "Âu Cơ đã được gỡ khỏi hero");
 });
 
-test("chỉ lá đầu tải sớm, ba lá sau để lazy", async () => {
+test("năm ảnh carousel đều tải lười và không tranh tài nguyên với LCP", async () => {
   const html = await home();
   const carousel = html.slice(html.indexOf("data-hero-carousel"), html.indexOf("data-hero-dots"));
-  const first = carousel.slice(0, carousel.indexOf("thanh-giong"));
-  assert.match(first, /fetchpriority="high"/);
-  assert.doesNotMatch(first, /loading="lazy"/);
-  assert.equal((carousel.match(/loading="lazy"/g) || []).length, 3);
+  assert.equal((carousel.match(/fetchpriority="high"/g) || []).length, 0);
+  assert.equal((carousel.match(/loading="lazy"/g) || []).length, 5);
+  assert.equal((carousel.match(/decoding="async"/g) || []).length, 5);
+  const pack = carousel.slice(0, carousel.indexOf("data-story=\"strength\""));
+  assert.match(pack, /data-pack/);
+  assert.match(pack, /fetchpriority="low"/);
+  assert.match(pack, /loading="lazy"/);
 });
 
 test("mỗi vị có bảng kể chuyện kèm nguồn và lối sang trang lá", async () => {
@@ -55,13 +58,12 @@ test("mỗi vị có bảng kể chuyện kèm nguồn và lối sang trang lá"
   assert.doesNotMatch(html, /đang được biên tập/, "vẫn còn chữ tạm trong bảng kể chuyện");
 });
 
-test("hero không còn ảnh trống đồng, chỉ giữ quầng sáng từ tâm mặt trời", async () => {
+test("hero chỉ giữ nền tĩnh và không còn cụm mặt trời phụ", async () => {
   const html = await home();
   const hero = html.slice(html.indexOf('<section class="hero'), html.indexOf("data-hero-carousel"));
   // Ảnh trống đồng đã được gỡ khỏi hero theo yêu cầu thiết kế.
   assert.doesNotMatch(hero, /class="hero-drum"/, "ảnh trống đồng phải được gỡ khỏi hero");
-  // Cụm mặt trời vẫn còn: quầng sáng và tia toả là nền của hiệu ứng cuộn.
-  assert.match(hero, /data-hero-sun/, "vẫn phải giữ cụm mặt trời để có ánh sáng từ tâm");
+  assert.doesNotMatch(hero, /data-hero-sun/, "cụm mặt trời phụ phải được gỡ ở đợt hiệu năng");
   assert.doesNotMatch(hero, /drum-watermark/, "hero không dùng hoa văn chìm");
 });
 

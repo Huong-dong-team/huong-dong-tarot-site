@@ -13,50 +13,11 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 .waitlist{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:clamp(80px,10vw,130px) max(16px,calc((100vw - 1180px)/2));background:linear-gradient(135deg,var(--gold) 0%,var(--orange) 55%,var(--rose) 100%);color:var(--ink)}.waitlist:before{opacity:.08}.waitlist>div{max-width:600px}.waitlist-form{display:grid;gap:12px}.waitlist-form label{display:grid;gap:8px;font-size:13px;font-weight:600}.waitlist-form input{width:100%;min-height:54px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--paper-raised) 60%,transparent);border-radius:0;background:color-mix(in srgb,var(--paper-raised) 94%,transparent);color:var(--ink)}.form-status{min-height:26px;margin:0}.site-footer{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:24px;align-items:center;padding:46px max(16px,calc((100vw - 1180px)/2));background:var(--brown);color:var(--on-brown);font-size:12px}.site-footer img{opacity:.7}.site-footer strong{color:var(--on-brown);font:600 24px var(--display)}
 .page-hero{padding:clamp(90px,12vw,160px) max(16px,calc((100vw - 1180px)/2));background:var(--paper-band);color:var(--ink)}.page-hero>h1,.page-hero>p{max-width:900px}.page-hero>p:last-child{color:var(--ink-soft);font-size:18px}.filters{width:var(--shell);display:grid;grid-template-columns:1.4fr 2fr 1fr auto;gap:16px;align-items:end;margin:0 auto 38px;padding:20px;border:1px solid var(--line);background:var(--paper-raised)}.filters label{display:grid;gap:8px;font-size:12px;font-weight:700}.filters input,.filters select{min-height:46px;padding:9px 12px;border:1px solid var(--line);background:var(--paper-raised)}.filters fieldset{display:flex;gap:8px;margin:0;padding:0;border:0}.filters legend{position:absolute;width:1px;height:1px;overflow:hidden}.filters button{min-height:46px;padding:8px 12px;border:1px solid var(--line);background:transparent;color:var(--ink)}.filters button[aria-pressed="true"]{background:var(--gold);color:var(--ink)}.filters p{margin:0}.library-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.empty-state{text-align:center}.pagination{display:flex;gap:8px;justify-content:center;margin:42px auto}.pagination a{padding:8px 13px;border:1px solid var(--line)}.pagination a[aria-current="page"]{background:var(--gold);color:var(--ink)}
 .card-detail{display:grid;grid-template-columns:minmax(280px,430px) 1fr;gap:clamp(50px,8vw,110px);align-items:center;padding:clamp(70px,9vw,120px) max(16px,calc((100vw - 1180px)/2));background:var(--paper);color:var(--ink)}.card-art{padding:12px;border:1px solid var(--brown);background:var(--paper-raised)}.card-art img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:var(--img-radius)}.card-art>span{display:block;padding:10px 4px 0;color:var(--muted);font-size:11px;text-transform:uppercase}.card-intro h1{margin-bottom:8px}.card-original{color:var(--muted);font-size:19px}.card-intro .lead{color:var(--ink-soft)}.keyword-list{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.keyword-list span{padding:7px 11px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}.share-row{display:flex;flex-wrap:wrap;gap:8px}.share-row button{padding:8px 12px;border:1px solid currentColor;background:transparent;color:inherit}.meaning-section{display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:clamp(70px,8vw,110px) max(16px,calc((100vw - 1180px)/2));background:var(--line)}.meaning-section>div{padding:clamp(28px,5vw,60px);background:var(--paper-raised)}.meaning-section p:not(.eyebrow){color:var(--muted)}.story-detail,.post-detail{max-width:860px;margin:auto;padding:clamp(70px,9vw,120px) 16px}.story-detail h2,.post-detail h1{font-size:clamp(44px,7vw,72px)}.story-detail p,.prose p{font-size:18px}.symbol-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.symbol-list article{padding:20px;border:1px solid var(--line);background:var(--paper-raised)}blockquote{margin:34px 0 0;padding:28px;border-left:4px solid var(--coral-ink);background:var(--paper-raised);font:600 26px/1.25 var(--display)}.card-pagination{width:var(--shell);display:grid;grid-template-columns:1fr auto 1fr;gap:20px;margin:0 auto 70px;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.card-pagination a:last-child{text-align:right}.inline-waitlist{padding:70px max(16px,calc((100vw - 780px)/2));background:var(--paper-band)}.post-detail header>img{width:100%;margin:34px 0;aspect-ratio:16/9;object-fit:cover}.post-detail .lead{font-size:21px;color:var(--muted)}.prose a{text-decoration:underline;color:var(--magenta-ink)}.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}.about-grid article{padding:34px;border:1px solid var(--line);background:var(--paper-raised)}.not-found{min-height:70vh;padding:clamp(100px,14vw,180px) max(16px,calc((100vw - 900px)/2));background:var(--paper);color:var(--ink)}
-@media(max-width:900px){.site-header{grid-template-columns:1fr auto}.menu-toggle{display:block}.site-header nav{position:absolute;top:76px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;padding:18px 16px 24px;background:var(--paper);border-bottom:1px solid var(--line)}.site-header nav[data-open]{display:flex}.hero{grid-template-columns:1fr;padding-top:70px}.hero-card{justify-self:center;width:min(300px,78vw)}.section-heading,.waitlist{grid-template-columns:1fr}.card-grid{grid-template-columns:repeat(2,1fr)}.news-grid{grid-template-columns:1fr}.story-panels{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:repeat(3,1fr)}.card-detail{grid-template-columns:1fr}.card-art{width:min(420px,100%);margin:auto}.site-footer{grid-template-columns:1fr 1fr}.site-footer>span{text-align:right}}
+@media(max-width:900px){.site-header{grid-template-columns:1fr auto}.menu-toggle{display:block}.site-header nav{position:absolute;top:76px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;padding:18px 16px 24px;background:var(--paper);border-bottom:1px solid var(--line)}.site-header nav[data-open]{display:flex}.hero{grid-template-columns:1fr;padding-top:70px}.home-page .hero h1{font-family:Georgia,"Times New Roman",serif}.hero-bg{display:none}.hero-card{justify-self:center;width:min(300px,78vw)}.section-heading,.waitlist{grid-template-columns:1fr}.card-grid{grid-template-columns:repeat(2,1fr)}.news-grid{grid-template-columns:1fr}.story-panels{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr}.library-grid{grid-template-columns:repeat(3,1fr)}.card-detail{grid-template-columns:1fr}.card-art{width:min(420px,100%);margin:auto}.site-footer{grid-template-columns:1fr 1fr}.site-footer>span{text-align:right}}
 @media(max-width:620px){h1{font-size:49px}h2{font-size:40px}.proof{gap:18px}.proof dt{font-size:30px}.card-grid,.library-grid,.about-grid,.meaning-section,.symbol-list{grid-template-columns:1fr 1fr}.filters{grid-template-columns:1fr}.filters fieldset{display:grid;grid-template-columns:1fr 1fr}.card-pagination{grid-template-columns:1fr;}.card-pagination a:last-child{text-align:left}.site-footer{grid-template-columns:1fr}.site-footer>span{text-align:left}.waitlist{gap:30px}}
 @media(max-width:430px){.card-grid,.library-grid,.about-grid,.meaning-section,.symbol-list{grid-template-columns:1fr}.hero{padding-inline:16px}.hero-card{width:88vw}.proof{display:grid;grid-template-columns:repeat(3,1fr)}.tarot-card{padding:10px 10px 18px}.filters fieldset{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media(max-width:620px){.hero-waitlist{grid-template-columns:1fr}.hero-waitlist .form-status{grid-column:auto}}
-
-/* ============================================================
-   Cinematic motion — dust, mist, bronze sweep, hero reveal.
-   Additive only: no existing selector above is changed. Every
-   rule here is inert under prefers-reduced-motion (see block
-   above, which now also zeroes `animation`).
-   ============================================================ */
-
-.hero-dust {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.hero-mist {
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 42% 46%, color-mix(in srgb, var(--amber) 20%, transparent), transparent 34%),
-    radial-gradient(ellipse at 74% 68%, color-mix(in srgb, var(--amber) 15%, transparent), transparent 30%);
-  filter: blur(1.5rem);
-  will-change: opacity;          /* xin layer riêng: blur chỉ tính một lần */
-  animation: mistBreath 11s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes mistBreath {
-  from { opacity: .42; }
-  to   { opacity: .78; }
-}
-
-
-/* drumTurn đã bỏ. Một vòng quay 260 giây là chuyển động không ai nhận ra, nhưng
-   trình duyệt phải giữ lớp composite của một ảnh nền lớn sống suốt phiên. Hoa văn
-   giữ nguyên, chỉ mất phần quay. */
 
 /* Ánh đồng quét viền — bronze edge sweep on the primary CTAs. */
 .button.brass,
@@ -83,32 +44,16 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   transform: translateX(120%);
 }
 
-/* One-time reveal on load. Pure CSS, no JS dependency: plays
-   automatically and exactly once per page load (animation-fill-mode
-   `both` applies the "from" state immediately, even during the delay, so
-   there's no flash of the final state before it animates in). This is
-   deliberately not JS-driven — a class toggled from a script would depend
-   on that script loading, running without error, and (if timed via
-   requestAnimationFrame) the tab actually compositing frames, none of
-   which are guaranteed.
-
-   The animation sits on the stage, not on .hero-card: the card carries
-   `transform: rotate(1deg)`, and a keyframe ending at `transform: none`
-   with fill-mode `both` would flatten that tilt for good. */
-/* Dịch trái bằng margin chứ không phải transform: .hero-stage đang chạy
-   heroReveal vốn đã animate transform, thêm translateX vào đó sẽ bị keyframe
-   ghi đè. Khoảng dịch chặn theo 8vw để màn hình hẹp không đẩy mặt trống ra
-   ngoài mép trái. */
+/* Khung carousel giữ vị trí tĩnh; hiệu ứng bay vào đã bỏ ở 0.10 để nội dung
+   màn hình đầu không bị giữ opacity 0 trong lúc CSS đầy đủ tải về. */
 .hero-stage {
   position: relative;
   width: min(100%, 440px);
   justify-self: end;
-  animation: heroReveal .9s 120ms cubic-bezier(.2, .7, .2, 1) both;
 }
 
-/* Chỉ áp dụng ở bố cục hai cột. Dưới 900px hero về một cột, mặt trống đã
-   chiếm trọn bề ngang nên dịch trái sẽ đẩy nó lòi ra ngoài mép. Cột phải vốn
-   chặn ở 400px nên phải nới thêm, nếu không mặt trống không to lên được. */
+/* Chỉ áp dụng ở bố cục hai cột. Cột phải được nới để giữ nguyên kích thước
+   carousel trên màn hình rộng. */
 @media (min-width: 901px) {
   .hero {
     grid-template-columns: minmax(0, 1fr) minmax(280px, calc(440px + 2cm));
@@ -119,101 +64,14 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   }
 }
 
-/* Trống đồng + quầng sáng + tia là một cụm "mặt trời" tách khỏi .hero-stage,
-   định vị tuyệt đối trong .hero và do JS đưa vào đúng tâm mặt trời của tranh
-   nền (ảnh dùng cover nên vị trí đổi theo màn hình — CSS thuần không tính được).
-   width là +10% so với mặt trống cũ (440 -> 484). */
-.hero-sun {
-  position: absolute;
-  z-index: 0;
-  width: min(120vh, 160vw);
-  aspect-ratio: 1;
-  pointer-events: none;
-  /* Giấu cho tới khi positionHeroSun đặt xong toạ độ.
-
-     Không có dòng này, phần tử nằm ở góc trên trái rồi nhảy vào tâm mặt trời khi
-     JS chạy — cú nhảy đó là toàn bộ CLS 0,178 đo được. Đặt sẵn vị trí bằng phần
-     trăm cũng không cứu được: trên màn hình dọc, cover math cắt ảnh mạnh nên tâm
-     mặt trời không rơi vào 68,7% bề ngang hero, và cú nhảy vẫn còn (thử rồi,
-     CLS lên 0,234). Phần tử xuất hiện tại chỗ thì không tính là dịch chuyển. */
-  visibility: hidden;
-}
-
-/* Quầng sáng ở tâm mặt trời. Phủ đúng hộp vuông của cụm nên tâm quầng luôn
-   trùng tâm trống dù kích thước đổi theo màn hình. */
-.hero-sun::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  aspect-ratio: 1;
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 85%, transparent) 0%, color-mix(in srgb, var(--orange) 45%, transparent) 4.5%, color-mix(in srgb, var(--rose) 18%, transparent) 9%, transparent 15%);
-  mix-blend-mode: screen;
-  animation: drumGlow 5s ease-in-out infinite;
-  animation-play-state: paused;
-  pointer-events: none;
-}
-
-@keyframes drumGlow {
-  0%, 100% { opacity: .55; transform: scale(.94); }
-  50% { opacity: 1; transform: scale(1.06); }
-}
-
-/* Tia sáng tỏa từ tâm mặt trời. Nan quạt mảnh bằng repeating-conic, rồi mask
-   hình vành khuyên để tia mạnh ở giữa và tan dần ra rìa — khớp hoa văn tia
-   sẵn có trên mặt trống thay vì phủ đè lên nó. Quay ngược chiều mặt trống cho
-   hai lớp không dính vào nhau thành một khối cứng. */
-.hero-sun::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  aspect-ratio: 1;
-  background: repeating-conic-gradient(from 0deg at 50% 50%,
-    color-mix(in srgb, var(--orange) 0%, transparent) 0deg, color-mix(in srgb, var(--orange) 22%, transparent) 1.4deg, color-mix(in srgb, var(--orange) 0%, transparent) 4.5deg);
-  -webkit-mask: radial-gradient(circle at 50% 50%, #000 5%, rgb(0 0 0 / .55) 20%, transparent 44%);
-  mask: radial-gradient(circle at 50% 50%, #000 5%, rgb(0 0 0 / .55) 20%, transparent 44%);
-  mix-blend-mode: screen;
-  animation: drumRays 90s linear infinite reverse;
-  animation-play-state: paused;
-  pointer-events: none;
-}
-
-@keyframes drumRays { to { transform: rotate(360deg); } }
-
-/* Quầng sáng lệch tâm chồng trên nền — kỹ thuật nền của trang tham chiếu, đưa
-   vào hero sáng bằng sắc bình minh ấm. Đặt sau nội dung (z-index 0)
-   nên chữ và lá bài vẫn nổi trên nó. overflow ẩn để quầng không tràn ra ngoài. */
 .hero { position: relative; overflow: hidden; }
-
-.hero::after {
-  content: "";
-  position: absolute;
-  right: -6%;
-  top: -14%;
-  width: min(760px, 62vw);
-  aspect-ratio: 1;
-  z-index: 0;
-  background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--amber) 30%, transparent), color-mix(in srgb, var(--amber) 10%, transparent) 38%, transparent 68%);
-  pointer-events: none;
-}
 
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 
-/* Nghiêng theo chuột (hiệu ứng 1): khung dựng phối cảnh, JS chỉ xoay
-   .hero-carousel. Cố ý không đặt lên .hero-stage vì nó đang giữ heroReveal với
-   fill:both — mọi transform gán tay sẽ bị keyframe ghi đè. */
+/* Nghiêng theo chuột (desktop): JS chỉ xoay .hero-carousel để không làm thay đổi
+   layout của .hero-stage. */
 .hero-stage { perspective: 1100px; }
 .hero-carousel { transition: transform .25s ease; transform-style: preserve-3d; }
-
-/* Hiện dần khi cuộn (hiệu ứng 5). Lớp .reveal chỉ do JS gắn khi được phép
-   chuyển động, nên trang không JS hoặc bật giảm chuyển động luôn thấy đủ nội
-   dung, không bị kẹt ẩn. */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease var(--reveal-delay, 0ms), transform .7s cubic-bezier(.2, .7, .2, 1) var(--reveal-delay, 0ms); }
-.reveal-in { opacity: 1; transform: none; }
 
 /* Dấu "bản thử nghiệm" — toàn bộ tranh minh họa hiện là bản nháp AI, chưa phải
    art cuối. Dán bằng CSS ::before ở góc trên phải mỗi khung ảnh (và .proto-stamp
@@ -241,30 +99,8 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   pointer-events: none;
 }
 
-/* Trống đồng lùi thành nền mờ chìm dưới phông cảnh — theo trang tham chiếu:
-   opacity 0.5, blend screen nên chỉ cộng nét ấm lên tranh, không đục
-   thành đĩa đặc. Vẫn xoay chậm để nền sống. Lá bài vẫn dùng bề ngang mặt trống
-   làm thước đo 40%, nên kích thước carousel không đổi. */
-.hero-drum {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  opacity: .5;
-  filter: saturate(.9) contrast(1.03);
-  mix-blend-mode: screen;
-  /* Hoa văn trống đồng có vòng tròn vàng ngoài cùng. Ở cỡ tràn màn, vòng đó
-     thành một đường tròn lớn cắt ngang hero, đọc ra như viền cứng thay vì hoa
-     văn chìm. Mask cho mép tan dần từ 46% bán kính trở ra, nên trống đồng hòa
-     vào phông cảnh và không còn ranh giới nào. */
-  -webkit-mask: radial-gradient(circle at 50% 50%, #000 40%, rgb(0 0 0 / .55) 58%, transparent 76%);
-  mask: radial-gradient(circle at 50% 50%, #000 40%, rgb(0 0 0 / .55) 58%, transparent 76%);
-  animation: drumSpin 180s linear infinite;
-}
-
-/* Trống đồng đã tách ra thành .hero-sun, nên carousel không còn phủ lên nó mà
-   nằm theo luồng thường trong cột phải, tự cao bằng thẻ. Các lá xếp chồng cùng
-   một ô lưới để mờ chồng khi chuyển. */
+/* Chỉ slide active tham gia layout; bốn slide ẩn không còn làm browser đo và
+   vẽ bốn thẻ lớn ở khung đầu. */
 .hero-carousel {
   display: grid;
   justify-items: center;
@@ -285,21 +121,15 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   font: inherit;
   text-align: center;
   cursor: pointer;
-  display: grid;
+  display: none;
   gap: 4px;
-  opacity: 0;
-  visibility: hidden;
-  /* Mờ chồng: lá đi và lá đến cùng đổi độ mờ và tỷ lệ trong một khoảng, nên
-     hai hình chồng lên nhau ở giữa chuyển cảnh thay vì tắt hẳn rồi mới hiện. */
-  transform: rotate(1deg) scale(.96);
-  transition: opacity .9s ease, transform .9s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .9s;
+  transform: rotate(1deg);
 }
 
 .hero-carousel .hero-card.is-active {
+  display: grid;
   opacity: 1;
   visibility: visible;
-  transform: rotate(1deg) scale(1);
-  transition: opacity .9s ease, transform .9s cubic-bezier(.2, .7, .2, 1), visibility 0s;
 }
 
 .hero-card img {
@@ -334,32 +164,6 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 .hero-card:focus-visible {
   outline: 2px solid var(--muted);
   outline-offset: 3px;
-}
-
-/* Ánh sáng quét chậm qua mặt lá đang hiện. Đặt trên phần tử con để không
-   đụng vào transform của thẻ, và chỉ chạy ở lá active cho đỡ tốn. */
-.hero-card.is-active img {
-  position: relative;
-}
-
-.hero-card.is-active::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 40%, color-mix(in srgb, var(--gold) 55%, transparent) 50%, transparent 60%);
-  background-size: 300% 100%;
-  animation: cardSheen 6s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes cardSheen {
-  0%, 100% { background-position: 160% 0; }
-  55% { background-position: -60% 0; }
-}
-
-@keyframes drumSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .hero-dots {
@@ -400,32 +204,9 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   outline-offset: 2px;
 }
 
-@keyframes heroReveal {
-  from { opacity: 0; filter: blur(14px); transform: translateY(16px); }
-  to   { opacity: 1; filter: blur(0); transform: none; }
-}
-
-/* Hiệu ứng mở đầu page: từng dòng chữ hero trượt vào từ phải và hiện dần theo
-   bậc, học từ hero-slide-in của trang tham chiếu. fill:both giữ trạng thái đầu
-   ngay trong lúc chờ, nên không lóe nội dung trước khi chạy. Dưới prefers-
-   reduced-motion, luật *{animation:none} toàn cục tắt hết và chữ hiện luôn ở
-   opacity mặc định 1 — không kẹt ẩn. */
 /* Bóng chữ mềm để tiêu đề đọc rõ trên nền phong cảnh sáng hơn — theo trang
    tham chiếu. Giúp cả desktop lẫn mobile khi chữ chạm vùng cảnh. */
 .hero h1 { text-shadow: 0 .3rem 2rem color-mix(in srgb, var(--ink) 55%, transparent); }
-
-.hero-copy > * { animation: heroEnter .85s cubic-bezier(.2, .7, .2, 1) both; }
-.hero-copy > *:nth-child(1) { animation-delay: .10s; }
-.hero-copy > *:nth-child(2) { animation-delay: .20s; }
-.hero-copy > *:nth-child(3) { animation-delay: .30s; }
-.hero-copy > *:nth-child(4) { animation-delay: .40s; }
-.hero-copy > *:nth-child(5) { animation-delay: .50s; }
-.hero-copy > *:nth-child(6) { animation-delay: .60s; }
-
-@keyframes heroEnter {
-  from { opacity: 0; transform: translate3d(1.25rem, 0, 0); }
-  to   { opacity: 1; transform: none; }
-}
 
 /* Bảng kể chuyện của từng vị. Dùng <dialog> để trình duyệt lo sẵn phần khoá
    tiêu điểm, phím Esc và lớp nền mờ — ít mã hơn và đúng hành vi hơn tự dựng. */
@@ -609,15 +390,9 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   text-transform: uppercase;
 }
 
-/* Ba lớp cinematic — ánh sáng quét, mặt trống xoay, mờ chồng — đều tắt ở đây.
-   Người bật chế độ giảm chuyển động vẫn thấy đủ nội dung, chỉ không thấy
-   chuyển động; lá đang hiện giữ nguyên độ nghiêng 1 độ của thiết kế. */
+/* Các micro-interaction còn lại vẫn tôn trọng giảm chuyển động. */
 @media (prefers-reduced-motion: reduce) {
-  .hero-stage { animation: none; opacity: 1; filter: none; transform: none; }
-  .hero-stage::before { animation: none; opacity: .8; transform: none; }
-  .hero-drum { animation: none; }
   .hero-carousel .hero-card { transition: none; transform: rotate(1deg); }
-  .hero-carousel .hero-card.is-active::after { animation: none; background: none; }
   .hero-dots button::before { transition: none; }
   .immortals-grid img { transition: none; }
   .hero-card-cue { opacity: 1; }
@@ -666,11 +441,6 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   }
 }
 
-/* Hai hiệu ứng mặt trời chỉ chạy khi hero còn trong tầm nhìn. Lớp .is-visible do
-   initHeroSunGate trong site.js gắn qua motion-gate.js. */
-.hero.is-visible .hero-sun::before,
-.hero.is-visible .hero-sun::after { animation-play-state: running; }
-
 /* Bỏ qua layout của phần chưa nhìn thấy. Trang chủ có tám section; trước đây
    trình duyệt layout cả tám trước khi vẽ khung đầu. Không áp cho .hero vì nó là
    chính LCP element. contain-intrinsic-size lấy cận dưới của chiều cao thật để
@@ -685,3 +455,535 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
+
+/* ============================================================
+   0.13 — lớp typography và tương tác trước đây ở theme-dark.css.
+   Nội dung bên dưới được nối nguyên thứ tự để giữ nguyên cascade.
+   ============================================================ */
+/* ============================================================
+   Hường Đông — typography và các lớp tương tác đã chốt.
+   Tên tệp được giữ để không đổi thứ tự tài nguyên đang chạy; bảng màu
+   Bình Minh do khối token trong main.css làm nguồn duy nhất.
+
+   Sans công nghiệp dùng cho thân bài và đa số tiêu đề;
+   Charm chỉ dùng làm điểm nhấn ở hero và logo.
+   ============================================================ */
+
+:root {
+  /* Typography vẫn ở tệp nạp sau để giữ đúng cơ cấu hiện tại. */
+  --display: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
+  --body: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
+  --script: "Charm", cursive;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Tiêu đề: sans, siết letter-spacing cho gọn — chất "công nghiệp". */
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  letter-spacing: -0.015em;
+  font-weight: 600;
+  color: var(--ink);
+}
+h1 { font-weight: 700; letter-spacing: -0.025em; }
+
+/* Điểm nhấn thư pháp: chỉ logo và hero trang chủ. */
+.brand span {
+  font-family: var(--script);
+  font-size: 1.45rem;
+  color: var(--gold-ink);
+  letter-spacing: 0;
+}
+.home-page .page-hero h1,
+.home-page .hero h1 {
+  font-family: var(--script);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--gold-ink);
+}
+
+/* Vỏ trang */
+.site-header {
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  border-color: var(--line);
+}
+.site-footer {
+  background: var(--brown);
+  border-color: var(--line);
+  color: var(--on-brown);
+}
+#main-nav a { color: var(--ink); opacity: 0.85; }
+#main-nav a:hover,
+#main-nav a[aria-current="page"] { opacity: 1; color: var(--gold-ink); }
+.nav-cta {
+  background: var(--magenta-ink);
+  color: var(--on-brown);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+}
+.nav-cta:hover { background: var(--rose-ink); }
+#main-nav .nav-cta,
+#main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; }
+
+/* Ảnh nền mờ được hạ cường độ để hoa văn không tranh chấp với nội dung. */
+.drum-watermark::before,
+.lac-watermark::before { opacity: 0.05; }
+
+/* ---------- Khối nội dung của cơ cấu 7 mục ---------- */
+
+.v2-prose {
+  width: var(--shell);
+  margin: 0 auto;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--line);
+  max-width: 860px;
+}
+.v2-prose:last-of-type { border-bottom: none; }
+.v2-prose p,
+.v2-prose li { font-size: 1.02rem; line-height: 1.75; }
+.v2-prose h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0 0 14px; }
+.v2-prose h3 { font-size: 1.12rem; margin: 26px 0 8px; color: var(--muted); }
+.v2-prose .eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown);
+  margin: 0 0 6px;
+}
+
+.v2-link { color: var(--gold-ink); font-weight: 600; }
+.v2-link:hover { text-decoration: underline; }
+
+.v2-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+.v2-two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+.v2-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+.v2-card h3 { margin-top: 0; color: var(--muted); }
+.v2-card p:last-child,
+.v2-card ul:last-child { margin-bottom: 0; }
+.v2-num {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--brown);
+  margin-bottom: 6px;
+}
+
+.v2-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.97rem;
+}
+.v2-table th,
+.v2-table td {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.v2-table th { background: var(--paper-raised); color: var(--muted); font-weight: 600; }
+
+.v2-list { padding-left: 1.15rem; margin: 14px 0; }
+.v2-list li { margin-bottom: 8px; }
+
+.v2-note {
+  border-left: 3px solid var(--brown);
+  background: color-mix(in srgb, var(--paper-raised) 70%, transparent);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  margin: 18px 0;
+}
+.v2-warn {
+  border-left: 3px solid var(--coral-ink);
+  background: color-mix(in srgb, var(--coral) 12%, transparent);
+  padding: 12px 16px;
+  border-radius: 0 10px 10px 0;
+  margin: 18px 0;
+}
+
+.v2-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 20px 0 6px;
+}
+.v2-price strong {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  color: var(--gold-ink);
+  letter-spacing: -0.02em;
+}
+.v2-price span { color: var(--muted); font-size: 0.92rem; }
+
+.v2-pending {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--gold) 26%, transparent);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.v2-prose code {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.9em;
+}
+
+/* ---------- Khối Lĩnh Nam chích quái trên trang lá ---------- */
+.lncq-block {
+  width: var(--shell);
+  max-width: 860px;
+  margin: 0 auto 40px;
+  padding: 26px 28px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.lncq-block h2 { font-size: 1.25rem; margin: 0 0 12px; }
+.lncq-quote {
+  border-left: 3px solid var(--brown);
+  margin: 18px 0;
+  padding: 10px 0 10px 18px;
+  font-style: italic;
+  color: var(--muted);
+}
+.lncq-cite {
+  font-size: 0.86rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 16px;
+  line-height: 1.65;
+}
+.lncq-caveat { display: block; margin-top: 6px; color: var(--coral-ink); }
+.lncq-warn {
+  border-left: 3px solid var(--coral-ink);
+  padding-left: 16px;
+  color: var(--muted);
+}
+
+/* ---------- Bộ bài Trải bài (chuyển thể từ Mystic-Draw) ---------- */
+.hd-deck-wrap { width: var(--shell); max-width: 900px; margin: 0 auto 40px; }
+.hd-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 22px; }
+.hd-controls select,
+.hd-controls button {
+  background: var(--paper-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.hd-controls button[data-draw] { background: var(--gold); color: var(--ink); font-weight: 600; border-color: transparent; }
+.hd-controls button[data-draw]:hover { background: var(--amber); }
+.hd-controls button:hover { border-color: var(--brown); }
+
+.hd-deck { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; padding: 10px 0 6px; }
+
+/* Kỹ thuật lật giữ nguyên từ Mystic-Draw. */
+.hd-card {
+  width: 132px;
+  aspect-ratio: 3.5 / 5;
+  perspective: 1000px;          /* chiều sâu cho khung chứa */
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  animation: hd-in 0.4s backwards;
+  animation-delay: calc(var(--i) * 70ms);
+}
+@keyframes hd-in { from { opacity: 0; transform: translateY(14px); } }
+.hd-card:hover { filter: brightness(1.18); transform: scale(1.05); transition: all 0.2s ease; }
+.hd-card:focus-visible { outline: 3px solid var(--gold-ink); outline-offset: 4px; border-radius: 10px; }
+
+.hd-card-inner {
+  display: block;
+  width: 100%; height: 100%;
+  position: relative;
+  transition: transform 0.8s;   /* nhịp lật */
+  transform-style: preserve-3d; /* giữ không gian 3D */
+}
+.hd-card.flipped .hd-card-inner { transform: rotateY(180deg); }
+
+.hd-card-back,
+.hd-card-front {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  backface-visibility: hidden;  /* giấu mặt sau khi quay */
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--line);
+}
+/* Mặt lưng tạm: trống đồng làm tâm, đối xứng để không lộ xuôi/ngược.
+   Sẽ thay bằng art thật ở đợt big update hình ảnh. */
+.hd-card-back {
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 30%, transparent) 0 22%, transparent 23%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 18%, transparent) 0 40%, transparent 41%),
+    repeating-conic-gradient(from 0deg at 50% 50%, var(--paper-band) 0deg 15deg, var(--gold) 15deg 30deg),
+    var(--paper-raised);
+}
+.hd-card-front { transform: rotateY(180deg); background: var(--paper-raised); }
+.hd-card-front.reversed { transform: rotateY(180deg) rotate(180deg); }
+.hd-card-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.hd-hint { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 14px 0 0; }
+
+.hd-reading { display: grid; gap: 14px; margin-top: 26px; }
+.hd-reading-item {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brown);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 18px;
+}
+.hd-reading-head { margin: 0 0 8px; font-size: 1.02rem; }
+.hd-rev {
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
+  background: color-mix(in srgb, var(--coral) 30%, transparent);
++  color: var(--ink); padding: 2px 9px; border-radius: 999px; margin-left: 6px;
+}
+.hd-reading-src { font-size: 0.85rem; color: var(--muted); margin: 8px 0 0; }
+
+@media (max-width: 520px) { .hd-card { width: 104px; } .hd-deck { gap: 12px; } }
+
+/* ---------- Sửa header chật do nav tăng 4 → 7 mục ---------- */
+.brand span { white-space: nowrap; }              /* không cho "Hường Đông" gãy dòng */
+#main-nav a { white-space: nowrap; }              /* không cho "Tarot là gì" gãy dòng */
+
+@media (min-width: 861px) and (max-width: 1180px) {
+  /* Khoảng giữa: siết chữ lại cho 7 mục vừa một hàng. */
+  #main-nav { gap: 12px; }
+  #main-nav a { font-size: 0.86rem; }
+  .nav-cta { padding: 7px 13px; }
+  .brand span { font-size: 1.2rem; }
+}
+
+/* ============================================================
+   HERO — yêu cầu 2,3,4  (ghi đè main.css, không sửa file gốc)
+   ============================================================ */
+
+/* --- YC3a: ảnh carousel TO GẤP 2 ---
+   Hai cột chia theo tỷ lệ (fr) chứ KHÔNG đặt cột ảnh cứng: đặt cứng 760px
+   làm cột chữ bị bóp còn ~70px ở màn ~950px. Dưới 1100px xếp dọc. */
+.hero {
+  grid-template-columns: minmax(280px, 0.95fr) minmax(340px, 1.25fr);
+  gap: clamp(32px, 3.4vw, 60px);
+  /* Nới khung hero rộng hơn 1180px của main.css để lá to gấp đôi mà cột chữ
+     vẫn đủ rộng. Chỉ nới ở hero, các mục khác giữ nguyên bề ngang cũ. */
+  padding-inline: max(16px, calc((100vw - 1460px) / 2));
+}
+.hero-carousel .hero-card { grid-area: 1 / 1; width: 100%; max-width: 720px; justify-self: end; }
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-carousel .hero-card { max-width: min(620px, 92vw); justify-self: center; }
+}
+
+.drum-watermark::before { opacity: 0.033; }   /* 0.055 → 60% */
+.lac-watermark::after   { opacity: 0.027; }   /* 0.045 → 60% */
+
+/* Chỉ slide active tham gia layout; JS đổi lớp is-active khi chuyển lá. */
+.hero-carousel {
+  position: relative;
+  display: grid;
+  perspective: none;
+}
+
+.hero-carousel .hero-card {
+  grid-area: 1 / 1;                 /* mọi lá chồng lên cùng một ô */
+  transform: rotate(1deg);          /* giữ độ nghiêng nhẹ của bản gốc */
+}
+
+.hero-carousel .hero-card.is-active {
+  display: grid;
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-carousel .hero-card:not(.is-active) {
+  display: none;
+}
+
+/* --- YC5: khối giới thiệu bao bài --- */
+.pack-section {
+  width: var(--shell);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px 0;
+  border-top: 1px solid var(--line);
+}
+.pack-figure { margin: 26px 0 18px; }
+.pack-figure img {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.pack-figure figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-align: center;
+}
+.pack-cta { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.pack-cta a:not(.button) { color: var(--gold-ink); font-weight: 600; }
+
+/* --- Slide hộp bài (slide đầu của hero carousel) --- */
+.hero-card--pack { background: var(--paper-raised); }
+.hero-card--pack img {
+  aspect-ratio: 2 / 3;      /* khớp các slide còn lại, ảnh đã cắt sẵn đúng tỷ lệ */
+  object-fit: cover;
+  background: var(--paper);      /* nền kem của ảnh, tránh viền lạ khi tải */
+}
+.hero-card--pack .hero-card-cue { color: var(--gold-ink); }
+
+/* ============================================================
+   HÀNH TRÌNH ÁNH SÁNG khi cuộn — mức "tinh tế"
+   --hd-scroll: 0→1 toàn trang | --hd-hero: 0→1 khi rời hero
+   Cả hai do light-journey.js ghi. Không có JS thì mặc định 0
+   (= trạng thái sáng nhất), trang vẫn đẹp và đầy đủ.
+   ============================================================ */
+:root { --hd-scroll: 0; --hd-hero: 0; }
+
+/* Vầng sáng nền, cố định theo màn hình, hửng dần khi cuộn.
+   z-index -1: nằm sau nội dung nhưng trên màu nền của body. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120vh 90vh at 72% 12%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 62%),
+    radial-gradient(90vh 70vh at 18% 4%, color-mix(in srgb, var(--peach) 10%, transparent), transparent 58%);
+  /* Biên độ nhỏ để cảm nhận được bình minh mà không thành hiệu ứng trình diễn. */
+  opacity: calc(0.35 + var(--hd-scroll) * 0.45);
+  transition: opacity .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+/* Nền hửng dần từ kem sang vàng nhạt; biên độ nhỏ để chữ luôn ổn định. */
+body {
+  background-color: color-mix(in oklab, var(--paper), var(--paper-band) calc(var(--hd-scroll) * 45%));
+}
+
+/* Mỗi mục nhận một chút hơi ấm ở mép trên, mạnh ở đầu trang và nhạt dần
+   xuống cuối — tạo cảm giác "chuyển cảnh" giữa các mục mà không cần kẻ vạch. */
+.story-section, .immortals-section, .houses-section,
+.featured, .pack-section, .news-section, .waitlist { position: relative; }
+.story-section::before, .immortals-section::before, .houses-section::before,
+.featured::before, .pack-section::before, .news-section::before, .waitlist::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 16%, transparent), transparent);
+  opacity: calc(1 - var(--hd-scroll) * 0.7);
+}
+.story-section > *, .immortals-section > *, .houses-section > *,
+.featured > *, .pack-section > *, .news-section > *, .waitlist > * { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { opacity: .5; transition: none; }
+  body { background-color: var(--paper); }
+}
+
+/* --- Toàn văn Lĩnh Nam chích quái --- */
+.lncq-index td:first-child { width: 68px; color: var(--muted); text-align: right; }
+.lncq-index td:last-child { width: 150px; }
+.lncq-nocard { color: var(--muted); }
+.lncq-full p { font-size: 1.03rem; line-height: 1.85; margin: 0 0 18px; }
+.lncq-full .lncq-cards {
+  border-left: 3px solid var(--brown);
+  padding: 10px 0 10px 16px;
+  margin-bottom: 26px;
+  font-size: .95rem;
+}
+
+/* ============================================================
+   Ảnh minh hoạ trong tiêu đề mục — hoà thẳng vào nền, KHÔNG viền
+   ============================================================ */
+.section-heading.has-art { align-items: center; }
+.section-heading.has-art > .heading-art { grid-column: 1; grid-row: 1 / span 3; margin: 0; }
+.section-heading.has-art > .eyebrow     { grid-column: 2; grid-row: 1; }
+.section-heading.has-art > h2           { grid-column: 2; grid-row: 2; }
+.section-heading.has-art > p:not(.eyebrow) { grid-column: 2; grid-row: 3; }
+
+.heading-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Không khung, không nền, không đổ bóng — ảnh nằm thẳng trên nền trang. */
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+}
+
+/* Tranh có nền riêng (không tách nền được): làm tan mép bằng mask
+   để không còn cạnh chữ nhật, kèm hoà sáng nhẹ vào nền trang. */
+.heading-art.is-photo img {
+  -webkit-mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 42%, rgb(0 0 0 / .45) 72%, transparent 100%);
+  mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 42%, rgb(0 0 0 / .45) 72%, transparent 100%);
+  mix-blend-mode: luminosity;
+  opacity: .9;
+}
+
+@media (max-width: 860px) {
+  .section-heading.has-art > .heading-art,
+  .section-heading.has-art > .eyebrow,
+  .section-heading.has-art > h2,
+  .section-heading.has-art > p:not(.eyebrow) { grid-column: 1; grid-row: auto; }
+  .heading-art img { max-width: 420px; margin: 0 auto; }
+}
+
+/* Nút bấm mục 22 lá */
+.story-more { width: var(--shell); margin: 26px auto 0; }
+
+/* Ảnh minh hoạ tiêu đề: chặn bề ngang để không phình quá khổ như mục
+   "Hai lớp nghĩa" (ảnh mặt lưng bài vốn là ảnh dọc 800x1200). */
+.heading-art img { max-width: 420px; margin-inline: auto; }
+.houses-section .heading-art img,
+.story-section .heading-art img { max-width: 520px; }
+
+
+/* Nhãn phiên bản. main.css gắn chữ "Bản thử nghiệm" vào ::before của MỌI
+   lá bài, ảnh và thẻ tin — phải ghi đè đúng danh sách đó, không chỉ .proto-stamp. */
+.hero-card::before,
+.immortals-grid a::before,
+.tarot-card::before,
+.card-art::before,
+.houses-figure::before,
+.lac-figure::before,
+.news-grid article::before { content: "OpenBeta"; }

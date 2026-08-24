@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -31,4 +31,15 @@ test("firebase.json không cache lâu các tệp không đổi tên", async () =
   const rule = config.hosting.headers.find((entry) => entry.source.includes("css|js"));
   const value = rule.headers.find((header) => header.key === "Cache-Control").value;
   assert.doesNotMatch(value, /max-age=[1-9]/, "CSS/JS phải revalidate, không giữ cache dài ngày");
+});
+
+test("giao diện chỉ dùng một URL stylesheet chính sau khi gộp theme", async () => {
+  await assert.rejects(access(path.join(root, "public/assets/css/theme-dark.css")));
+  for (const file of ["dist/index.html", "dist/la-bai/index.html", "dist/la-bai/the-star/index.html"]) {
+    const html = await read(file);
+    const stylesheets = [...html.matchAll(/<link rel="stylesheet" href="(\/assets\/css\/(?:main|theme-dark)\.css[^\"]*)">/g)];
+    const uniqueUrls = new Set(stylesheets.map((match) => match[1]));
+    assert.equal(uniqueUrls.size, 1, `${file}: phải chỉ dùng một URL stylesheet giao diện`);
+    assert.match([...uniqueUrls][0], /^\/assets\/css\/main\.css\?v=[0-9a-f]{8}$/);
+  }
 });
