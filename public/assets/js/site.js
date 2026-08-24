@@ -2,9 +2,9 @@ const normalize = (value) => String(value || "").normalize("NFD").replace(/[\u03
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-// Nghiêng theo chuột (hiệu ứng 1). Chỉ xoay .hero-carousel; .hero-stage đang
-// giữ heroReveal nên xoay nó sẽ bị keyframe nuốt. Gom mỗi lần di chuột vào một
-// khung hình bằng requestAnimationFrame để không giật. Bỏ qua trên máy cảm ứng
+// Nghiêng theo chuột (hiệu ứng 1). Chỉ xoay .hero-carousel để không thay đổi
+// layout của .hero-stage. Gom mỗi lần di chuột vào một khung hình bằng
+// requestAnimationFrame để không giật. Bỏ qua trên máy cảm ứng
 // (không có con trỏ để lần theo) và khi người dùng chọn giảm chuyển động.
 function initHeroTilt() {
   const hero = document.querySelector(".hero");
@@ -29,83 +29,6 @@ function initHeroTilt() {
   hero.addEventListener("pointerleave", () => { nx = 0; ny = 0; schedule(); });
 }
 initHeroTilt();
-
-// Đưa cụm mặt trời (trống đồng mờ + quầng + tia) vào đúng tâm mặt trời của
-// tranh nền. Nền dùng background cover nên vị trí mặt trời đổi theo kích thước
-// hero — CSS thuần không tính được. Chạy cả khi giảm chuyển động vì đây là định
-// vị chứ không phải hiệu ứng. Tâm mặt trời đo từ ảnh: 68,7% ngang, 44,1% dọc.
-function positionHeroSun() {
-  const hero = document.querySelector(".hero");
-  const sun = document.querySelector("[data-hero-sun]");
-  if (!hero || !sun) return;
-  const IMG_W = 1536;
-  const IMG_H = 1024;
-  const SUN_X = 0.687;
-  const SUN_Y = 0.441;
-  let raf = 0;
-  const place = () => {
-    raf = 0;
-    const w = hero.clientWidth;
-    const h = hero.clientHeight;
-    // Oversize: trống đồng lớn hơn hero, cắt mép (overflow ẩn). Lấy theo chiều
-    // cao ×1.2 nhưng chặn theo bề ngang để mobile không phình vô lý.
-    const size = Math.min(h * 1.2, w * 1.6);
-    sun.style.width = `${Math.round(size)}px`;
-    // Tâm mặt trời trong tranh, tính qua cover math nên khít ở mọi màn hình.
-    const scale = Math.max(w / IMG_W, h / IMG_H);
-    const cx = (w - IMG_W * scale) / 2 + SUN_X * IMG_W * scale;
-    const cy = (h - IMG_H * scale) / 2 + SUN_Y * IMG_H * scale;
-    sun.style.left = `${Math.round(cx - size / 2)}px`;
-    sun.style.top = `${Math.round(cy - size / 2)}px`;
-    // Hiện ra đúng chỗ thay vì nhảy vào chỗ. CSS để visibility:hidden nên trước
-    // dòng này phần tử chưa từng có vị trí nhìn thấy được — không có gì để dịch.
-    sun.style.visibility = "visible";
-  };
-  const schedule = () => { if (!raf) raf = requestAnimationFrame(place); };
-  place();
-  window.addEventListener("load", place);
-  window.addEventListener("resize", schedule);
-  // Hero đổi chiều cao khi font/ảnh xong hoặc nội dung đổi dòng — ResizeObserver
-  // giữ trống đồng luôn đồng tâm khít, không phụ thuộc thời điểm load. Gọi place
-  // trực tiếp (không qua rAF): cụm mặt trời tuyệt đối, pointer-events none nên
-  // không đổi cỡ hero, không gây vòng lặp observer.
-  if ("ResizeObserver" in window) new ResizeObserver(place).observe(hero);
-}
-positionHeroSun();
-
-// Hiện dần khi cuộn (hiệu ứng 5). Gắn lớp .reveal bằng JS chứ không đặt sẵn
-// trong HTML: trang không chạy được script vẫn hiện đủ nội dung. Dùng vị trí
-// đo bằng getBoundingClientRect thay vì IntersectionObserver — IO phụ thuộc
-// pipeline dựng hình, nếu nó không phát thì nội dung kẹt ẩn vĩnh viễn. Bỏ qua
-// khi giảm chuyển động để nội dung hiện ngay.
-function initReveal() {
-  if (reduceMotion.matches) return;
-  let pending = [...document.querySelectorAll(".section-heading, .immortals-grid li, .card-grid > a, .news-grid article, .houses-figure, .lac-figure, .story-panels article")];
-  if (!pending.length) return;
-  pending.forEach((element, index) => {
-    element.classList.add("reveal");
-    element.style.setProperty("--reveal-delay", `${(index % 4) * 70}ms`);
-  });
-  let raf = 0;
-  const check = () => {
-    raf = 0;
-    const trigger = window.innerHeight * 0.92;
-    pending = pending.filter((element) => {
-      if (element.getBoundingClientRect().top >= trigger) return true;
-      element.classList.add("reveal-in");
-      return false;
-    });
-    if (!pending.length) {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    }
-  };
-  const onScroll = () => { if (!raf) raf = requestAnimationFrame(check); };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
-  check();
-}
-initReveal();
 
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#main-nav");
@@ -163,81 +86,6 @@ document.querySelectorAll("[data-share]").forEach((button) => button.addEventLis
     button.textContent = "Đã sao chép";
   }
 }));
-
-// Cinematic hero: sparse drifting bronze dust motes behind the hero card.
-// (The hero-card entrance reveal is pure CSS — see main.css — so it isn't
-// dependent on this script loading or running.) Additive only — no-ops if
-// the canvas isn't in the markup, and bails out entirely under
-// prefers-reduced-motion (matches the "hạt bụi" / restrained-motion
-// language already approved for this project).
-function initHeroDust() {
-  const canvas = document.querySelector(".hero-dust");
-  if (!canvas) return;
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-
-  let width = 0;
-  let height = 0;
-  let motes = [];
-  let raf = 0;
-  let t = 0;
-
-  const size = () => {
-    const hero = canvas.closest(".hero");
-    const rect = (hero || canvas).getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    width = rect.width;
-    height = rect.height;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const count = Math.round((width * height) / 26000);
-    motes = Array.from({ length: count }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      r: Math.random() * 1.4 + 0.3,
-      vy: -(Math.random() * 0.16 + 0.03),
-      vx: (Math.random() - 0.5) * 0.1,
-      a: Math.random() * 0.36 + 0.08,
-      ph: Math.random() * Math.PI * 2,
-    }));
-  };
-  // A module script runs after DOM parsing but can still land before the
-  // browser's first layout pass finishes (fonts, image intrinsic sizes),
-  // which would size the canvas from a not-yet-settled 0/near-0 rect.
-  // Re-measure on the next frame and once more after full page load.
-  size();
-  requestAnimationFrame(size);
-  window.addEventListener("load", size);
-  window.addEventListener("resize", size);
-
-  const tick = () => {
-    t += 0.016;
-    ctx.clearRect(0, 0, width, height);
-    for (const mote of motes) {
-      mote.y += mote.vy;
-      mote.x += mote.vx + Math.sin(t * 0.4 + mote.ph) * 0.12;
-      if (mote.y < -6) { mote.y = height + 6; mote.x = Math.random() * width; }
-      if (mote.x < -6) mote.x = width + 6;
-      if (mote.x > width + 6) mote.x = -6;
-      const glow = mote.a * (0.55 + 0.45 * Math.sin(t * 1.2 + mote.ph));
-      ctx.beginPath();
-      ctx.arc(mote.x, mote.y, mote.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(199,150,78,${glow.toFixed(3)})`;
-      ctx.fill();
-    }
-    raf = requestAnimationFrame(tick);
-  };
-  tick();
-
-  window.addEventListener("beforeunload", () => {
-    window.removeEventListener("resize", size);
-    cancelAnimationFrame(raf);
-  });
-}
-initHeroDust();
 
 // Hero carousel. Progressive enhancement: the markup already ships the
 // first slide with .is-active, so a page whose script never runs still
