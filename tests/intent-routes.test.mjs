@@ -28,18 +28,18 @@ test("trang đang phát triển có canonical, breadcrumb và noindex", async ()
   }
 });
 
-test("trang Trải bài liên kết đủ bốn URL và phân biệt bản duyệt", async () => {
+test("trang Trải bài liên kết đủ bốn URL và phân biệt trang đã duyệt", async () => {
   const html = await readFile(path.join(root, "dist/trai-bai/index.html"), "utf8");
   for (const route of intentRoutes) assert.match(html, new RegExp(`href="${route.replaceAll("/", "\\/")}"`));
   assert.match(html, /href="\/la-bai-hom-nay\/"/);
   assert.equal((html.match(/Đang phát triển thêm/g) || []).length, 3);
-  assert.equal((html.match(/Bản duyệt đang chạy/g) || []).length, 1);
+  assert.equal((html.match(/Đã duyệt nội dung/g) || []).length, 1);
 });
 
 test("route chờ chưa vào sitemap và trang hoàn chỉnh vẫn được index", async () => {
   const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
   for (const route of intentRoutes) assert.ok(!sitemap.includes(route));
-  assert.ok(!sitemap.includes("/la-bai-hom-nay/"));
+  assert.ok(sitemap.includes("/la-bai-hom-nay/"));
   const home = await readFile(path.join(root, "dist/index.html"), "utf8");
   assert.doesNotMatch(home, /<meta name="robots" content="noindex,follow">/);
 });

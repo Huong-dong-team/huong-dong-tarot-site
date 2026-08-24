@@ -97,7 +97,7 @@ const markdown = `# Bản duyệt 1.5 — ánh xạ Golden Dawn và 50 mẫu “
 - Lá và chiều lá: khóa theo mã thiết bị ẩn danh + ngày Việt Nam; lần đầu được lưu cục bộ và không bốc lại để đổi kết quả trong ngày.
 - Bối cảnh: Mặt Trời, Mặt Trăng, pha Trăng và giờ hành tinh theo thứ tự Chaldean; “nhịp ẩn” chỉ dùng nội bộ để chống lặp, không hiện như một khẳng định huyền học.
 - Golden Dawn được dùng như hệ quy chiếu biên tập, không được mô tả là sự thật khoa học hay cách đọc duy nhất.
-- Route vẫn \`noindex,follow\`, chưa vào sitemap và chưa được deploy trong lúc chờ duyệt.
+- Trong giai đoạn lấy mẫu, route được giữ \`noindex,follow\` và ngoài sitemap; chỉ bỏ cổng này sau khi chủ dự án duyệt nội dung.
 
 ## Ánh xạ 22 lá Ẩn Chính
 

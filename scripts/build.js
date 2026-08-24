@@ -417,7 +417,7 @@ for (const page of intentPages) {
   }));
 }
 
-// 1.5 — Bản duyệt có chức năng thật nhưng vẫn noindex và chưa vào sitemap.
+// 1.5 — Nội dung và ánh xạ đã được chủ dự án duyệt ngày 24/08/2026.
 // Chỉ đưa các trường tối thiểu vào trình duyệt; không để dữ liệu quản trị hoặc
 // chuỗi HTML không cần thiết lọt vào gói JSON của trang.
 const dailyCards = cards.map((card) => ({
@@ -444,7 +444,6 @@ await emit("/la-bai-hom-nay/", layout({
   title: "Lá Bài Hôm Nay",
   description: "Bốc một lá Tarot cố định trong ngày, kết hợp thời điểm bốc bài để nhận một lời đọc ngắn dành cho tự phản tư.",
   path: "/la-bai-hom-nay/",
-  robots: "noindex,follow",
   schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }])],
   content: dailyContent,
   bodyClass: "daily-card-page",
@@ -466,7 +465,7 @@ for (let i = 0; i < lncqChapters.length; i += 1) {
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
 
-const routes = ["/", "/la-bai/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
+const routes = ["/", "/la-bai/", "/la-bai-hom-nay/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${escapeHtml(absoluteUrl(data.site.baseUrl, route))}</loc></url>`).join("")}</urlset>`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap);
 await writeFile(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${absoluteUrl(data.site.baseUrl, "/sitemap.xml")}\n`);

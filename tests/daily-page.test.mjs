@@ -7,10 +7,10 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("trang Lá hôm nay là bản duyệt noindex có đủ cấu trúc truy cập", async () => {
+test("trang Lá hôm nay đã duyệt có đủ cấu trúc truy cập và được index", async () => {
   const html = await read("dist/la-bai-hom-nay/index.html");
   assert.match(html, /<link rel="canonical" href="https:\/\/huongdong\.id\.vn\/la-bai-hom-nay\/">/);
-  assert.match(html, /<meta name="robots" content="noindex,follow">/);
+  assert.doesNotMatch(html, /<meta name="robots" content="noindex,follow">/);
   assert.match(html, /"@type":"BreadcrumbList"/);
   assert.match(html, /data-daily-card/);
   assert.match(html, /data-daily-draw[^>]*aria-describedby="daily-privacy"/);
@@ -61,8 +61,8 @@ test("module trang chỉ lưu cục bộ, dùng ngẫu nhiên mật mã và dự
   assert.doesNotMatch(source, /\bfetch\s*\(|firebase|firestore|geolocation/i);
 });
 
-test("Lá hôm nay chưa xuất hiện trong sitemap trước khi duyệt nội dung", async () => {
+test("Lá hôm nay xuất hiện trong sitemap sau khi duyệt nội dung", async () => {
   await access(path.join(root, "dist/la-bai-hom-nay/index.html"));
   const sitemap = await read("dist/sitemap.xml");
-  assert.ok(!sitemap.includes("/la-bai-hom-nay/"));
+  assert.match(sitemap, /<loc>https:\/\/huongdong\.id\.vn\/la-bai-hom-nay\/<\/loc>/);
 });
