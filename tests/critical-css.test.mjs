@@ -23,7 +23,27 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
 test("chỉ trang chủ preload ảnh hero", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
-  assert.match(home, /<link rel="preload" as="image" fetchpriority="high" href="\/assets\/img\/hero-800\.avif"/);
   assert.match(home, /<link rel="preload" as="image" fetchpriority="high" href="\/assets\/img\/hero-1536\.avif"/);
+  assert.doesNotMatch(home, /rel="preload" as="image"[^>]+hero-800\.avif/);
   assert.doesNotMatch(card, /rel="preload" as="image"[^>]+hero-/);
+});
+
+test("preload đúng font dùng ở màn hình đầu", async () => {
+  const html = await read("dist/index.html");
+  for (const font of [
+    "be-vietnam-pro-700-vietnamese.woff2",
+    "be-vietnam-pro-700.woff2",
+    "charm-700-vietnamese.woff2",
+    "charm-700.woff2",
+  ]) {
+    assert.match(html, new RegExp(`rel="preload" href="/assets/fonts/${font.replace(".", "\\.")}"`));
+  }
+  assert.doesNotMatch(html, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-(?:400|600)/);
+});
+
+test("font tiêu đề không đổi mặt muộn trên mạng chậm", async () => {
+  const fonts = await read("public/assets/css/fonts.css");
+  const charm700 = fonts.match(/@font-face\s*\{[^}]*font-family:\s*"Charm";[^}]*font-weight:\s*700;[^}]*\}/gs) || [];
+  assert.equal(charm700.length, 2);
+  for (const face of charm700) assert.match(face, /font-display:\s*optional/);
 });

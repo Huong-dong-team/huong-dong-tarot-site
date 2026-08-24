@@ -190,10 +190,6 @@ h3 { font-size: 30px; line-height: 1.08; }
     color-mix(in srgb, var(--paper) 72%, transparent) 44%,
     color-mix(in srgb, var(--paper) 38%, transparent) 100%);
 }
-.hero-mist, .hero-dust, .hero-sun { position: absolute; pointer-events: none; }
-.hero-mist, .hero-dust { inset: 0; }
-.hero-dust { z-index: 1; width: 100%; height: 100%; }
-.hero-sun { z-index: 0; aspect-ratio: 1; visibility: hidden; }
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 .hero-copy { max-width: 700px; }
 .home-page .hero h1 {
@@ -240,8 +236,8 @@ h3 { font-size: 30px; line-height: 1.08; }
   text-align: center;
   transform: rotate(1deg);
 }
-.hero-carousel .hero-card.is-active { z-index: 2; visibility: visible; opacity: 1; }
-.hero-carousel .hero-card:not(.is-active) { z-index: 1; visibility: hidden; opacity: 0; }
+.hero-carousel .hero-card.is-active { display: grid; z-index: 2; visibility: visible; opacity: 1; }
+.hero-carousel .hero-card:not(.is-active) { display: none; }
 .hero-card img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--img-radius); object-fit: cover; }
 .hero-card--pack img { aspect-ratio: 2 / 3; background: var(--paper); }
 .hero-card-label, .hero-card-power, .hero-card-cue {
@@ -269,6 +265,20 @@ h3 { font-size: 30px; line-height: 1.08; }
   pointer-events: none;
 }
 .hero-card::before { content: "OpenBeta"; }
+
+/* Cô lập toàn bộ nội dung dưới hero ngay từ lần tính style đầu tiên. Nếu chờ
+   main.css tải xong mới có quy tắc này, browser vẫn phải layout cả trang trước
+   khi vẽ tiêu đề LCP. */
+.story-section,
+.immortals-section,
+.houses-section,
+.featured,
+.pack-section,
+.news-section,
+.waitlist {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
 .hero-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
 .hero-dots button { display: grid; width: 44px; height: 26px; padding: 0; place-items: center; border: 0; background: none; }
 .hero-dots button::before { width: 9px; height: 9px; border: 1px solid var(--brown); border-radius: 50%; content: ""; }
@@ -334,6 +344,12 @@ h3 { font-size: 30px; line-height: 1.08; }
   }
   .site-header nav[data-open] { display: flex; }
   .hero { padding-top: 70px; }
+  /* Mobile ưu tiên font hệ thống cho LCP: không chờ/đổi mặt chữ trên thiết bị
+     yếu. Desktop vẫn dùng Charm theo hệ nhận diện. */
+  .home-page .hero h1 { font-family: Georgia, "Times New Roman", serif; }
+  /* Trên màn hình hẹp, lớp phủ gần như che hoàn toàn tranh nền. Không vẽ ảnh
+     trang trí này để tránh biến nó thành LCP của cả khung hero dài. */
+  .hero-bg { display: none; }
   .hero-overlay {
     background: linear-gradient(180deg,
       color-mix(in srgb, var(--paper) 88%, transparent) 0%,
@@ -351,6 +367,7 @@ h3 { font-size: 30px; line-height: 1.08; }
 }
 @media (max-width: 430px) {
   .hero { padding-inline: 16px; }
+  .proof { display: grid; grid-template-columns: repeat(3, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }

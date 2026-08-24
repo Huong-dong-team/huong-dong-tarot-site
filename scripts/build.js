@@ -226,7 +226,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     content,
     bodyClass,
     heroPreloads: bodyClass === "home-page"
-      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-800.avif" media="(max-width: 900px)"><link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
+      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
       : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
@@ -290,8 +290,10 @@ const immortals = immortalSpecs.map((spec, index) => {
     // Dựng sẵn ở đây thay vì lồng {{#if}} trong template: renderString dùng
     // regex non-greedy nên điều kiện lồng nhau sẽ đóng sai thẻ.
     activeClass: index === 0 ? " is-active" : "",
-    // Lá đầu là ảnh lớn nhất màn hình đầu nên phải tải sớm, ba lá sau thì không.
-    imgAttrs: index === 0 ? 'fetchpriority="high"' : 'loading="lazy"',
+    // Cả bốn chân dung bắt đầu ở trạng thái ẩn nên để lazy; slide hộp bài trong
+    // template cũng tải lười vì nằm gần cuối khung mobile. Nhờ vậy carousel
+    // không tranh băng thông và decode với tiêu đề LCP.
+    imgAttrs: 'loading="lazy" decoding="async"',
   };
 });
 

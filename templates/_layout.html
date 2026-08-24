@@ -10,13 +10,12 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Ảnh hero chỉ preload trên trang chủ; build.js để trống khối này ở route khác. -->
   {{{heroPreloads}}}
-<!-- Bốn file font dùng ở màn hình đầu. Phải preload cả dải Việt LẪN dải Latin:
-       tiêu đề "Di sản Việt, soi đường qua 78 lá bài." có cả hai loại ký tự, thiếu
-       một dải là chữ đổi mặt giữa chừng và đẩy CLS lên. -->
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Preload đúng hai kiểu chữ xuất hiện ở màn hình đầu và đủ cả dải Việt/Latin
+       để tránh font swap làm dịch chuyển bố cục. -->
   <link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/charm-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/charm-700.woff2" as="font" type="font/woff2" crossorigin>
   <style data-critical>{{{criticalCss}}}</style>
   <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/assets/css/main.css"></noscript>
