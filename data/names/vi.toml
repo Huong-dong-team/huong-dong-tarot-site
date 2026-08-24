@@ -1,0 +1,1374 @@
+# Tên tiếng Việt của bộ bài Hường Đông — lớp tra cứu, tách khỏi lớp dữ liệu.
+#
+# SINH TỰ ĐỘNG từ seed/cards.json + tools/content/legacy-names.json +
+# tools/content/folk-conflicts.md. Sinh lại bằng:
+#     node tools/scripts/gen-names-vi.mjs --write
+#
+# Sửa tên thì sửa Ở ĐÂY, không sửa trong seed/cards.json — rồi chạy bước nối
+# ngược lại. Trường `slug` là BẤT BIẾN: đổi slug là mất toàn bộ index đã có.
+#
+# Chỗ chưa có nội dung ghi "đang phát triển". Đó là chỗ chờ bạn quyết, không phải lỗi.
+
+[metadata]
+schema_version = "1.0"
+locale = "vi"
+deck = "huong-dong-tarot"
+generated_at = "2026-08-24"
+generator = "tools/scripts/gen-names-vi.mjs"
+source = "seed/cards.json · legacy-names.json · folk-conflicts.md"
+wired_into_build = "chưa — file để duyệt, chưa nối vào scripts/build.js"
+alt_text_attribution = "Alt do dự án tự viết. 56 lá Ẩn Phụ hiện dùng alt của phù hiệu nhà vì chưa có tranh riêng."
+
+# ── BỐN NHÀ ────────────────────────────────────────────────────────────────
+# Bảng kiểm kê ghi ba biến thể đang chạy song song:
+#   "Tre / Sen / Dâu tằm / Lúa" (/la-bai/) · "Hoa Sen / Bông Lúa" (trang chủ)
+#   "Cây Tre / Hoa Sen / Dâu Tằm / Bông Lúa" (folder 56)
+# Ở đây mỗi nhà có ĐÚNG hai dạng, mỗi dạng một chỗ dùng. Không có dạng thứ ba.
+
+[suits.wands]
+name = "Cây Tre"  # dạng đầy đủ — tiêu đề lá, khối dẫn nguồn
+short = "Tre"  # dạng ngắn — sơ đồ bốn nhà, nhãn lọc
+element = "Lửa"
+rws = "wands"
+slug = "đang phát triển"  # chưa có trang riêng cho từng nhà
+
+[suits.cups]
+name = "Hoa Sen"  # dạng đầy đủ — tiêu đề lá, khối dẫn nguồn
+short = "Sen"  # dạng ngắn — sơ đồ bốn nhà, nhãn lọc
+element = "Nước"
+rws = "cups"
+slug = "đang phát triển"  # chưa có trang riêng cho từng nhà
+
+[suits.swords]
+name = "Dâu Tằm"  # dạng đầy đủ — tiêu đề lá, khối dẫn nguồn
+short = "Dâu tằm"  # dạng ngắn — sơ đồ bốn nhà, nhãn lọc
+element = "Khí"
+rws = "swords"
+slug = "đang phát triển"  # chưa có trang riêng cho từng nhà
+
+[suits.pentacles]
+name = "Bông Lúa"  # dạng đầy đủ — tiêu đề lá, khối dẫn nguồn
+short = "Lúa"  # dạng ngắn — sơ đồ bốn nhà, nhãn lọc
+element = "Đất"
+rws = "pentacles"
+slug = "đang phát triển"  # chưa có trang riêng cho từng nhà
+
+# ── THỨ BẬC ────────────────────────────────────────────────────────────────
+# Một tên cho mỗi thứ bậc, dùng chung cho cả bốn nhà.
+# Dữ liệu hiện tại KHÔNG theo quy tắc này (xem [review.ten_an_phu]).
+
+[ranks]
+ace = "Át"
+two = "Hai"
+three = "Ba"
+four = "Bốn"
+five = "Năm"
+six = "Sáu"
+seven = "Bảy"
+eight = "Tám"
+nine = "Chín"
+ten = "Mười"
+page = "Tiểu Đồng"
+knight = "Kỵ Sĩ"
+queen = "Hoàng Hậu"
+king = "Quốc Vương"
+
+# ── 22 ẨN CHÍNH ────────────────────────────────────────────────────────────
+# display = tên hiển thị đã chốt theo v2.1. aliases = tên cũ còn lang thang
+# trên site, giữ lại để dò tìm chứ không để hiển thị.
+
+[major_arcana."00"]
+slug = "the-fool"  # BẤT BIẾN
+roman = "0"
+rws = "The Fool"
+vi = "Kẻ Khờ"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Mai An Tiêm"  # nhân vật / tích Việt
+display = "Mai An Tiêm"  # tên hiện trên site
+aliases = []
+alt = "Minh họa nguyên bản The Fool: Mai An Tiêm bước bên vách đảo lúc bình minh, cạnh quả dưa và cánh chim"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "ok"
+
+[major_arcana."01"]
+slug = "the-magician"  # BẤT BIẾN
+roman = "I"
+rws = "The Magician"
+vi = "Nhà Pháp Thuật"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Kinh Dương Vương"  # nhân vật / tích Việt
+display = "Kinh Dương Vương"  # tên hiện trên site
+aliases = []
+alt = "Minh họa nguyên bản The Magician: vị thủ lĩnh cổ Việt đứng trước đàn lễ với bốn biểu tượng quyền trượng, chén, kiếm và hạt giống"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "ok"
+
+[major_arcana."02"]
+slug = "the-high-priestess"  # BẤT BIẾN
+roman = "II"
+rws = "The High Priestess"
+vi = "Nữ Tư Tế"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Ma Cô"  # nhân vật / tích Việt
+display = "Ma Cô"  # tên hiện trên site
+aliases = ["Người giữ ký ức"]
+alt = "Lá The High Priestess trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "ADJUST"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."03"]
+slug = "the-empress"  # BẤT BIẾN
+roman = "III"
+rws = "The Empress"
+vi = "Hoàng Hậu"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Âu Cơ"  # nhân vật / tích Việt
+display = "Âu Cơ"  # tên hiện trên site
+aliases = []
+alt = "Minh họa nguyên bản The Empress: Âu Cơ trong y phục Việt cổ đứng giữa núi sông, lúa và bọc trăm trứng"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "ok"
+
+[major_arcana."04"]
+slug = "the-emperor"  # BẤT BIẾN
+roman = "IV"
+rws = "The Emperor"
+vi = "Hoàng Đế"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Hùng Vương đầu triều"  # nhân vật / tích Việt
+display = "Hùng Vương đầu triều"  # tên hiện trên site
+aliases = ["Hùng Vương"]
+alt = "Lá The Emperor trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "ADJUST_MINOR"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."05"]
+slug = "the-hierophant"  # BẤT BIẾN
+roman = "V"
+rws = "The Hierophant"
+vi = "Giáo Hoàng"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Già La Đồ Lê"  # nhân vật / tích Việt
+display = "Già La Đồ Lê"  # tên hiện trên site
+aliases = ["Chủ lễ truyền tục"]
+alt = "Lá The Hierophant trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "ADJUST_MINOR"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."06"]
+slug = "the-lovers"  # BẤT BIẾN
+roman = "VI"
+rws = "The Lovers"
+vi = "Tình Nhân"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Tân, Lang và nàng họ Lưu"  # nhân vật / tích Việt
+display = "Tân, Lang và nàng họ Lưu"  # tên hiện trên site
+aliases = ["Trầu Cau"]
+alt = "Minh họa nguyên bản The Lovers: vua Hùng chứng kiến biểu tượng ba nhân vật hóa thành cây cau, dây trầu và tảng đá"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."07"]
+slug = "the-chariot"  # BẤT BIẾN
+roman = "VII"
+rws = "The Chariot"
+vi = "Cỗ Xe"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Thánh Gióng"  # nhân vật / tích Việt
+display = "Thánh Gióng"  # tên hiện trên site
+aliases = []
+alt = "Minh họa nguyên bản The Chariot: Thánh Gióng cưỡi ngựa sắt lao qua đồng tre trong ánh bình minh đỏ"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "ok"
+
+[major_arcana."08"]
+slug = "strength"  # BẤT BIẾN
+roman = "VIII"
+rws = "Strength"
+vi = "Sức Mạnh"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Sơn Tinh"  # nhân vật / tích Việt
+display = "Sơn Tinh"  # tên hiện trên site
+aliases = ["Tản Viên Sơn Thánh", "Sơn Tinh (Tản Viên)"]
+alt = "Minh họa nguyên bản Strength: Sơn Tinh bình thản đặt tay lên hổ giữa núi rừng và dòng nước dâng"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."09"]
+slug = "the-hermit"  # BẤT BIẾN
+roman = "IX"
+rws = "The Hermit"
+vi = "Ẩn Sĩ"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Dương Không Lộ"  # nhân vật / tích Việt
+display = "Dương Không Lộ"  # tên hiện trên site
+aliases = ["Chử Đồng Tử tìm đạo", "Chử Đồng Tử"]
+alt = "Lá The Hermit trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."10"]
+slug = "wheel-of-fortune"  # BẤT BIẾN
+roman = "X"
+rws = "Wheel of Fortune"
+vi = "Bánh Xe Số Phận"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Thủy Tinh"  # nhân vật / tích Việt
+display = "Thủy Tinh"  # tên hiện trên site
+aliases = ["Sơn Tinh – Thủy Tinh"]
+alt = "Minh họa nguyên bản Wheel of Fortune: Sơn Tinh và Thủy Tinh ở hai phía một bánh xe trống đồng giữa chu kỳ nước dâng và rút"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."11"]
+slug = "justice"  # BẤT BIẾN
+roman = "XI"
+rws = "Justice"
+vi = "Công Lý"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Tô Lịch Giang Thần / Long Đỗ"  # nhân vật / tích Việt
+display = "Tô Lịch Giang Thần / Long Đỗ"  # tên hiện trên site
+aliases = ["Lang Liêu"]
+alt = "Lá Justice trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."12"]
+slug = "the-hanged-man"  # BẤT BIẾN
+roman = "XII"
+rws = "The Hanged Man"
+vi = "Người Treo Ngược"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Từ Đạo Hạnh nhập định"  # nhân vật / tích Việt
+display = "Từ Đạo Hạnh nhập định"  # tên hiện trên site
+aliases = ["Chử Đồng Tử bên bãi cát"]
+alt = "Lá The Hanged Man trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "NEW_CONCEPT"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."13"]
+slug = "death"  # BẤT BIẾN
+roman = "XIII"
+rws = "Death"
+vi = "Chuyển Hóa"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Xương Cuồng / Mộc Tinh"  # nhân vật / tích Việt
+display = "Xương Cuồng / Mộc Tinh"  # tên hiện trên site
+aliases = ["Lạc Long Quân trừ Hồ Tinh"]
+alt = "Lá Death trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "EXPERIMENT"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."14"]
+slug = "temperance"  # BẤT BIẾN
+roman = "XIV"
+rws = "Temperance"
+vi = "Tiết Chế"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Lang Liêu"  # nhân vật / tích Việt
+display = "Lang Liêu"  # tên hiện trên site
+aliases = ["Núi và biển chung nguồn"]
+alt = "Minh họa nguyên bản Temperance: Lạc Long Quân và Âu Cơ cùng rót nước từ hai bình vào một dòng sáng nối biển với núi"
+image_status = "KEEP"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."15"]
+slug = "the-devil"  # BẤT BIẾN
+roman = "XV"
+rws = "The Devil"
+vi = "Quỷ Dữ"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Trọng Thủy; Mỵ Châu hỗ trợ"  # nhân vật / tích Việt
+display = "Trọng Thủy; Mỵ Châu hỗ trợ"  # tên hiện trên site
+aliases = ["Mị Châu – Trọng Thủy"]
+alt = "Minh họa nguyên bản The Devil: Mị Châu và Trọng Thủy nối với nhau bằng sợi chỉ đỏ và xiềng mở trước hai chiếc nỏ cùng bóng thành Cổ Loa"
+image_status = "KEEP_IMAGE_LOCK_NAME"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."16"]
+slug = "the-tower"  # BẤT BIẾN
+roman = "XVI"
+rws = "The Tower"
+vi = "Tòa Tháp"  # nghĩa RWS dịch sang tiếng Việt
+folk = "An Dương Vương"  # nhân vật / tích Việt
+display = "An Dương Vương"  # tên hiện trên site
+aliases = ["Cổ Loa thất thủ"]
+alt = "Lá The Tower trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."17"]
+slug = "the-star"  # BẤT BIẾN
+roman = "XVII"
+rws = "The Star"
+vi = "Ngôi Sao"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Mẫu Liễu Hạnh"  # nhân vật / tích Việt
+display = "Mẫu Liễu Hạnh"  # tên hiện trên site
+aliases = []
+alt = "Lá The Star trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "ok"
+
+[major_arcana."18"]
+slug = "the-moon"  # BẤT BIẾN
+roman = "XVIII"
+rws = "The Moon"
+vi = "Mặt Trăng"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Mỵ Châu"  # nhân vật / tích Việt
+display = "Mỵ Châu"  # tên hiện trên site
+aliases = ["Dấu lông ngỗng dưới trăng"]
+alt = "Lá The Moon trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "ADJUST"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."19"]
+slug = "the-sun"  # BẤT BIẾN
+roman = "XIX"
+rws = "The Sun"
+vi = "Mặt Trời"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Man Nương"  # nhân vật / tích Việt
+display = "Man Nương"  # tên hiện trên site
+aliases = ["Ngày hội Văn Lang"]
+alt = "Lá The Sun trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."20"]
+slug = "judgement"  # BẤT BIẾN
+roman = "XX"
+rws = "Judgement"
+vi = "Phán Xét"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Sứ Thanh Giang / Rùa Vàng"  # nhân vật / tích Việt
+display = "Sứ Thanh Giang / Rùa Vàng"  # tên hiện trên site
+aliases = ["Phán quyết bên bờ biển"]
+alt = "Minh họa nguyên bản Judgement: An Dương Vương và Mị Châu bên bờ biển dưới ánh sáng Kim Quy, diễn tả phán quyết mà không có bạo lực"
+image_status = "KEEP_IMAGE_LOCK_NAME"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+[major_arcana."21"]
+slug = "the-world"  # BẤT BIẾN
+roman = "XXI"
+rws = "The World"
+vi = "Thế Giới"  # nghĩa RWS dịch sang tiếng Việt
+folk = "Việt Thường và thiên hạ"  # nhân vật / tích Việt
+display = "Việt Thường và thiên hạ"  # tên hiện trên site
+aliases = ["Trăm con chung một cõi"]
+alt = "Lá The World trong bộ Hường Đông Tarot — tranh đang được vẽ lại theo bản Art Direction 2.1"
+image_status = "REDRAW"
+cultural_review = "pending"
+decision = "cần bạn duyệt"
+
+# ── 56 ẨN PHỤ ──────────────────────────────────────────────────────────────
+# vi        = nameVi đang chạy trong dữ liệu
+# vi_quy_tac = [ranks] + [suits].short — dạng lẽ ra phải có
+# Hai cột lệch nhau ở phần lớn lá. Chốt một quy tắc ở [review.ten_an_phu].
+
+[minor_arcana.wands.ace]
+slug = "ace-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-ace
+rws = "Ace of Wands"
+vi = "Át Tre"
+vi_quy_tac = "Át Tre"
+folk = "Át Cây Tre"
+display = "Át Cây Tre"
+subject = "Bàn tay vô danh và mầm tre lửa"  # chủ thể v2.1
+scene_title = "Mầm tre đón tia sét đầu mùa"
+alt = "Phù hiệu Nhà Tre cho lá Ace of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "ok"
+
+[minor_arcana.wands.two]
+slug = "two-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-two
+rws = "Two of Wands"
+vi = "2 Tre"
+vi_quy_tac = "Hai Tre"
+folk = "Hai Cây Tre"
+display = "Hai Cây Tre"
+subject = "Người giữ vọng tre"  # chủ thể v2.1
+scene_title = "Hai ngọn đuốc, hai đường chân trời"
+alt = "Phù hiệu Nhà Tre cho lá Two of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.three]
+slug = "three-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-three
+rws = "Three of Wands"
+vi = "3 Tre"
+vi_quy_tac = "Ba Tre"
+folk = "Ba Cây Tre"
+display = "Ba Cây Tre"
+subject = "Ba người mở cảng"  # chủ thể v2.1
+scene_title = "Ba cột buồm qua Cảng Phật Đào"
+alt = "Phù hiệu Nhà Tre cho lá Three of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.four]
+slug = "four-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-four
+rws = "Four of Wands"
+vi = "4 Tre"
+vi_quy_tac = "Bốn Tre"
+folk = "Bốn Cây Tre"
+display = "Bốn Cây Tre"
+subject = "Bốn gia đình dựng cổng hội"  # chủ thể v2.1
+scene_title = "Cổng tre khép thành mái nhà chung"
+alt = "Phù hiệu Nhà Tre cho lá Four of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.five]
+slug = "five-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-five
+rws = "Five of Wands"
+vi = "5 Tre"
+vi_quy_tac = "Năm Tre"
+folk = "Năm Cây Tre"
+display = "Năm Cây Tre"
+subject = "Năm trai làng tranh lửa"  # chủ thể v2.1
+scene_title = "Cuộc đấu gậy tre giữa sân sấm"
+alt = "Phù hiệu Nhà Tre cho lá Five of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.six]
+slug = "six-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-six
+rws = "Six of Wands"
+vi = "6 Tre"
+vi_quy_tac = "Sáu Tre"
+folk = "Sáu Cây Tre"
+display = "Sáu Cây Tre"
+subject = "Người mang cờ chiến thắng"  # chủ thể v2.1
+scene_title = "Sáu lá cờ qua cổng làng"
+alt = "Phù hiệu Nhà Tre cho lá Six of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.seven]
+slug = "seven-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-seven
+rws = "Seven of Wands"
+vi = "7 Tre"
+vi_quy_tac = "Bảy Tre"
+folk = "Bảy Cây Tre"
+display = "Bảy Cây Tre"
+subject = "Người giữ đèo"  # chủ thể v2.1
+scene_title = "Bảy bậc tre trước bóng chồn"
+alt = "Phù hiệu Nhà Tre cho lá Seven of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.eight]
+slug = "eight-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-eight
+rws = "Eight of Wands"
+vi = "8 Tre"
+vi_quy_tac = "Tám Tre"
+folk = "Tám Cây Tre"
+display = "Tám Cây Tre"
+subject = "Đội truyền hỏa"  # chủ thể v2.1
+scene_title = "Tám tên lửa vượt sông"
+alt = "Phù hiệu Nhà Tre cho lá Eight of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.nine]
+slug = "nine-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-nine
+rws = "Nine of Wands"
+vi = "9 Tre"
+vi_quy_tac = "Chín Tre"
+folk = "Chín Cây Tre"
+display = "Chín Cây Tre"
+subject = "Lính canh bị thương"  # chủ thể v2.1
+scene_title = "Chín đốt tre còn đứng"
+alt = "Phù hiệu Nhà Tre cho lá Nine of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.ten]
+slug = "ten-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-ten
+rws = "Ten of Wands"
+vi = "10 Tre"
+vi_quy_tac = "Mười Tre"
+folk = "Mười Cây Tre"
+display = "Mười Cây Tre"
+subject = "Người gánh đuốc"  # chủ thể v2.1
+scene_title = "Mười bó tre trên đường ngập"
+alt = "Phù hiệu Nhà Tre cho lá Ten of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.page]
+slug = "page-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-page
+rws = "Page of Wands"
+vi = "Tiểu đồng Tre"
+vi_quy_tac = "Tiểu Đồng Tre"
+folk = "Tiểu Đồng Cây Tre"
+display = "Tiểu Đồng Cây Tre"
+subject = "Tân Hỏa - người học lửa"  # chủ thể v2.1
+scene_title = "Con chim xanh trong ống tre"
+alt = "Phù hiệu Nhà Tre cho lá Page of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.knight]
+slug = "knight-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-knight
+rws = "Knight of Wands"
+vi = "Hiệp sĩ Tre"
+vi_quy_tac = "Kỵ Sĩ Tre"
+folk = "Kỵ Sĩ Cây Tre"
+display = "Kỵ Sĩ Cây Tre"
+subject = "Kỵ mã Sóc Sơn"  # chủ thể v2.1
+scene_title = "Ngựa lửa qua sườn núi"
+alt = "Phù hiệu Nhà Tre cho lá Knight of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.queen]
+slug = "queen-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-queen
+rws = "Queen of Wands"
+vi = "Nữ vương Tre"
+vi_quy_tac = "Hoàng Hậu Tre"
+folk = "Hoàng Hậu Cây Tre"
+display = "Hoàng Hậu Cây Tre"
+subject = "Nữ chủ Lửa Làng"  # chủ thể v2.1
+scene_title = "Người giữ bếp giữa đêm chồn"
+alt = "Phù hiệu Nhà Tre cho lá Queen of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.wands.king]
+slug = "king-of-wands"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng wands-king
+rws = "King of Wands"
+vi = "Quốc vương Tre"
+vi_quy_tac = "Quốc Vương Tre"
+folk = "Quốc Vương Cây Tre"
+display = "Quốc Vương Cây Tre"
+subject = "Vua Mở Cõi"  # chủ thể v2.1
+scene_title = "Gậy tre chỉ đường cho đoàn khai phá"
+alt = "Phù hiệu Nhà Tre cho lá King of Wands"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.ace]
+slug = "ace-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-ace
+rws = "Ace of Cups"
+vi = "Át Sen"
+vi_quy_tac = "Át Sen"
+folk = "Át Hoa Sen"
+display = "Át Hoa Sen"
+subject = "Bàn tay nâng chén sen"  # chủ thể v2.1
+scene_title = "Chén nước tràn từ giếng cổ"
+alt = "Phù hiệu Nhà Sen cho lá Ace of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "ok"
+
+[minor_arcana.cups.two]
+slug = "two-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-two
+rws = "Two of Cups"
+vi = "2 Sen"
+vi_quy_tac = "Hai Sen"
+folk = "Hai Hoa Sen"
+display = "Hai Hoa Sen"
+subject = "Tiên Dung và Chử Đồng Tử"  # chủ thể v2.1
+scene_title = "Hai chén bên bãi cát"
+alt = "Phù hiệu Nhà Sen cho lá Two of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.three]
+slug = "three-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-three
+rws = "Three of Cups"
+vi = "3 Sen"
+vi_quy_tac = "Ba Sen"
+folk = "Ba Hoa Sen"
+display = "Ba Hoa Sen"
+subject = "Ba người bạn bến trăng"  # chủ thể v2.1
+scene_title = "Ba thuyền sen chạm mũi"
+alt = "Phù hiệu Nhà Sen cho lá Three of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.four]
+slug = "four-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-four
+rws = "Four of Cups"
+vi = "4 Sen"
+vi_quy_tac = "Bốn Sen"
+folk = "Bốn Hoa Sen"
+display = "Bốn Hoa Sen"
+subject = "Người ngồi bên giếng"  # chủ thể v2.1
+scene_title = "Bông sen thứ tư dưới mặt nước"
+alt = "Phù hiệu Nhà Sen cho lá Four of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.five]
+slug = "five-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-five
+rws = "Five of Cups"
+vi = "5 Sen"
+vi_quy_tac = "Năm Sen"
+folk = "Năm Hoa Sen"
+display = "Năm Hoa Sen"
+subject = "Người sống sót Đầm Một Đêm"  # chủ thể v2.1
+scene_title = "Ba chén chìm, hai chén còn"
+alt = "Phù hiệu Nhà Sen cho lá Five of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.six]
+slug = "six-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-six
+rws = "Six of Cups"
+vi = "6 Sen"
+vi_quy_tac = "Sáu Sen"
+folk = "Sáu Hoa Sen"
+display = "Sáu Hoa Sen"
+subject = "Hai trẻ làng sen"  # chủ thể v2.1
+scene_title = "Sáu thuyền lá mang ký ức"
+alt = "Phù hiệu Nhà Sen cho lá Six of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.seven]
+slug = "seven-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-seven
+rws = "Seven of Cups"
+vi = "7 Sen"
+vi_quy_tac = "Bảy Sen"
+folk = "Bảy Hoa Sen"
+display = "Bảy Hoa Sen"
+subject = "Người mơ bên hồ"  # chủ thể v2.1
+scene_title = "Bảy hoa sen mang bảy ảo ảnh"
+alt = "Phù hiệu Nhà Sen cho lá Seven of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.eight]
+slug = "eight-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-eight
+rws = "Eight of Cups"
+vi = "8 Sen"
+vi_quy_tac = "Tám Sen"
+folk = "Tám Hoa Sen"
+display = "Tám Hoa Sen"
+subject = "Người rời bến cũ"  # chủ thể v2.1
+scene_title = "Tám chén dưới trăng khuyết"
+alt = "Phù hiệu Nhà Sen cho lá Eight of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.nine]
+slug = "nine-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-nine
+rws = "Nine of Cups"
+vi = "9 Sen"
+vi_quy_tac = "Chín Sen"
+folk = "Chín Hoa Sen"
+display = "Chín Hoa Sen"
+subject = "Người chữa nước"  # chủ thể v2.1
+scene_title = "Chín bát thuốc quanh nụ cười"
+alt = "Phù hiệu Nhà Sen cho lá Nine of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.ten]
+slug = "ten-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-ten
+rws = "Ten of Cups"
+vi = "10 Sen"
+vi_quy_tac = "Mười Sen"
+folk = "Mười Hoa Sen"
+display = "Mười Hoa Sen"
+subject = "Gia đình bến Rồng"  # chủ thể v2.1
+scene_title = "Mười chén dưới cầu vồng nước"
+alt = "Phù hiệu Nhà Sen cho lá Ten of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.page]
+slug = "page-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-page
+rws = "Page of Cups"
+vi = "Tiểu đồng Sen"
+vi_quy_tac = "Tiểu Đồng Sen"
+folk = "Tiểu Đồng Hoa Sen"
+display = "Tiểu Đồng Hoa Sen"
+subject = "Đồng tử Bên Giếng"  # chủ thể v2.1
+scene_title = "Cá nhỏ nói trong chén sen"
+alt = "Phù hiệu Nhà Sen cho lá Page of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.knight]
+slug = "knight-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-knight
+rws = "Knight of Cups"
+vi = "Hiệp sĩ Sen"
+vi_quy_tac = "Kỵ Sĩ Sen"
+folk = "Kỵ Sĩ Hoa Sen"
+display = "Kỵ Sĩ Hoa Sen"
+subject = "Sứ giả Dòng Lam"  # chủ thể v2.1
+scene_title = "Lời mời đi trên lưng rồng nước"
+alt = "Phù hiệu Nhà Sen cho lá Knight of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.queen]
+slug = "queen-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-queen
+rws = "Queen of Cups"
+vi = "Nữ vương Sen"
+vi_quy_tac = "Hoàng Hậu Sen"
+folk = "Hoàng Hậu Hoa Sen"
+display = "Hoàng Hậu Hoa Sen"
+subject = "Bà Chúa Sen"  # chủ thể v2.1
+scene_title = "Nghe tiếng người dưới mặt đầm"
+alt = "Phù hiệu Nhà Sen cho lá Queen of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.cups.king]
+slug = "king-of-cups"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng cups-king
+rws = "King of Cups"
+vi = "Quốc vương Sen"
+vi_quy_tac = "Quốc Vương Sen"
+folk = "Quốc Vương Hoa Sen"
+display = "Quốc Vương Hoa Sen"
+subject = "Chúa Bến Nước"  # chủ thể v2.1
+scene_title = "Ngai thuyền giữa hai dòng"
+alt = "Phù hiệu Nhà Sen cho lá King of Cups"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.ace]
+slug = "ace-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-ace
+rws = "Ace of Swords"
+vi = "Át Dâu tằm"
+vi_quy_tac = "Át Dâu tằm"
+folk = "Át Dâu Tằm"
+display = "Át Dâu Tằm"
+subject = "Bàn tay cắt kén"  # chủ thể v2.1
+scene_title = "Lưỡi sáng mở kén tằm"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Ace of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "ok"
+
+[minor_arcana.swords.two]
+slug = "two-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-two
+rws = "Two of Swords"
+vi = "2 Dâu tằm"
+vi_quy_tac = "Hai Dâu tằm"
+folk = "Hai Dâu Tằm"
+display = "Hai Dâu Tằm"
+subject = "Người giữ hai thoi"  # chủ thể v2.1
+scene_title = "Hai thoi dệt chặn trước mắt"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Two of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.three]
+slug = "three-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-three
+rws = "Three of Swords"
+vi = "3 Dâu tằm"
+vi_quy_tac = "Ba Dâu tằm"
+folk = "Ba Dâu Tằm"
+display = "Ba Dâu Tằm"
+subject = "Người giữ lời thề đứt"  # chủ thể v2.1
+scene_title = "Ba kim đồng xuyên dải lụa đỏ"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Three of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.four]
+slug = "four-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-four
+rws = "Four of Swords"
+vi = "4 Dâu tằm"
+vi_quy_tac = "Bốn Dâu tằm"
+folk = "Bốn Dâu Tằm"
+display = "Bốn Dâu Tằm"
+subject = "Người lính trong nhà tơ"  # chủ thể v2.1
+scene_title = "Bốn cờ lụa canh giấc ngủ"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Four of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.five]
+slug = "five-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-five
+rws = "Five of Swords"
+vi = "5 Dâu tằm"
+vi_quy_tac = "Năm Dâu tằm"
+folk = "Năm Dâu Tằm"
+display = "Năm Dâu Tằm"
+subject = "Kẻ thắng trong xưởng dệt"  # chủ thể v2.1
+scene_title = "Năm chiếc kéo sau cuộc tranh phần"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Five of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.six]
+slug = "six-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-six
+rws = "Six of Swords"
+vi = "6 Dâu tằm"
+vi_quy_tac = "Sáu Dâu tằm"
+folk = "Sáu Dâu Tằm"
+display = "Sáu Dâu Tằm"
+subject = "Gia đình qua sông gió"  # chủ thể v2.1
+scene_title = "Sáu cờ tơ trên thuyền lặng"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Six of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.seven]
+slug = "seven-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-seven
+rws = "Seven of Swords"
+vi = "7 Dâu tằm"
+vi_quy_tac = "Bảy Dâu tằm"
+folk = "Bảy Dâu Tằm"
+display = "Bảy Dâu Tằm"
+subject = "Người lấy trộm mật đồ"  # chủ thể v2.1
+scene_title = "Bảy thẻ tre dưới áo lụa"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Seven of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.eight]
+slug = "eight-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-eight
+rws = "Eight of Swords"
+vi = "8 Dâu tằm"
+vi_quy_tac = "Tám Dâu tằm"
+folk = "Tám Dâu Tằm"
+display = "Tám Dâu Tằm"
+subject = "Người bị trói bằng tơ"  # chủ thể v2.1
+scene_title = "Tám sợi tơ quanh cọc dâu"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Eight of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.nine]
+slug = "nine-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-nine
+rws = "Nine of Swords"
+vi = "9 Dâu tằm"
+vi_quy_tac = "Chín Dâu tằm"
+folk = "Chín Dâu Tằm"
+display = "Chín Dâu Tằm"
+subject = "Người thợ thức đêm"  # chủ thể v2.1
+scene_title = "Chín bướm đen trên màn ngủ"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Nine of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.ten]
+slug = "ten-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-ten
+rws = "Ten of Swords"
+vi = "10 Dâu tằm"
+vi_quy_tac = "Mười Dâu tằm"
+folk = "Mười Dâu Tằm"
+display = "Mười Dâu Tằm"
+subject = "Người giữ cờ thất thủ"  # chủ thể v2.1
+scene_title = "Mười kim đồng và bình minh"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Ten of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.page]
+slug = "page-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-page
+rws = "Page of Swords"
+vi = "Tiểu đồng Dâu tằm"
+vi_quy_tac = "Tiểu Đồng Dâu tằm"
+folk = "Tiểu Đồng Dâu Tằm"
+display = "Tiểu Đồng Dâu Tằm"
+subject = "Thư đồng Nương Dâu"  # chủ thể v2.1
+scene_title = "Đọc chữ trong hướng bay của lá"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Page of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.knight]
+slug = "knight-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-knight
+rws = "Knight of Swords"
+vi = "Hiệp sĩ Dâu tằm"
+vi_quy_tac = "Kỵ Sĩ Dâu tằm"
+folk = "Kỵ Sĩ Dâu Tằm"
+display = "Kỵ Sĩ Dâu Tằm"
+subject = "Kỵ sĩ Cờ Lụa"  # chủ thể v2.1
+scene_title = "Phi ngựa theo lời thề trong gió"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Knight of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.queen]
+slug = "queen-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-queen
+rws = "Queen of Swords"
+vi = "Nữ vương Dâu tằm"
+vi_quy_tac = "Hoàng Hậu Dâu tằm"
+folk = "Hoàng Hậu Dâu Tằm"
+display = "Hoàng Hậu Dâu Tằm"
+subject = "Nữ quan Cắt Tơ"  # chủ thể v2.1
+scene_title = "Một nhát kéo tháo nút oan"
+alt = "Phù hiệu Nhà Dâu tằm cho lá Queen of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.swords.king]
+slug = "king-of-swords"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng swords-king
+rws = "King of Swords"
+vi = "Quốc vương Dâu tằm"
+vi_quy_tac = "Quốc Vương Dâu tằm"
+folk = "Quốc Vương Dâu Tằm"
+display = "Quốc Vương Dâu Tằm"
+subject = "Quan Trưởng Luật Tơ"  # chủ thể v2.1
+scene_title = "Đo sợi trước khi phán"
+alt = "Phù hiệu Nhà Dâu tằm cho lá King of Swords"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.ace]
+slug = "ace-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-ace
+rws = "Ace of Pentacles"
+vi = "Át Lúa"
+vi_quy_tac = "Át Lúa"
+folk = "Át Bông Lúa"
+display = "Át Bông Lúa"
+subject = "Bàn tay nhận hạt lúa đồng"  # chủ thể v2.1
+scene_title = "Hạt giống trong vòng trống"
+alt = "Phù hiệu Nhà Lúa cho lá Ace of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "ok"
+
+[minor_arcana.pentacles.two]
+slug = "two-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-two
+rws = "Two of Pentacles"
+vi = "2 Lúa"
+vi_quy_tac = "Hai Lúa"
+folk = "Hai Bông Lúa"
+display = "Hai Bông Lúa"
+subject = "Người cân hai thúng"  # chủ thể v2.1
+scene_title = "Hai thúng lúa trên bến sóng"
+alt = "Phù hiệu Nhà Lúa cho lá Two of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.three]
+slug = "three-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-three
+rws = "Three of Pentacles"
+vi = "3 Lúa"
+vi_quy_tac = "Ba Lúa"
+folk = "Ba Bông Lúa"
+display = "Ba Bông Lúa"
+subject = "Ba người dựng kho"  # chủ thể v2.1
+scene_title = "Kho lúa ba nghề"
+alt = "Phù hiệu Nhà Lúa cho lá Three of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.four]
+slug = "four-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-four
+rws = "Four of Pentacles"
+vi = "4 Lúa"
+vi_quy_tac = "Bốn Lúa"
+folk = "Bốn Bông Lúa"
+display = "Bốn Bông Lúa"
+subject = "Người giữ bốn chum"  # chủ thể v2.1
+scene_title = "Bốn chum lúa khóa dưới thân"
+alt = "Phù hiệu Nhà Lúa cho lá Four of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.five]
+slug = "five-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-five
+rws = "Five of Pentacles"
+vi = "5 Lúa"
+vi_quy_tac = "Năm Lúa"
+folk = "Năm Bông Lúa"
+display = "Năm Bông Lúa"
+subject = "Hai người qua mùa rét"  # chủ thể v2.1
+scene_title = "Năm bông lúa sáng sau cửa đình"
+alt = "Phù hiệu Nhà Lúa cho lá Five of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.six]
+slug = "six-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-six
+rws = "Six of Pentacles"
+vi = "6 Lúa"
+vi_quy_tac = "Sáu Lúa"
+folk = "Sáu Bông Lúa"
+display = "Sáu Bông Lúa"
+subject = "Người chia sáu đấu thóc"  # chủ thể v2.1
+scene_title = "Cân thóc dưới bóng trống"
+alt = "Phù hiệu Nhà Lúa cho lá Six of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.seven]
+slug = "seven-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-seven
+rws = "Seven of Pentacles"
+vi = "7 Lúa"
+vi_quy_tac = "Bảy Lúa"
+folk = "Bảy Bông Lúa"
+display = "Bảy Bông Lúa"
+subject = "Người chờ bảy thửa"  # chủ thể v2.1
+scene_title = "Bảy ruộng bậc dưới mây rồng"
+alt = "Phù hiệu Nhà Lúa cho lá Seven of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.eight]
+slug = "eight-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-eight
+rws = "Eight of Pentacles"
+vi = "8 Lúa"
+vi_quy_tac = "Tám Lúa"
+folk = "Tám Bông Lúa"
+display = "Tám Bông Lúa"
+subject = "Nghệ nhân đúc tám đồng lúa"  # chủ thể v2.1
+scene_title = "Tám lần gõ thành một hoa văn"
+alt = "Phù hiệu Nhà Lúa cho lá Eight of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.nine]
+slug = "nine-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-nine
+rws = "Nine of Pentacles"
+vi = "9 Lúa"
+vi_quy_tac = "Chín Lúa"
+folk = "Chín Bông Lúa"
+display = "Chín Bông Lúa"
+subject = "Nữ chủ vườn lúa"  # chủ thể v2.1
+scene_title = "Chim trĩ trong khu vườn tự gây dựng"
+alt = "Phù hiệu Nhà Lúa cho lá Nine of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.ten]
+slug = "ten-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-ten
+rws = "Ten of Pentacles"
+vi = "10 Lúa"
+vi_quy_tac = "Mười Lúa"
+folk = "Mười Bông Lúa"
+display = "Mười Bông Lúa"
+subject = "Gia đình giữ kho tổ"  # chủ thể v2.1
+scene_title = "Mười bông lúa quanh trống gia phả"
+alt = "Phù hiệu Nhà Lúa cho lá Ten of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.page]
+slug = "page-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-page
+rws = "Page of Pentacles"
+vi = "Tiểu đồng Lúa"
+vi_quy_tac = "Tiểu Đồng Lúa"
+folk = "Tiểu Đồng Bông Lúa"
+display = "Tiểu Đồng Bông Lúa"
+subject = "Tiểu đồng Hạt Giống"  # chủ thể v2.1
+scene_title = "Đọc lịch mùa trên hạt lúa"
+alt = "Phù hiệu Nhà Lúa cho lá Page of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.knight]
+slug = "knight-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-knight
+rws = "Knight of Pentacles"
+vi = "Hiệp sĩ Lúa"
+vi_quy_tac = "Kỵ Sĩ Lúa"
+folk = "Kỵ Sĩ Bông Lúa"
+display = "Kỵ Sĩ Bông Lúa"
+subject = "Kỵ sĩ Trâu Mộng"  # chủ thể v2.1
+scene_title = "Chuyến giống qua mưa dài"
+alt = "Phù hiệu Nhà Lúa cho lá Knight of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.queen]
+slug = "queen-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-queen
+rws = "Queen of Pentacles"
+vi = "Nữ vương Lúa"
+vi_quy_tac = "Hoàng Hậu Lúa"
+folk = "Hoàng Hậu Bông Lúa"
+display = "Hoàng Hậu Bông Lúa"
+subject = "Nữ chủ Lúa Vàng"  # chủ thể v2.1
+scene_title = "Bếp, ruộng và kho cùng một nhịp"
+alt = "Phù hiệu Nhà Lúa cho lá Queen of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+[minor_arcana.pentacles.king]
+slug = "king-of-pentacles"  # BẤT BIẾN — live dùng dạng này, folder 56 dùng pentacles-king
+rws = "King of Pentacles"
+vi = "Quốc vương Lúa"
+vi_quy_tac = "Quốc Vương Lúa"
+folk = "Quốc Vương Bông Lúa"
+display = "Quốc Vương Bông Lúa"
+subject = "Chúa Kho Đồng"  # chủ thể v2.1
+scene_title = "Kho mở giữa bốn dòng trao đổi"
+alt = "Phù hiệu Nhà Lúa cho lá King of Pentacles"  # tạm — alt của phù hiệu nhà
+alt_tranh_rieng = "đang phát triển"  # viết khi có tranh riêng cho lá này
+image_status = "MISSING"
+decision = "cần bạn duyệt"
+
+# ═══════════════════════════════════════════════════════════════════════════
+# PHẦN CHỜ NGƯỜI QUYẾT
+# ═══════════════════════════════════════════════════════════════════════════
+
+[review.ten_an_phu]
+hang_muc = "0.6 · quy tắc đặt tên 56 Ẩn Phụ"
+van_de = "52/56 lá có nameVi không khớp [ranks] + [suits].short"
+vi_du = "\"2 Tre\" vs \"Hai Tre\" · \"Hiệp sĩ Tre\" vs \"Kỵ Sĩ Tre\" · \"Nữ vương Tre\" vs \"Hoàng Hậu Tre\""
+phuong_an_a = "Theo quy tắc: sinh lại toàn bộ nameVi từ [ranks] + [suits].short"
+phuong_an_b = "Giữ nameVi đang chạy, sửa [ranks] cho khớp"
+phuong_an_c = "Bỏ nameVi khỏi giao diện, chỉ hiện folk + rws"
+decision = "đang phát triển"
+
+[review.ten_bon_nha]
+hang_muc = "0.6 · dạng viết hoa của tên bốn nhà"
+van_de = "Cây Tre / Tre · Hoa Sen / Sen · Dâu Tằm / Dâu tằm · Bông Lúa / Lúa"
+chu_y = "Nhà Dâu Tằm có hai lối viết hoa khác nhau giữa dạng đầy đủ và dạng ngắn (\"Dâu Tằm\" vs \"Dâu tằm\"). Ba nhà kia nhất quán."
+decision = "đang phát triển"
+
+[review.ten_an_chinh]
+hang_muc = "0.6 · 54 chỗ trong rename-report.json"
+van_de = "rename-report.json trong repo là kết quả chạy trên repo giả _test/regress (4 file), KHÔNG phải bản quét 54 chỗ trên mã thật. Bản 54 chỗ chưa được commit."
+viec_can_lam = "chạy lại tools/scripts/apply-renames.mjs trên repo thật rồi commit báo cáo, trước khi duyệt"
+thay_the = "bảng aliases trong [major_arcana.*] là phần dùng được ngay: 17/22 lá có tên cũ cần dò"
+decision = "đang phát triển"
+
+[review.nguon_la_XXI]
+hang_muc = "0.11 · nguồn của lá XXI The World"
+van_de = "v2.1 có sót S09 không? Chốt rồi mới cập nhật dữ liệu."
+hien_tai = "Việt Thường và thiên hạ"
+decision = "đang phát triển"
+
+# ── 0.7 · 23 lá có neo dân gian chọi nhau ──────────────────────────────────
+# Ba lựa chọn hợp lệ: giữ v2.1 (một nguồn duy nhất) · giữ neo cũ (thêm lớp
+# nghĩa) · bỏ trống. Điền vào `decision` một trong: v21 | neo_cu | bo_trong
+
+[review.neo_dan_gian.wands.knight]
+slug = "knight-of-wands"
+rws = "Knight of Wands"
+v21 = "Kỵ mã Sóc Sơn — Ngựa lửa qua sườn núi"
+bo_56 = "Người cưỡi ngựa lao về phía trước"
+neo_cu = "Kỵ sĩ phóng ngựa mang lệnh vua, không dừng ở trạm nào."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.wands.king]
+slug = "king-of-wands"
+rws = "King of Wands"
+v21 = "Vua Mở Cõi — Gậy tre chỉ đường cho đoàn khai phá"
+bo_56 = "Người đứng đầu đoàn mở đất"
+neo_cu = "Người dẫn dân xuống khai khẩn vùng cửa sông, cắm cọc đầu tiên xuống bùn."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.two]
+slug = "two-of-cups"
+rws = "Two of Cups"
+v21 = "Tiên Dung và Chử Đồng Tử — Hai chén bên bãi cát"
+bo_56 = "Hai người trao chén trong nghi lễ kết giao"
+neo_cu = "Miếng trầu mở đầu mọi đám cưới: hai người nhận nhau trước mặt làng."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.three]
+slug = "three-of-cups"
+rws = "Three of Cups"
+v21 = "Ba người bạn bến trăng — Ba thuyền sen chạm mũi"
+bo_56 = "Ba người cùng nâng chén trong ngày hội"
+neo_cu = "Ba nhà chung một giếng, gánh nước gặp nhau mỗi sáng."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.six]
+slug = "six-of-cups"
+rws = "Six of Cups"
+v21 = "Hai trẻ làng sen — Sáu thuyền lá mang ký ức"
+bo_56 = "Ký ức tuổi thơ trong sân nhà"
+neo_cu = "Bến sông tuổi nhỏ, chỗ lội qua học về — ký ức không đi đâu cả."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.seven]
+slug = "seven-of-cups"
+rws = "Seven of Cups"
+v21 = "Người mơ bên hồ — Bảy hoa sen mang bảy ảo ảnh"
+bo_56 = "Nhiều lựa chọn hiện lên trong sương nước"
+neo_cu = "Sương trên mặt đầm sớm mai, thấy bóng nhiều thứ mà chưa rõ thứ nào thật."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.nine]
+slug = "nine-of-cups"
+rws = "Nine of Cups"
+v21 = "Người chữa nước — Chín bát thuốc quanh nụ cười"
+bo_56 = "Sự sung túc và mãn nguyện"
+neo_cu = "Đầm sen tháng sáu nở kín, chủ đầm ngồi bờ nhìn, không cần hái."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.page]
+slug = "page-of-cups"
+rws = "Page of Cups"
+v21 = "Đồng tử Bên Giếng — Cá nhỏ nói trong chén sen"
+bo_56 = "Người trẻ nhận thông điệp từ trực giác"
+neo_cu = "Đứa nhỏ mang tin vui chạy trước, người lớn theo sau chưa kịp tin."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.queen]
+slug = "queen-of-cups"
+rws = "Queen of Cups"
+v21 = "Bà Chúa Sen — Nghe tiếng người dưới mặt đầm"
+bo_56 = "Người nữ giàu trực giác, chữa lành và bao dung"
+neo_cu = "Người đàn bà trong làng ai ốm cũng tìm đến, thuốc thì ít mà lời thì đủ."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.cups.king]
+slug = "king-of-cups"
+rws = "King of Cups"
+v21 = "Chúa Bến Nước — Ngai thuyền giữa hai dòng"
+bo_56 = "Người lãnh đạo điềm tĩnh, kiểm soát cảm xúc"
+neo_cu = "Người chủ họ đứng ra hòa giải hai nhà, giọng không to mà ai cũng nghe."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.two]
+slug = "two-of-swords"
+rws = "Two of Swords"
+v21 = "Người giữ hai thoi — Hai thoi dệt chặn trước mắt"
+bo_56 = "Người bịt mắt trước hai lựa chọn"
+neo_cu = "Mị Châu tin chồng, không hỏi thêm một câu nào — có những lúc không hỏi là một quyết định."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.three]
+slug = "three-of-swords"
+rws = "Three of Swords"
+v21 = "Người giữ lời thề đứt — Ba kim đồng xuyên dải lụa đỏ"
+bo_56 = "Nỗi đau, chia lìa và sự thật gây tổn thương"
+neo_cu = "Vết gươm An Dương Vương, nhát chém đau nhất trong huyền sử Việt."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.six]
+slug = "six-of-swords"
+rws = "Six of Swords"
+v21 = "Gia đình qua sông gió — Sáu cờ tơ trên thuyền lặng"
+bo_56 = "Con thuyền rời vùng biến động"
+neo_cu = "Con thuyền chở người chạy loạn xuôi dòng, bỏ lại làng sau lưng."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.seven]
+slug = "seven-of-swords"
+rws = "Seven of Swords"
+v21 = "Người lấy trộm mật đồ — Bảy thẻ tre dưới áo lụa"
+bo_56 = "Người hành động bí mật hoặc dùng mưu"
+neo_cu = "Trọng Thủy tráo lẫy nỏ trong đêm, vợ vẫn ngủ yên bên cạnh."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.ten]
+slug = "ten-of-swords"
+rws = "Ten of Swords"
+v21 = "Người giữ cờ thất thủ — Mười kim đồng và bình minh"
+bo_56 = "Kết thúc đau đớn nhưng bình minh xuất hiện"
+neo_cu = "Lông ngỗng rắc hết dọc đường, đến bờ biển thì hết đường — và trời sáng."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.page]
+slug = "page-of-swords"
+rws = "Page of Swords"
+v21 = "Thư đồng Nương Dâu — Đọc chữ trong hướng bay của lá"
+bo_56 = "Người học chữ, quan sát và đặt câu hỏi"
+neo_cu = "Trò nhỏ học chữ dưới mái đình, chép lại mà chưa hiểu hết."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.knight]
+slug = "knight-of-swords"
+rws = "Knight of Swords"
+v21 = "Kỵ sĩ Cờ Lụa — Phi ngựa theo lời thề trong gió"
+bo_56 = "Người lao vào tranh luận hoặc chiến đấu"
+neo_cu = "Người vác gươm đi đòi lẽ phải, chưa kịp nghĩ đòi xong thì sao."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.swords.queen]
+slug = "queen-of-swords"
+rws = "Queen of Swords"
+v21 = "Nữ quan Cắt Tơ — Một nhát kéo tháo nút oan"
+bo_56 = "Người nữ sắc sảo, độc lập và công minh"
+neo_cu = "Người đàn bà xử việc trong họ, nói một câu là dứt, không nói lần hai."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.pentacles.three]
+slug = "three-of-pentacles"
+rws = "Three of Pentacles"
+v21 = "Ba người dựng kho — Kho lúa ba nghề"
+bo_56 = "Nghệ nhân cùng hợp tác xây dựng công trình"
+neo_cu = "Cả xóm đổi công cấy cho nhau, ruộng ai cũng xong đúng vụ."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.pentacles.eight]
+slug = "eight-of-pentacles"
+rws = "Eight of Pentacles"
+v21 = "Nghệ nhân đúc tám đồng lúa — Tám lần gõ thành một hoa văn"
+bo_56 = "Nghệ nhân chuyên tâm rèn luyện nghề"
+neo_cu = "Thợ rèn quai búa vào lưỡi cày, ngày nào cũng một việc ấy."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.pentacles.ten]
+slug = "ten-of-pentacles"
+rws = "Ten of Pentacles"
+v21 = "Gia đình giữ kho tổ — Mười bông lúa quanh trống gia phả"
+bo_56 = "Gia đình nhiều thế hệ và gia sản bền vững"
+neo_cu = "Nhà thờ họ với mấy sào ruộng hương hỏa, truyền qua bốn đời."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.pentacles.knight]
+slug = "knight-of-pentacles"
+rws = "Knight of Pentacles"
+v21 = "Kỵ sĩ Trâu Mộng — Chuyến giống qua mưa dài"
+bo_56 = "Người bền bỉ, trách nhiệm và chậm chắc"
+neo_cu = "Người làm ruộng thuê, mưa nắng gì cũng có mặt đúng giờ."
+decision = "đang phát triển"
+
+[review.neo_dan_gian.pentacles.king]
+slug = "king-of-pentacles"
+rws = "King of Pentacles"
+v21 = "Chúa Kho Đồng — Kho mở giữa bốn dòng trao đổi"
+bo_56 = "Thương chủ hoặc người quản trị tài sản lớn"
+neo_cu = "Chủ vựa lúa cả vùng, cho vay thóc giống mùa giáp hạt."
+decision = "đang phát triển"
+
