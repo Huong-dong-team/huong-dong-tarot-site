@@ -46,8 +46,12 @@ test("trang Trải bài liên kết đủ bốn URL và phân biệt trang đã 
   const html = await readFile(path.join(root, "dist/trai-bai/index.html"), "utf8");
   for (const route of intentRoutes) assert.match(html, new RegExp(`href="${route.replaceAll("/", "\\/")}"`));
   assert.match(html, /href="\/la-bai-hom-nay\/"/);
-  assert.equal((html.match(/Đang phát triển thêm/g) || []).length, 3);
+  // Ba trang trải bài đã rút bài được (Lớp 2), nội dung biên tập còn dở. Nhãn
+  // phải nói đúng điều đó: để nguyên "Đang phát triển thêm" thì người đọc không
+  // có lý do bấm vào một trang đã dùng được.
+  assert.equal((html.match(/Dùng thử được/g) || []).length, 3);
   assert.equal((html.match(/Đã duyệt nội dung/g) || []).length, 1);
+  assert.doesNotMatch(html, /Đang phát triển thêm/, "trang Trải bài không còn nhãn chờ nào");
 });
 
 test("route chờ chưa vào sitemap và trang hoàn chỉnh vẫn được index", async () => {
