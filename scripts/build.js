@@ -73,7 +73,14 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+async function loadCriticalCss() {
+  const files = ["fonts.css", "critical.css"];
+  const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
+  if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
+  return css;
+}
+const criticalCss = await loadCriticalCss();
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
 const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"][number] || String(number);
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
@@ -94,6 +101,81 @@ const ART_NOTE = {
   KEEP_IMAGE_LOCK_NAME: "",
 };
 
+const ADAPTATION_LEVEL_LABEL = Object.freeze({
+  LNCQ_CORE: "Lĩnh Nam chích quái — phần chính",
+  LNCQ_CORE_ADAPTATION: "Dựa trên Lĩnh Nam chích quái, có biên tập khoảnh khắc",
+  LNCQ_TUC_BIEN_ADAPTATION: "Dựa trên phần Tục Biên, có chuyển thể",
+  VIET_FOLK_EXPANDED_ADAPTATION: "Tín ngưỡng Việt mở rộng ngoài Lĩnh Nam chích quái",
+  EDITORIAL_FANTASY_INSPIRED: "Cảnh mới sáng tác, chỉ mượn motif",
+});
+
+const cleanText = (value) => String(value ?? "").trim();
+
+function detailCard(title, value, className = "v2-card") {
+  const text = cleanText(value);
+  return text ? `<article class="${className}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></article>` : "";
+}
+
+// Dựng sẵn bốn khối cho Ẩn Phụ để template không phải lồng điều kiện. Mỗi
+// trường được lọc trước khi sinh thẻ, nhờ vậy dữ liệu thiếu không tạo đoạn rỗng
+// và dữ liệu Firestore luôn đi qua escapeHtml trước khi vào HTML.
+function minorDetailsHtml(card) {
+  if (card.arcana !== "minor") return "";
+
+  const subject = cleanText(card.subject);
+  const sceneTitle = cleanText(card.sceneTitle);
+  const scene = cleanText(card.scene);
+  const shortStory = cleanText(card.shortStory);
+  const contextParts = [
+    subject ? `<p><strong>Chủ thể:</strong> ${escapeHtml(subject)}</p>` : "",
+    scene ? `<p>${escapeHtml(scene)}</p>` : "",
+    shortStory ? `<p>${escapeHtml(shortStory)}</p>` : "",
+  ].filter(Boolean).join("");
+  const context = contextParts
+    ? `<section class="v2-prose minor-detail" data-minor-details="context"><p class="eyebrow">Chủ thể và cảnh</p><h2>${escapeHtml(sceneTitle || "Chủ thể và cảnh")}</h2>${contextParts}</section>`
+    : "";
+
+  const fields = [
+    detailCard("Tình yêu", card.love),
+    detailCard("Công việc", card.career),
+    detailCard("Tài chính", card.finance),
+    detailCard("Sức khỏe", card.health),
+  ].filter(Boolean).join("");
+  const applications = fields
+    ? `<section class="v2-prose minor-detail" data-minor-details="applications"><p class="eyebrow">Theo lĩnh vực</p><h2>Khi soi theo từng lĩnh vực</h2><div class="v2-grid">${fields}</div></section>`
+    : "";
+
+  const guidanceCards = [
+    detailCard("Lời khuyên", card.advice, "v2-card v2-note"),
+    detailCard("Cảnh báo", card.warning, "v2-card v2-warn"),
+  ].filter(Boolean).join("");
+  const guidance = guidanceCards
+    ? `<section class="v2-prose minor-detail" data-minor-details="guidance"><p class="eyebrow">Gợi ý thực hành</p><h2>Lời khuyên và cảnh báo</h2><div class="v2-two">${guidanceCards}</div></section>`
+    : "";
+
+  const sources = Array.isArray(card.sources)
+    ? card.sources.map((source) => {
+      const id = cleanText(source?.id);
+      const title = cleanText(source?.title);
+      if (!id && !title) return "";
+      const sourceName = [id ? `<strong>${escapeHtml(id)}</strong>` : "", title ? escapeHtml(title) : ""].filter(Boolean).join(" · ");
+      const corpus = source?.isLNCQ ? " <span>— Lĩnh Nam chích quái</span>" : "";
+      return `<li>${sourceName}${corpus}</li>`;
+    }).filter(Boolean).join("")
+    : "";
+  const levelCode = cleanText(card.adaptationLevel);
+  const level = ADAPTATION_LEVEL_LABEL[levelCode] || levelCode;
+  const sourceParts = [
+    level ? `<p><strong>Mức chuyển thể:</strong> ${escapeHtml(level)}</p>` : "",
+    sources ? `<ul class="v2-list">${sources}</ul>` : "",
+  ].filter(Boolean).join("");
+  const citations = sourceParts
+    ? `<section class="v2-prose minor-detail" data-minor-details="sources"><p class="eyebrow">Nguồn tư liệu</p><h2>Dẫn nguồn và mức chuyển thể</h2>${sourceParts}</section>`
+    : "";
+
+  return `${context}${applications}${guidance}${citations}`;
+}
+
 const cards = data.cards.map((card) => ({
   ...card,
   nameFolk: card.nameFolk || card.nameVi,
@@ -102,6 +184,7 @@ const cards = data.cards.map((card) => ({
   displayNumber: card.arcana === "major" ? roman(card.number) : card.nameVi.split(" ")[0],
   folkStyleLabel: folkStyleLabel[card.folkStyle] || "Mỹ thuật Việt",
   artNote: ART_NOTE[card.imageStatus] ?? "",
+  minorDetailsHtml: minorDetailsHtml(card),
   searchText: [card.nameVi, card.nameEn, card.nameFolk, ...(card.keywordsUpright || [])].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
@@ -128,6 +211,7 @@ const socialLinks = [
 ].filter(([, url]) => url);
 const layoutSettings = {
   analytics: analyticsSnippet(data.site),
+  criticalCss,
   tagline: data.site.tagline || "",
   contactEmail: data.site.contactEmail || "",
   socialHtml: socialLinks.length
@@ -135,12 +219,15 @@ const layoutSettings = {
     : "",
 };
 
-function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "" }) {
+function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "" }) {
   return renderString(templates._layout, {
     ...layoutSettings,
-    head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas }),
+    head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
+    heroPreloads: bodyClass === "home-page"
+      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
+      : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
   });
@@ -203,8 +290,10 @@ const immortals = immortalSpecs.map((spec, index) => {
     // Dựng sẵn ở đây thay vì lồng {{#if}} trong template: renderString dùng
     // regex non-greedy nên điều kiện lồng nhau sẽ đóng sai thẻ.
     activeClass: index === 0 ? " is-active" : "",
-    // Lá đầu là ảnh lớn nhất màn hình đầu nên phải tải sớm, ba lá sau thì không.
-    imgAttrs: index === 0 ? 'fetchpriority="high"' : 'loading="lazy"',
+    // Cả bốn chân dung bắt đầu ở trạng thái ẩn nên để lazy; slide hộp bài trong
+    // template cũng tải lười vì nằm gần cuối khung mobile. Nhờ vậy carousel
+    // không tranh băng thông và decode với tiêu đề LCP.
+    imgAttrs: 'loading="lazy" decoding="async"',
   };
 });
 
@@ -278,6 +367,55 @@ for (const page of newPages) {
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
     content: templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
+  }));
+}
+
+// 1.1 — Chốt URL trước khi viết chức năng. Các trang có canonical và
+// breadcrumb ngay từ đầu, nhưng để noindex cho tới khi hạng mục 1.2–1.5 có nội
+// dung thật; 1.7 sẽ đưa chúng vào sitemap sau nghiệm thu.
+const intentPages = [
+  {
+    route: "/trai-bai/co-khong/",
+    title: "Trải bài Có hoặc Không",
+    heading: "Có hoặc Không",
+    intro: "Một lá bài giúp bạn dừng lại, nhìn rõ điều đang nghiêng về phía nào và tự kiểm tra lý do của mình.",
+    nextStep: "Hạng mục 1.2 sẽ bổ sung rút một lá, diễn giải Có/Không có điều kiện và chia sẻ kết quả.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Có hoặc Không", path: "/trai-bai/co-khong/" }],
+  },
+  {
+    route: "/trai-bai/ba-la/",
+    title: "Trải bài Ba Lá",
+    heading: "Ba Lá",
+    intro: "Ba vị trí cho quá khứ, hiện tại và hướng đi — một khung đọc ngắn để nhìn sự việc theo dòng thời gian.",
+    nextStep: "Hạng mục 1.3 sẽ bổ sung rút ba lá, nhãn từng vị trí và phần đọc kết quả liền mạch.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Ba Lá", path: "/trai-bai/ba-la/" }],
+  },
+  {
+    route: "/trai-bai/tinh-yeu/",
+    title: "Trải bài Tình Yêu",
+    heading: "Tình Yêu",
+    intro: "Một khung soi chiếu mối quan hệ bằng câu hỏi rõ ràng, không phán thay cảm xúc hay lựa chọn của bạn.",
+    nextStep: "Hạng mục 1.4 sẽ dùng lại khung Ba Lá và bổ sung câu hỏi, nội dung hướng dẫn riêng cho mối quan hệ.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Tình Yêu", path: "/trai-bai/tinh-yeu/" }],
+  },
+  {
+    route: "/la-bai-hom-nay/",
+    title: "Lá Bài Hôm Nay",
+    heading: "Lá Bài Hôm Nay",
+    intro: "Mỗi ngày một lá bài và một câu chuyện Việt để học, nhớ và dành vài phút tự phản tư.",
+    nextStep: "Hạng mục 1.5 sẽ bảo đảm cùng một ngày luôn trả về cùng một lá và có đường dẫn tới trang lá đầy đủ.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }],
+  },
+];
+for (const page of intentPages) {
+  const content = renderString(templates.development, page);
+  await emit(page.route, layout({
+    title: page.title,
+    description: `${page.intro} Tính năng đang được Hường Đông phát triển thêm.`,
+    path: page.route,
+    robots: "noindex,follow",
+    schemas: [breadcrumbSchema(data.site, page.breadcrumbs)],
+    content,
   }));
 }
 
