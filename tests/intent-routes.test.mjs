@@ -9,12 +9,11 @@ const intentRoutes = [
   "/trai-bai/co-khong/",
   "/trai-bai/ba-la/",
   "/trai-bai/tinh-yeu/",
-  "/la-bai-hom-nay/",
 ];
 
 const outputPath = (route) => path.join(root, "dist", route.replace(/^\//, ""), "index.html");
 
-test("1.1 sinh đúng bốn URL đã chốt", async () => {
+test("1.1 giữ đúng ba URL đang phát triển", async () => {
   for (const route of intentRoutes) await access(outputPath(route));
 });
 
@@ -29,15 +28,18 @@ test("trang đang phát triển có canonical, breadcrumb và noindex", async ()
   }
 });
 
-test("trang Trải bài liên kết đủ bốn URL", async () => {
+test("trang Trải bài liên kết đủ bốn URL và phân biệt bản duyệt", async () => {
   const html = await readFile(path.join(root, "dist/trai-bai/index.html"), "utf8");
   for (const route of intentRoutes) assert.match(html, new RegExp(`href="${route.replaceAll("/", "\\/")}"`));
-  assert.equal((html.match(/Đang phát triển thêm/g) || []).length, 4);
+  assert.match(html, /href="\/la-bai-hom-nay\/"/);
+  assert.equal((html.match(/Đang phát triển thêm/g) || []).length, 3);
+  assert.equal((html.match(/Bản duyệt đang chạy/g) || []).length, 1);
 });
 
 test("route chờ chưa vào sitemap và trang hoàn chỉnh vẫn được index", async () => {
   const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
   for (const route of intentRoutes) assert.ok(!sitemap.includes(route));
+  assert.ok(!sitemap.includes("/la-bai-hom-nay/"));
   const home = await readFile(path.join(root, "dist/index.html"), "utf8");
   assert.doesNotMatch(home, /<meta name="robots" content="noindex,follow">/);
 });

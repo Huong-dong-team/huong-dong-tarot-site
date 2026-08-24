@@ -73,7 +73,7 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 async function loadCriticalCss() {
   const files = ["fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
@@ -219,12 +219,13 @@ const layoutSettings = {
     : "",
 };
 
-function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "" }) {
+function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
   return renderString(templates._layout, {
     ...layoutSettings,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
+    pageScripts,
     heroPreloads: bodyClass === "home-page"
       ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
       : "",
@@ -262,6 +263,11 @@ async function emit(route, html) {
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 await cp(path.join(root, "public"), dist, { recursive: true });
+await mkdir(path.join(dist, "assets", "vendor"), { recursive: true });
+await cp(
+  path.join(root, "node_modules", "astronomy-engine", "astronomy.browser.min.js"),
+  path.join(dist, "assets", "vendor", "astronomy.browser.min.js"),
+);
 
 const featuredSlugs = ["the-fool", "the-empress", "the-chariot", "the-tower", "the-star", "the-world"];
 const featuredCards = featuredSlugs.map((slug) => cards.find((card) => card.slug === slug)).filter(Boolean);
@@ -370,8 +376,8 @@ for (const page of newPages) {
   }));
 }
 
-// 1.1 — Chốt URL trước khi viết chức năng. Các trang có canonical và
-// breadcrumb ngay từ đầu, nhưng để noindex cho tới khi hạng mục 1.2–1.5 có nội
+// 1.1 — Chốt URL trước khi viết chức năng. Ba trang chưa làm có canonical và
+// breadcrumb ngay từ đầu, nhưng để noindex cho tới khi hạng mục 1.2–1.4 có nội
 // dung thật; 1.7 sẽ đưa chúng vào sitemap sau nghiệm thu.
 const intentPages = [
   {
@@ -398,14 +404,6 @@ const intentPages = [
     nextStep: "Hạng mục 1.4 sẽ dùng lại khung Ba Lá và bổ sung câu hỏi, nội dung hướng dẫn riêng cho mối quan hệ.",
     breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Tình Yêu", path: "/trai-bai/tinh-yeu/" }],
   },
-  {
-    route: "/la-bai-hom-nay/",
-    title: "Lá Bài Hôm Nay",
-    heading: "Lá Bài Hôm Nay",
-    intro: "Mỗi ngày một lá bài và một câu chuyện Việt để học, nhớ và dành vài phút tự phản tư.",
-    nextStep: "Hạng mục 1.5 sẽ bảo đảm cùng một ngày luôn trả về cùng một lá và có đường dẫn tới trang lá đầy đủ.",
-    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }],
-  },
 ];
 for (const page of intentPages) {
   const content = renderString(templates.development, page);
@@ -418,6 +416,40 @@ for (const page of intentPages) {
     content,
   }));
 }
+
+// 1.5 — Bản duyệt có chức năng thật nhưng vẫn noindex và chưa vào sitemap.
+// Chỉ đưa các trường tối thiểu vào trình duyệt; không để dữ liệu quản trị hoặc
+// chuỗi HTML không cần thiết lọt vào gói JSON của trang.
+const dailyCards = cards.map((card) => ({
+  slug: card.slug,
+  nameEn: card.nameEn,
+  nameVi: card.nameVi,
+  nameFolk: card.nameFolk,
+  arcana: card.arcana,
+  suit: card.suit,
+  image: {
+    url: card.image?.url || "/assets/img/default-og.webp",
+    alt: card.image?.alt || `Minh họa lá ${card.nameFolk || card.nameVi || card.nameEn}`,
+    width: Number(card.image?.width) || 768,
+    height: Number(card.image?.height) || 1152,
+  },
+  keywordsUpright: card.keywordsUpright || [],
+  keywordsReversed: card.keywordsReversed || [],
+  meaningUpright: card.meaningUpright || "",
+  meaningReversed: card.meaningReversed || "",
+}));
+const dailyCardsJson = JSON.stringify(dailyCards).replaceAll("<", "\\u003c");
+const dailyContent = renderString(templates["daily-card"], { dailyCardsJson });
+await emit("/la-bai-hom-nay/", layout({
+  title: "Lá Bài Hôm Nay",
+  description: "Bốc một lá Tarot cố định trong ngày, kết hợp thời điểm bốc bài để nhận một lời đọc ngắn dành cho tự phản tư.",
+  path: "/la-bai-hom-nay/",
+  robots: "noindex,follow",
+  schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }])],
+  content: dailyContent,
+  bodyClass: "daily-card-page",
+  pageScripts: '<script src="/assets/vendor/astronomy.browser.min.js"></script><script type="module" src="/assets/js/daily-card/page.js"></script>',
+}));
 
 // 34 trang toàn văn Lĩnh Nam chích quái.
 for (let i = 0; i < lncqChapters.length; i += 1) {
