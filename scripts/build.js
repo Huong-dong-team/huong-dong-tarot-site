@@ -94,6 +94,81 @@ const ART_NOTE = {
   KEEP_IMAGE_LOCK_NAME: "",
 };
 
+const ADAPTATION_LEVEL_LABEL = Object.freeze({
+  LNCQ_CORE: "Lĩnh Nam chích quái — phần chính",
+  LNCQ_CORE_ADAPTATION: "Dựa trên Lĩnh Nam chích quái, có biên tập khoảnh khắc",
+  LNCQ_TUC_BIEN_ADAPTATION: "Dựa trên phần Tục Biên, có chuyển thể",
+  VIET_FOLK_EXPANDED_ADAPTATION: "Tín ngưỡng Việt mở rộng ngoài Lĩnh Nam chích quái",
+  EDITORIAL_FANTASY_INSPIRED: "Cảnh mới sáng tác, chỉ mượn motif",
+});
+
+const cleanText = (value) => String(value ?? "").trim();
+
+function detailCard(title, value, className = "v2-card") {
+  const text = cleanText(value);
+  return text ? `<article class="${className}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></article>` : "";
+}
+
+// Dựng sẵn bốn khối cho Ẩn Phụ để template không phải lồng điều kiện. Mỗi
+// trường được lọc trước khi sinh thẻ, nhờ vậy dữ liệu thiếu không tạo đoạn rỗng
+// và dữ liệu Firestore luôn đi qua escapeHtml trước khi vào HTML.
+function minorDetailsHtml(card) {
+  if (card.arcana !== "minor") return "";
+
+  const subject = cleanText(card.subject);
+  const sceneTitle = cleanText(card.sceneTitle);
+  const scene = cleanText(card.scene);
+  const shortStory = cleanText(card.shortStory);
+  const contextParts = [
+    subject ? `<p><strong>Chủ thể:</strong> ${escapeHtml(subject)}</p>` : "",
+    scene ? `<p>${escapeHtml(scene)}</p>` : "",
+    shortStory ? `<p>${escapeHtml(shortStory)}</p>` : "",
+  ].filter(Boolean).join("");
+  const context = contextParts
+    ? `<section class="v2-prose minor-detail" data-minor-details="context"><p class="eyebrow">Chủ thể và cảnh</p><h2>${escapeHtml(sceneTitle || "Chủ thể và cảnh")}</h2>${contextParts}</section>`
+    : "";
+
+  const fields = [
+    detailCard("Tình yêu", card.love),
+    detailCard("Công việc", card.career),
+    detailCard("Tài chính", card.finance),
+    detailCard("Sức khỏe", card.health),
+  ].filter(Boolean).join("");
+  const applications = fields
+    ? `<section class="v2-prose minor-detail" data-minor-details="applications"><p class="eyebrow">Theo lĩnh vực</p><h2>Khi soi theo từng lĩnh vực</h2><div class="v2-grid">${fields}</div></section>`
+    : "";
+
+  const guidanceCards = [
+    detailCard("Lời khuyên", card.advice, "v2-card v2-note"),
+    detailCard("Cảnh báo", card.warning, "v2-card v2-warn"),
+  ].filter(Boolean).join("");
+  const guidance = guidanceCards
+    ? `<section class="v2-prose minor-detail" data-minor-details="guidance"><p class="eyebrow">Gợi ý thực hành</p><h2>Lời khuyên và cảnh báo</h2><div class="v2-two">${guidanceCards}</div></section>`
+    : "";
+
+  const sources = Array.isArray(card.sources)
+    ? card.sources.map((source) => {
+      const id = cleanText(source?.id);
+      const title = cleanText(source?.title);
+      if (!id && !title) return "";
+      const sourceName = [id ? `<strong>${escapeHtml(id)}</strong>` : "", title ? escapeHtml(title) : ""].filter(Boolean).join(" · ");
+      const corpus = source?.isLNCQ ? " <span>— Lĩnh Nam chích quái</span>" : "";
+      return `<li>${sourceName}${corpus}</li>`;
+    }).filter(Boolean).join("")
+    : "";
+  const levelCode = cleanText(card.adaptationLevel);
+  const level = ADAPTATION_LEVEL_LABEL[levelCode] || levelCode;
+  const sourceParts = [
+    level ? `<p><strong>Mức chuyển thể:</strong> ${escapeHtml(level)}</p>` : "",
+    sources ? `<ul class="v2-list">${sources}</ul>` : "",
+  ].filter(Boolean).join("");
+  const citations = sourceParts
+    ? `<section class="v2-prose minor-detail" data-minor-details="sources"><p class="eyebrow">Nguồn tư liệu</p><h2>Dẫn nguồn và mức chuyển thể</h2>${sourceParts}</section>`
+    : "";
+
+  return `${context}${applications}${guidance}${citations}`;
+}
+
 const cards = data.cards.map((card) => ({
   ...card,
   nameFolk: card.nameFolk || card.nameVi,
@@ -102,6 +177,7 @@ const cards = data.cards.map((card) => ({
   displayNumber: card.arcana === "major" ? roman(card.number) : card.nameVi.split(" ")[0],
   folkStyleLabel: folkStyleLabel[card.folkStyle] || "Mỹ thuật Việt",
   artNote: ART_NOTE[card.imageStatus] ?? "",
+  minorDetailsHtml: minorDetailsHtml(card),
   searchText: [card.nameVi, card.nameEn, card.nameFolk, ...(card.keywordsUpright || [])].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
