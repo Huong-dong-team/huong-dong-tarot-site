@@ -74,6 +74,13 @@ function lncqChapterHtml(c, prev, next) {
 }
 
 const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+async function loadCriticalCss() {
+  const files = ["fonts.css", "critical.css"];
+  const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
+  if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
+  return css;
+}
+const criticalCss = await loadCriticalCss();
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
 const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"][number] || String(number);
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
@@ -204,6 +211,7 @@ const socialLinks = [
 ].filter(([, url]) => url);
 const layoutSettings = {
   analytics: analyticsSnippet(data.site),
+  criticalCss,
   tagline: data.site.tagline || "",
   contactEmail: data.site.contactEmail || "",
   socialHtml: socialLinks.length
@@ -217,6 +225,9 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas }),
     content,
     bodyClass,
+    heroPreloads: bodyClass === "home-page"
+      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-800.avif" media="(max-width: 900px)"><link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
+      : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
   });
