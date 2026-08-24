@@ -210,6 +210,7 @@ h3 { font-size: 30px; line-height: 1.08; }
   font-size: 13px;
 }
 .hero-actions a { border-bottom: 1px solid var(--line); }
+.hero-actions .hero-daily-button { border: 1px solid var(--magenta-ink); color: var(--magenta-ink); }
 .proof { display: flex; gap: 32px; margin: 38px 0 0; padding: 24px 0 0; border-top: 1px solid var(--line); }
 .proof div { display: grid; }
 .proof dt { color: var(--muted); font: 600 36px/1 var(--display); }

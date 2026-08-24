@@ -46,6 +46,14 @@ test("năm ảnh carousel đều tải lười và không tranh tài nguyên v�
   assert.match(pack, /loading="lazy"/);
 });
 
+test("hero carousel có nút đi tới Lá bài hôm nay", async () => {
+  const html = await home();
+  assert.match(
+    html,
+    /class="button hero-daily-button" href="\/la-bai-hom-nay\/">Lá bài hôm nay/,
+  );
+});
+
 test("mỗi vị có bảng kể chuyện kèm nguồn và lối sang trang lá", async () => {
   const html = await home();
   assert.equal((html.match(/data-story-for=/g) || []).length, 4);
