@@ -15,6 +15,7 @@
     "deploy": "npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
+    "astronomy-engine": "2.1.19",
     "firebase-admin": "^14.2.0"
   },
   "overrides": {
