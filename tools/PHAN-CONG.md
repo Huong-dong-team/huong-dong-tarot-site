@@ -1,6 +1,6 @@
 # Bảng phân công — từ nay đến khi dự án hoàn thành
 
-Cập nhật 22/08/2026. Ba vai:
+Cập nhật 24/08/2026. Ba vai:
 
 | Vai | Làm gì | Vì sao |
 |---|---|---|
@@ -22,20 +22,60 @@ Quy trình cố định: **Claude viết spec → ChatGPT viết code → Claude
 | 0.3 | Seed Firestore + phát hành | Claude + Người | ✅ 21/08, 22/22 tên đúng trên site |
 | 0.4 | Patch hiệu năng | Claude | ✅ LCP 11,9s → 3,2s |
 | 0.5 | Tối ưu ảnh | Claude | ✅ 19,6 MB → 2,5 MB |
+| 0.8 | Đưa 56 Ẩn Phụ lên trang lá | ChatGPT | ✅ PR #3, bù trường trống ở PR #12 |
+| 0.9 | Tách critical CSS | Claude | ✅ PR #5 |
+| 0.10 | Hạ TBT | Claude | ✅ PR #6 — canvas hạt bụi gỡ hẳn |
+| 0.12 / 0.13 | Palette Bình Minh · gộp CSS | Claude | ✅ PR #2, PR #4 |
 | — | Gộp repo cũ, CI/CD, chốt an toàn 11 tệp | Claude | ✅ |
+| — | Tách lớp tên ra `data/names/vi.toml` | Claude | ✅ PR #14 |
 
 ### Đợt 0 còn lại
 
 | Mã | Việc | Ai | Phụ thuộc | Nghiệm thu |
 |---|---|---|---|---|
-| 0.6 | Đọc 54 chỗ trong `rename-report.json` | **Người** | — | Mỗi chỗ: đổi, giữ, hay ghi lý do bỏ qua |
-| 0.7 | Duyệt 23 lá trong `folk-conflicts.md` | **Người** | — | Chọn v2.1, giữ neo cũ, hay bỏ trống |
-| 0.8 | Đưa 56 Ẩn Phụ lên trang lá | **ChatGPT** | spec đã sẵn | 56 trang đủ 4 khối · 22 Ẩn Chính diff rỗng |
-| 0.9 | Tách critical CSS nhúng vào HTML | Claude | — | LCP < 2,5s trên production |
-| 0.10 | Hạ TBT 690ms | Claude | — | TBT < 200ms |
+| 0.6 | Duyệt tên 22 Ẩn Chính | **Người** | — | **Không còn 54 chỗ** — xem ghi chú dưới |
+| 0.7 | Duyệt 23 lá trong `folk-conflicts.md` | **Người** | — | Chọn v2.1, giữ neo cũ, hay bỏ trống · điền vào `data/names/vi.toml` |
 | 0.11 | Nguồn của lá XXI: v2.1 sót S09? | **Người** | — | Chốt rồi Claude cập nhật dữ liệu |
 
-**Cổng ra Đợt 0:** LCP < 2,5s · TBT < 200ms · perf ≥ 80 · SEO 100 · a11y 97 · CLS 0 · `verify-live-names` 22/22.
+### 0.6 — con số 54 là sai, và vì sao
+
+`rename-report.json` trong repo trước 24/08 là kết quả chạy codemod trên **repo giả**
+`_test/regress` (4 tệp), không phải bản quét mã thật: test hồi quy ghi đè tệp đó bằng
+đường mặc định. Cả roadmap lẫn bảng này đã hiểu nhầm nó là "54 chỗ cần người đọc".
+
+Bản quét thật trên bề mặt site, ngày 24/08:
+
+| | |
+|---|---|
+| file quét | 82 |
+| chỗ có mỏ neo | 2 — cả hai bị lớp che tiền tố / tên chương vô hiệu hoá |
+| chỗ đọc tay | 10 — 8 chỗ Tứ Bất Tử, 2 chỗ là văn kể trong `deck-data.js` |
+| file cần sửa | **0** — chạy `--write` trên bản sao cho `git diff` trống |
+
+`verify-live-names.mjs` trả **22/22**. Nghĩa là tên trên site đã đúng hết; 0.6 không
+còn việc đổi tên, chỉ còn phần đặt tên và giọng văn nếu bạn muốn xem lại — làm trong
+`data/names/vi.toml`.
+
+**Cổng ra Đợt 0 — đo trên production ngày 24/08:**
+
+Ba lần chạy Lighthouse mobile trên `https://huongdong.id.vn/`:
+
+| Tiêu chí | Cổng | Lần 1 | Lần 2 | Lần 3 |
+|---|---|---|---|---|
+| LCP | < 2,5s | **2,0s** ✅ | **2,4s** ✅ | **1,9s** ✅ |
+| TBT | < 200ms | **80ms** ✅ | 230ms ✖ | **10ms** ✅ |
+| performance | ≥ 80 | **98** ✅ | **89** ✅ | **99** ✅ |
+| SEO | 100 | **100** ✅ | **100** ✅ | — |
+| accessibility | ≥ 97 | **100** ✅ | **100** ✅ | — |
+| CLS | 0 | **0** ✅ | **0** ✅ | **0** ✅ |
+| `verify-live-names` | 22/22 | **22/22** ✅ | — | — |
+
+**Cổng ra Đợt 0 ĐẠT.** Lần 2 chạy khi máy đang bận nên TBT vọt lên 230ms; lần 3 chạy
+lúc máy rảnh cho 10ms. Đúng cảnh báo đã ghi sẵn trong roadmap là đừng tin một lần đo
+đơn lẻ. LCP đạt ở cả ba lần, không phụ thuộc tải máy. a11y lên 100, cao hơn cổng 97.
+
+Đây là lần đo đầu tiên sau khi 0.9 và 0.10 vào `main` — trước đó con số mới nhất trong
+tài liệu là 3,2s của 0.4.
 
 ---
 
@@ -92,15 +132,24 @@ Trusted Tarot có ~75% truy cập trực tiếp nhờ đúng cơ chế này.
 
 ## Việc chỉ Người làm được — gom một chỗ
 
+Điền quyết định vào `data/names/vi.toml` — mọi mục dưới đây đều có sẵn một khối
+`[review.*]` trong đó, chỗ chưa chốt ghi `đang phát triển`.
+
 | | Việc | Chặn cái gì |
 |---|---|---|
-| 1 | 54 chỗ `rename-report.json` (0.6) | không chặn gì, nhưng còn nợ |
+| 1 | ~~54 chỗ `rename-report.json`~~ (0.6) | **hết nợ** — quét thật cho 0 chỗ cần sửa |
 | 2 | 23 lá `folk-conflicts.md` (0.7) | 0.8 hiển thị neo dân gian |
 | 3 | Nguồn lá XXI (0.11) | tính chính xác của khối dẫn nguồn |
-| 4 | Cấu trúc URL Đợt 1 (1.1) | toàn bộ Đợt 1 |
-| 5 | Duyệt 8–12 bài SEO (1.6) | phát hành nội dung |
-| 6 | Duyệt văn hoá 78 lá (3.3) | gỡ nhãn "đang biên tập" |
-| 7 | Bấm phát hành mỗi đợt | mọi thứ |
+| 4 | Quy tắc tên 56 Ẩn Phụ | 52/56 lá có `nameVi` không theo quy tắc nào |
+| 5 | Cấu trúc URL Đợt 1 (1.1) | toàn bộ Đợt 1 |
+| 6 | Duyệt 8–12 bài SEO (1.6) | phát hành nội dung |
+| 7 | Duyệt văn hoá 78 lá (3.3) | gỡ nhãn "đang biên tập" |
+| 8 | Bấm phát hành mỗi đợt | mọi thứ |
+
+**Bằng chứng mới cho mục 3.** `verify-live-names.mjs` ngày 24/08 cho 21/22 nguồn trích
+khớp. Lá lệch là XXI: trang trích *Chương 10 · Truyện Bạch Trĩ*, còn dữ liệu có S02
+Truyện họ Hồng Bàng · S07 Truyện Bánh chưng · S08 Truyện Dưa hấu · S14 Truyện Núi Tản
+Viên. Đây đúng là câu hỏi 0.11 — nay có số liệu để chốt.
 
 ---
 

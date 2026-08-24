@@ -1,6 +1,6 @@
 # Roadmap Hường Đông — và cách chia việc với ChatGPT
 
-Cập nhật 20/08/2026. Tài liệu này là bản hợp đồng chung: cả người, Claude và ChatGPT
+Cập nhật 24/08/2026. Tài liệu này là bản hợp đồng chung: cả người, Claude và ChatGPT
 đều đọc từ đây. Sửa roadmap thì sửa file này, đừng giữ bản riêng ở chỗ khác.
 
 ---
@@ -19,6 +19,10 @@ Cập nhật 20/08/2026. Tài liệu này là bản hợp đồng chung: cả ng
 | Codemod | 12/12 test, 5 lớp bảo vệ |
 
 ### Chưa xong — và một mắt xích dễ hiểu nhầm
+
+> **Cập nhật 24/08/2026:** mắt xích dưới đây ĐÃ nối. 0.2 sinh `seed/cards.json` từ nguồn
+> chuẩn, 0.3 đã seed và phát hành ngày 21/08, và `verify-live-names.mjs` trả 22/22 trên
+> site thật. Giữ lại phần mô tả vì chuỗi dữ liệu và cảnh báo `{ merge: true }` vẫn đúng.
 
 **Đổi tên trong `seed/cards.json` CHƯA làm site đổi theo.** Chuỗi dữ liệu thật là:
 
@@ -77,18 +81,29 @@ song song nhiều việc. Đừng tin một lần đo đơn lẻ; chạy lại k
 
 ---
 
-## 1 · Đợt 0 còn lại
+## 1 · Đợt 0 còn lại (cập nhật 24/08/2026)
 
-| # | Việc | Ai | Vì sao người đó |
-|---|---|---|---|
-| 0.3 | **Seed + deploy** — cần bạn cho phép | Người bấm | Ghi vào Firestore production và xuất bản |
-| 0.9 | Tách critical CSS nhúng vào HTML | Claude | Việc còn lại để LCP xuống dưới 2,5s |
-| 0.6 | Đọc 54 chỗ "cần người đọc" trong `rename-report.json` | Người | Quyết định biên tập, máy không thay được |
-| 0.7 | Duyệt 23 lá trong `folk-conflicts.md` | Người | Như trên |
-| 0.8 | Nối 56 Ẩn Phụ vào trang lá | **ChatGPT** | Spec viết đủ được; xem §3 |
+Bảng chi tiết nay nằm ở `tools/PHAN-CONG.md`; phần này chỉ giữ trạng thái tóm tắt.
+
+**Đã xong từ bản trước:** 0.3 seed + phát hành (21/08) · 0.8 Ẩn Phụ lên trang lá
+(PR #3, #12) · 0.9 critical CSS (PR #5) · 0.10 hạ TBT (PR #6) · 0.12, 0.13 palette và
+gộp CSS (PR #2, #4) · lớp tên `data/names/vi.toml` (PR #14).
+
+**Còn lại — cả ba đều chỉ người quyết:** 0.7 duyệt 23 lá neo dân gian · 0.11 nguồn lá
+XXI · quy tắc tên 56 Ẩn Phụ. Điền thẳng vào `data/names/vi.toml`.
+
+**0.6 không còn 54 chỗ.** Bản `rename-report.json` cũ là kết quả chạy trên repo giả
+`_test/regress`, không phải mã thật — test hồi quy ghi đè nó bằng đường mặc định. Quét
+thật ngày 24/08: 82 tệp, 2 chỗ có neo (đều bị lớp che vô hiệu hoá), 10 chỗ đọc tay đều
+là vai khác, **0 tệp cần sửa**. `verify-live-names.mjs` trả 22/22.
 
 **Cổng ra Đợt 0:** LCP < 2,5s · TBT < 200ms · performance ≥ 80 · SEO vẫn 100 · a11y vẫn 97 ·
 CLS vẫn 0 · `verify-live-names.mjs` trả 22/22.
+
+**Đo trên production 24/08 — cổng ĐẠT.** Ba lần chạy Lighthouse mobile: LCP 2,0s / 2,4s /
+1,9s · TBT 80ms / 230ms / 10ms · perf 98 / 89 / 99 · SEO 100 · a11y 100 · CLS 0. Lần 2
+chạy lúc máy bận nên TBT vọt lên; lần 3 lúc máy rảnh cho 10ms. Bảng đầy đủ ở
+`tools/PHAN-CONG.md`.
 
 ---
 
