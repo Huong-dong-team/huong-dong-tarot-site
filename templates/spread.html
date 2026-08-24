@@ -1,0 +1,46 @@
+<main id="noi-dung-chinh">
+  <section class="page-hero drum-watermark">
+    <p class="eyebrow">Đợt 1 · Trang theo nhu cầu</p>
+    <h1>{{heading}}</h1>
+    <p>{{intro}}</p>
+  </section>
+
+  <section class="v2-prose">
+    <h2>Rút bài</h2>
+    <p>{{howTo}}</p>
+    <div class="hd-deck-wrap" id="hd-deck" data-spread-size="{{spreadSize}}" data-positions="{{positions}}">
+      <div class="hd-controls">
+        <button type="button" data-draw>Xáo và rút</button>
+        <button type="button" data-reversed aria-pressed="true">Đọc ngược: bật</button>
+        <button type="button" data-sound aria-pressed="true">🔊 Âm thanh: bật</button>
+      </div>
+      {{#if verdict}}
+      <div class="hd-verdict" data-verdict>
+        <p class="hd-verdict-label">Kết luận</p>
+        <p><span class="v2-pending">Đang phát triển thêm</span></p>
+        <p class="hd-verdict-note">{{verdictNote}}</p>
+      </div>
+      {{/if}}
+      <div class="hd-deck" data-deck></div>
+      <p class="hd-hint" data-hint hidden>Bấm vào lá để lật</p>
+      <div class="hd-reading" data-reading></div>
+    </div>
+    <p class="v2-note">Bộ bài hiện dùng <strong>22 Ẩn chính</strong>. Mặt lưng đang là bản tạm — sẽ thay bằng art trống đồng thật ở đợt cập nhật hình ảnh.</p>
+  </section>
+
+  <section class="v2-prose">
+    <p><span class="v2-pending">Đang phát triển thêm</span></p>
+    <article class="v2-card">
+      <span class="v2-num">Bước tiếp theo</span>
+      <h3>Phần còn lại của trang này</h3>
+      <p>{{nextStep}}</p>
+    </article>
+    <p><a class="v2-link" href="/trai-bai/">Xem trang Trải bài hiện có →</a></p>
+  </section>
+
+  <section class="v2-prose">
+    <p class="v2-note">Kết quả trải bài không phải lời tiên đoán. Tarot ở Hường Đông là công cụ tự phản tư và học tập, <strong>không thay thế tư vấn y tế, pháp lý hoặc tài chính.</strong></p>
+  </section>
+</main>
+<script src="/assets/js/deck-data.js"></script>
+<script src="/assets/js/trai-bai.js" defer></script>

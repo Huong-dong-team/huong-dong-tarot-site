@@ -77,7 +77,7 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 async function loadCriticalCss() {
   const files = ["fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
@@ -380,16 +380,30 @@ for (const page of newPages) {
   }));
 }
 
-// 1.1 — Chốt URL trước khi viết chức năng. Ba trang chưa làm có canonical và
-// breadcrumb ngay từ đầu, nhưng để noindex cho tới khi hạng mục 1.2–1.4 có nội
-// dung thật; 1.7 sẽ đưa chúng vào sitemap sau nghiệm thu.
+// 1.1 — Chốt URL trước khi viết chức năng. 1.2–1.4 Lớp 2 — khung tương tác.
+//
+// Ba trang giữ nguyên `noindex,follow` và vẫn nằm ngoài sitemap: khung rút bài
+// đã chạy được, nhưng phần nội dung biên tập (Lớp 3) còn chờ ba quyết định của
+// người — quy tắc Có/Không, nhãn ba vị trí của Tình Yêu, và 0.7. Mở index khi
+// trang mới có nửa nội dung là tự bắn vào chân mình về SEO.
+//
+// Khung chỉ dùng dữ liệu ĐÃ chốt: 22 Ẩn Chính trong deck-data.js, sinh từ
+// content/major-arcana.mjs. Không đụng tới 56 Ẩn Phụ đang chờ 0.7.
 const intentPages = [
   {
     route: "/trai-bai/co-khong/",
     title: "Trải bài Có hoặc Không",
     heading: "Có hoặc Không",
     intro: "Một lá bài giúp bạn dừng lại, nhìn rõ điều đang nghiêng về phía nào và tự kiểm tra lý do của mình.",
-    nextStep: "Hạng mục 1.2 sẽ bổ sung rút một lá, diễn giải Có/Không có điều kiện và chia sẻ kết quả.",
+    howTo: "Giữ câu hỏi trong đầu — dạng câu hỏi có thể trả lời bằng có hoặc không — rồi bấm Xáo và rút. Bấm vào lá úp để lật.",
+    spreadSize: 1,
+    positions: "",
+    verdict: true,
+    // §4 của KE-HOACH-1.2-1.4: chưa có quy tắc "lá nào → Có/Không" trong dữ liệu.
+    // Khung cố ý KHÔNG tự chế ra quy tắc; khi người chốt thì chỉ thêm một cột dữ
+    // liệu và nối vào đúng chỗ này, khung không phải viết lại.
+    verdictNote: "Quy tắc phân cực Có/Không chưa được chốt, nên trang chưa đưa ra kết luận. Lá rút được và phần đọc bên dưới đã dùng dữ liệu thật.",
+    nextStep: "Hạng mục 1.2 Lớp 3 sẽ bổ sung kết luận Có/Không có điều kiện và chia sẻ kết quả, sau khi quy tắc phân cực được chốt.",
     breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Có hoặc Không", path: "/trai-bai/co-khong/" }],
   },
   {
@@ -397,7 +411,10 @@ const intentPages = [
     title: "Trải bài Ba Lá",
     heading: "Ba Lá",
     intro: "Ba vị trí cho quá khứ, hiện tại và hướng đi — một khung đọc ngắn để nhìn sự việc theo dòng thời gian.",
-    nextStep: "Hạng mục 1.3 sẽ bổ sung rút ba lá, nhãn từng vị trí và phần đọc kết quả liền mạch.",
+    howTo: "Giữ câu hỏi trong đầu rồi bấm Xáo và rút. Ba lá hiện theo thứ tự Quá khứ, Hiện tại, Hướng đi. Bấm vào từng lá úp để lật.",
+    spreadSize: 3,
+    positions: "Quá khứ|Hiện tại|Hướng đi",
+    nextStep: "Hạng mục 1.3 Lớp 3 sẽ bổ sung phần đọc liền mạch ba lá và nội dung biên tập, sau khi 0.7 được duyệt.",
     breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Ba Lá", path: "/trai-bai/ba-la/" }],
   },
   {
@@ -405,12 +422,18 @@ const intentPages = [
     title: "Trải bài Tình Yêu",
     heading: "Tình Yêu",
     intro: "Một khung soi chiếu mối quan hệ bằng câu hỏi rõ ràng, không phán thay cảm xúc hay lựa chọn của bạn.",
-    nextStep: "Hạng mục 1.4 sẽ dùng lại khung Ba Lá và bổ sung câu hỏi, nội dung hướng dẫn riêng cho mối quan hệ.",
+    howTo: "Giữ câu hỏi về mối quan hệ trong đầu rồi bấm Xáo và rút. Ba lá hiện theo thứ tự vị trí. Bấm vào từng lá úp để lật.",
+    spreadSize: 3,
+    // §5.3: nhãn ba vị trí của Tình Yêu là quyết định của người, chưa chốt. Dùng
+    // nhãn trung tính để không lá nào thiếu nhãn, và nêu bộ nhãn đang đề nghị ở
+    // khối "Bước tiếp theo" để người duyệt trong một lần nhìn.
+    positions: "Vị trí 1|Vị trí 2|Vị trí 3",
+    nextStep: "Hạng mục 1.4 Lớp 3 chờ bạn chốt tên ba vị trí. Bộ đang đề nghị: Điều bạn mang vào · Điều đối phương mang vào · Điều cả hai đang tạo ra.",
     breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Tình Yêu", path: "/trai-bai/tinh-yeu/" }],
   },
 ];
 for (const page of intentPages) {
-  const content = renderString(templates.development, page);
+  const content = renderString(templates.spread, page);
   await emit(page.route, layout({
     title: page.title,
     description: `${page.intro} Tính năng đang được Hường Đông phát triển thêm.`,

@@ -1,7 +1,13 @@
 /* Bộ bài Trải bài — hiệu ứng lật 3D chuyển thể từ Mystic-Draw.
    Giữ nguyên kỹ thuật gốc: perspective + preserve-3d + rotateY(180deg)
    + backface-visibility, xáo Fisher-Yates, âm thanh lật/xáo.
-   Thêm cho Hường Đông: lá ngược, nút tắt đọc ngược, nối dữ liệu LNCQ. */
+   Thêm cho Hường Đông: lá ngược, nút tắt đọc ngược, nối dữ liệu LNCQ.
+
+   Hai chế độ, cùng một bộ mã:
+     /trai-bai/           có <select data-spread> — người đọc tự chọn cỡ trải
+     /trai-bai/<nhu-cầu>/ cỡ trải CỐ ĐỊNH qua data-spread-size, kèm nhãn vị trí
+                          qua data-positions (ngăn nhau bằng "|")
+   Trang nào không khai hai thuộc tính đó thì chạy đúng như trước. */
 (function () {
   var root = document.getElementById("hd-deck");
   if (!root || !window.HD_DECK) return;
@@ -12,6 +18,11 @@
   var revBtn   = root.querySelector("[data-reversed]");
   var spreadEl = root.querySelector("[data-spread]");
   var readEl   = root.querySelector("[data-reading]");
+
+  var fixedSize = parseInt(root.getAttribute("data-spread-size"), 10) || 0;
+  var positions = (root.getAttribute("data-positions") || "")
+    .split("|").map(function (s) { return s.trim(); }).filter(Boolean);
+  var posOf = function (i) { return positions[i] || ""; };
 
   var soundOn = true, allowReversed = true;
   var flipAudio = new Audio("/assets/audio/card-flip.mp3");
@@ -49,19 +60,22 @@
       if (el.classList.contains("flipped")) return;
       play(flipAudio);
       el.classList.add("flipped");
-      el.setAttribute("aria-label", card.roman + " · " + card.en + (reversed ? " (ngược)" : ""));
-      renderReading(card, reversed);
+      var pos = posOf(index);
+      el.setAttribute("aria-label", (pos ? pos + ": " : "") + card.roman + " · " + card.en + (reversed ? " (ngược)" : ""));
+      renderReading(card, reversed, index);
     });
     return el;
   }
 
-  function renderReading(card, reversed) {
+  function renderReading(card, reversed, index) {
     var src = card.inLNCQ
       ? "Lĩnh Nam chích quái · Chương " + card.chapter + " · " + card.chapterTitle
       : "Ngoài Lĩnh Nam chích quái";
+    var pos = posOf(index);
     var item = document.createElement("article");
     item.className = "hd-reading-item";
     item.innerHTML =
+      (pos ? '<p class="hd-pos">' + pos + "</p>" : "") +
       '<p class="hd-reading-head"><strong>' + card.roman + " · " + card.en + "</strong>" +
       (reversed ? ' <span class="hd-rev">ngược</span>' : "") + "</p>" +
       "<p>" + card.summary + "</p>" +
@@ -70,20 +84,42 @@
     readEl.appendChild(item);
   }
 
+  /* Nhãn vị trí phải nằm cạnh lá úp, trước khi lật — đó là thứ cho biết lá này
+     đang trả lời câu hỏi nào. Bọc thêm một lớp .hd-slot chứ không nhét vào
+     trong nút, để nhãn không bị lật theo mặt bài. */
+  function makeSlot(card, reversed, index) {
+    var btn = makeCard(card, reversed, index);
+    var pos = posOf(index);
+    if (!pos) return btn;
+    var slot = document.createElement("div");
+    slot.className = "hd-slot";
+    var label = document.createElement("p");
+    label.className = "hd-pos";
+    label.textContent = pos;
+    slot.appendChild(label);
+    slot.appendChild(btn);
+    btn.setAttribute("aria-label", pos + ". Lá úp thứ " + (index + 1) + ". Bấm để lật.");
+    return slot;
+  }
+
+  function spreadSize() {
+    if (fixedSize) return fixedSize;
+    return (spreadEl && parseInt(spreadEl.value, 10)) || 3;
+  }
+
   function deal() {
     play(shuffleAudio);
     deckEl.innerHTML = "";
     readEl.innerHTML = "";
-    var n = parseInt(spreadEl.value, 10) || 3;
-    shuffle(window.HD_DECK).slice(0, n).forEach(function (card, i) {
+    shuffle(window.HD_DECK).slice(0, spreadSize()).forEach(function (card, i) {
       var reversed = allowReversed && Math.random() < 0.5;
-      deckEl.appendChild(makeCard(card, reversed, i));
+      deckEl.appendChild(makeSlot(card, reversed, i));
     });
     root.querySelector("[data-hint]").hidden = false;
   }
 
   drawBtn.addEventListener("click", deal);
-  spreadEl.addEventListener("change", deal);
+  if (spreadEl) spreadEl.addEventListener("change", deal);
   soundBtn.addEventListener("click", function () {
     soundOn = !soundOn;
     soundBtn.textContent = soundOn ? "🔊 Âm thanh: bật" : "🔇 Âm thanh: tắt";
