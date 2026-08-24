@@ -5,7 +5,7 @@
 // mọi quyết định sửa vẫn là của người đọc diff.
 //
 // Vì sao cần script riêng thay vì đọc bằng mắt: bản sửa này chạm 137 giá trị màu
-// rải trong hai tệp CSS 36KB + 22KB. Sót một giá trị jade thì trang ra nửa kem nửa
+// rải trong stylesheet đã gộp. Sót một giá trị jade thì trang ra nửa kem nửa
 // xanh, mà mắt người rất khó bắt một dòng lọt giữa 1.500 dòng CSS đã nén.
 //
 //   node tools/scripts/check-palette.mjs
@@ -24,7 +24,7 @@ const root = path.resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
 const MAIN = "public/assets/css/main.css";
-const DARK = "public/assets/css/theme-dark.css";
+const CSS_FILES = [MAIN];
 const LAYOUT = "templates/_layout.html";
 
 let failed = 0;
@@ -36,7 +36,7 @@ function check(ok, name, detail = "") {
 
 // ── 1 · Màu cũ phải biến mất hoàn toàn ────────────────────────────────────────
 // Danh sách này là toàn bộ token màu của hệ jade/brass/cinnabar, lấy từ khối
-// :root của cả hai tệp trước khi sửa. Còn một cái nghĩa là còn một vùng chưa đổi.
+// :root của hai tệp trước 0.13. Còn một cái nghĩa là còn một vùng chưa đổi.
 const MAU_CU = [
   "082824", "0b332e", "12463e", "1b5b50", "f5eedf", "fff9ed",
   "916843", "b78a4a", "d7ba98", "9f3f35", "18201d", "68716c",
@@ -44,7 +44,7 @@ const MAU_CU = [
   "0d3b34", "0a332e", "092f2a", "dfe9e3",
 ];
 
-for (const file of [MAIN, DARK]) {
+for (const file of CSS_FILES) {
   const text = await read(file);
   const con = MAU_CU.filter((hex) => new RegExp(`#${hex}\\b`, "i").test(text));
   check(con.length === 0, `${file}: không còn màu của hệ cũ`,
@@ -60,7 +60,7 @@ const RGB_CU = [
   [/rgba?\(\s*199\s*,\s*150\s*,\s*78/g, "rgba(199,150,78…) — đường kẻ brass"],
   [/rgba?\(\s*4\s*,\s*31\s*,\s*27/g, "rgba(4,31,27…) — bóng đổ jade"],
 ];
-for (const file of [MAIN, DARK]) {
+for (const file of CSS_FILES) {
   const text = await read(file);
   const con = RGB_CU.filter(([re]) => re.test(text)).map(([, ten]) => ten);
   check(con.length === 0, `${file}: không còn họ rgb() của hệ cũ`,
@@ -110,7 +110,7 @@ function boHamCss(text, tenHam) {
   return output;
 }
 
-for (const file of [MAIN, DARK]) {
+for (const file of CSS_FILES) {
   const text = await read(file);
   const rootBlock = text.match(/:root\s*\{[^}]*\}/g)?.join("\n") ?? "";
 
@@ -126,7 +126,7 @@ for (const file of [MAIN, DARK]) {
 
   check(sot.length === 0, `${file}: mọi màu nằm trong :root`,
     sot.length ? `còn ${sot.length} literal: ${[...new Set(sot)].slice(0, 8).join(" ")}${sot.length > 8 ? " …" : ""}` : "");
-  check(rootBlock.length > 0 || file === DARK, `${file}: có khối :root`);
+  check(rootBlock.length > 0, `${file}: có khối :root`);
 }
 
 // ── 3 · Luật hai tầng token — chỗ dễ tuột a11y nhất ───────────────────────────
@@ -138,7 +138,7 @@ const CAM_LAM_CHU = [
   "paper", "paper-raised", "paper-band", "paper-sun",
   "tre", "sen", "lua",
 ];
-for (const file of [MAIN, DARK]) {
+for (const file of CSS_FILES) {
   const text = await read(file);
   const pham = [...text.matchAll(/(?<!-)\bcolor\s*:\s*var\(\s*--([a-z0-9-]+)\s*\)/gi)]
     .map((m) => m[1])
