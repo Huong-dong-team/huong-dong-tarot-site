@@ -35,9 +35,9 @@ nên trang khách giữ bản cũ đang chạy tốt.
 
 ### Chốt an toàn trước khi build
 
-Workflow kiểm 11 tệp bắt buộc và dừng ngay nếu thiếu:
+Workflow kiểm 12 tệp bắt buộc và dừng ngay nếu thiếu:
 
-`templates/` — `huyen-su`, `healing`, `tarot-la-gi`, `trai-bai`, `cua-hang`,
+`templates/` — `huyen-su`, `healing`, `tarot-la-gi`, `trai-bai`, `daily-card`, `cua-hang`,
 `card-detail`, `card-list`, `home`, `_layout` · `data/` — `lncq-22.json`,
 `lncq-chapters.json`
 
