@@ -787,9 +787,32 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 .hd-rev {
   font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
   background: color-mix(in srgb, var(--coral) 30%, transparent);
-+  color: var(--ink); padding: 2px 9px; border-radius: 999px; margin-left: 6px;
+  color: var(--ink); padding: 2px 9px; border-radius: 999px; margin-left: 6px;
 }
 .hd-reading-src { font-size: 0.85rem; color: var(--muted); margin: 8px 0 0; }
+
+/* ---------- Trải bài theo nhu cầu (1.2 · 1.3 · 1.4) ---------- */
+/* Nhãn vị trí nằm ngoài nút lật nên không quay theo mặt bài. */
+.hd-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.hd-pos {
+  margin: 0; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+}
+.hd-reading-item .hd-pos { margin-bottom: 6px; }
+.hd-verdict {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.hd-verdict-label {
+  margin: 0 0 8px; font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+}
+.hd-verdict p:last-child { margin-bottom: 0; }
+.hd-verdict-note { font-size: 0.85rem; color: var(--muted); margin: 8px 0 0; }
 
 @media (max-width: 520px) { .hd-card { width: 104px; } .hd-deck { gap: 12px; } }
 
