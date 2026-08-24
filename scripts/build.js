@@ -73,7 +73,7 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 async function loadCriticalCss() {
   const files = ["fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
@@ -219,14 +219,14 @@ const layoutSettings = {
     : "",
 };
 
-function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "" }) {
+function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "" }) {
   return renderString(templates._layout, {
     ...layoutSettings,
-    head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas }),
+    head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
     heroPreloads: bodyClass === "home-page"
-      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-800.avif" media="(max-width: 900px)"><link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
+      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
       : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
@@ -290,8 +290,10 @@ const immortals = immortalSpecs.map((spec, index) => {
     // Dựng sẵn ở đây thay vì lồng {{#if}} trong template: renderString dùng
     // regex non-greedy nên điều kiện lồng nhau sẽ đóng sai thẻ.
     activeClass: index === 0 ? " is-active" : "",
-    // Lá đầu là ảnh lớn nhất màn hình đầu nên phải tải sớm, ba lá sau thì không.
-    imgAttrs: index === 0 ? 'fetchpriority="high"' : 'loading="lazy"',
+    // Cả bốn chân dung bắt đầu ở trạng thái ẩn nên để lazy; slide hộp bài trong
+    // template cũng tải lười vì nằm gần cuối khung mobile. Nhờ vậy carousel
+    // không tranh băng thông và decode với tiêu đề LCP.
+    imgAttrs: 'loading="lazy" decoding="async"',
   };
 });
 
@@ -365,6 +367,55 @@ for (const page of newPages) {
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
     content: templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
+  }));
+}
+
+// 1.1 — Chốt URL trước khi viết chức năng. Các trang có canonical và
+// breadcrumb ngay từ đầu, nhưng để noindex cho tới khi hạng mục 1.2–1.5 có nội
+// dung thật; 1.7 sẽ đưa chúng vào sitemap sau nghiệm thu.
+const intentPages = [
+  {
+    route: "/trai-bai/co-khong/",
+    title: "Trải bài Có hoặc Không",
+    heading: "Có hoặc Không",
+    intro: "Một lá bài giúp bạn dừng lại, nhìn rõ điều đang nghiêng về phía nào và tự kiểm tra lý do của mình.",
+    nextStep: "Hạng mục 1.2 sẽ bổ sung rút một lá, diễn giải Có/Không có điều kiện và chia sẻ kết quả.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Có hoặc Không", path: "/trai-bai/co-khong/" }],
+  },
+  {
+    route: "/trai-bai/ba-la/",
+    title: "Trải bài Ba Lá",
+    heading: "Ba Lá",
+    intro: "Ba vị trí cho quá khứ, hiện tại và hướng đi — một khung đọc ngắn để nhìn sự việc theo dòng thời gian.",
+    nextStep: "Hạng mục 1.3 sẽ bổ sung rút ba lá, nhãn từng vị trí và phần đọc kết quả liền mạch.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Ba Lá", path: "/trai-bai/ba-la/" }],
+  },
+  {
+    route: "/trai-bai/tinh-yeu/",
+    title: "Trải bài Tình Yêu",
+    heading: "Tình Yêu",
+    intro: "Một khung soi chiếu mối quan hệ bằng câu hỏi rõ ràng, không phán thay cảm xúc hay lựa chọn của bạn.",
+    nextStep: "Hạng mục 1.4 sẽ dùng lại khung Ba Lá và bổ sung câu hỏi, nội dung hướng dẫn riêng cho mối quan hệ.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Tình Yêu", path: "/trai-bai/tinh-yeu/" }],
+  },
+  {
+    route: "/la-bai-hom-nay/",
+    title: "Lá Bài Hôm Nay",
+    heading: "Lá Bài Hôm Nay",
+    intro: "Mỗi ngày một lá bài và một câu chuyện Việt để học, nhớ và dành vài phút tự phản tư.",
+    nextStep: "Hạng mục 1.5 sẽ bảo đảm cùng một ngày luôn trả về cùng một lá và có đường dẫn tới trang lá đầy đủ.",
+    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }],
+  },
+];
+for (const page of intentPages) {
+  const content = renderString(templates.development, page);
+  await emit(page.route, layout({
+    title: page.title,
+    description: `${page.intro} Tính năng đang được Hường Đông phát triển thêm.`,
+    path: page.route,
+    robots: "noindex,follow",
+    schemas: [breadcrumbSchema(data.site, page.breadcrumbs)],
+    content,
   }));
 }
 
