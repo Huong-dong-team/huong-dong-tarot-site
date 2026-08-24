@@ -12,7 +12,11 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
   const critical = html.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
   assert.ok(critical.length > 8_000, "critical CSS bị thiếu hoặc quá ngắn");
   assert.ok(critical.length < 20_000, "critical CSS vượt ngân sách 20 KB");
-  for (const marker of ["@font-face", ".site-header", ".hero-bg", ".hero-carousel", ".page-hero", ".card-detail"]) {
+  // .v2-prose và .nav-sub nằm trong danh sách vì cả hai quyết định BỐ CỤC của
+  // màn hình đầu. Thiếu .v2-prose, mọi khối nội dung nở ra 113px khi main.css
+  // về và đẩy trang xuống — CLS 0,066 đo được trên /trai-bai/. Thiếu .nav-sub,
+  // menu con hiện nguyên danh sách giữa thanh điều hướng rồi mới biến mất.
+  for (const marker of ["@font-face", ".site-header", ".hero-bg", ".hero-carousel", ".page-hero", ".card-detail", ".v2-prose", ".nav-sub"]) {
     assert.ok(critical.includes(marker), `critical CSS thiếu ${marker}`);
   }
   assert.match(html, /<link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}" media="print" onload="this\.media='all'">/);

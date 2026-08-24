@@ -78,11 +78,21 @@ function lncqChapterHtml(c, prev, next) {
 }
 
 const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+// Critical CSS được nhúng thẳng vào MỌI trang, nên mỗi byte ở đây nhân với số
+// trang và nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn thì
+// đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
+// trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn
+// hơn khoảng 2 KB. Không có chuỗi nào trong hai tệp chứa "/*" nên phép thay
+// này an toàn; test critical-css.test.mjs canh cả ngân sách lẫn các mốc bắt buộc.
 async function loadCriticalCss() {
   const files = ["fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
   if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
-  return css;
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\n{2,}/g, "\n")
+    .replace(/^[ \t]+$/gm, "")
+    .trim();
 }
 const criticalCss = await loadCriticalCss();
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
