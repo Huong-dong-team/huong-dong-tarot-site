@@ -1,0 +1,49 @@
+<main id="noi-dung-chinh">
+  <section class="page-hero drum-watermark">
+    <p class="eyebrow">Đợt 1 · Hạng mục 1.5</p>
+    <h1>Lá Bài Hôm Nay</h1>
+    <p>Một lá bài cho riêng ngày này, ghép với nhịp Mặt Trời, Mặt Trăng và thời điểm bạn bốc.</p>
+  </section>
+
+  <section class="daily-card-shell" data-daily-card aria-labelledby="daily-card-title">
+    <div class="daily-draw-panel drum-watermark">
+      <p class="eyebrow">Một lần mỗi ngày</p>
+      <h2 id="daily-card-title">Dành một nhịp để bốc</h2>
+      <p>Giữ một câu hỏi trong đầu nếu bạn muốn. Kết quả đầu tiên được lưu trên thiết bị và hiện lại nguyên vẹn trong ngày.</p>
+      <p id="daily-privacy" class="daily-privacy">Hệ thống dùng giờ Việt Nam và bình minh tại Hà Nội. Không hỏi ngày sinh, không xin vị trí và không cần đăng nhập.</p>
+      <button class="button primary daily-draw-button" type="button" data-daily-draw aria-describedby="daily-privacy">Bốc lá hôm nay</button>
+      <p class="daily-status" data-daily-status role="status" aria-live="polite">Lá vẫn đang úp.</p>
+    </div>
+
+    <article class="daily-card-result" data-daily-result aria-labelledby="daily-result-title" hidden>
+      <figure class="daily-card-art">
+        <img data-daily-image width="768" height="1152" alt="">
+        <figcaption data-daily-orientation></figcaption>
+      </figure>
+      <div class="daily-card-reading">
+        <p class="eyebrow" data-daily-date></p>
+        <h2 id="daily-result-title" data-daily-name tabindex="-1"></h2>
+        <p class="card-original" data-daily-original></p>
+        <p class="daily-reading-text" data-daily-reading></p>
+        <details class="daily-context">
+          <summary>Thông tin lần bốc</summary>
+          <ul class="v2-list" data-daily-context></ul>
+          <p class="daily-trace">Mã truy vết: <code data-daily-trace></code></p>
+        </details>
+        <div class="daily-actions">
+          <a class="button primary" data-daily-card-link href="/la-bai/">Đọc đầy đủ về lá này</a>
+          <button class="button ghost" type="button" data-daily-share>Chia sẻ kết quả</button>
+          <button class="button ghost" type="button" data-daily-copy>Sao chép lời đọc</button>
+        </div>
+      </div>
+    </article>
+
+    <details class="daily-method v2-prose">
+      <summary>Cách Hường Đông tạo lời đọc</summary>
+      <p>Lá và chiều lá được khóa theo thiết bị cùng ngày Việt Nam. Bối cảnh thiên văn dùng hệ quy chiếu Golden Dawn như một truyền thống biên tập, không phải sự thật khoa học hay cách đọc duy nhất.</p>
+      <p>Chỉ những tín hiệu nổi bật nhất đi vào lời đọc. Kết quả dùng để tự phản tư, không dự đoán chắc chắn và không thay thế tư vấn y tế, pháp lý hoặc tài chính.</p>
+    </details>
+
+    <script type="application/json" id="daily-card-data">{{{dailyCardsJson}}}</script>
+  </section>
+</main>

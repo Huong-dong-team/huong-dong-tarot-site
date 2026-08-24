@@ -645,6 +645,18 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   border: 1px solid var(--line);
 }
 
+.v2-ready {
+  display: inline-block;
+  padding: 3px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rose) 14%, transparent);
+  color: var(--magenta-ink);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .v2-prose code {
   background: var(--paper-raised);
   border: 1px solid var(--line);
@@ -976,6 +988,70 @@ body {
 .heading-art img { max-width: 420px; margin-inline: auto; }
 .houses-section .heading-art img,
 .story-section .heading-art img { max-width: 520px; }
+
+/* ---------- Lá Bài Hôm Nay · bản duyệt hạng mục 1.5 ---------- */
+
+.daily-card-shell {
+  width: var(--shell);
+  max-width: 980px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vw, 96px) 0;
+}
+
+.daily-draw-panel {
+  padding: clamp(28px, 6vw, 56px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-raised);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.daily-draw-panel h2 { margin-bottom: 18px; }
+.daily-draw-panel > p:not(.eyebrow) { max-width: 720px; margin-inline: auto; color: var(--ink-soft); }
+.daily-privacy { font-size: 0.9rem; }
+.daily-draw-button { margin-top: 8px; }
+.daily-status { min-height: 28px; margin: 14px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.daily-card-result {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 6vw, 64px);
+  align-items: center;
+  margin-top: clamp(32px, 6vw, 64px);
+  padding: clamp(22px, 5vw, 46px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-raised);
+}
+
+.daily-card-result[hidden] { display: none; }
+.daily-card-art { margin: 0; padding: 10px; border: 1px solid var(--brown); background: var(--paper); }
+.daily-card-art img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--img-radius); }
+.daily-card-art img.is-reversed { transform: rotate(180deg); }
+.daily-card-art figcaption { padding: 10px 4px 2px; color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.daily-card-reading h2 { margin-bottom: 8px; }
+.daily-card-reading .card-original { margin-bottom: 24px; }
+.daily-reading-text { color: var(--ink-soft); font-size: 1.06rem; line-height: 1.85; }
+
+.daily-context,
+.daily-method { margin-top: 26px; border-top: 1px solid var(--line); }
+.daily-context summary,
+.daily-method summary { display: flex; align-items: center; min-height: 48px; color: var(--gold-ink); font-weight: 700; cursor: pointer; }
+.daily-context .v2-list { margin-top: 8px; }
+.daily-trace { color: var(--muted); font-size: 0.82rem; }
+.daily-trace code { overflow-wrap: anywhere; }
+.daily-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.daily-actions .button { min-height: 48px; }
+.daily-method { max-width: 860px; padding-top: 14px; }
+.daily-method p { color: var(--ink-soft); }
+
+@media (max-width: 760px) {
+  .daily-card-result { grid-template-columns: 1fr; }
+  .daily-card-art { width: min(100%, 380px); margin-inline: auto; }
+  .daily-actions { display: grid; }
+  .daily-actions .button { width: 100%; }
+}
 
 
 /* Nhãn phiên bản. main.css gắn chữ "Bản thử nghiệm" vào ::before của MỌI
