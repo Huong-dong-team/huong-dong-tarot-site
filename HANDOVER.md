@@ -2,7 +2,7 @@
 
 ## Biến môi trường phải điền
 
-- `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.vn`.
+- `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.id.vn`.
 - `FIREBASE_PROJECT_ID`, `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_STORAGE_BUCKET`.
 - `GOOGLE_APPLICATION_CREDENTIALS`: đường dẫn tuyệt đối đến service account, chỉ dùng khi build/seed.
 
