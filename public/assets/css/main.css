@@ -662,6 +662,23 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   text-transform: uppercase;
 }
 
+/* Trạng thái thứ ba, giữa "chưa có gì" và "đã duyệt": chức năng chạy được,
+   nội dung biên tập còn dở. Trước đây ba trang trải bài đeo nhãn v2-pending
+   nên người đọc không có lý do gì để bấm vào — chức năng có mà cửa vào vẫn
+   treo biển đóng. */
+.v2-partial {
+  display: inline-block;
+  padding: 3px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--gold) 42%, transparent);
+  color: var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.v2-note-inline { font-size: 0.85rem; color: var(--muted); margin: 6px 0 0; }
+
 .v2-prose code {
   background: var(--paper-raised);
   border: 1px solid var(--line);
