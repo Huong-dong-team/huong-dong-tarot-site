@@ -8,20 +8,17 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- Ảnh hero: nói cho trình duyệt biết ngay từ HTML, trước cả khi CSS về.
-     media chia đôi để di động không phải tải bản 1536px. Chỉ trang chủ có hero,
-     các trang khác bỏ qua vì file không tồn tại trong DOM của chúng. -->
-<!-- Bốn file font dùng ở màn hình đầu. Phải preload cả dải Việt LẪN dải Latin:
-       tiêu đề "Di sản Việt, soi đường qua 78 lá bài." có cả hai loại ký tự, thiếu
-       một dải là chữ đổi mặt giữa chừng và đẩy CLS lên. -->
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-400.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Ảnh hero chỉ preload trên trang chủ; build.js để trống khối này ở route khác. -->
+  {{{heroPreloads}}}
+  <!-- Preload đúng hai kiểu chữ xuất hiện ở màn hình đầu và đủ cả dải Việt/Latin
+       để tránh font swap làm dịch chuyển bố cục. -->
   <link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/fonts.css">
-  <link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-800.avif" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">
-<link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="preload" href="/assets/fonts/charm-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/charm-700.woff2" as="font" type="font/woff2" crossorigin>
+  <style data-critical>{{{criticalCss}}}</style>
+  <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/assets/css/main.css"></noscript>
   {{{head}}}
   {{{analytics}}}
 </head>

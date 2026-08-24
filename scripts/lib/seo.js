@@ -4,7 +4,7 @@ export function absoluteUrl(baseUrl, path = "/") {
   return new URL(path, `${baseUrl.replace(/\/$/, "")}/`).toString();
 }
 
-export function seoHead({ site, title, description, path, image, type = "website", jsonLd = [] }) {
+export function seoHead({ site, title, description, path, image, type = "website", jsonLd = [], robots = "" }) {
   const canonical = absoluteUrl(site.baseUrl, path);
   const ogImage = absoluteUrl(site.baseUrl, image || site.defaultOgImage);
   const pageTitle = title === site.siteName ? title : `${title} | ${site.siteName}`;
@@ -12,6 +12,7 @@ export function seoHead({ site, title, description, path, image, type = "website
   return `
     <title>${escapeHtml(pageTitle)}</title>
     <meta name="description" content="${escapeHtml(description)}">
+    ${robots ? `<meta name="robots" content="${escapeHtml(robots)}">` : ""}
     <link rel="canonical" href="${escapeHtml(canonical)}">
     <meta property="og:type" content="${escapeHtml(type)}">
     <meta property="og:title" content="${escapeHtml(pageTitle)}">

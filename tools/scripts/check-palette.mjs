@@ -24,7 +24,8 @@ const root = path.resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
 const MAIN = "public/assets/css/main.css";
-const CSS_FILES = [MAIN];
+const CRITICAL = "public/assets/css/critical.css";
+const CSS_FILES = [MAIN, CRITICAL];
 const LAYOUT = "templates/_layout.html";
 
 let failed = 0;
