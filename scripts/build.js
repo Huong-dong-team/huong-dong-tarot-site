@@ -6,6 +6,7 @@ import { getApps, initializeApp, applicationDefault } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { renderString, escapeHtml } from "./lib/render.js";
 import { absoluteUrl, analyticsSnippet, breadcrumbSchema, seoHead } from "./lib/seo.js";
+import { fillMinorDetails } from "./lib/minor-details-fallback.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
@@ -34,7 +35,10 @@ async function loadData() {
     db.collection("settings").doc("site").get(),
   ]);
   const normalize = (data) => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, value?.toDate ? value.toDate().toISOString() : value]));
-  return { cards: cardSnap.docs.map((doc) => normalize(doc.data())), posts: postSnap.docs.map((doc) => normalize(doc.data())), site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
+  // Firestore là nguồn ưu tiên; seed chỉ bù trường chi tiết Ẩn Phụ còn trống,
+  // không đè giá trị đang có. Xem lib/minor-details-fallback.js.
+  const liveCards = cardSnap.docs.map((doc) => normalize(doc.data()));
+  return { cards: fillMinorDetails(liveCards, await readJson("cards.json")), posts: postSnap.docs.map((doc) => normalize(doc.data())), site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
 }
 
 const data = await loadData();
