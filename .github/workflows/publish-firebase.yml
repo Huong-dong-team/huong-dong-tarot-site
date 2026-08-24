@@ -38,6 +38,7 @@ jobs:
             templates/tarot-la-gi.html \
             templates/trai-bai.html \
             templates/daily-card.html \
+            templates/spread.html \
             templates/cua-hang.html \
             templates/card-detail.html \
             templates/card-list.html \
@@ -55,7 +56,7 @@ jobs:
             echo "Dừng lại: cây mã nguồn không đủ để dựng site đầy đủ." >&2
             exit 1
           fi
-          echo "Đủ 12 tệp bắt buộc."
+          echo "Đủ 13 tệp bắt buộc."
 
       - uses: actions/setup-node@v5
         with:
