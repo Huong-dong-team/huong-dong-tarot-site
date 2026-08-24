@@ -1,39 +1,21 @@
 /* ============================================================
-   Hường Đông — chủ đề TỐI + typography cơ cấu mới
-   Nạp SAU main.css. Không sửa main.css để còn quay lại được.
+   Hường Đông — typography và các lớp tương tác đã chốt.
+   Tên tệp được giữ để không đổi thứ tự tài nguyên đang chạy; bảng màu
+   Bình Minh do khối token trong main.css làm nguồn duy nhất.
 
-   YC4 — giữ tone web online: dùng ĐÚNG bộ token màu của
-   huongdong.id.vn, chỉ đảo vai trò nền/chữ. Bảng màu ấy vốn đã
-   có sẵn các sắc jade rất tối (jade-950 #082824), nên bản tối
-   này không bịa màu mới.
-
-   YC1 — sans công nghiệp cho thân bài và đa số tiêu đề;
+   Sans công nghiệp dùng cho thân bài và đa số tiêu đề;
    Charm chỉ dùng làm điểm nhấn ở hero và logo.
    ============================================================ */
 
 :root {
-  /* Đảo vai trò: jade tối làm nền, ivory làm chữ. */
-  --ink: #f5eedf;          /* chữ chính  (trước là nền) */
-  --paper: #0b332e;        /* nền phụ    (trước là giấy) */
-  --ivory: #082824;        /* nền chính  (trước là chữ) */
-  --muted: #9db3aa;        /* chữ phụ, sáng lên cho đủ tương phản trên nền tối */
-  --line: rgba(199, 150, 78, 0.28);
-  --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
-
-  /* Nhấn giữ nguyên hệ brass/cinnabar của web online. */
-  --brass: #b78a4a;
-  --brass-light: #d7ba98;
-  --brass-glow: #d8b66a;
-  --cinnabar: #c2564a;
-
-  /* YC1: sans công nghiệp làm chữ hiển thị; Charm là điểm nhấn. */
+  /* Typography vẫn ở tệp nạp sau để giữ đúng cơ cấu hiện tại. */
   --display: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
   --body: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
   --script: "Charm", cursive;
 }
 
 body {
-  background: var(--ivory);
+  background: var(--paper);
   color: var(--ink);
 }
 
@@ -50,7 +32,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 .brand span {
   font-family: var(--script);
   font-size: 1.45rem;
-  color: var(--brass-glow);
+  color: var(--gold-ink);
   letter-spacing: 0;
 }
 .home-page .page-hero h1,
@@ -58,28 +40,34 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   font-family: var(--script);
   font-weight: 700;
   letter-spacing: 0.01em;
-  color: var(--brass-glow);
+  color: var(--gold-ink);
 }
 
 /* Vỏ trang */
-.site-header,
-.site-footer {
-  background: color-mix(in srgb, var(--ivory) 88%, black);
+.site-header {
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
   border-color: var(--line);
+}
+.site-footer {
+  background: var(--brown);
+  border-color: var(--line);
+  color: var(--on-brown);
 }
 #main-nav a { color: var(--ink); opacity: 0.85; }
 #main-nav a:hover,
-#main-nav a[aria-current="page"] { opacity: 1; color: var(--brass-glow); }
+#main-nav a[aria-current="page"] { opacity: 1; color: var(--gold-ink); }
 .nav-cta {
-  background: var(--brass);
-  color: #08201c;
+  background: var(--magenta-ink);
+  color: var(--on-brown);
   border-radius: 999px;
   padding: 8px 16px;
   font-weight: 600;
 }
-.nav-cta:hover { background: var(--brass-glow); }
+.nav-cta:hover { background: var(--rose-ink); }
+#main-nav .nav-cta,
+#main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; }
 
-/* Ảnh nền mờ vốn thiết kế cho nền sáng — giảm để không thành vệt trắng. */
+/* Ảnh nền mờ được hạ cường độ để hoa văn không tranh chấp với nội dung. */
 .drum-watermark::before,
 .lac-watermark::before { opacity: 0.05; }
 
@@ -96,16 +84,16 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 .v2-prose p,
 .v2-prose li { font-size: 1.02rem; line-height: 1.75; }
 .v2-prose h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); margin: 0 0 14px; }
-.v2-prose h3 { font-size: 1.12rem; margin: 26px 0 8px; color: var(--brass-light); }
+.v2-prose h3 { font-size: 1.12rem; margin: 26px 0 8px; color: var(--muted); }
 .v2-prose .eyebrow {
   font-size: 12px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--brown);
   margin: 0 0 6px;
 }
 
-.v2-link { color: var(--brass-glow); font-weight: 600; }
+.v2-link { color: var(--gold-ink); font-weight: 600; }
 .v2-link:hover { text-decoration: underline; }
 
 .v2-grid {
@@ -121,19 +109,19 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   margin: 22px 0;
 }
 .v2-card {
-  background: var(--paper);
+  background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 20px;
 }
-.v2-card h3 { margin-top: 0; color: var(--brass-light); }
+.v2-card h3 { margin-top: 0; color: var(--muted); }
 .v2-card p:last-child,
 .v2-card ul:last-child { margin-bottom: 0; }
 .v2-num {
   display: block;
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--brass);
+  color: var(--brown);
   margin-bottom: 6px;
 }
 
@@ -150,21 +138,21 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   text-align: left;
   vertical-align: top;
 }
-.v2-table th { background: var(--paper); color: var(--brass-light); font-weight: 600; }
+.v2-table th { background: var(--paper-raised); color: var(--muted); font-weight: 600; }
 
 .v2-list { padding-left: 1.15rem; margin: 14px 0; }
 .v2-list li { margin-bottom: 8px; }
 
 .v2-note {
-  border-left: 3px solid var(--brass);
-  background: color-mix(in srgb, var(--paper) 70%, transparent);
+  border-left: 3px solid var(--brown);
+  background: color-mix(in srgb, var(--paper-raised) 70%, transparent);
   padding: 12px 16px;
   border-radius: 0 10px 10px 0;
   margin: 18px 0;
 }
 .v2-warn {
-  border-left: 3px solid var(--cinnabar);
-  background: color-mix(in srgb, var(--cinnabar) 12%, transparent);
+  border-left: 3px solid var(--coral-ink);
+  background: color-mix(in srgb, var(--coral) 12%, transparent);
   padding: 12px 16px;
   border-radius: 0 10px 10px 0;
   margin: 18px 0;
@@ -178,7 +166,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 }
 .v2-price strong {
   font-size: clamp(1.8rem, 4vw, 2.6rem);
-  color: var(--brass-glow);
+  color: var(--gold-ink);
   letter-spacing: -0.02em;
 }
 .v2-price span { color: var(--muted); font-size: 0.92rem; }
@@ -190,13 +178,13 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: color-mix(in srgb, var(--brass) 26%, transparent);
-  color: var(--brass-light);
+  background: color-mix(in srgb, var(--gold) 26%, transparent);
+  color: var(--muted);
   border: 1px solid var(--line);
 }
 
 .v2-prose code {
-  background: var(--paper);
+  background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 5px;
   padding: 1px 6px;
@@ -209,17 +197,17 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   max-width: 860px;
   margin: 0 auto 40px;
   padding: 26px 28px;
-  background: var(--paper);
+  background: var(--paper-raised);
   border: 1px solid var(--line);
   border-radius: 16px;
 }
 .lncq-block h2 { font-size: 1.25rem; margin: 0 0 12px; }
 .lncq-quote {
-  border-left: 3px solid var(--brass);
+  border-left: 3px solid var(--brown);
   margin: 18px 0;
   padding: 10px 0 10px 18px;
   font-style: italic;
-  color: var(--brass-light);
+  color: var(--muted);
 }
 .lncq-cite {
   font-size: 0.86rem;
@@ -229,11 +217,11 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   margin-top: 16px;
   line-height: 1.65;
 }
-.lncq-caveat { display: block; margin-top: 6px; color: var(--cinnabar); }
+.lncq-caveat { display: block; margin-top: 6px; color: var(--coral-ink); }
 .lncq-warn {
-  border-left: 3px solid var(--cinnabar);
+  border-left: 3px solid var(--coral-ink);
   padding-left: 16px;
-  color: var(--brass-light);
+  color: var(--muted);
 }
 
 /* ---------- Bộ bài Trải bài (chuyển thể từ Mystic-Draw) ---------- */
@@ -241,7 +229,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 .hd-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 22px; }
 .hd-controls select,
 .hd-controls button {
-  background: var(--paper);
+  background: var(--paper-raised);
   color: var(--ink);
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -250,9 +238,9 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   font-size: 0.92rem;
   cursor: pointer;
 }
-.hd-controls button[data-draw] { background: var(--brass); color: #08201c; font-weight: 600; border-color: transparent; }
-.hd-controls button[data-draw]:hover { background: var(--brass-glow); }
-.hd-controls button:hover { border-color: var(--brass); }
+.hd-controls button[data-draw] { background: var(--gold); color: var(--ink); font-weight: 600; border-color: transparent; }
+.hd-controls button[data-draw]:hover { background: var(--amber); }
+.hd-controls button:hover { border-color: var(--brown); }
 
 .hd-deck { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; padding: 10px 0 6px; }
 
@@ -272,7 +260,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 }
 @keyframes hd-in { from { opacity: 0; transform: translateY(14px); } }
 .hd-card:hover { filter: brightness(1.18); transform: scale(1.05); transition: all 0.2s ease; }
-.hd-card:focus-visible { outline: 3px solid var(--brass-glow); outline-offset: 4px; border-radius: 10px; }
+.hd-card:focus-visible { outline: 3px solid var(--gold-ink); outline-offset: 4px; border-radius: 10px; }
 
 .hd-card-inner {
   display: block;
@@ -291,18 +279,18 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   overflow: hidden;
   backface-visibility: hidden;  /* giấu mặt sau khi quay */
   -webkit-backface-visibility: hidden;
-  border: 1px solid rgba(199, 150, 78, 0.45);
+  border: 1px solid var(--line);
 }
 /* Mặt lưng tạm: trống đồng làm tâm, đối xứng để không lộ xuôi/ngược.
    Sẽ thay bằng art thật ở đợt big update hình ảnh. */
 .hd-card-back {
   background:
-    radial-gradient(circle at 50% 50%, rgba(216,182,106,0.30) 0 22%, transparent 23%),
-    radial-gradient(circle at 50% 50%, rgba(216,182,106,0.18) 0 40%, transparent 41%),
-    repeating-conic-gradient(from 0deg at 50% 50%, var(--jade-800, #12463e) 0deg 15deg, #0e3b34 15deg 30deg),
-    var(--paper);
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 30%, transparent) 0 22%, transparent 23%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 18%, transparent) 0 40%, transparent 41%),
+    repeating-conic-gradient(from 0deg at 50% 50%, var(--paper-band) 0deg 15deg, var(--gold) 15deg 30deg),
+    var(--paper-raised);
 }
-.hd-card-front { transform: rotateY(180deg); background: var(--paper); }
+.hd-card-front { transform: rotateY(180deg); background: var(--paper-raised); }
 .hd-card-front.reversed { transform: rotateY(180deg) rotate(180deg); }
 .hd-card-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
@@ -310,17 +298,17 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 
 .hd-reading { display: grid; gap: 14px; margin-top: 26px; }
 .hd-reading-item {
-  background: var(--paper);
+  background: var(--paper-raised);
   border: 1px solid var(--line);
-  border-left: 3px solid var(--brass);
+  border-left: 3px solid var(--brown);
   border-radius: 0 12px 12px 0;
   padding: 16px 18px;
 }
 .hd-reading-head { margin: 0 0 8px; font-size: 1.02rem; }
 .hd-rev {
   font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;
-  background: color-mix(in srgb, var(--cinnabar) 30%, transparent);
-  color: #ffd9d2; padding: 2px 9px; border-radius: 999px; margin-left: 6px;
+  background: color-mix(in srgb, var(--coral) 30%, transparent);
++  color: var(--ink); padding: 2px 9px; border-radius: 999px; margin-left: 6px;
 }
 .hd-reading-src { font-size: 0.85rem; color: var(--muted); margin: 8px 0 0; }
 
@@ -371,13 +359,13 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
 /* Lớp sáng riêng, tâm trùng tâm cụm mặt trời, thở chậm và lan rộng ra trang. */
 .hero-sun {
   --hd-beam: radial-gradient(circle at 50% 50%,
-    rgb(255 244 214 / 46%) 0%,
-    rgb(232 201 140 / 26%) 7%,
-    rgb(199 150 78 / 14%) 16%,
-    rgb(183 138 74 / 6%) 30%,
+    color-mix(in srgb, var(--gold) 46%, transparent) 0%,
+    color-mix(in srgb, var(--orange) 26%, transparent) 7%,
+    color-mix(in srgb, var(--rose) 14%, transparent) 16%,
+    color-mix(in srgb, var(--magenta) 6%, transparent) 30%,
     transparent 52%);
 }
-.hero-sun::before { background: var(--hd-beam), radial-gradient(circle at 50% 50%, rgb(255 244 214 / 70%) 0%, transparent 13%); }
+.hero-sun::before { background: var(--hd-beam), radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 70%, transparent) 0%, transparent 13%); }
 /* Tia dài hơn, vươn ra khỏi mặt trống để ánh sáng "chiếu" ra toàn hero. */
 .hero-sun::after {
   -webkit-mask: radial-gradient(circle at 50% 50%, #000 4%, rgb(0 0 0 / .6) 26%, transparent 62%);
@@ -393,7 +381,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 68.7% 44.1%, rgb(255 244 214 / 55%) 0%, rgb(232 201 140 / 22%) 12%, transparent 46%);
+  background: radial-gradient(circle at 68.7% 44.1%, color-mix(in srgb, var(--gold) 55%, transparent) 0%, color-mix(in srgb, var(--orange) 22%, transparent) 12%, transparent 46%);
   animation: hdSunburst 2.2s cubic-bezier(.16, .84, .32, 1) both;
 }
 @keyframes hdSunburst {
@@ -488,16 +476,16 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
   text-align: center;
 }
 .pack-cta { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
-.pack-cta a:not(.button) { color: var(--brass-glow); font-weight: 600; }
+.pack-cta a:not(.button) { color: var(--gold-ink); font-weight: 600; }
 
 /* --- Slide hộp bài (slide đầu của hero carousel) --- */
-.hero-card--pack { background: #0d3833; }
+.hero-card--pack { background: var(--paper-raised); }
 .hero-card--pack img {
   aspect-ratio: 2 / 3;      /* khớp các slide còn lại, ảnh đã cắt sẵn đúng tỷ lệ */
   object-fit: cover;
-  background: #fbf4e4;      /* nền kem của ảnh, tránh viền lạ khi tải */
+  background: var(--paper);      /* nền kem của ảnh, tránh viền lạ khi tải */
 }
-.hero-card--pack .hero-card-cue { color: var(--brass-glow); }
+.hero-card--pack .hero-card-cue { color: var(--gold-ink); }
 
 /* Trống đồng đã gỡ khỏi hero: dọn quy tắc cũ để khỏi treo animation vô ích. */
 .hero-drum { display: none; }
@@ -510,7 +498,7 @@ h1 { font-weight: 700; letter-spacing: -0.025em; }
    ============================================================ */
 :root { --hd-scroll: 0; --hd-hero: 0; }
 
-/* Vầng sáng nền, cố định theo màn hình, lắng dần khi cuộn.
+/* Vầng sáng nền, cố định theo màn hình, hửng dần khi cuộn.
    z-index -1: nằm sau nội dung nhưng trên màu nền của body. */
 body::before {
   content: "";
@@ -519,16 +507,16 @@ body::before {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(120vh 90vh at 72% 12%, rgb(232 201 140 / 13%), transparent 62%),
-    radial-gradient(90vh 70vh at 18% 4%, rgb(183 138 74 / 7%), transparent 58%);
-  /* Biên độ nhỏ: 1 → 0.18. Cảm nhận được mà không thành hiệu ứng trình diễn. */
-  opacity: calc(1 - var(--hd-scroll) * 0.82);
+    radial-gradient(120vh 90vh at 72% 12%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 62%),
+    radial-gradient(90vh 70vh at 18% 4%, color-mix(in srgb, var(--peach) 10%, transparent), transparent 58%);
+  /* Biên độ nhỏ để cảm nhận được bình minh mà không thành hiệu ứng trình diễn. */
+  opacity: calc(0.35 + var(--hd-scroll) * 0.45);
   transition: opacity .5s cubic-bezier(.22, .61, .36, 1);
 }
 
-/* Nền chìm dần: jade-950 → gần đen xanh. Chênh lệch cố ý rất nhỏ. */
+/* Nền hửng dần từ kem sang vàng nhạt; biên độ nhỏ để chữ luôn ổn định. */
 body {
-  background-color: color-mix(in oklab, #082824, #041512 calc(var(--hd-scroll) * 62%));
+  background-color: color-mix(in oklab, var(--paper), var(--paper-band) calc(var(--hd-scroll) * 45%));
 }
 
 /* Mặt trời ở hero tắt dần khi người đọc rời hero — nguồn sáng đi qua,
@@ -551,7 +539,7 @@ body {
   height: 180px;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(180deg, rgb(232 201 140 / 6%), transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--gold) 16%, transparent), transparent);
   opacity: calc(1 - var(--hd-scroll) * 0.7);
 }
 .story-section > *, .immortals-section > *, .houses-section > *,
@@ -559,7 +547,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   body::before { opacity: .5; transition: none; }
-  body { background-color: #082824; }
+  body { background-color: var(--paper); }
   .hero-sun { opacity: 1; }
 }
 
@@ -569,7 +557,7 @@ body {
 .lncq-nocard { color: var(--muted); }
 .lncq-full p { font-size: 1.03rem; line-height: 1.85; margin: 0 0 18px; }
 .lncq-full .lncq-cards {
-  border-left: 3px solid var(--brass);
+  border-left: 3px solid var(--brown);
   padding: 10px 0 10px 16px;
   margin-bottom: 26px;
   font-size: .95rem;
@@ -596,7 +584,7 @@ body {
 }
 
 /* Tranh có nền riêng (không tách nền được): làm tan mép bằng mask
-   để không còn cạnh chữ nhật, kèm hoà sáng nhẹ vào nền tối. */
+   để không còn cạnh chữ nhật, kèm hoà sáng nhẹ vào nền trang. */
 .heading-art.is-photo img {
   -webkit-mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 42%, rgb(0 0 0 / .45) 72%, transparent 100%);
   mask-image: radial-gradient(ellipse 74% 74% at 50% 50%, #000 42%, rgb(0 0 0 / .45) 72%, transparent 100%);
