@@ -34,7 +34,35 @@ const WINDOW = Number(arg("--window", 2));
    file ở đó nhắc "Lang Liêu" trong bài viết của họ). Đổi tên trong đó vừa sai
    vừa là sửa nội dung của người khác. */
 const EXCLUDE = (arg("--exclude", "") || "").split(",").map((s) => s.trim()).filter(Boolean);
-if (!DIR) { console.error("Dùng: node scripts/apply-renames.mjs --dir <repo> [--write] [--loose]"); process.exit(1); }
+
+/* Loại trừ mặc định — rút ra từ lần chạy thật đầu tiên trên repo này, ngày
+   24/08/2026. Không có danh sách này thì `--write` phá đúng những tệp mà chính
+   codemod dựa vào:
+
+   tools/          Máy móc của codemod nói VỀ việc đổi tên, nên nó chứa cả tên
+                   cũ lẫn tên mới như dữ liệu. Chạy thật đã ghi đè
+                   legacy-names.json ở 8 lá — `currentName` bị thay bằng
+                   `targetName`, tức bảng dò tên cũ tự xoá chính nó — và sửa cả
+                   chú thích trong mã nguồn của codemod lẫn tools/README.md.
+   seed/           Sinh ra từ gen-seed-cards.mjs, không sửa tay. Chạy thật đã
+                   viết "được lập làm Hùng Vương đầu triều" vào giữa câu kể của
+                   lá IV: ở đó "Hùng Vương" là danh hiệu trong truyện, không
+                   phải nhãn lá. Muốn đổi thì đổi ở nguồn chuẩn rồi sinh lại.
+   data/lncq-*     Toàn văn Lĩnh Nam chích quái. Sử liệu của người khác; đổi tên
+                   trong đó là sửa nội dung nguồn.
+   archive/        Repo cũ đã nghỉ hưu, không được build.
+
+   Bỏ qua danh sách này bằng --no-default-exclude, chỉ khi biết rõ mình làm gì. */
+const DEFAULT_EXCLUDE = has("--no-default-exclude")
+  ? []
+  : ["tools", "seed", "archive", "data/lncq-22.json", "data/lncq-chapters.json"];
+const ALL_EXCLUDE = [...DEFAULT_EXCLUDE, ...EXCLUDE];
+
+/* Báo cáo phải nằm NGOÀI cây quét. Bản trước ghi vào content/rename-report.json
+   ngay trong tools/ rồi lần chạy sau lại quét chính tệp đó: 55 chỗ có neo hoá
+   thành 336 vì báo cáo trích dẫn tên cũ, và báo cáo mới lại trích báo cáo cũ. */
+const REPORT = arg("--report", "content/rename-report.json");
+if (!DIR) { console.error("Dùng: node scripts/apply-renames.mjs --dir <repo> [--write] [--loose] [--report <tệp>]"); process.exit(1); }
 
 const EXT = new Set([".ts",".tsx",".js",".jsx",".mjs",".cjs",".json",".astro",".vue",".svelte",
                      ".html",".htm",".md",".mdx",".yaml",".yml",".txt",".css"]);
@@ -71,7 +99,7 @@ const files = [];
   try { entries = readdirSync(dir); } catch { return; }
   for (const name of entries) {
     if (SKIP_DIR.has(name) || name.startsWith(".")) continue;
-    if (EXCLUDE.some((x) => name === x || join(dir, name).includes(x))) continue;
+    if (ALL_EXCLUDE.some((x) => name === x || join(dir, name).includes(x))) continue;
     const p = join(dir, name);
     let st; try { st = statSync(p); } catch { continue; }
     if (st.isDirectory()) walk(p);
@@ -79,7 +107,7 @@ const files = [];
   }
 })(DIR);
 
-console.log(`${files.length} file văn bản trong phạm vi${EXCLUDE.length ? ` · loại trừ: ${EXCLUDE.join(", ")}` : ""}\n`);
+console.log(`${files.length} file văn bản trong phạm vi${ALL_EXCLUDE.length ? ` · loại trừ: ${ALL_EXCLUDE.join(", ")}` : ""}\n`);
 
 /* ── Tìm và phân loại ─────────────────────────────────────────────────── */
 
@@ -189,6 +217,11 @@ for (const file of files) {
   if (touched) {
     let out = lines.join("\n");
     slots.forEach((name, i) => { out = out.split(`\u0000HD${i}\u0000`).join(name); });
+    /* `touched` chỉ nói có thử thay, không nói nội dung có đổi. Khi lớp che
+       tiền tố hoặc tên chương vô hiệu hoá phép thay, kết quả bằng đúng bản gốc.
+       Đếm theo nội dung, nếu không báo cáo sẽ khoe "1 file đã sửa" trong khi
+       git diff trống. */
+    if (out === src) continue;
     if (WRITE) writeFileSync(file, out, "utf8");
     changedFiles++;
   }
@@ -222,14 +255,15 @@ for (const [f, hits] of Object.entries(lg)) {
 }
 
 const report = { dir: DIR, ranAt: new Date().toISOString(), write: WRITE, loose: LOOSE,
+                 excluded: ALL_EXCLUDE,
                  filesScanned: files.length, filesChanged: changedFiles, anchored, unanchored: loose };
-writeFileSync("content/rename-report.json", JSON.stringify(report, null, 2) + "\n", "utf8");
+writeFileSync(REPORT, JSON.stringify(report, null, 2) + "\n", "utf8");
 
 console.log(`\n${C.bold}Tổng kết${C.off}`);
 console.log(`  file quét            ${files.length}`);
 console.log(`  chỗ có neo           ${anchored.length}`);
 console.log(`  chỗ không neo        ${loose.length}   ${loose.length ? C.yellow + "← đọc tay" + C.off : ""}`);
 console.log(`  file ${WRITE ? "đã sửa" : "sẽ sửa"}         ${changedFiles}`);
-console.log(`\n→ content/rename-report.json`);
-if (!WRITE) console.log(`\n${C.dim}XEM TRƯỚC — chưa ghi gì. Thêm --write để áp dụng.${C.off}`);
+console.log(`\n→ ${REPORT}`);
+if (!WRITE) console.log(`\n${C.dim}XEM TRƯỚC — không sửa tệp nào trong cây quét; chỉ ghi báo cáo ở trên. Thêm --write để áp dụng.${C.off}`);
 console.log(`${C.dim}Chạy trên cây git sạch để còn git diff mà soát.${C.off}`);

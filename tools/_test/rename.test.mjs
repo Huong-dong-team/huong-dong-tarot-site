@@ -1,5 +1,10 @@
 /* Test hồi quy cho codemod. Dựng repo giả, chạy, kiểm từng khẳng định.
  *   node _test/rename.test.mjs
+ *
+ * Báo cáo của test ghi vào _test/regress, KHÔNG dùng đường mặc định. Trước đây
+ * test ghi đè content/rename-report.json, nên bản báo cáo nằm trong repo thật ra
+ * là kết quả chạy trên repo giả 4 tệp — mà roadmap và bảng phân công lại hiểu là
+ * bản quét 54 chỗ trên mã thật.
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync, rmSync, mkdirSync, writeFileSync, cpSync } from "node:fs";
@@ -27,7 +32,7 @@ writeFileSync(`${ROOT}/src/done.html`, `<tr><td>IV · The Emperor</td><td>Hùng 
 <tr><td>IV · The Emperor</td><td>Hùng Vương</td></tr>
 `);
 
-execFileSync("node", ["scripts/apply-renames.mjs", "--dir", ROOT, "--write"], { stdio: "ignore" });
+execFileSync("node", ["scripts/apply-renames.mjs", "--dir", ROOT, "--write", "--report", `${ROOT}/rename-report.json`], { stdio: "ignore" });
 
 const cards = readFileSync(`${ROOT}/src/cards.ts`, "utf8");
 const home = readFileSync(`${ROOT}/src/home.astro`, "utf8");
@@ -69,7 +74,7 @@ check("dòng chưa đổi vẫn được đổi",
 
 // Chạy lần hai: kết quả phải y hệt (idempotent).
 const before = readFileSync(`${ROOT}/src/cards.ts`, "utf8");
-execFileSync("node", ["scripts/apply-renames.mjs", "--dir", ROOT, "--write"], { stdio: "ignore" });
+execFileSync("node", ["scripts/apply-renames.mjs", "--dir", ROOT, "--write", "--report", `${ROOT}/rename-report.json`], { stdio: "ignore" });
 check("chạy lại lần hai không đổi gì thêm",
   readFileSync(`${ROOT}/src/cards.ts`, "utf8") === before
   && !readFileSync(`${ROOT}/src/done.html`, "utf8").includes("đầu triều đầu triều"));
