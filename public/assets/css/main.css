@@ -204,6 +204,11 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   outline-offset: 2px;
 }
 
+.hero-actions .hero-daily-button {
+  border: 1px solid var(--magenta-ink);
+  color: var(--magenta-ink);
+}
+
 /* Bóng chữ mềm để tiêu đề đọc rõ trên nền phong cảnh sáng hơn — theo trang
    tham chiếu. Giúp cả desktop lẫn mobile khi chữ chạm vùng cảnh. */
 .hero h1 { text-shadow: 0 .3rem 2rem color-mix(in srgb, var(--ink) 55%, transparent); }
