@@ -52,7 +52,9 @@ test("tối ưu hiệu ứng không làm mất nền hero và carousel", async (
   // mobile đều thay đúng font nhận diện sau khi tệp tải xong mà không cần ép
   // về Georgia ở breakpoint hẹp.
   const finalTypography = main.slice(main.indexOf("0.13 —"));
-  assert.match(finalTypography, /--script:\s*"Fontasia VH"/);
+  // Token đã được gom về :root duy nhất ở đầu main.css; phần 0.13 chỉ giữ luật
+  // sử dụng font. Canh hai nơi riêng để không ép kiến trúc quay lại nhiều root.
+  assert.match(main, /--script:\s*"Fontasia VH"/);
   assert.match(finalTypography, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
   assert.match(critical, /--script:\s*"Fontasia VH"/);
   assert.match(critical, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
