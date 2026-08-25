@@ -180,13 +180,19 @@ test("container không được đụng tới opacity trong pha đi vào", async
 
 test("nội dung hiện rõ ngay, không để lại khoảng trống sau khi trang cũ biến mất", async () => {
   const css = await read("public/assets/css/page-transition.css");
+  const childDuration = Number(css.match(/animation: page-stagger (\d+)ms/)?.[1]);
+  assert.ok(childDuration > 0);
   for (const name of ["page-stagger", "page-stagger-back"]) {
     const body = css.match(new RegExp(`@keyframes ${name} \\{([\\s\\S]*?)\\n\\}`))?.[1];
     assert.ok(body, `thiếu @keyframes ${name}`);
-    // Mốc giữa đưa opacity về 1 sớm hơn nhiều so với lúc cú nâng kết thúc. Mắt
-    // đọc "đã có nội dung chưa" bằng độ sáng, không bằng vị trí.
-    assert.match(body, /^\s*45%\s*\{\s*opacity:\s*1;\s*\}/m,
-      `${name} phải đủ sáng ở 45% chặng đường`);
+    const moc = Number(body.match(/^\s*(\d+)%\s*\{\s*opacity:\s*1;\s*\}/m)?.[1]);
+    assert.ok(moc > 0, `${name} thiếu mốc opacity đầy`);
+    // Ràng buộc thật là THỜI GIAN, không phải phần trăm: nội dung phải đủ sáng
+    // trong khoảng 150ms kể từ lúc thay DOM. Chuyển cảnh chậm lại là để chuyển
+    // ĐỘNG mượt hơn, không phải để người đọc chờ lâu hơn mới thấy chữ.
+    const msDenKhiSang = Math.round(childDuration * moc / 100);
+    assert.ok(msDenKhiSang <= 170,
+      `${name} sáng đủ sau ${msDenKhiSang}ms, quá muộn — hạ mốc phần trăm xuống`);
   }
 });
 
