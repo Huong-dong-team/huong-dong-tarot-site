@@ -1,4 +1,4 @@
-:root{--paper:#FFFBEB;--paper-raised:#FFFFFF;--paper-band:#FFEF9F;--paper-sun:#FEE87D;--ink:#2B1B12;--ink-soft:#5C4433;--muted:#7A6656;--gold:#FFD45A;--amber:#FFA95A;--orange:#FF8B5A;--coral:#FF5A5A;--peach:#F8966A;--rose:#F0557B;--magenta:#E2407C;--brown:#8B6339;--gold-ink:#8B6600;--amber-ink:#AD5300;--orange-ink:#C53B00;--coral-ink:#DB0000;--rose-ink:#D51343;--magenta-ink:#CF1F61;--tre:#46843E;--tre-ink:#407939;--dau:#C0272D;--dau-ink:#C0272D;--sen:#E1407C;--sen-ink:#CE2061;--lua:#F89E31;--lua-ink:#A15B05;--on-brown:#FFFBEB;--line:rgb(139 99 57 / 22%);--shadow:0 24px 70px rgb(139 99 57 / 14%);--danger:#C0272D;--img-radius:clamp(10px,1.4vw,18px);--display:"Cormorant Garamond",Georgia,serif;--body:"Be Vietnam Pro",Arial,sans-serif;--shell:min(1180px,calc(100% - 32px))}
+:root{--paper:#FFFBEB;--paper-raised:#FFFFFF;--paper-band:#FFEF9F;--ink:#2B1B12;--ink-soft:#5C4433;--muted:#7A6656;--gold:#FFD45A;--amber:#FFA95A;--orange:#FF8B5A;--coral:#FF5A5A;--peach:#F8966A;--rose:#F0557B;--brown:#8B6339;--gold-ink:#8B6600;--coral-ink:#DB0000;--rose-ink:#D51343;--magenta-ink:#CF1F61;--tre:#46843E;--tre-ink:#407939;--dau:#C0272D;--dau-ink:#C0272D;--sen:#E1407C;--sen-ink:#CE2061;--lua:#F89E31;--lua-ink:#A15B05;--on-brown:#FFFBEB;--line:rgb(139 99 57 / 22%);--shadow:0 24px 70px rgb(139 99 57 / 14%);--danger:#C0272D;--img-radius:clamp(10px,1.4vw,18px);--shell:min(1180px,calc(100% - 32px))}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;text-rendering:optimizeLegibility}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}:focus-visible{outline:3px solid #4285f4;outline-offset:3px}.skip-link{position:fixed;z-index:1000;left:16px;top:12px;padding:10px 14px;background:#fff;color:#000;transform:translateY(-160%)}.skip-link:focus{transform:none}
 .site-header{position:sticky;z-index:60;top:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;min-height:76px;padding:10px max(16px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);color:var(--ink);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;color:var(--ink)}.brand img{width:85px;height:45px;object-fit:contain}.site-header nav{display:flex;align-items:center;gap:28px;font-size:14px;font-weight:600}.site-header nav a:not(.nav-cta){border-bottom:1px solid transparent}.site-header nav a:hover{border-color:var(--magenta-ink)}.nav-cta{padding:9px 16px;border:1px solid var(--magenta-ink);border-radius:999px;background:var(--magenta-ink);color:var(--on-brown)}.menu-toggle{display:none;border:1px solid var(--magenta-ink);background:transparent;padding:8px 12px;border-radius:999px;color:var(--ink)}
 h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.025em}h1{font-size:clamp(50px,7vw,90px);line-height:.94;font-weight:600}h2{font-size:clamp(40px,5.6vw,68px);line-height:1;font-weight:600}h3{font-size:30px;line-height:1.08}.eyebrow{margin-bottom:16px;color:var(--brown);font:700 12px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase}
@@ -1406,4 +1406,291 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   body::before { opacity: .54; transition: none; }
+}
+
+/* --- Ba cửa vào -------------------------------------------------------- */
+
+/* Cố ý KHÔNG dùng .section-heading. Sáu section còn lại của trang chủ đều dựng
+   bằng đúng một phân tử — nhãn eyebrow, h2, một đoạn, ảnh 651px, rồi một hàng
+   thẻ đều nhau — lặp sáu lần liền. Mắt nhận ra cái khuôn trước khi kịp đọc chữ,
+   và đó là phần lớn cảm giác "trang này do máy dựng".
+
+   Khối này phá khuôn: một nhãn trần không eyebrow không đoạn dẫn, rồi ba ô
+   KHÁC cỡ nhau. Ba nhóm người đọc không ngang trọng số thì ba ô cũng không
+   được ngang cỡ. */
+.doors {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 1180px) / 2));
+  background: var(--paper);
+}
+
+.doors-label {
+  grid-column: 1 / -1;
+  max-width: 18ch;
+  margin: 0 0 8px;
+}
+
+.door {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  padding: clamp(24px, 3vw, 38px);
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+}
+
+/* Cửa Học cao bằng hai cửa kia cộng lại: nó là phễu rộng nhất và là thứ duy
+   nhất trên trang cho người đọc một món trước khi xin gì của họ. */
+.door--hoc {
+  grid-row: 2 / span 2;
+  border-top: 3px solid var(--magenta-ink);
+}
+
+.door h3 { margin: 0; }
+.door p { margin: 0; color: var(--muted); }
+.door .eyebrow { margin: 0; }
+/* Đẩy nút xuống đáy để ba ô lệch cỡ vẫn có hàng nút thẳng nhau. */
+.door .door-cta { margin-top: auto; }
+.door .door-note { font-size: 13px; }
+
+.door ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--muted);
+}
+
+.door-spec { display: grid; gap: 10px; margin: 0; }
+.door-spec div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.door-spec dt { color: var(--muted); font-size: 13px; }
+.door-spec dd { margin: 0; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .doors { grid-template-columns: 1fr; }
+  .door--hoc { grid-row: auto; }
+}
+
+/* --- Bốn nhà Ẩn Phụ ---------------------------------------------------- */
+
+/* Bảng màu khai 29 token, trong đó có đủ bốn nhà — nhưng --tre, --sen, --lua
+   trước nay dùng 0 lần và --dau đúng 1 lần. Tức là trang tuyên bố một hệ màu
+   Việt rồi vẽ toàn bộ bằng màu kem. Bốn nhà là bản sắc của bộ bài, nên chúng
+   phải nhìn thấy được chứ không nằm chết trong :root.
+
+   Nền lấy màu gốc pha loãng, chữ lấy biến thể *-ink: các màu gốc (--lua
+   #F89E31 rõ nhất) không đủ tương phản để làm màu chữ trên nền sáng. */
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: var(--shell);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.house {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 26px 22px 22px;
+  border: 1px solid var(--line);
+  border-top: 0;
+  background: color-mix(in srgb, var(--house) 7%, var(--paper-raised));
+}
+
+.house-swatch {
+  height: 6px;
+  margin: -26px -22px 6px;
+  background: var(--house);
+}
+
+.house h3 { margin: 0; color: var(--house-ink); }
+.house p { margin: 0; }
+.house-rws {
+  color: var(--house-text);
+  font: 700 12px/1.2 var(--body);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.house-note { color: var(--muted); font-size: 14px; }
+.house a {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--house) 30%, transparent);
+  color: var(--house-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.house--tre { --house: var(--tre); --house-ink: var(--tre-ink); --house-text: color-mix(in srgb, var(--tre-ink) 68%, var(--ink)); }
+.house--dau { --house: var(--dau); --house-ink: var(--dau-ink); --house-text: color-mix(in srgb, var(--dau-ink) 68%, var(--ink)); }
+.house--sen { --house: var(--sen); --house-ink: var(--sen-ink); --house-text: color-mix(in srgb, var(--sen-ink) 68%, var(--ink)); }
+.house--lua { --house: var(--lua); --house-ink: var(--lua-ink); --house-text: color-mix(in srgb, var(--lua-ink) 68%, var(--ink)); }
+
+/* Thẻ lá mang màu nhà của nó: mở thư viện 78 lá là thấy ngay bốn nhóm, không
+   phải đọc nhãn mới biết lá thuộc nhà nào. Chỉ tô mép dưới — tô cả viền thì
+   bốn màu tranh nhau với tranh của lá. */
+.tarot-card[data-suit]:not([data-suit=""]) { border-bottom-width: 3px; }
+.tarot-card[data-suit="wands"] { border-bottom-color: var(--tre); }
+.tarot-card[data-suit="swords"] { border-bottom-color: var(--dau); }
+.tarot-card[data-suit="cups"] { border-bottom-color: var(--sen); }
+.tarot-card[data-suit="pentacles"] { border-bottom-color: var(--lua); }
+
+@media (max-width: 900px) {
+  .houses-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 430px) {
+  .houses-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Khối tối: một nhịp nghỉ ------------------------------------------- */
+
+/* Tám section của trang chủ đều chung một độ chói: nền luân phiên trắng, kem,
+   vàng bơ, và MỌI chữ đều là rgb(43,27,18). Mắt không có chỗ nào để nghỉ, nên
+   trang đọc ra thành phẳng dù từng khối đều ổn. Khối này là chỗ tối duy nhất.
+
+   Cố ý không thẻ, không lưới, không nhãn, không ảnh — chỉ một câu. Nó không
+   bán gì và không dẫn đi đâu ngoài về nguồn của chính câu đó. Giữ nó là khối
+   RỖNG nhất trang thì nó mới làm được việc của mình. */
+.quote-band {
+  padding: clamp(90px, 12vw, 150px) max(16px, calc((100vw - 900px) / 2));
+  background: var(--brown);
+  color: var(--on-brown);
+}
+
+/* Đè luật blockquote chung: bản gốc có nền giấy sáng và vạch đỏ bên trái, đặt
+   lên nền nâu thì thành một mảng sáng — đúng thứ khối này muốn tránh. */
+.quote-band blockquote {
+  max-width: 20ch;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+/* Mon Cheri, đúng vai trò đã định trong hệ chữ: lớp điểm nhấn biên tập, chỉ
+   dùng ở trích dẫn. Đây là chỗ nó được để ở cỡ lớn nhất trang. */
+.quote-band blockquote p {
+  margin: 0;
+  font-family: var(--editorial);
+  font-size: clamp(38px, 5.4vw, 66px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: .01em;
+}
+
+.quote-band cite {
+  display: block;
+  max-width: none;
+  margin-top: 28px;
+  color: color-mix(in srgb, var(--on-brown) 76%, transparent);
+  font: 600 13px/1.5 var(--body);
+  font-style: normal;
+  letter-spacing: .04em;
+}
+.quote-band cite a { border-bottom: 1px solid currentColor; }
+.quote-band cite em { font-style: italic; }
+
+/* --- Phân cấp cỡ tiêu đề ----------------------------------------------- */
+
+/* Trước đây cả 8 thẻ h2 của trang chủ đều đúng 68px và đúng một màu, nên mọi
+   section hét cùng một âm lượng và trang không có cao trào. Ba bậc dưới đây
+   dùng lại đúng ba mặt chữ đã có vai trò sẵn, không thêm font mới:
+     bậc 1  Harmoni 68px  — hai câu hỏi lớn của trang
+     bậc 2  Harmoni 46px  — các section giới thiệu
+     bậc 3  Ganh 30px     — nhật ký dự án, thứ yếu thật sự */
+.immortals-section .section-heading h2,
+.houses-section .section-heading h2,
+.featured .section-heading h2,
+.pack-section .section-heading h2 {
+  font-size: clamp(34px, 3.6vw, 46px);
+}
+
+.news-section .section-heading h2 {
+  font-family: var(--sans-display);
+  font-size: clamp(26px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: .005em;
+}
+
+/* --- Quy cách bộ bài ---------------------------------------------------- */
+
+/* Người sưu tầm tìm giá và số lượng trước mọi thứ khác. Trước đây hai con số đó
+   chỉ có ở mục 7.1 trang Cửa hàng, còn trang chủ chỉ nói "350gsm, cạnh mạ đồng"
+   — phần nhạt nhất của cả bảng quy cách. */
+.pack-spec {
+  display: grid;
+  gap: 0;
+  width: min(var(--shell), 640px);
+  margin: 40px auto 0;
+}
+.pack-spec div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.pack-spec dt { color: var(--muted); font-size: 14px; }
+.pack-spec dd { margin: 0; font-weight: 600; text-align: right; }
+.pack-spec .pack-spec-price dd {
+  font: 600 26px/1 var(--display);
+  color: var(--coral-ink);
+}
+
+/* --- Câu hỏi thường gặp ------------------------------------------------- */
+
+/* Dùng <details> gốc: mở/đóng bằng bàn phím, đọc được bằng trình đọc màn hình,
+   nội dung nằm sẵn trong HTML nên vẫn được lập chỉ mục — và không tốn một dòng
+   JavaScript nào. Nội dung sinh từ mảng faqs trong build.js, cùng nguồn với
+   JSON-LD FAQPage, nên hai bên không thể lệch nhau. */
+.faq-section {
+  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 900px) / 2));
+  background: var(--paper);
+}
+.faq-section > h2 {
+  margin-bottom: 32px;
+  font-size: clamp(34px, 3.6vw, 46px);
+}
+.faq-list { border-top: 1px solid var(--line); }
+
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0;
+  font-weight: 600;
+  font-size: 17px;
+  cursor: pointer;
+  list-style: none;
+}
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after {
+  content: "+";
+  flex: none;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+}
+.faq-list details[open] summary::after { content: "–"; }
+.faq-list details p {
+  margin: 0;
+  padding: 0 0 24px;
+  max-width: 62ch;
+  color: var(--muted);
 }

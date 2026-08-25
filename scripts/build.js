@@ -392,13 +392,75 @@ const immortals = immortalSpecs.map((spec, index) => {
   };
 });
 
-const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals });
+/* Câu hỏi thường gặp. MỘT nguồn duy nhất cho cả phần hiển thị lẫn JSON-LD:
+   viết hai chỗ thì sớm muộn hai bên lệch nhau, mà FAQPage không khớp nội dung
+   người đọc nhìn thấy là vi phạm hướng dẫn dữ liệu có cấu trúc của Google.
+
+   Năm câu này đều là nghi ngại có thật, và câu trả lời phải khớp với lập trường
+   đã ghi ở các trang khác — nhất là câu 3: trang này không bán huyền sử như sử
+   liệu, nên phần FAQ cũng không được nói khác đi. */
+const faqs = [
+  {
+    q: "Tarot ở đây có phải là bói không?",
+    a: "Không. Hường Đông dùng Tarot làm công cụ tự phản tư và học tập. Trang không đưa lời phán, và Tarot không thay thế tư vấn y tế, pháp lý hay tài chính.",
+  },
+  {
+    q: "Tôi đã đọc Rider–Waite–Smith rồi, có phải học lại từ đầu không?",
+    a: "Không. Cấu trúc nghĩa của RWS giữ nguyên: vẫn 22 Ẩn Chính và 56 Ẩn Phụ, vẫn bốn chất, vẫn nghĩa xuôi và nghĩa ngược. Chỉ lớp hình ảnh và liên tưởng là Việt, và mỗi lá đều ghi rõ nó ứng với lá RWS nào.",
+  },
+  {
+    q: "Những tích trong bộ bài có phải lịch sử không?",
+    a: "Không. Phần lớn rút từ Lĩnh Nam chích quái của Trần Thế Pháp, là sách chép truyện huyền sử chứ không phải sử liệu đã được chứng minh. Mỗi lá đều ghi nguồn và phân loại rõ: truyền thuyết, dã sử, chính sử hay khảo cổ học.",
+  },
+  {
+    q: "Bao giờ mở bán và giá bao nhiêu?",
+    a: "Bộ bài chưa mở bán. Giá dự kiến của bản in đầu là 690.000đ, số lượng giới hạn theo số người đăng ký. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.",
+  },
+  {
+    q: "Người mới nên bắt đầu từ đâu?",
+    a: "Bắt đầu với 22 lá Ẩn Chính thay vì cả 78 lá: ít lá hơn, chủ đề lớn hơn, dễ nhớ hơn. Trang Tarot là gì có phần thử một lá, và khoá học qua email đi hết 22 lá trong 22 tuần.",
+  },
+];
+
+/* Bộ bài là hàng chưa mở bán, nên availability phải là PreOrder chứ không phải
+   InStock. Giá ở đây là giá DỰ KIẾN của bản in đầu: đổi giá trong FAQ hay trang
+   Cửa hàng thì phải đổi cả con số này, nếu không dữ liệu có cấu trúc sẽ nói một
+   đằng còn trang nói một nẻo. */
+const packSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Hường Đông Tarot — bộ 78 lá",
+  description: "Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, kể lại bằng huyền sử và dã sử Việt. In offset trên giấy 350gsm, khổ 70×120mm, cạnh mạ đồng, hộp cứng nắp từ, kèm sách nhỏ 96 trang ghi rõ nguồn từng câu chuyện.",
+  image: absoluteUrl(data.site.baseUrl, "/assets/img/product-hop-bai.webp"),
+  brand: { "@type": "Brand", name: data.site.siteName },
+  inLanguage: "vi",
+  offers: {
+    "@type": "Offer",
+    price: "690000",
+    priceCurrency: "VND",
+    availability: "https://schema.org/PreOrder",
+    url: absoluteUrl(data.site.baseUrl, "/cua-hang/"),
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+};
+
+const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, faqs });
 await emit("/", layout({
   title: data.site.siteName,
   description: data.site.description,
   path: "/",
   image: data.site.defaultOgImage,
-  schemas: [organizationSchema(), { "@context": "https://schema.org", "@type": "WebSite", name: data.site.siteName, url: data.site.baseUrl, inLanguage: "vi" }],
+  schemas: [
+    organizationSchema(),
+    { "@context": "https://schema.org", "@type": "WebSite", name: data.site.siteName, url: data.site.baseUrl, inLanguage: "vi" },
+    packSchema,
+    faqSchema,
+  ],
   content: homeContent,
   bodyClass: "home-page",
 }));
