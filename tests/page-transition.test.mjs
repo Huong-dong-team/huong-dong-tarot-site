@@ -266,3 +266,30 @@ test("tranh chỉ chạy nhịp riêng ở lần tải đầu, không chạy l�
   assert.match(bootstrap, /classList\.add\("hd-first-load"\)/);
   assert.match(bootstrap, /content:replace[\s\S]{0,160}classList\.remove\("hd-first-load"\)[\s\S]{0,80}once: true/);
 });
+
+test("hero tự tạo stacking context để tranh không bị chính nền của nó phủ lên", async () => {
+  const [critical, main] = await Promise.all([
+    read("public/assets/css/critical.css"),
+    read("public/assets/css/main.css"),
+  ]);
+  // Đây là nguyên nhân thật của "tranh phong cảnh hiện lên rồi mất tiêu", và nó
+  // vô hình với mọi phép kiểm dựa trên computed style: thẻ <img> vẫn
+  // display:block, opacity:1, đúng kích thước — nó chỉ đơn giản bị vẽ dưới nền
+  // của .hero. Đo được bằng document.elementsFromPoint: IMG.hero-bg đứng SAU
+  // SECTION.hero trong thứ tự hit-test.
+  //
+  // .hero-bg ở z-index -2. Không có stacking context riêng thì nó thoát lên
+  // tầng gốc và bị vẽ trước nền của chính .hero. Bất kỳ ai bỏ dòng isolation
+  // dưới đây, hoặc thêm background đục cho .hero mà quên nó, sẽ làm tranh biến
+  // mất trở lại mà không có phép kiểm nào khác kêu lên.
+  for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
+    const rule = css.match(/\n\.hero \{([\s\S]*?)\n\}/)?.[1];
+    assert.ok(rule, `${ten}: không tìm thấy quy tắc .hero`);
+    // Bỏ comment TRƯỚC khi kiểm. Chính khối comment ở trên giải thích vì sao
+    // cần isolation, nên nếu quét cả comment thì phép kiểm này vẫn xanh ngay cả
+    // khi khai báo thật đã bị xoá — một cái chốt cửa không nối vào cánh cửa nào.
+    const khaiBao = rule.replace(/\/\*[\s\S]*?\*\//g, "");
+    assert.match(khaiBao, /^\s*isolation:\s*isolate;/m,
+      `${ten}: .hero phải tự tạo stacking context, nếu không nền của nó phủ lên .hero-bg`);
+  }
+});
