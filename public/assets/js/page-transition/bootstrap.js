@@ -72,7 +72,6 @@ async function bootSwup() {
 
   attachLifecycle(swup);
   attachAnalytics(swup);
-  mountSweep();
 
   // Lần thay nội dung đầu tiên là ranh giới: từ đây trở đi mọi trang đều tới
   // bằng chuyển cảnh, và section mẹ đã lo phần hiện ra rồi.
@@ -95,14 +94,4 @@ function ignoreVisit(url, { el } = {}) {
   // Tệp tải về không có [download] (ví dụ link thẳng tới .pdf hay .mp3).
   if (/\.(?:pdf|zip|mp3|mp4|jpe?g|png|webp|avif|svg|xml|txt|json)(?:$|\?)/i.test(url)) return true;
   return false;
-}
-
-/* Vệt bình minh sống ngoài container Swup nên nó không bị thay theo nội dung —
-   dựng một lần, dùng cho mọi chuyến đi. aria-hidden vì nó thuần trang trí. */
-function mountSweep() {
-  if (document.querySelector(".page-sweep")) return;
-  const sweep = document.createElement("div");
-  sweep.className = "page-sweep";
-  sweep.setAttribute("aria-hidden", "true");
-  document.body.append(sweep);
 }

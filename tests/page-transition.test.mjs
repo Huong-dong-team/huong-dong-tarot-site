@@ -117,8 +117,9 @@ test("chuyển cảnh chỉ động tới transform, opacity và filter", async 
       );
     }
   }
+  // Không đòi phải có bao nhiêu @keyframes: animation cũ đã gỡ, bản mới chưa
+  // viết. Chỉ ràng buộc rằng CÁI GÌ có mặt thì phải nằm trong ba thuộc tính này.
   const keyframeBodies = [...css.matchAll(/@keyframes[^{]+\{([\s\S]*?)\n\}/g)].map((match) => match[1]);
-  assert.ok(keyframeBodies.length >= 4);
   for (const body of keyframeBodies) {
     for (const [, property] of body.matchAll(/^\s*(?:from|to|\d+%)\s*\{([^}]*)\}/gm)) {
       for (const declaration of property.split(";")) {
@@ -135,18 +136,11 @@ test("chuyển cảnh tắt hẳn khi người dùng yêu cầu giảm chuyển 
   const block = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
   assert.match(block, /transition-duration:\s*1ms/,
     "0s không bắn transitionend nên Swup sẽ treo tới hết bộ đếm dự phòng");
-  assert.match(block, /animation:\s*none\s*!important/);
-  assert.match(block, /\.page-sweep\s*\{\s*display:\s*none/, "vệt sáng cũng phải tắt");
+  assert.match(block, /animation:\s*none\s*!important/,
+    "animation của tầng nội dung phải bị tắt, kể cả bản sẽ viết sau này");
+  assert.match(block, /transform:\s*none\s*!important/);
 });
 
-test("vệt sáng không chặn thao tác và không tạo tràn ngang", async () => {
-  const css = await read("public/assets/css/page-transition.css");
-  const sweep = css.slice(css.indexOf(".page-sweep {"), css.indexOf(".page-sweep::before"));
-  assert.match(sweep, /pointer-events:\s*none/,
-    "lớp phủ trang trí không bao giờ được nuốt cú bấm, kể cả khi mạng chậm");
-  assert.match(sweep, /contain:\s*layout paint/, "vệt chạy 280vw phải bị cắt trong khung của nó");
-  assert.match(sweep, /position:\s*fixed/);
-});
 
 test("bundle Swup tự chứa và nằm trong ngân sách", async () => {
   const bundle = await read("public/assets/vendor/swup.mjs");
@@ -164,33 +158,37 @@ test("không dùng đồng thời hai thư viện chuyển cảnh", async () => 
   }
 });
 
+/* Ba phép kiểm dưới đây canh cho animation chuyển cảnh SẼ được viết, không đòi
+   hỏi phải có animation ngay bây giờ. Animation cũ đã bị gỡ vì nó đọc ra thành
+   "chớp chớp"; ba cái bẫy nó từng rơi vào thì vẫn còn nguyên đó cho người viết
+   bản mới, nên giữ lại dưới dạng có điều kiện. */
+
+function docStagger(css) {
+  const duration = Number(css.match(/animation: page-stagger (\d+)ms/)?.[1]);
+  const delays = [...css.matchAll(/animation-delay:\s*(\d+)ms/g)].map((match) => Number(match[1]));
+  return duration && delays.length ? { duration, delays } : null;
+}
+
 test("container không được đụng tới opacity trong pha đi vào", async () => {
   const css = await read("public/assets/css/page-transition.css");
+  const pageIn = css.match(/@keyframes page-in \{([\s\S]*?)\n\}/)?.[1];
+  if (!pageIn) return; // chưa có animation container — không có gì để canh
   // Opacity của cha và con NHÂN với nhau. Bản đầu tiên cho container mờ 0.55
   // chồng lên section mờ 0, ra đúng 0 tuyệt đối: đo được 60ms màn hình trắng
-  // ngay sau khi trang cũ biến mất. Việc hiện ra thuộc về section, không thuộc
-  // về container.
-  const pageIn = css.match(/@keyframes page-in \{([\s\S]*?)\n\}/)?.[1];
-  assert.ok(pageIn, "thiếu @keyframes page-in");
+  // ngay sau khi trang cũ biến mất.
   assert.doesNotMatch(pageIn, /opacity/, "container chỉ được lo transform");
-  const rule = css.match(/html\.is-changing\.is-rendering \.transition-page \{([^}]*)\}/)?.[1];
-  assert.ok(rule);
-  assert.doesNotMatch(rule, /opacity/);
 });
 
-test("nội dung hiện rõ ngay, không để lại khoảng trống sau khi trang cũ biến mất", async () => {
+test("nội dung phải sáng đủ sớm, không để lại khoảng trống", async () => {
   const css = await read("public/assets/css/page-transition.css");
-  const childDuration = Number(css.match(/animation: page-stagger (\d+)ms/)?.[1]);
-  assert.ok(childDuration > 0);
+  const stagger = docStagger(css);
+  if (!stagger) return; // chưa có animation tầng nội dung
   for (const name of ["page-stagger", "page-stagger-back"]) {
     const body = css.match(new RegExp(`@keyframes ${name} \\{([\\s\\S]*?)\\n\\}`))?.[1];
-    assert.ok(body, `thiếu @keyframes ${name}`);
+    if (!body) continue;
     const moc = Number(body.match(/^\s*(\d+)%\s*\{\s*opacity:\s*1;\s*\}/m)?.[1]);
     assert.ok(moc > 0, `${name} thiếu mốc opacity đầy`);
-    // Ràng buộc thật là THỜI GIAN, không phải phần trăm: nội dung phải đủ sáng
-    // trong khoảng 150ms kể từ lúc thay DOM. Chuyển cảnh chậm lại là để chuyển
-    // ĐỘNG mượt hơn, không phải để người đọc chờ lâu hơn mới thấy chữ.
-    const msDenKhiSang = Math.round(childDuration * moc / 100);
+    const msDenKhiSang = Math.round(stagger.duration * moc / 100);
     assert.ok(msDenKhiSang <= 170,
       `${name} sáng đủ sau ${msDenKhiSang}ms, quá muộn — hạ mốc phần trăm xuống`);
   }
@@ -198,18 +196,17 @@ test("nội dung hiện rõ ngay, không để lại khoảng trống sau khi tr
 
 test("ngân sách thời gian của tầng nội dung nằm gọn trong thời lượng Swup đo", async () => {
   const css = await read("public/assets/css/page-transition.css");
+  const stagger = docStagger(css);
+  if (!stagger) return;
   // Swup chỉ đo .transition-page. Section nào chạy quá mốc đó sẽ bị gỡ lớp
   // .is-rendering giữa chừng và snap về trạng thái cuối — thấy rõ là một cú giật.
   const pageIn = Number(css.match(/--page-in:\s*(\d+)ms/)?.[1]);
-  const childDuration = Number(css.match(/animation: page-stagger (\d+)ms/)?.[1]);
-  const delays = [...css.matchAll(/animation-delay:\s*(\d+)ms/g)].map((match) => Number(match[1]));
-  assert.ok(pageIn > 0 && childDuration > 0 && delays.length >= 6);
+  assert.ok(pageIn > 0);
   assert.ok(
-    Math.max(...delays) + childDuration <= pageIn,
-    `delay lớn nhất (${Math.max(...delays)}ms) + ${childDuration}ms phải ≤ ${pageIn}ms`,
+    Math.max(...stagger.delays) + stagger.duration <= pageIn,
+    `delay lớn nhất (${Math.max(...stagger.delays)}ms) + ${stagger.duration}ms phải ≤ ${pageIn}ms`,
   );
 });
-
 test("tranh phong cảnh hiện trên cả màn hình hẹp", async () => {
   const [critical, main] = await Promise.all([
     read("public/assets/css/critical.css"),

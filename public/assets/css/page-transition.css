@@ -1,206 +1,78 @@
-/* Chuyển cảnh giữa các trang — "bình minh".
+/* Chuyển cảnh giữa các trang — KHUNG, chưa có animation.
 
-   Hường Đông là ánh hồng phương Đông, và website đã có sẵn một hành trình ánh
-   sáng theo trục cuộn (light-journey.js). Chuyển cảnh mượn đúng ngôn ngữ ấy:
-   trang cũ lắng xuống như chiều tắt, một vệt sáng ấm quét ngang như mặt trời
-   ló, rồi trang mới dựng lên theo tầng.
+   Animation cũ (trang cũ lùi ra + vệt sáng quét ngang + nội dung vào theo tầng)
+   đã được gỡ: nó đọc ra thành "chớp chớp" ở mỗi lần điều hướng. Toàn bộ phần
+   máy móc thì giữ nguyên — Swup, vòng đời module, analytics, lớp trạng thái
+   trên <html> — nên viết animation mới chỉ cần đụng vào đúng tệp này.
 
-   Ràng buộc tự đặt cho mình, không được phá:
-     · CHỈ transform, opacity và filter — ba thuộc tính compositor xử lý được
-       mà không cần layout lại. Không đụng width/height/top/margin, nên hiệu ứng
-       không đóng góp một pixel nào vào CLS.
-     · Không có khung nào để trang trắng: trang cũ chỉ mờ tới 0 sau khi vệt sáng
-       đã phủ, và nền vẫn là màu giấy của website.
-     · prefers-reduced-motion tắt sạch, kể cả vệt sáng.
+   Hiện tại chuyển cảnh là tức thì: 1ms chứ không phải 0ms, vì Swup chờ sự kiện
+   transitionend/animationend và một transition 0s KHÔNG bao giờ bắn sự kiện đó.
 
-   Swup gắn các lớp trạng thái lên <html> (animationScope: "html"):
-     .is-changing   suốt cả chuyến đi
-     .is-leaving    trang cũ đang rời
-     .is-rendering  trang mới đang vào
-     .is-popstate   chuyến đi do nút Back/Forward, không phải do bấm link */
+   ---------------------------------------------------------------------------
+   VIẾT ANIMATION MỚI: bốn cái bẫy đã trả giá để biết
+   ---------------------------------------------------------------------------
+
+   1. ĐỪNG cho .transition-page chạy opacity cùng lúc với các section con.
+      Opacity của cha và con NHÂN với nhau. Bản đầu tiên cho container mờ 0.55
+      chồng lên section mờ 0 → ra 0 tuyệt đối, đo được 60ms màn hình trống ngay
+      sau khi trang cũ đã biến mất. Container lo transform, section lo opacity.
+
+   2. Ngân sách thời gian phải khép kín. Swup CHỈ đo thời lượng trên phần tử
+      khớp animationSelector, tức .transition-page. Nếu section con có
+      animation-delay + thời lượng vượt quá --page-in, Swup gỡ lớp .is-rendering
+      giữa chừng và section cuối bị cắt animation, giật một cái.
+      tests/page-transition.test.mjs canh bất đẳng thức này tự động.
+
+   3. Nội dung phải SÁNG ĐỦ trong khoảng 150ms, tách khỏi thời lượng chuyển
+      động. Mắt đọc "đã có nội dung chưa" bằng độ sáng chứ không bằng vị trí.
+      Muốn chuyển động thong thả thì kéo dài phần transform, đừng kéo dài phần
+      opacity — nếu không, chậm hơn cũng đồng nghĩa với chờ lâu hơn mới đọc được.
+
+   4. Chỉ transform, opacity và filter. Ba thuộc tính này chạy trên compositor.
+      Bất cứ thứ gì khác đều buộc trình duyệt tính lại layout giữa lúc chuyển
+      trang và đổ thẳng vào CLS. Có test canh.
+
+   Lớp trạng thái Swup gắn lên <html> để móc vào (animationScope: "html"):
+     .is-changing    suốt cả chuyến đi
+     .is-leaving     trang cũ đang rời
+     .is-rendering   trang mới đang vào
+     .is-popstate    chuyến đi do Back/Forward — dùng để đảo chiều animation,
+                     nếu không thì lùi lại vẫn "cảm thấy" như đang tiến tới
+   Và .to-<tên> nếu đặt visit.animation.name trong một hook.
+
+   prefers-reduced-motion phải tắt sạch animation mới, xem khối cuối tệp. */
 
 :root {
-  --page-out: 340ms;
-  --page-in: 560ms;
-  /* Đường cong "rời đi": rời chậm rồi mới dứt, thay vì giật đi ngay từ khung
-     hình đầu — đó là khác biệt giữa "trang biến mất" và "trang lui ra". */
+  --page-out: 1ms;
+  --page-in: 1ms;
   --page-ease-out: cubic-bezier(.4, 0, .7, .3);
-  /* Đường cong "đi vào": bung ra rồi hãm lại rất dài ở đoạn cuối. Đuôi dài là
-     thứ tạo cảm giác mượt; rút ngắn nó thì chuyển cảnh sẽ "đến nơi" cộc lốc dù
-     tổng thời lượng không đổi. */
   --page-ease-in: cubic-bezier(.22, .68, .24, 1);
 }
 
-/* --- Trang: rời đi và đi vào ------------------------------------------- */
-
+/* Móc sẵn cho animation mới. Giữ lại dù đang rỗng: Swup đo thời lượng qua chính
+   phần tử này, và animationSelector mặc định là [class*="transition-"]. Bỏ nó đi
+   thì Swup cảnh báo "No elements found matching animationSelector" ở console. */
 .transition-page {
-  transition:
-    opacity var(--page-out) var(--page-ease-out),
-    transform var(--page-out) var(--page-ease-out),
-    filter var(--page-out) var(--page-ease-out);
+  transition: opacity var(--page-out) var(--page-ease-out);
 }
 
-/* Lùi ra xa và ngả sáng lên — cảm giác trang cũ "bay lên" chứ không phải bị xoá. */
 html.is-changing.is-leaving .transition-page {
   opacity: 0;
-  transform: translate3d(0, -14px, 0) scale(.985);
-  filter: saturate(.75) brightness(1.06);
 }
 
-/* Trang mới đi vào bằng @keyframes chứ không bằng transition, và transition bị
-   tắt hẳn trong pha này. Lý do là cách Swup đo thời lượng: nó đọc computed style
-   rồi chờ sự kiện transitionend/animationend. Một transition được khai báo nhưng
-   không có thuộc tính nào thực sự đổi giá trị sẽ KHÔNG bao giờ bắn sự kiện, và
-   Swup phải rơi vào bộ đếm giờ dự phòng. Dùng animation thì animationend luôn
-   tới đúng hẹn.
-
-   Container KHÔNG được đụng tới opacity. Opacity của phần tử cha và con NHÂN với
-   nhau, nên một container mờ 0.55 chồng lên một section mờ 0 cho ra 0 tuyệt đối:
-   màn hình trống trơn trong lúc trang cũ đã biến mất. Đo được 60ms trắng ở bản
-   đầu tiên. Container chỉ lo phần scale; việc hiện ra giao hết cho các section. */
 html.is-changing.is-rendering .transition-page {
-  transition: none;
-  animation: page-in var(--page-in) var(--page-ease-in) both;
+  transition: opacity var(--page-in) var(--page-ease-in);
 }
 
-@keyframes page-in {
-  from { transform: translate3d(0, 0, 0) scale(.992); }
-  to   { transform: none; }
-}
-
-/* --- Tầng nội dung: mỗi khối vào sau khối trước một nhịp ---------------- */
-
-/* Chỉ áp cho sáu khối đầu. Trang chủ có tám section; nếu để chạy hết thì khối
-   cuối phải chờ gần nửa giây, mà nó vốn nằm ngoài màn hình — không ai thấy,
-   chỉ tốn compositor.
-
-   Ngân sách thời gian phải khép kín: Swup chỉ đo thời lượng trên .transition-page
-   (--page-in), nên delay lớn nhất CỘNG thời lượng của section phải nằm gọn trong
-   đó. Vượt ra ngoài thì Swup gỡ lớp .is-rendering giữa chừng và section cuối bị
-   cắt animation, giật một cái. 155ms + 400ms = 555ms, vừa khít 560ms. */
-html.is-changing.is-rendering .transition-page > * {
-  animation: page-stagger 400ms var(--page-ease-in) both;
-}
-html.is-changing.is-rendering .transition-page > :nth-child(1) { animation-delay: 0ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 55ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 95ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 120ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 140ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 155ms; }
-
-/* Opacity về đủ ở 38% chặng đường, còn cú nâng thì chạy tiếp tới cuối. Tách hai
-   nhịp như vậy vì mắt đọc "có nội dung chưa" bằng độ sáng chứ không bằng vị trí:
-   nội dung phải hiện rõ trong khoảng 150ms, rồi vẫn còn lửng lơ đi lên thêm một
-   quãng nữa cho có nhịp.
-
-   Con số 38% được buộc vào thời lượng, không phải chọn cho đẹp mắt: 38% của
-   400ms là 152ms. Khi chỉnh chuyển cảnh chậm lại, mốc này PHẢI được tính lại để
-   giữ nguyên ~150ms — nếu cứ để nguyên phần trăm thì chuyển động chậm đi kéo
-   theo cả lúc nội dung hiện ra chậm đi, mà đó là hai thứ khác nhau: người dùng
-   muốn chuyển động mượt, không muốn phải chờ lâu hơn mới đọc được. */
-@keyframes page-stagger {
-  from { opacity: 0; transform: translate3d(0, 18px, 0); }
-  38%  { opacity: 1; }
-  to   { opacity: 1; transform: none; }
-}
-
-/* --- Vệt bình minh ------------------------------------------------------ */
-
-/* Một dải sáng quét từ trái sang phải, đúng hướng đọc. Nó nằm trên cùng nhưng
-   pointer-events:none nên không bao giờ chặn được cú bấm của người dùng — kể cả
-   khi mạng chậm và chuyến đi kéo dài hơn dự kiến. */
-.page-sweep {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  /* Chặn hai thứ cùng lúc: trình duyệt không phải tính lại layout của cả trang vì
-     một lớp phủ trang trí, và vệt sáng chạy 280vw không tràn ra ngoài tạo thanh
-     cuộn ngang. */
-  contain: layout paint;
-}
-
-.page-sweep::before {
-  content: "";
-  position: absolute;
-  top: -20%;
-  bottom: -20%;
-  left: -60%;
-  width: 60%;
-  transform: translate3d(0, 0, 0) skewX(-12deg);
-  background: linear-gradient(
-    100deg,
-    rgba(255, 251, 235, 0) 0%,
-    rgba(255, 226, 168, .55) 35%,
-    rgba(255, 172, 120, .78) 55%,
-    rgba(214, 108, 74, .35) 78%,
-    rgba(255, 251, 235, 0) 100%
-  );
-  filter: blur(14px);
-}
-
-html.is-changing .page-sweep {
-  opacity: 1;
-}
-
-/* Vệt chạy hết một lượt trong đúng tổng thời lượng của cả chuyến đi, nên nó
-   luôn ra khỏi màn hình trước khi trang mới ổn định. */
-html.is-changing .page-sweep::before {
-  animation: page-sweep-run calc(var(--page-out) + var(--page-in)) var(--page-ease-in) both;
-}
-
-@keyframes page-sweep-run {
-  from { transform: translate3d(0, 0, 0) skewX(-12deg); }
-  to   { transform: translate3d(280vw, 0, 0) skewX(-12deg); }
-}
-
-/* Back/Forward đi ngược chiều đọc, nên vệt sáng cũng phải quét ngược. Nếu không,
-   thao tác lùi lại vẫn "cảm thấy" như đang tiến tới và người dùng mất phương
-   hướng — đây là lý do duy nhất website phân biệt popstate với click. */
-html.is-changing.is-popstate .page-sweep::before {
-  left: auto;
-  right: -60%;
-  animation-name: page-sweep-run-back;
-}
-html.is-changing.is-popstate.is-leaving .transition-page {
-  transform: translate3d(0, 14px, 0) scale(.985);
-}
-html.is-changing.is-popstate.is-rendering .transition-page > * {
-  animation-name: page-stagger-back;
-}
-
-@keyframes page-sweep-run-back {
-  from { transform: translate3d(0, 0, 0) skewX(12deg); }
-  to   { transform: translate3d(-280vw, 0, 0) skewX(12deg); }
-}
-
-@keyframes page-stagger-back {
-  from { opacity: 0; transform: translate3d(0, -18px, 0); }
-  38%  { opacity: 1; }
-  to   { opacity: 1; transform: none; }
-}
-
-/* --- Giảm chuyển động --------------------------------------------------- */
-
-/* Tắt sạch, không thay bằng một hiệu ứng "nhẹ hơn". Người đã yêu cầu giảm
-   chuyển động thì thứ họ cần là trang xuất hiện, không phải một phiên bản dịu
-   hơn của cùng chuyển động đó. Thời lượng 1ms chứ không phải 0: Swup chờ sự
-   kiện transitionend, và transition 0s không bao giờ bắn sự kiện ấy. */
 @media (prefers-reduced-motion: reduce) {
-  .transition-page {
+  .transition-page,
+  html.is-changing.is-rendering .transition-page {
     transition-duration: 1ms;
     transform: none !important;
     filter: none !important;
   }
-  html.is-changing.is-rendering .transition-page {
-    animation: none !important;
-  }
   html.is-changing.is-rendering .transition-page > * {
     animation: none !important;
-  }
-  .page-sweep {
-    display: none;
   }
 }
 
@@ -234,8 +106,8 @@ html.is-changing.is-popstate.is-rendering .transition-page > * {
    · Chỉ transform và opacity. .hero đã có overflow:hidden nên cú phóng 1.06
      không tràn ra ngoài và không đóng góp gì vào CLS.
    · Chỉ chạy khi trang được tải thật. Đi vào bằng chuyển cảnh thì tranh nằm sẵn
-     trong section đang chạy page-stagger rồi; chồng thêm một lớp nữa là mờ kép,
-     đúng lỗi đã sửa ở lần trước. */
+     trong section mà animation chuyển cảnh đang chạy rồi; chồng thêm một lớp
+     nữa là mờ kép. Điều này vẫn đúng khi animation mới được viết. */
 /* Mốc .hd-first-load do bootstrap.js gắn và gỡ ngay ở lần thay nội dung đầu
    tiên. Không thể dùng .swup-enabled để loại trừ: Swup gắn lớp đó ngay lúc khởi
    động, tức là ngay trong lần tải đầu — hiệu ứng sẽ bị cắt đúng lúc đáng lẽ nó
