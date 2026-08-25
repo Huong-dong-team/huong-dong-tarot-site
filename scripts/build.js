@@ -341,8 +341,20 @@ for (let index = 0; index < cards.length; index += 1) {
   const card = cards[index];
   const previous = cards[(index - 1 + cards.length) % cards.length];
   const next = cards[(index + 1) % cards.length];
-  card.keywordHtml = [...(card.keywordsUpright || []), ...(card.keywordsReversed || []).slice(0, 2)].map((item) => `<span>${escapeHtml(item)}</span>`).join("");
-  card.symbolHtml = (card.symbols || []).map((item) => `<article><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
+  const symbols = (card.symbols || []).map((item, symbolIndex) => ({
+    ...item,
+    domId: `card-symbol-${symbolIndex + 1}`,
+    // NFC giữ nguyên dấu tiếng Việt nhưng gom hai cách mã hoá Unicode thành
+    // cùng một khoá; không bỏ dấu vì hai cụm gần giống chưa chắc cùng nghĩa.
+    meaningKey: String(item.meaning || "").normalize("NFC").trim().toLocaleLowerCase("vi"),
+  }));
+  card.keywordHtml = [...(card.keywordsUpright || []), ...(card.keywordsReversed || []).slice(0, 2)].map((item) => {
+    const keywordKey = String(item || "").normalize("NFC").trim().toLocaleLowerCase("vi");
+    const symbol = symbols.find((candidate) => candidate.meaningKey === keywordKey);
+    if (!symbol) return `<span>${escapeHtml(item)}</span>`;
+    return `<span data-symbol-trigger data-symbol-source="${symbol.domId}" aria-describedby="${symbol.domId}">${escapeHtml(item)}</span>`;
+  }).join("");
+  card.symbolHtml = symbols.map((item) => `<article id="${item.domId}" data-symbol-source><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
   const content = renderString(templates["card-detail"], { card, previous, next }).replace("<!--LNCQ-->", lncqBlock(card.slug));
   const creativeWork = { "@context": "https://schema.org", "@type": "CreativeWork", name: `${card.nameFolk} – ${card.nameEn}`, description: card.seo.description, image: absoluteUrl(data.site.baseUrl, card.image.url), inLanguage: "vi", isPartOf: data.site.siteName };
   await emit(`/la-bai/${card.slug}/`, layout({

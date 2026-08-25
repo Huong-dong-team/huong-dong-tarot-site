@@ -17,6 +17,7 @@ test("trang Lá hôm nay đã duyệt có đủ cấu trúc truy cập và đư�
   assert.match(html, /data-daily-status[^>]*role="status"[^>]*aria-live="polite"/);
   assert.match(html, /data-daily-result[^>]*hidden/);
   assert.match(html, /data-daily-name[^>]*tabindex="-1"/);
+  assert.match(html, /data-daily-back[^>]*loading="lazy"[^>]*aria-hidden="true"[^>]*hidden/);
   assert.match(html, /<img data-daily-image(?![^>]*\bsrc=)[^>]*>/, "ảnh kết quả ẩn không được tải trước");
   assert.match(html, /data-daily-share/);
   assert.match(html, /data-daily-copy/);
@@ -49,6 +50,11 @@ test("gói thiên văn và module trang có dấu phiên bản, kích thước �
   assert.ok(vendor.size <= 130_000, `gói thiên văn quá lớn: ${vendor.size} byte`);
 });
 
+test("máy chủ cục bộ phát module vendored với MIME JavaScript", async () => {
+  const source = await read("scripts/serve.js");
+  assert.match(source, /"\.mjs":\s*"text\/javascript; charset=utf-8"/);
+});
+
 test("module trang chỉ lưu cục bộ, dùng ngẫu nhiên mật mã và dựng DOM an toàn", async () => {
   const source = await read("public/assets/js/daily-card/page.js");
   assert.match(source, /localStorage/);
@@ -57,6 +63,17 @@ test("module trang chỉ lưu cục bộ, dùng ngẫu nhiên mật mã và dự
   assert.match(source, /navigator\.share/);
   assert.match(source, /refreshDate\(now, cards\)/, "phải đổi khóa lưu nếu tab mở qua nửa đêm");
   assert.match(source, /classList\.toggle\("is-reversed"/, "lá ngược phải xoay tranh");
+  assert.match(source, /motion-mini\.mjs/, "hiệu ứng đơn giản phải dùng bundle Motion nhỏ");
+  assert.match(source, /motionGate\(root/, "chuyển động phải đi qua cổng giảm chuyển động và tab ẩn");
+  assert.match(source, /activeAnimations\) animation\.complete\(\)/,
+    "ẩn tab giữa chuỗi lật phải giải phóng Promise và mở khóa nút");
+  assert.doesNotMatch(source, /activeAnimations\) animation\.stop\(\)/,
+    "stop của Motion Mini có thể để Promise finished chờ vô hạn");
+  assert.match(source, /await renderReading\(memoryResult, \{ animated: freshDraw \}\)/,
+    "chỉ lần bốc mới được chạy chuỗi lật và nút phải khóa tới khi chuỗi kết thúc");
+  assert.match(source, /if \(shouldAnimate\) await revealCard\(\);[\s\S]*resultTitle\.focus\(\)/,
+    "focus tên lá phải đến sau khi chuỗi lật hoàn tất");
+  assert.doesNotMatch(source, /assets\/vendor\/motion\.mjs/, "không được nạp Motion đầy đủ cho timeline đơn giản");
   assert.doesNotMatch(source, /Math\.random|innerHTML|outerHTML|insertAdjacentHTML/);
   assert.doesNotMatch(source, /\bfetch\s*\(|firebase|firestore|geolocation/i);
 });

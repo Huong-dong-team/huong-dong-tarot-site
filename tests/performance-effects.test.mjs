@@ -41,3 +41,18 @@ test("tối ưu hiệu ứng không làm mất nền hero và carousel", async (
   assert.match(main, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
   assert.match(critical, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
 });
+
+test("bộ lọc 78 lá giữ hidden và chỉ tăng cường chuyển động khi motionGate cho phép", async () => {
+  const [site, main] = await Promise.all([
+    read("public/assets/js/site.js"),
+    read("public/assets/css/main.css"),
+  ]);
+  assert.match(site, /import \{ motionGate \} from "\.\/motion-gate\.js"/);
+  assert.match(site, /motionGate\(grid/);
+  assert.match(site, /card\.hidden = !visible/, "lọc phải giữ node và thứ tự DOM gốc");
+  assert.match(site, /visible && card\.hidden && filterMotionAllowed/,
+    "chỉ thẻ vừa quay lại mới được chạy transition");
+  assert.doesNotMatch(site, /auto-animate\.mjs|autoAnimate\(/,
+    "không được giả vờ AutoAnimate phản ứng với thuộc tính hidden");
+  assert.match(main, /\.library-grid\.is-filter-motion-ready \.tarot-card\.is-filter-entering\s*\{[^}]*opacity:\s*0;[^}]*transform:\s*translateY\(8px\)/);
+});
