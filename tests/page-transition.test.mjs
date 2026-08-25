@@ -209,3 +209,60 @@ test("ngân sách thời gian của tầng nội dung nằm gọn trong thời l
     `delay lớn nhất (${Math.max(...delays)}ms) + ${childDuration}ms phải ≤ ${pageIn}ms`,
   );
 });
+
+test("tranh phong cảnh hiện trên cả màn hình hẹp", async () => {
+  const [critical, main] = await Promise.all([
+    read("public/assets/css/critical.css"),
+    read("public/assets/css/main.css"),
+  ]);
+  // Quy tắc cũ ẩn hẳn tranh dưới 900px để nó không thành LCP. Đổi lại thì gần
+  // như toàn bộ người đọc — vốn dùng điện thoại — không bao giờ thấy tranh mở
+  // đầu của bộ bài. Hai tệp phải cùng quan điểm, lệch nhau là trang giật một cú
+  // đúng lúc main.css về.
+  assert.doesNotMatch(critical, /\.hero-bg\s*\{\s*display:\s*none/);
+  assert.doesNotMatch(main, /\.hero-bg\{display:none\}/);
+  assert.match(critical, /\.hero-bg \{ object-position: center 30%; \}/);
+  assert.match(main, /\.hero-bg \{ object-position: center 30%; \}/);
+  // Vị trí trong tệp là một phần của tính đúng: @media không cộng độ ưu tiên,
+  // nên khối ghi đè phải nằm SAU quy tắc gốc, không thì nó vô tác dụng.
+  assert.ok(
+    main.indexOf("object-position: center 30%") > main.indexOf("object-position: center;"),
+    "khối ≤900px phải nằm sau quy tắc .hero-bg gốc",
+  );
+});
+
+test("tranh phong cảnh không nạp trễ và không fade từ trong suốt", async () => {
+  const [home, css] = await Promise.all([
+    read("templates/home.html"),
+    read("public/assets/css/page-transition.css"),
+  ]);
+  // loading="lazy" trên một ảnh nằm ngay đầu trang khiến nó hiện sau mọi thứ
+  // khác — đúng cảm giác "tranh hiện lên rồi mới thấy" người dùng đã báo.
+  // Giới hạn trong đúng thẻ <img> đó: home.html còn nhiều ảnh khác cố ý dùng
+  // loading="lazy", quét cả tệp sẽ bắt nhầm chúng.
+  const heroImg = home.match(/<img class="hero-bg"[^>]*>/)?.[0] || "";
+  assert.match(heroImg, /loading="eager"/);
+  assert.match(heroImg, /fetchpriority="high"/);
+  assert.doesNotMatch(heroImg, /loading="lazy"/);
+  const reveal = css.match(/@keyframes hero-art-reveal \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(reveal, "thiếu @keyframes hero-art-reveal");
+  // Fade từ opacity 0 sẽ đẩy mốc LCP ra sau đúng bằng thời lượng animation:
+  // trình duyệt bỏ qua phần tử trong suốt khi chọn phần tử LCP.
+  const start = Number(reveal.match(/from \{ opacity: ([\d.]+)/)?.[1]);
+  assert.ok(start >= 0.1, `phải bắt đầu từ opacity đủ thấy được, đang là ${start}`);
+});
+
+test("tranh chỉ chạy nhịp riêng ở lần tải đầu, không chạy lại sau mỗi chuyển cảnh", async () => {
+  const [css, bootstrap] = await Promise.all([
+    read("public/assets/css/page-transition.css"),
+    read("public/assets/js/page-transition/bootstrap.js"),
+  ]);
+  // Section mẹ đã chạy page-stagger; chồng thêm nhịp của tranh lên trên là mờ
+  // kép, đúng lỗi đã sửa ở lần trước.
+  assert.match(css, /html\.hd-first-load \.hero-bg \{\s*\n\s*animation: hero-art-reveal/);
+  // .swup-enabled KHÔNG dùng được: Swup gắn lớp đó ngay lúc khởi động, tức ngay
+  // trong lần tải đầu, nên hiệu ứng sẽ bị cắt đúng lúc đáng lẽ phải chạy.
+  assert.doesNotMatch(css, /swup-enabled[^\n]*hero-bg|hero-bg[^\n]*swup-enabled/);
+  assert.match(bootstrap, /classList\.add\("hd-first-load"\)/);
+  assert.match(bootstrap, /content:replace[\s\S]{0,160}classList\.remove\("hd-first-load"\)[\s\S]{0,80}once: true/);
+});

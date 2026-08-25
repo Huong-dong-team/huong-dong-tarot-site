@@ -22,6 +22,12 @@ const CONTAINER = "#noi-dung-chinh";
 // trên <body> trong _layout.html là đủ để tắt, không cần build lại JavaScript.
 const DISABLED = document.body.dataset.noTransitions !== undefined;
 
+/* Mốc cho hiệu ứng tranh phong cảnh mở đầu: nó chỉ được chạy ở lần tải trang
+   thật, không chạy lại mỗi khi Swup đưa người dùng về trang chủ. Gắn ở đây chứ
+   không phải trong CSS vì CSS không phân biệt được "vừa tải trang" với "vừa
+   chuyển cảnh". */
+document.documentElement.classList.add("hd-first-load");
+
 initMenu();
 startPage();
 
@@ -67,6 +73,12 @@ async function bootSwup() {
   attachLifecycle(swup);
   attachAnalytics(swup);
   mountSweep();
+
+  // Lần thay nội dung đầu tiên là ranh giới: từ đây trở đi mọi trang đều tới
+  // bằng chuyển cảnh, và section mẹ đã lo phần hiện ra rồi.
+  swup.hooks.on("content:replace", () => {
+    document.documentElement.classList.remove("hd-first-load");
+  }, { once: true });
 
   return swup;
 }
