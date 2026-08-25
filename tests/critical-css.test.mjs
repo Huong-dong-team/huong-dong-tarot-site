@@ -50,12 +50,13 @@ test("preload đúng font dùng ở màn hình đầu", async () => {
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:be-vietnam-pro-(?:400|600)|charm-)/);
 });
 
-test("font tiêu đề không đổi mặt muộn trên mạng chậm", async () => {
+test("font tiêu đề luôn thay font nhận diện sau khi tải xong", async () => {
   const fonts = await read("public/assets/css/custom-fonts.css");
   for (const family of ["Fontasia VH", "DFVN TAN Harmoni"]) {
     const face = fonts.match(new RegExp(`@font-face\\s*\\{[^}]*font-family:\\s*"${family}";[^}]*\\}`, "s"))?.[0] || "";
     assert.ok(face, `thiếu @font-face của ${family}`);
-    assert.match(face, /font-display:\s*optional/);
+    assert.match(face, /font-display:\s*swap/);
+    assert.doesNotMatch(face, /font-display:\s*optional/);
   }
 });
 

@@ -386,8 +386,8 @@ h3 { font-size: 30px; line-height: 1.12; }
     overscroll-behavior: contain;
   }
   .hero { padding-top: 70px; }
-  /* Fontasia đã được preload và dùng font-display: optional, nên thiết bị yếu
-     tự giữ fallback mà không cần đổi riêng mặt chữ ở breakpoint này. */
+  /* Fontasia đã được preload và dùng font-display: swap, nên trình duyệt thay
+     đúng font nhận diện ngay khi tệp tải xong ở mọi kích thước màn hình. */
   .home-page .hero h1 { font-size: clamp(54px, 15vw, 70px); }
   /* Trên màn hình hẹp, lớp phủ gần như che hoàn toàn tranh nền. Không vẽ ảnh
      trang trí này để tránh biến nó thành LCP của cả khung hero dài. */
