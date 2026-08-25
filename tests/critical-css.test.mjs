@@ -27,11 +27,21 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
   assert.doesNotMatch(html, /<link rel="stylesheet" href="\/assets\/css\/fonts\.css/);
 });
 
-test("chỉ trang chủ preload ảnh hero", async () => {
+test("chỉ trang chủ preload ảnh hero, và preload đúng bản cho từng dải màn hình", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
-  assert.match(home, /<link rel="preload" as="image" fetchpriority="high" href="\/assets\/img\/hero-1536\.avif"/);
-  assert.doesNotMatch(home, /rel="preload" as="image"[^>]+hero-800\.avif/);
+  // Đúng MỘT preload, và nó phải đi qua cùng logic chọn ảnh với <img>. Preload
+  // bằng href cố định (hoặc chia theo media) khiến hai bên chọn hai bản khác
+  // nhau và trình duyệt tải cả hai: đo được 106 KB trên một điện thoại 375px
+  // DPR 3 — preload bản 800w rồi srcset lại lấy bản 1200w.
+  const preloads = [...home.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
+  assert.equal(preloads.length, 1, "chỉ được một preload ảnh hero");
+  assert.match(preloads[0], /imagesrcset="[^"]*hero-800\.avif 800w[^"]*hero-1200\.avif 1200w[^"]*hero-1536\.avif 1536w"/);
+  assert.match(preloads[0], /imagesizes="100vw"/);
+  assert.doesNotMatch(preloads[0], /\bmedia=/, "chia theo media không biết được mật độ điểm ảnh của máy");
+  // imagesizes phải khớp sizes của chính thẻ <img>, lệch nhau là chọn lệch bản.
+  const heroImg = home.match(/<img class="hero-bg"[\s\S]*?>/)?.[0] || "";
+  assert.match(heroImg, /sizes="100vw"/);
   assert.doesNotMatch(card, /rel="preload" as="image"[^>]+hero-/);
 });
 

@@ -20,12 +20,15 @@
      .is-popstate   chuyến đi do nút Back/Forward, không phải do bấm link */
 
 :root {
-  --page-out: 260ms;
-  --page-in: 420ms;
-  /* Đường cong "rời đi": nhanh dần rồi dứt khoát. */
-  --page-ease-out: cubic-bezier(.55, 0, .85, .35);
-  /* Đường cong "đi vào": bật ra nhanh rồi hãm lại êm, giống rèm kéo lên. */
-  --page-ease-in: cubic-bezier(.16, .84, .3, 1);
+  --page-out: 340ms;
+  --page-in: 560ms;
+  /* Đường cong "rời đi": rời chậm rồi mới dứt, thay vì giật đi ngay từ khung
+     hình đầu — đó là khác biệt giữa "trang biến mất" và "trang lui ra". */
+  --page-ease-out: cubic-bezier(.4, 0, .7, .3);
+  /* Đường cong "đi vào": bung ra rồi hãm lại rất dài ở đoạn cuối. Đuôi dài là
+     thứ tạo cảm giác mượt; rút ngắn nó thì chuyển cảnh sẽ "đến nơi" cộc lốc dù
+     tổng thời lượng không đổi. */
+  --page-ease-in: cubic-bezier(.22, .68, .24, 1);
 }
 
 /* --- Trang: rời đi và đi vào ------------------------------------------- */
@@ -74,25 +77,30 @@ html.is-changing.is-rendering .transition-page {
    Ngân sách thời gian phải khép kín: Swup chỉ đo thời lượng trên .transition-page
    (--page-in), nên delay lớn nhất CỘNG thời lượng của section phải nằm gọn trong
    đó. Vượt ra ngoài thì Swup gỡ lớp .is-rendering giữa chừng và section cuối bị
-   cắt animation, giật một cái. 115ms + 300ms = 415ms, vừa khít 420ms. */
+   cắt animation, giật một cái. 155ms + 400ms = 555ms, vừa khít 560ms. */
 html.is-changing.is-rendering .transition-page > * {
-  animation: page-stagger 300ms var(--page-ease-in) both;
+  animation: page-stagger 400ms var(--page-ease-in) both;
 }
 html.is-changing.is-rendering .transition-page > :nth-child(1) { animation-delay: 0ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 40ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 70ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 90ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 105ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 115ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 55ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 95ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 120ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 140ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 155ms; }
 
-/* Opacity về đủ ở 45% chặng đường, còn cú nâng thì chạy tiếp tới cuối. Tách hai
+/* Opacity về đủ ở 38% chặng đường, còn cú nâng thì chạy tiếp tới cuối. Tách hai
    nhịp như vậy vì mắt đọc "có nội dung chưa" bằng độ sáng chứ không bằng vị trí:
-   nội dung phải hiện rõ trong khoảng 135ms, rồi vẫn còn lửng lơ đi lên thêm một
-   quãng nữa cho có nhịp. Nếu để opacity kéo dài hết 300ms thì khoảnh khắc ngay
-   sau khi trang cũ biến mất là một mảng giấy trống. */
+   nội dung phải hiện rõ trong khoảng 150ms, rồi vẫn còn lửng lơ đi lên thêm một
+   quãng nữa cho có nhịp.
+
+   Con số 38% được buộc vào thời lượng, không phải chọn cho đẹp mắt: 38% của
+   400ms là 152ms. Khi chỉnh chuyển cảnh chậm lại, mốc này PHẢI được tính lại để
+   giữ nguyên ~150ms — nếu cứ để nguyên phần trăm thì chuyển động chậm đi kéo
+   theo cả lúc nội dung hiện ra chậm đi, mà đó là hai thứ khác nhau: người dùng
+   muốn chuyển động mượt, không muốn phải chờ lâu hơn mới đọc được. */
 @keyframes page-stagger {
   from { opacity: 0; transform: translate3d(0, 18px, 0); }
-  45%  { opacity: 1; }
+  38%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
 
@@ -169,7 +177,7 @@ html.is-changing.is-popstate.is-rendering .transition-page > * {
 
 @keyframes page-stagger-back {
   from { opacity: 0; transform: translate3d(0, -18px, 0); }
-  45%  { opacity: 1; }
+  38%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
 
@@ -210,4 +218,42 @@ html.is-changing.is-popstate.is-rendering .transition-page > * {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+/* --- Tranh phong cảnh mở đầu ------------------------------------------- */
+
+/* Tranh nền hero là hình đầu tiên người đọc gặp, nên nó được vào bằng một nhịp
+   riêng, chậm hơn hẳn mọi thứ khác: sáng dần trong 900ms rồi vẫn còn lùi ra rất
+   chậm suốt 1,8 giây. Nhịp dài là thứ khiến nó "hiện lên" chứ không "bật ra".
+
+   Ba ràng buộc phải giữ:
+
+   · Bắt đầu từ opacity 0.18 chứ không phải 0. Trình duyệt bỏ qua phần tử trong
+     suốt khi chọn phần tử LCP, nên fade từ 0 sẽ đẩy mốc LCP ra sau đúng bằng
+     thời lượng animation — làm chậm một chỉ số thật để đổi lấy một hiệu ứng.
+   · Chỉ transform và opacity. .hero đã có overflow:hidden nên cú phóng 1.06
+     không tràn ra ngoài và không đóng góp gì vào CLS.
+   · Chỉ chạy khi trang được tải thật. Đi vào bằng chuyển cảnh thì tranh nằm sẵn
+     trong section đang chạy page-stagger rồi; chồng thêm một lớp nữa là mờ kép,
+     đúng lỗi đã sửa ở lần trước. */
+/* Mốc .hd-first-load do bootstrap.js gắn và gỡ ngay ở lần thay nội dung đầu
+   tiên. Không thể dùng .swup-enabled để loại trừ: Swup gắn lớp đó ngay lúc khởi
+   động, tức là ngay trong lần tải đầu — hiệu ứng sẽ bị cắt đúng lúc đáng lẽ nó
+   phải chạy. Cũng không thể chỉ loại trừ .is-changing: lớp đó được gỡ khi chuyến
+   đi kết thúc, và animation sẽ khởi động lại đúng lúc đó, phát muộn một nhịp.
+
+   JavaScript tắt thì không có mốc, không có hiệu ứng, tranh hiện thẳng ở
+   opacity 1 — đúng tinh thần tăng cường dần. */
+html.hd-first-load .hero-bg {
+  animation: hero-art-reveal 1800ms cubic-bezier(.16, .74, .2, 1) both;
+}
+
+@keyframes hero-art-reveal {
+  from { opacity: .18; transform: scale(1.06); }
+  50%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg { animation: none; }
 }

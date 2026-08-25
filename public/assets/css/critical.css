@@ -389,9 +389,12 @@ h3 { font-size: 30px; line-height: 1.12; }
   /* Fontasia đã được preload và dùng font-display: swap, nên trình duyệt thay
      đúng font nhận diện ngay khi tệp tải xong ở mọi kích thước màn hình. */
   .home-page .hero h1 { font-size: clamp(54px, 15vw, 70px); }
-  /* Trên màn hình hẹp, lớp phủ gần như che hoàn toàn tranh nền. Không vẽ ảnh
-     trang trí này để tránh biến nó thành LCP của cả khung hero dài. */
-  .hero-bg { display: none; }
+  /* Tranh nền GIỮ LẠI trên màn hình hẹp. Trước đây nó bị display:none để không
+     thành LCP của khung hero cao 1067px; đổi lại thì điện thoại — tức gần như
+     toàn bộ người đọc — không bao giờ thấy tranh mở đầu của bộ bài.
+     Bù cho phần hiệu năng đã mất: bản 800w chỉ 35 KB, được preload riêng cho
+     dải hẹp, và lớp phủ dọc bên dưới vẫn giữ nguyên độ đọc của chữ ở phía trên. */
+  .hero-bg { object-position: center 30%; }
   .hero-overlay {
     background: linear-gradient(180deg,
       color-mix(in srgb, var(--paper) 88%, transparent) 0%,

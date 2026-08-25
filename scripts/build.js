@@ -289,7 +289,20 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     pageScripts,
     fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),
     heroPreloads: bodyClass === "home-page"
-      ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
+      // imagesrcset/imagesizes chứ KHÔNG phải href + media. Preload phải đi qua
+      // đúng logic chọn ảnh của <img class="hero-bg">, nếu không hai bên chọn
+      // hai bản khác nhau và trình duyệt tải cả hai.
+      //
+      // Chia theo media không cứu được, vì bản nào được chọn còn phụ thuộc mật
+      // độ điểm ảnh của máy: một điện thoại 375px DPR 3 cần tới bản 1200w. Đo
+      // được đúng cảnh đó — preload 800w rồi srcset lại lấy 1200w, tổng 106 KB
+      // cho một tấm ảnh.
+      //
+      // href giữ lại làm bản dự phòng cho trình duyệt chưa hiểu imagesrcset;
+      // trình duyệt hiểu thì bỏ qua href.
+      ? '<link rel="preload" as="image" fetchpriority="high"'
+        + ' imagesrcset="/assets/img/hero-800.avif 800w, /assets/img/hero-1200.avif 1200w, /assets/img/hero-1536.avif 1536w"'
+        + ' imagesizes="100vw" href="/assets/img/hero-1200.avif">'
       : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
