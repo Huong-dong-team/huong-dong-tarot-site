@@ -19,6 +19,7 @@ Giấy phép: xem [`THIRD-PARTY-NOTICES.md`](../../../THIRD-PARTY-NOTICES.md) �
 | `focus-trap.mjs` | `focus-trap` | 8.2.2 | ~20 KB |
 | `motion.mjs` | `motion` | 13.1.1 | ~135 KB |
 | `motion-mini.mjs` | `motion/mini` | 13.1.1 | ~12 KB |
+| `swup.mjs` | `swup` | 4.9.2 | ~27 KB |
 
 Tất cả đã minify. Kích thước là bản chưa nén; qua gzip/brotli của Firebase Hosting
 sẽ nhỏ hơn nhiều.
@@ -31,7 +32,14 @@ import autoAnimate from "/assets/vendor/auto-animate.mjs";
 import EmblaCarousel from "/assets/vendor/embla-carousel.mjs";
 import { createFocusTrap } from "/assets/vendor/focus-trap.mjs";
 import { animate, scroll, inView, stagger } from "/assets/vendor/motion.mjs";
+import Swup from "/assets/vendor/swup.mjs";
 ```
+
+`swup.mjs` là engine chuyển cảnh giữa các trang. Nó được nạp trễ trong
+`assets/js/page-transition/bootstrap.js` và không bao giờ được import tĩnh: nếu
+bundle hỏng thì website phải quay về điều hướng trình duyệt bình thường, chứ
+không kéo theo phần còn lại của front-end. Không thêm Barba hay bất kỳ engine
+chuyển cảnh thứ hai nào — `tests/page-transition.test.mjs` canh điều đó.
 
 **Ưu tiên `motion-mini.mjs`** (`animate`, `animateSequence`) cho hiệu ứng đơn giản:
 nó chạy trên Web Animations API của trình duyệt, nhẹ hơn `motion.mjs` hơn 10 lần.
@@ -45,7 +53,7 @@ trong repo.
 ```bash
 mkdir vendor-build && cd vendor-build && npm init -y
 npm i @floating-ui/dom@1.8.0 @formkit/auto-animate@0.10.0 embla-carousel@8.6.0 \
-      focus-trap@8.2.2 motion@13.1.1
+      focus-trap@8.2.2 motion@13.1.1 swup@4.9.2
 ```
 
 Tạo file entry cho từng gói rồi bundle (auto-animate và embla cần re-export cả
