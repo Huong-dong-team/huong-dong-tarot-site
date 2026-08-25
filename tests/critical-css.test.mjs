@@ -17,12 +17,13 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
   // mỗi lượt tải đầu, và ngân sách 20 KB chỉ còn ~800 ký tự để xoay xở.
   assert.doesNotMatch(critical, /\n/, "critical CSS phải được gộp dòng trước khi nhúng");
   assert.doesNotMatch(critical, / {2,}/, "critical CSS còn sót thụt lề");
-  // .v2-prose và .nav-sub nằm trong danh sách vì cả hai quyết định BỐ CỤC của
-  // màn hình đầu. Thiếu .v2-prose, mọi khối nội dung nở ra 113px khi main.css
-  // về và đẩy trang xuống — CLS 0,066 đo được trên /trai-bai/. Thiếu .nav-sub,
-  // menu con hiện nguyên danh sách giữa thanh điều hướng rồi mới biến mất.
-  for (const marker of ["@font-face", ".site-header", ".hero-bg", ".hero-carousel", ".page-hero", ".card-detail", ".v2-prose", ".nav-sub"]) {
+  for (const marker of ["@font-face", ".site-header", ".hero-bg", ".hero-carousel", ".nav-sub"]) {
     assert.ok(critical.includes(marker), `critical CSS thiếu ${marker}`);
+  }
+  // Trang chủ không dựng các khung trang trong. Nếu một selector dưới đây lọt
+  // lại vào gói chung, 86 URL sẽ cùng trả giá cho CSS mà route `/` không dùng.
+  for (const marker of [".page-hero", ".card-detail", ".v2-prose", ".post-detail", ".not-found"]) {
+    assert.ok(!critical.includes(marker), `critical CSS trang chủ còn chứa ${marker}`);
   }
   assert.match(html, /<link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}" media="print" onload="this\.media='all'">/);
   // <noscript> chứa main.css và landing-drag.css: tầng scroll-snap của dải kéo
@@ -30,6 +31,22 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
   assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}">/);
   assert.match(html, /<noscript>[^<]*(?:<link[^>]*>)*<link rel="stylesheet" href="\/assets\/css\/landing-drag\.css\?v=[0-9a-f]{8}"><\/noscript>/);
   assert.doesNotMatch(html, /<link rel="stylesheet" href="\/assets\/css\/fonts\.css/);
+});
+
+test("trang trong nhận đúng critical CSS theo loại nội dung", async () => {
+  const card = await read("dist/la-bai/the-star/index.html");
+  const spread = await read("dist/trai-bai/index.html");
+  const cardCritical = card.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
+  const spreadCritical = spread.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
+
+  assert.ok(cardCritical.length < 20_000, "critical CSS trang lá vượt ngân sách 20 KB");
+  assert.ok(spreadCritical.length < 20_000, "critical CSS trang nội dung vượt ngân sách 20 KB");
+  for (const critical of [cardCritical, spreadCritical]) {
+    assert.doesNotMatch(critical, /\n/, "critical CSS trang trong phải được gộp dòng");
+    assert.ok(critical.includes(".page-hero"), "trang trong thiếu khung page hero");
+  }
+  assert.ok(cardCritical.includes(".card-detail"), "trang lá thiếu khung card-detail");
+  assert.ok(spreadCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
 });
 
 test("chỉ trang chủ preload ảnh hero, và preload đúng bản cho từng dải màn hình", async () => {

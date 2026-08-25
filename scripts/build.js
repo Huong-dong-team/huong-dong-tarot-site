@@ -93,14 +93,11 @@ function lncqChapterHtml(c, prev, next) {
 }
 
 const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
-// Critical CSS được nhúng thẳng vào MỌI trang, nên mỗi byte ở đây nhân với số
-// trang và nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn thì
+// Critical CSS nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
-// trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn
-// hơn khoảng 2 KB. Không có chuỗi nào trong ba tệp chứa "/*" nên phép thay
-// này an toàn; test critical-css.test.mjs canh cả ngân sách lẫn các mốc bắt buộc.
+// trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn.
 //
-// Sau khi gỡ chú thích thì gộp luôn xuống dòng và thụt lề. Ba tệp nguồn được
+// Sau khi gỡ chú thích thì gộp luôn xuống dòng và thụt lề. Các tệp nguồn được
 // viết dạng dễ đọc — mỗi khai báo một dòng, thụt hai dấu cách — và toàn bộ chỗ
 // trắng đó đang được gửi đi kèm MỌI trang. Gộp lại tiết kiệm ~2,7 KB mỗi lượt
 // tải đầu, đủ để ngân sách 20 KB từ chỗ chỉ còn ~800 ký tự nới ra gấp đôi.
@@ -110,8 +107,7 @@ const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card
 // khoảng trắng trước dấu hai chấm — regex sẽ nuốt nhầm và làm hỏng luật. Muốn
 // mức đó thì phải dùng parser CSS thật, tức thêm một phụ thuộc; repo này giữ
 // đúng hai phụ thuộc chạy thật nên không đáng đổi.
-async function loadCriticalCss() {
-  const files = ["fonts.css", "custom-fonts.css", "critical.css"];
+async function loadCriticalCss(files) {
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
   if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
   return css
@@ -120,7 +116,11 @@ async function loadCriticalCss() {
     .replace(/ {2,}/g, " ")
     .trim();
 }
-const criticalCss = await loadCriticalCss();
+// Trang chủ và trang trong có hai khung đầu khác nhau. Chỉ phần nền tảng/font
+// là dùng chung; critical-inner.css không đi theo trang chủ, tránh gửi các luật
+// card-detail/v2-prose không bao giờ dùng ở route `/`.
+const criticalBaseCss = await loadCriticalCss(["fonts.css", "custom-fonts.css", "critical.css"]);
+const criticalInnerCss = `${criticalBaseCss} ${await loadCriticalCss(["critical-inner.css"])}`;
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
 const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"][number] || String(number);
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
@@ -264,7 +264,6 @@ const navPostsHtml = [
 const layoutSettings = {
   navPostsHtml,
   analytics: analyticsSnippet(data.site),
-  criticalCss,
   tagline: data.site.tagline || "",
   contactEmail: data.site.contactEmail || "",
   socialHtml: socialLinks.length
@@ -302,6 +301,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     : '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
   return renderString(templates._layout, {
     ...layoutSettings,
+    criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
