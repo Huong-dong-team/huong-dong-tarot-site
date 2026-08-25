@@ -371,7 +371,15 @@ h3 { font-size: 30px; line-height: 1.08; }
     border-bottom: 1px solid var(--line);
     background: var(--paper);
   }
-  .site-header nav[data-open] { display: flex; }
+  /* Bảy mục đều có menu con, và trên di động menu con mở sẵn hết — tổng cộng
+     hơn ba mươi liên kết. Cho khối nav tự cuộn để phần cuối không rơi ra ngoài
+     màn hình, thay vì đẩy người dùng phải cuộn cả trang phía sau. */
+  .site-header nav[data-open] {
+    display: flex;
+    max-height: calc(100dvh - 76px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
   .hero { padding-top: 70px; }
   /* Mobile ưu tiên font hệ thống cho LCP: không chờ/đổi mặt chữ trên thiết bị
      yếu. Desktop vẫn dùng Charm theo hệ nhận diện. */

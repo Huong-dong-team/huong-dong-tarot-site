@@ -48,7 +48,17 @@ if (filters) {
   const suit = filters.elements.suit;
   const count = filters.querySelector("[data-result-count]");
   const empty = document.querySelector("[data-empty]");
-  let arcana = new URLSearchParams(location.search).get("arcana") || "all";
+  const params = new URLSearchParams(location.search);
+  let arcana = params.get("arcana") || "all";
+  // Menu con "78 lá bài" trỏ thẳng tới từng nhà bằng ?suit=. Bốn nhà đều nằm
+  // trong Ẩn Phụ nên phải kéo arcana theo, giống hệt việc người dùng tự chọn
+  // trong ô select — nếu không, bộ lọc sẽ giao "tất cả" với một nhà và nút
+  // nhóm bài hiện sai trạng thái.
+  const suitFromUrl = params.get("suit");
+  if (suitFromUrl && [...suit.options].some((option) => option.value === suitFromUrl)) {
+    suit.value = suitFromUrl;
+    arcana = "minor";
+  }
   let filterMotionAllowed = false;
   let enterFrame = 0;
   const enteringCards = new Set();

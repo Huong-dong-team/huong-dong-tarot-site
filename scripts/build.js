@@ -223,7 +223,19 @@ const socialLinks = [
   ["Threads", safeUrl(social.threads)],
   ["TikTok", safeUrl(social.tiktok)],
 ].filter(([, url]) => url);
+/* Menu con của "Chuyện Hường Đông" lấy từ bài đã xuất bản, nên phải sinh lúc
+   build. Giới hạn 4 bài mới nhất: thanh điều hướng không phải trang lưu trữ, và
+   trên di động mọi menu con đều mở sẵn nên danh sách dài sẽ đẩy các mục khác
+   xuống dưới màn hình. Hai mục tĩnh luôn đứng cuối để menu không bao giờ rỗng
+   khi chưa có bài nào. */
+const navPostsHtml = [
+  ...posts.slice(0, 4).map((post) => `<li><a href="/tin-tuc/${escapeHtml(post.slug)}/">${escapeHtml(post.title)}</a></li>`),
+  '<li><a href="/tin-tuc/">Tất cả bài viết</a></li>',
+  '<li><a href="/gioi-thieu/">Giới thiệu Hường Đông</a></li>',
+].join("");
+
 const layoutSettings = {
+  navPostsHtml,
   analytics: analyticsSnippet(data.site),
   criticalCss,
   tagline: data.site.tagline || "",
