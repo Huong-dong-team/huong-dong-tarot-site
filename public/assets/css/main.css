@@ -1302,7 +1302,7 @@ body {
 .card-art::before,
 .houses-figure::before,
 .lac-figure::before,
-.news-grid article::before { content: "OpenBeta"; }
+.news-grid article::before { content: "Đang hoàn thiện"; }
 
 /* ============================================================
    0.14 — nền sơn mài Hường Đông

@@ -50,6 +50,14 @@ async function loadData() {
 
 const data = await loadData();
 data.site.baseUrl = process.env.SITE_BASE_URL || data.site.baseUrl;
+// Giá bộ bài là một quyết định sản phẩm, không phải câu chữ rải rác. Giữ cả
+// giá trị máy đọc và hai cách hiển thị ở một chỗ để HTML, FAQ và JSON-LD luôn
+// đổi cùng nhau khi chủ dự án chốt giá mới.
+const PACK_PRICE = Object.freeze({
+  vnd: 690000,
+  label: "690.000đ",
+  compactLabel: "690k",
+});
 const lncq22 = JSON.parse(await readFile(path.join(root, "data", "lncq-22.json"), "utf8"));
 // Khối Lĩnh Nam chích quái cho lá Ẩn chính. Dẫn nguồn theo CHƯƠNG (bản này không có số trang).
 function lncqBlock(slug) {
@@ -414,7 +422,7 @@ const faqs = [
   },
   {
     q: "Bao giờ mở bán và giá bao nhiêu?",
-    a: "Bộ bài chưa mở bán. Giá dự kiến của bản in đầu là 690.000đ, số lượng giới hạn theo số người đăng ký. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.",
+    a: `Bộ bài chưa mở bán. Giá dự kiến của bản in đầu là ${PACK_PRICE.label}, số lượng giới hạn theo số người đăng ký. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.`,
   },
   {
     q: "Người mới nên bắt đầu từ đâu?",
@@ -436,7 +444,7 @@ const packSchema = {
   inLanguage: "vi",
   offers: {
     "@type": "Offer",
-    price: "690000",
+    price: String(PACK_PRICE.vnd),
     priceCurrency: "VND",
     availability: "https://schema.org/PreOrder",
     url: absoluteUrl(data.site.baseUrl, "/cua-hang/"),
@@ -449,7 +457,7 @@ const faqSchema = {
   mainEntity: faqs.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
 };
 
-const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, faqs });
+const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, faqs, packPrice: PACK_PRICE });
 await emit("/", layout({
   title: data.site.siteName,
   description: data.site.description,
@@ -535,7 +543,7 @@ for (const page of newPages) {
     description: page.description,
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
-    content: templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
+    content: renderString(templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
   }));
 }
 
