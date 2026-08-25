@@ -48,6 +48,7 @@ test("năm ảnh carousel đều tải lười và không tranh tài nguyên v�
 
 test("hero carousel có nút đi tới Lá bài hôm nay", async () => {
   const html = await home();
+  assert.match(html, /<h1>Tarot qua lời kể của<br>văn hóa Việt Nam<\/h1>/);
   assert.match(
     html,
     /class="button hero-daily-button" href="\/la-bai-hom-nay\/">Lá bài hôm nay/,
