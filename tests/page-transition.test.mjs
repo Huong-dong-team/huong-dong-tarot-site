@@ -293,3 +293,13 @@ test("hero tự tạo stacking context để tranh không bị chính nền củ
       `${ten}: .hero phải tự tạo stacking context, nếu không nền của nó phủ lên .hero-bg`);
   }
 });
+
+test("âm thanh trải bài không ném AbortError khi rời trang", async () => {
+  const source = await read("public/assets/js/trai-bai.js");
+  // destroy() gọi pause() lúc rời trang; nếu play() còn đang chờ, Promise của nó
+  // bị huỷ và ném AbortError ra console dưới dạng unhandled rejection. try/catch
+  // quanh play() KHÔNG bắt được — đó là rejection bất đồng bộ, không phải throw.
+  assert.match(source, /a\.play\(\)\?\.catch\(/,
+    "phải nuốt rejection của play(), try/catch không bắt được nó");
+  assert.match(source, /flipAudio\.pause\(\)/, "destroy vẫn phải dừng âm thanh");
+});

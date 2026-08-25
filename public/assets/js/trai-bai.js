@@ -71,7 +71,16 @@ function mount(root, deck) {
 
   function play(a) {
     if (!soundOn) return;
-    try { a.currentTime = 0; a.volume = 0.7; a.play(); } catch (e) {}
+    /* play() trả về Promise, và try/catch KHÔNG bắt được rejection của nó. Từ
+       khi module có destroy() gọi pause() lúc rời trang, một cú play() đang chờ
+       sẽ bị huỷ và ném AbortError ra console dưới dạng unhandled rejection —
+       vô hại với người dùng nhưng làm bẩn console và che mất lỗi thật.
+       Trình duyệt cũ trả về undefined nên phải hỏi ?. trước khi catch. */
+    try {
+      a.currentTime = 0;
+      a.volume = 0.7;
+      a.play()?.catch(function () {});
+    } catch (e) {}
   }
 
   /* Fisher-Yates — xáo đều, không thiên vị. */
