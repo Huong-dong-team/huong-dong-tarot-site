@@ -91,16 +91,11 @@ button { cursor: pointer; }
   align-items: center;
   gap: 10px;
   color: var(--ink);
-  font: 600 28px/1 var(--display);
 }
-.brand img { width: 46px; height: 46px; object-fit: contain; border-radius: 50%; }
-.brand span {
-  color: var(--gold-ink);
-  font-family: var(--script);
-  font-size: 1.45rem;
-  letter-spacing: 0;
-  white-space: nowrap;
-}
+/* Wordmark thay cho cụm icon + chữ. Khoá luôn width/height theo tỉ lệ 2:1 của
+   bản vẽ tay để trình duyệt giữ chỗ trước khi ảnh về — header là sticky, một
+   lần layout shift ở đây đẩy toàn bộ trang xuống. */
+.brand img { width: 85px; height: 45px; object-fit: contain; }
 .site-header nav {
   display: flex;
   align-items: center;
