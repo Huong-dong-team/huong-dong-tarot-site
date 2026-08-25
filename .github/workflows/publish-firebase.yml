@@ -66,6 +66,13 @@ jobs:
 
       - run: npm ci
 
+      # Kiểm kiểu chạy TRƯỚC build: nó chỉ mất vài giây và không cần khoá
+      # Firestore, nên hỏng ở đây thì dừng luôn, khỏi tốn một lượt đọc Firestore
+      # và một lượt build đầy đủ. Phạm vi hiện tại: scripts/build.js và
+      # scripts/lib/ — xem tsconfig.check.json.
+      - name: Kiểm kiểu scripts/
+        run: npm run check:types
+
       # Service account chỉ tồn tại trong bộ nhớ tạm của runner, không bao giờ
       # nằm trong repo. RUNNER_TEMP bị xóa khi job kết thúc.
       - name: Ghi service account ra tệp tạm
