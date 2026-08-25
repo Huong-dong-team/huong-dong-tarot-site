@@ -15,7 +15,12 @@
   {{{fontPreloads}}}
   <style data-critical>{{{criticalCss}}}</style>
   <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="/assets/css/main.css"></noscript>
+  <!-- Hai lớp tăng cường tách riêng khỏi main.css để sửa được mà không đụng vào
+       54 KB nền tảng. landing-drag.css phải có mặt cả trong <noscript>: tầng
+       scroll-snap của dải kéo là CSS thuần và vẫn phải chạy khi JS bị chặn. -->
+  <link rel="stylesheet" href="/assets/css/page-transition.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
   {{{head}}}
   {{{analytics}}}
 </head>

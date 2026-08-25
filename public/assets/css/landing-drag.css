@@ -1,0 +1,112 @@
+/* Dải kéo ngang cho ba khối trang chủ: Tứ Bất Tử, Thư viện nổi bật, Nhật ký.
+
+   Ba tầng, mỗi tầng tự đứng được:
+
+     Tầng 1 — HTML: vẫn là <ol>/<div> chứa đủ mục.
+     Tầng 2 — CSS dưới đây: dưới 900px chuyển lưới thành dải cuộn ngang có
+              scroll-snap. Không cần một dòng JavaScript nào; ngón tay vuốt được
+              ngay, bàn phím Tab vào từng liên kết trình duyệt tự cuộn theo.
+     Tầng 3 — landing-drag/init.js: thêm quán tính, nút Trước/Sau, phím mũi tên.
+
+   Trên desktop (>900px) toàn bộ file này im lặng và lưới giữ nguyên như cũ. */
+
+@media (max-width: 900px) {
+  [data-drag-rail] {
+    display: flex;
+    /* Lưới cũ dùng gap; giữ đúng con số để khoảng cách giữa các mục không đổi
+       khi khối chuyển sang dạng dải. */
+    gap: 24px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    /* Chỉ khoá cuộn theo trục ngang. pan-y giữ nguyên thao tác cuộn dọc của
+       trang — đây là điều kiện để dải kéo không cướp mất khả năng đọc tiếp. */
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+    /* Ẩn thanh cuộn nhưng KHÔNG khoá cuộn: dải này đã có nút Trước/Sau và
+       chấm chỉ báo, thanh cuộn hệ thống chỉ làm rối một khối trang trí. */
+    scrollbar-width: none;
+    /* Đệm hai đầu để mục đầu và mục cuối không dính sát mép màn hình. */
+    padding-inline: 16px;
+    margin-inline: -16px;
+  }
+
+  [data-drag-rail]::-webkit-scrollbar { display: none; }
+
+  [data-drag-rail] > * {
+    scroll-snap-align: start;
+    /* flex-basis cố định theo viewport thay vì 1fr: mục phải giữ nguyên bề rộng
+       khi trôi ngang, và người đọc cần thấy hé một phần mục kế tiếp thì mới
+       đoán ra là kéo được. */
+    flex: 0 0 min(72vw, 300px);
+  }
+
+  /* Bài viết rộng hơn vì ảnh 16/9 co lại quá nhỏ ở 72vw. */
+  .news-grid[data-drag-rail] > * { flex-basis: min(84vw, 380px); }
+
+  /* Embla đã cầm lái: nó tự dịch chuyển container bằng transform, nên cuộn
+     nguyên bản và scroll-snap phải nhường đường, nếu không hai cơ chế đánh nhau
+     và dải giật khi thả tay. */
+  [data-drag-rail].is-drag-enhanced {
+    overflow: visible;
+    scroll-snap-type: none;
+    padding-inline: 0;
+    margin-inline: 0;
+  }
+
+  .drag-rail-viewport.is-drag-active {
+    overflow: hidden;
+    padding-inline: 16px;
+    margin-inline: -16px;
+  }
+
+  .drag-rail-viewport.is-drag-active [data-drag-rail] > * {
+    /* Con trỏ chỉ báo kéo được. Chỉ đặt khi Embla đang chạy — trên desktop mà
+       thấy bàn tay nắm thì đó là lời hứa sai. */
+    cursor: grab;
+  }
+
+  .drag-rail-controls {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    width: var(--shell);
+    margin: 16px auto 0;
+  }
+
+  .drag-rail-button {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--ink);
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .drag-rail-button:disabled {
+    opacity: .35;
+    cursor: default;
+  }
+
+  /* Viền tiêu điểm phải thấy rõ trên cả nền giấy sáng lẫn nền ngọc sẫm. */
+  .drag-rail-button:focus-visible,
+  .drag-rail-viewport:focus-visible {
+    outline: 2px solid var(--coral-ink);
+    outline-offset: 3px;
+  }
+}
+
+/* Ngoài breakpoint thì không có gì tồn tại: nút điều hướng cũng không được
+   chiếm chỗ, kể cả một dòng trống. */
+@media (min-width: 901px) {
+  .drag-rail-controls { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-drag-rail] { scroll-behavior: auto; }
+}

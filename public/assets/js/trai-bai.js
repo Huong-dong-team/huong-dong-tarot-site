@@ -7,11 +7,52 @@
      /trai-bai/           có <select data-spread> — người đọc tự chọn cỡ trải
      /trai-bai/<nhu-cầu>/ cỡ trải CỐ ĐỊNH qua data-spread-size, kèm nhãn vị trí
                           qua data-positions (ngăn nhau bằng "|")
-   Trang nào không khai hai thuộc tính đó thì chạy đúng như trước. */
-(function () {
-  var root = document.getElementById("hd-deck");
-  if (!root || !window.HD_DECK) return;
+   Trang nào không khai hai thuộc tính đó thì chạy đúng như trước.
 
+   Từ khi website chuyển cảnh bằng Swup, file này là một ES module có init() và
+   hàm huỷ thay vì IIFE tự chạy: Swup thay DOM chứ không tải lại trang, nên thẻ
+   <script> trong nội dung mới sẽ không bao giờ chạy lại, còn timer và <audio>
+   của trang cũ thì phải được tắt bằng tay. */
+
+/* 22 Ẩn chính nằm trong deck-data.js — một script cổ điển gán window.HD_DECK.
+   Module tự nạp nó khi cần và nhớ lại Promise, nên đi vào ba trang trải bài
+   liên tiếp chỉ tải dữ liệu đúng một lần. */
+let deckPromise = null;
+function loadDeck() {
+  if (window.HD_DECK) return Promise.resolve(window.HD_DECK);
+  if (deckPromise) return deckPromise;
+  deckPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "/assets/js/deck-data.js";
+    script.onload = () => resolve(window.HD_DECK);
+    script.onerror = () => { deckPromise = null; reject(new Error("deck-data-failed")); };
+    document.head.append(script);
+  });
+  return deckPromise;
+}
+
+export function init() {
+  const root = document.getElementById("hd-deck");
+  if (!root) return () => {};
+
+  let disposed = false;
+  let teardown = null;
+  loadDeck()
+    .then((deck) => {
+      if (disposed || !deck) return;
+      teardown = mount(root, deck);
+    })
+    // Không có dữ liệu bài thì phần chữ của trang vẫn đọc được nguyên vẹn.
+    .catch(() => {});
+
+  return () => {
+    disposed = true;
+    teardown?.();
+    teardown = null;
+  };
+}
+
+function mount(root, deck) {
   var deckEl   = root.querySelector("[data-deck]");
   var drawBtn  = root.querySelector("[data-draw]");
   var soundBtn = root.querySelector("[data-sound]");
@@ -111,7 +152,7 @@
     play(shuffleAudio);
     deckEl.innerHTML = "";
     readEl.innerHTML = "";
-    shuffle(window.HD_DECK).slice(0, spreadSize()).forEach(function (card, i) {
+    shuffle(deck).slice(0, spreadSize()).forEach(function (card, i) {
       var reversed = allowReversed && Math.random() < 0.5;
       deckEl.appendChild(makeSlot(card, reversed, i));
     });
@@ -133,4 +174,14 @@
   });
 
   deal();
-})();
+
+  return function destroy() {
+    // Hai thẻ <audio> được tạo bằng JS nên chúng không nằm trong cây DOM mà
+    // Swup gỡ đi. Không dừng ở đây thì tiếng xáo bài còn chạy tiếp trên trang
+    // kế, và trình duyệt vẫn giữ bộ giải mã âm thanh cho một trang đã đóng.
+    flipAudio.pause();
+    shuffleAudio.pause();
+    flipAudio.src = "";
+    shuffleAudio.src = "";
+  };
+}

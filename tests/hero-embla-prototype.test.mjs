@@ -10,7 +10,7 @@ const read = (file) => readFile(path.join(root, file), "utf8");
 test("bản thử Embla đứng riêng và không thay carousel production", async () => {
   const [prototype, site, home, evaluation] = await Promise.all([
     read("public/assets/js/hero-embla-prototype.js"),
-    read("public/assets/js/site.js"),
+    read("public/assets/js/ui/hero-carousel.js"),
     read("templates/home.html"),
     read("tools/HERO-EMBLA-EVALUATION.md"),
   ]);
@@ -20,7 +20,7 @@ test("bản thử Embla đứng riêng và không thay carousel production", asy
   assert.match(prototype, /destroy\(\)/, "phải khôi phục được carousel gốc");
   assert.doesNotMatch(site, /hero-embla-prototype|EmblaCarousel/);
   assert.doesNotMatch(home, /hero-embla-prototype/);
-  assert.match(site, /function initHeroCarousel\(/, "carousel production phải được giữ nguyên");
+  assert.match(site, /export function init\(/, "carousel production phải được giữ nguyên");
   assert.match(evaluation, /Chưa nên thay carousel production/);
 });
 
