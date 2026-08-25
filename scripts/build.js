@@ -204,7 +204,7 @@ const cards = data.cards.map((card) => ({
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
 
 function organizationSchema() {
-  return { "@context": "https://schema.org", "@type": "Organization", name: data.site.siteName, url: data.site.baseUrl, logo: absoluteUrl(data.site.baseUrl, "/assets/img/trong-dong.png") };
+  return { "@context": "https://schema.org", "@type": "Organization", name: data.site.siteName, url: data.site.baseUrl, logo: absoluteUrl(data.site.baseUrl, "/assets/img/logo-huong-dong-600.png") };
 }
 
 // Giá trị dùng chung cho chân trang mọi trang. Đây là dữ liệu build-time:
