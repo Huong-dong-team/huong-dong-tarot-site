@@ -91,14 +91,25 @@ const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card
 // trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn
 // hơn khoảng 2 KB. Không có chuỗi nào trong ba tệp chứa "/*" nên phép thay
 // này an toàn; test critical-css.test.mjs canh cả ngân sách lẫn các mốc bắt buộc.
+//
+// Sau khi gỡ chú thích thì gộp luôn xuống dòng và thụt lề. Ba tệp nguồn được
+// viết dạng dễ đọc — mỗi khai báo một dòng, thụt hai dấu cách — và toàn bộ chỗ
+// trắng đó đang được gửi đi kèm MỌI trang. Gộp lại tiết kiệm ~2,7 KB mỗi lượt
+// tải đầu, đủ để ngân sách 20 KB từ chỗ chỉ còn ~800 ký tự nới ra gấp đôi.
+//
+// Cố ý KHÔNG nén sâu hơn. Bỏ khoảng trắng quanh { } : ; , thì gọn thêm ~1,9 KB
+// nữa, nhưng ba tệp này có 65 chuỗi trong ngoặc kép (tên font) và 3 selector có
+// khoảng trắng trước dấu hai chấm — regex sẽ nuốt nhầm và làm hỏng luật. Muốn
+// mức đó thì phải dùng parser CSS thật, tức thêm một phụ thuộc; repo này giữ
+// đúng hai phụ thuộc chạy thật nên không đáng đổi.
 async function loadCriticalCss() {
   const files = ["fonts.css", "custom-fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
   if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
   return css
     .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\n{2,}/g, "\n")
-    .replace(/^[ \t]+$/gm, "")
+    .replace(/\n\s*/g, " ")
+    .replace(/ {2,}/g, " ")
     .trim();
 }
 const criticalCss = await loadCriticalCss();
