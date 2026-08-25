@@ -51,6 +51,26 @@ test("bootstrap không import Swup tĩnh và có đường lui khi Swup hỏng",
   assert.match(source, /initMenu\(\);\s*\nstartPage\(\);/,
     "menu và module của trang phải dựng trước khi thử bật Swup");
   assert.match(source, /bootSwup\(\)\.catch\(/, "Swup hỏng thì link phải quay về điều hướng trình duyệt");
+  assert.match(source, /import\("\.\/direction\.js"\)/, "bộ chọn hướng phải đi cùng bootstrap chuyển trang");
+  assert.match(source, /attachDirection\(swup\);[\s\S]*attachLifecycle\(swup\)/,
+    "hướng phải được gắn trước khi lifecycle bắt đầu chuyến đi");
+});
+
+test("hướng đi vào được chọn từ vị trí link và không can thiệp history", async () => {
+  const source = await read("public/assets/js/page-transition/direction.js");
+  assert.match(source, /visit\.history\?\.popstate/, "Back\/Forward phải giữ cơ chế đảo chiều hiện có");
+  assert.match(source, /visit\.animation\.name = `from-\$\{direction\}`/);
+  assert.match(source, /MENU_DIRECTIONS = \["left", "left", "top", "bottom", "top", "right", "right"\]/);
+  assert.match(source, /getBoundingClientRect\(\)/, "link ngoài menu phải lấy hướng từ vị trí bấm thật");
+  assert.match(source, /prefers-reduced-motion: reduce/, "JS không cần gắn hướng khi người dùng giảm chuyển động");
+});
+
+test("CSS có đủ bốn hướng đi vào và chỉ dùng transform, opacity", async () => {
+  const css = await read("public/assets/css/page-transition.css");
+  for (const direction of ["left", "right", "top", "bottom"]) {
+    assert.match(css, new RegExp(`html\\.to-from-${direction}`), `thiếu hướng ${direction}`);
+  }
+  assert.match(css, /translate3d\(var\(--page-enter-x\), var\(--page-enter-y\), 0\)/);
 });
 
 test("link không thuộc phạm vi chuyển cảnh bị loại đúng", async () => {

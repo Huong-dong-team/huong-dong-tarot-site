@@ -47,10 +47,11 @@ function supportsTransitions() {
 }
 
 async function bootSwup() {
-  const [{ default: Swup }, { attachLifecycle }, { attachAnalytics }] = await Promise.all([
+  const [{ default: Swup }, { attachLifecycle }, { attachAnalytics }, { attachDirection }] = await Promise.all([
     import("/assets/vendor/swup.mjs"),
     import("./lifecycle.js"),
     import("./analytics.js"),
+    import("./direction.js"),
   ]);
 
   const swup = new Swup({
@@ -70,6 +71,9 @@ async function bootSwup() {
     ignoreVisit,
   });
 
+  // Chọn hướng trước lifecycle: visit:start phải có animation.name trước khi
+  // Swup gắn lớp to-from-* lên <html> và bắt đầu đo animation.
+  attachDirection(swup);
   attachLifecycle(swup);
   attachAnalytics(swup);
   mountSweep();
