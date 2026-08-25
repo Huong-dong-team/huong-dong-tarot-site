@@ -64,7 +64,25 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   }
 }
 
-.hero { position: relative; overflow: hidden; }
+.hero {
+  position: relative;
+  overflow: hidden;
+  /* Bắt buộc: .hero phải tự tạo stacking context.
+
+     .hero-bg nằm ở z-index -2. Nếu .hero không tạo stacking context thì ảnh đó
+     thoát lên tầng gốc và bị vẽ TRƯỚC nền của chính .hero — tức là nền hero,
+     vốn là giấy đục, phủ kín lên tranh. Đo bằng document.elementsFromPoint:
+     IMG.hero-bg đứng SAU SECTION.hero trong thứ tự hit-test, nghĩa là nó nằm
+     dưới. Đó là lý do thật của việc "tranh phong cảnh hiện lên rồi mất tiêu",
+     và nó đúng trên cả điện thoại lẫn máy tính.
+
+     isolation: isolate thay vì z-index: 0 vì nó không tham gia vào bất kỳ so
+     sánh z-index nào của trang, chỉ làm đúng một việc là đóng khung tầng lớp.
+
+     Sau khi đóng khung, thứ tự trong .hero là: nền hero → tranh (-2) → lớp phủ
+     đọc chữ (-1) → nội dung (1). Nền vẫn còn nguyên, chỉ là nằm dưới tranh. */
+  isolation: isolate;
+}
 
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 
