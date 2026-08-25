@@ -49,34 +49,50 @@ html.is-changing.is-leaving .transition-page {
    rồi chờ sự kiện transitionend/animationend. Một transition được khai báo nhưng
    không có thuộc tính nào thực sự đổi giá trị sẽ KHÔNG bao giờ bắn sự kiện, và
    Swup phải rơi vào bộ đếm giờ dự phòng. Dùng animation thì animationend luôn
-   tới đúng hẹn. */
+   tới đúng hẹn.
+
+   Container KHÔNG được đụng tới opacity. Opacity của phần tử cha và con NHÂN với
+   nhau, nên một container mờ 0.55 chồng lên một section mờ 0 cho ra 0 tuyệt đối:
+   màn hình trống trơn trong lúc trang cũ đã biến mất. Đo được 60ms trắng ở bản
+   đầu tiên. Container chỉ lo phần scale; việc hiện ra giao hết cho các section. */
 html.is-changing.is-rendering .transition-page {
   transition: none;
   animation: page-in var(--page-in) var(--page-ease-in) both;
 }
 
 @keyframes page-in {
-  from { opacity: .55; transform: translate3d(0, 0, 0) scale(.992); }
-  to   { opacity: 1; transform: none; }
+  from { transform: translate3d(0, 0, 0) scale(.992); }
+  to   { transform: none; }
 }
 
 /* --- Tầng nội dung: mỗi khối vào sau khối trước một nhịp ---------------- */
 
 /* Chỉ áp cho sáu khối đầu. Trang chủ có tám section; nếu để chạy hết thì khối
    cuối phải chờ gần nửa giây, mà nó vốn nằm ngoài màn hình — không ai thấy,
-   chỉ tốn compositor. */
+   chỉ tốn compositor.
+
+   Ngân sách thời gian phải khép kín: Swup chỉ đo thời lượng trên .transition-page
+   (--page-in), nên delay lớn nhất CỘNG thời lượng của section phải nằm gọn trong
+   đó. Vượt ra ngoài thì Swup gỡ lớp .is-rendering giữa chừng và section cuối bị
+   cắt animation, giật một cái. 115ms + 300ms = 415ms, vừa khít 420ms. */
 html.is-changing.is-rendering .transition-page > * {
-  animation: page-stagger var(--page-in) var(--page-ease-in) both;
+  animation: page-stagger 300ms var(--page-ease-in) both;
 }
 html.is-changing.is-rendering .transition-page > :nth-child(1) { animation-delay: 0ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 45ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 80ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 105ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 120ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 130ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 40ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 70ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 90ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 105ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 115ms; }
 
+/* Opacity về đủ ở 45% chặng đường, còn cú nâng thì chạy tiếp tới cuối. Tách hai
+   nhịp như vậy vì mắt đọc "có nội dung chưa" bằng độ sáng chứ không bằng vị trí:
+   nội dung phải hiện rõ trong khoảng 135ms, rồi vẫn còn lửng lơ đi lên thêm một
+   quãng nữa cho có nhịp. Nếu để opacity kéo dài hết 300ms thì khoảnh khắc ngay
+   sau khi trang cũ biến mất là một mảng giấy trống. */
 @keyframes page-stagger {
   from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  45%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
 
@@ -153,6 +169,7 @@ html.is-changing.is-popstate.is-rendering .transition-page > * {
 
 @keyframes page-stagger-back {
   from { opacity: 0; transform: translate3d(0, -18px, 0); }
+  45%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }
 

@@ -120,7 +120,7 @@ test("chuyển cảnh chỉ động tới transform, opacity và filter", async 
   const keyframeBodies = [...css.matchAll(/@keyframes[^{]+\{([\s\S]*?)\n\}/g)].map((match) => match[1]);
   assert.ok(keyframeBodies.length >= 4);
   for (const body of keyframeBodies) {
-    for (const [, property] of body.matchAll(/^\s*(?:from|to)\s*\{([^}]*)\}/gm)) {
+    for (const [, property] of body.matchAll(/^\s*(?:from|to|\d+%)\s*\{([^}]*)\}/gm)) {
       for (const declaration of property.split(";")) {
         const name = declaration.split(":")[0].trim();
         if (!name) continue;
@@ -162,4 +162,44 @@ test("không dùng đồng thời hai thư viện chuyển cảnh", async () => 
   for (const forbidden of ["barba.mjs", "lenis.mjs", "keen-slider.mjs", "splide.mjs"]) {
     assert.ok(!names.includes(forbidden), `không được thêm ${forbidden} khi Swup đã đủ`);
   }
+});
+
+test("container không được đụng tới opacity trong pha đi vào", async () => {
+  const css = await read("public/assets/css/page-transition.css");
+  // Opacity của cha và con NHÂN với nhau. Bản đầu tiên cho container mờ 0.55
+  // chồng lên section mờ 0, ra đúng 0 tuyệt đối: đo được 60ms màn hình trắng
+  // ngay sau khi trang cũ biến mất. Việc hiện ra thuộc về section, không thuộc
+  // về container.
+  const pageIn = css.match(/@keyframes page-in \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(pageIn, "thiếu @keyframes page-in");
+  assert.doesNotMatch(pageIn, /opacity/, "container chỉ được lo transform");
+  const rule = css.match(/html\.is-changing\.is-rendering \.transition-page \{([^}]*)\}/)?.[1];
+  assert.ok(rule);
+  assert.doesNotMatch(rule, /opacity/);
+});
+
+test("nội dung hiện rõ ngay, không để lại khoảng trống sau khi trang cũ biến mất", async () => {
+  const css = await read("public/assets/css/page-transition.css");
+  for (const name of ["page-stagger", "page-stagger-back"]) {
+    const body = css.match(new RegExp(`@keyframes ${name} \\{([\\s\\S]*?)\\n\\}`))?.[1];
+    assert.ok(body, `thiếu @keyframes ${name}`);
+    // Mốc giữa đưa opacity về 1 sớm hơn nhiều so với lúc cú nâng kết thúc. Mắt
+    // đọc "đã có nội dung chưa" bằng độ sáng, không bằng vị trí.
+    assert.match(body, /^\s*45%\s*\{\s*opacity:\s*1;\s*\}/m,
+      `${name} phải đủ sáng ở 45% chặng đường`);
+  }
+});
+
+test("ngân sách thời gian của tầng nội dung nằm gọn trong thời lượng Swup đo", async () => {
+  const css = await read("public/assets/css/page-transition.css");
+  // Swup chỉ đo .transition-page. Section nào chạy quá mốc đó sẽ bị gỡ lớp
+  // .is-rendering giữa chừng và snap về trạng thái cuối — thấy rõ là một cú giật.
+  const pageIn = Number(css.match(/--page-in:\s*(\d+)ms/)?.[1]);
+  const childDuration = Number(css.match(/animation: page-stagger (\d+)ms/)?.[1]);
+  const delays = [...css.matchAll(/animation-delay:\s*(\d+)ms/g)].map((match) => Number(match[1]));
+  assert.ok(pageIn > 0 && childDuration > 0 && delays.length >= 6);
+  assert.ok(
+    Math.max(...delays) + childDuration <= pageIn,
+    `delay lớn nhất (${Math.max(...delays)}ms) + ${childDuration}ms phải ≤ ${pageIn}ms`,
+  );
 });
