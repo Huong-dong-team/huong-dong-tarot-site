@@ -26,13 +26,14 @@ const PAGES = {
 };
 
 /* Có mặt ở gần như mọi trang; rẻ và tự thoát ngay nếu không tìm thấy phần tử. */
-const SHARED = ["share", "waitlist"];
+const SHARED = ["entrance-reveal", "share", "waitlist"];
 
 const LOADERS = {
   "hero-tilt": () => import("../ui/hero-tilt.js"),
   "hero-carousel": () => import("../ui/hero-carousel.js"),
   "card-filters": () => import("../ui/card-filters.js"),
   "symbol-tooltips": () => import("../ui/symbol-tooltips.js"),
+  "entrance-reveal": () => import("../ui/entrance-reveal.js"),
   share: () => import("../ui/share.js"),
   waitlist: () => import("../ui/waitlist.js"),
   "landing-drag": () => import("../landing-drag/init.js"),

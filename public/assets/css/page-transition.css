@@ -1,4 +1,4 @@
-/* Chuyển cảnh giữa các trang — KHUNG, chưa có animation.
+/* Chuyển cảnh giữa các trang và entrance theo vùng nhìn.
 
    Animation cũ (trang cũ lùi ra + vệt sáng quét ngang + nội dung vào theo tầng)
    đã được gỡ: nó đọc ra thành "chớp chớp" ở mỗi lần điều hướng. Toàn bộ phần
@@ -43,16 +43,19 @@
    prefers-reduced-motion phải tắt sạch animation mới, xem khối cuối tệp. */
 
 :root {
-  --page-out: 280ms;
-  --page-in: 1950ms;
-  --page-ease-out: cubic-bezier(.4, 0, .7, .3);
-  --page-ease-in: cubic-bezier(.16, .86, .22, 1);
+  --page-out: 360ms;
+  --page-in: 2100ms;
+  --page-ease-out: cubic-bezier(.42, 0, .72, .24);
+  --page-ease-in: cubic-bezier(.16, 1, .3, 1);
   --page-enter-x: 0px;
-  --page-enter-y: 42px;
-  --hero-enter-x: 82px;
-  --hero-enter-y: 62px;
-  --hero-enter-left: -82px;
-  --hero-enter-top: -62px;
+  --page-enter-y: 48px;
+  --hero-enter-x: 96px;
+  --hero-enter-y: 72px;
+  --hero-enter-left: -96px;
+  --hero-enter-top: -72px;
+  --reveal-x: 0px;
+  --reveal-y: 54px;
+  --reveal-ease: cubic-bezier(.16, 1, .3, 1);
 }
 
 /* Container chỉ rời đi bằng opacity/transform. Ở pha đi vào, nó tuyệt đối không
@@ -67,8 +70,8 @@
 
 html.is-changing.is-leaving .transition-page {
   opacity: 0;
-  transform: translate3d(0, -10px, 0) scale(.994);
-  filter: saturate(.88) brightness(1.025);
+  transform: translate3d(0, -14px, 0) scale(.992);
+  filter: saturate(.82) brightness(1.035);
 }
 
 html.is-changing.is-rendering .transition-page {
@@ -77,14 +80,15 @@ html.is-changing.is-rendering .transition-page {
 }
 
 @keyframes page-in {
-  from { transform: translate3d(0, 0, 0) scale(.996); }
+  from { transform: translate3d(0, 12px, 0) scale(.992); }
+  68%  { transform: translate3d(0, -2px, 0) scale(1); }
   to   { transform: none; }
 }
 
 /* Mỗi section đi vào từ một phương khác nhau. Trang chủ loại hero khỏi nhịp
    chung vì các thành phần bên trong hero có choreography riêng ở khối dưới. */
 html.is-changing.is-rendering .transition-page > *:not(.hero) {
-  animation: page-stagger 1100ms var(--page-ease-in) both;
+  animation: page-stagger 1250ms var(--page-ease-in) both;
 }
 html.is-changing.is-rendering .transition-page > :nth-child(4n + 1):not(.hero) {
   --page-enter-x: -54px;
@@ -102,14 +106,53 @@ html.is-changing.is-rendering .transition-page > :nth-child(4n):not(.hero) {
   --page-enter-x: 0px;
   --page-enter-y: 42px;
 }
-html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 120ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 240ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 360ms; }
-html.is-changing.is-rendering .transition-page > :nth-child(n + 5) { animation-delay: 480ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 80ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 160ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 240ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(n + 5) { animation-delay: 320ms; }
 
 @keyframes page-stagger {
-  from { opacity: 0; transform: translate3d(var(--page-enter-x), var(--page-enter-y), 0); }
-  14%  { opacity: 1; }
+  from { opacity: .08; transform: translate3d(var(--page-enter-x), var(--page-enter-y), 0) scale(.985); }
+  12%  { opacity: 1; }
+  72%  { transform: translate3d(0, -2px, 0) scale(1); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Nội dung đi vào theo cú cuộn ------------------------------------- */
+
+/* JS chỉ gắn data-hd-reveal sau khi trang đã đọc được đầy đủ. Vì vậy nếu JS
+   lỗi, trình duyệt cũ không có IntersectionObserver, hoặc người dùng tắt JS,
+   không selector nào dưới đây có thể giấu nội dung tĩnh. */
+html.hd-reveal-ready [data-hd-reveal="left"] {
+  --reveal-x: -74px;
+  --reveal-y: 0px;
+}
+html.hd-reveal-ready [data-hd-reveal="top"] {
+  --reveal-x: 0px;
+  --reveal-y: -58px;
+}
+html.hd-reveal-ready [data-hd-reveal="right"] {
+  --reveal-x: 74px;
+  --reveal-y: 0px;
+}
+html.hd-reveal-ready [data-hd-reveal="bottom"] {
+  --reveal-x: 0px;
+  --reveal-y: 58px;
+}
+
+html.hd-reveal-ready [data-hd-reveal]:not(.is-hd-revealed) {
+  opacity: .08;
+  transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(.982);
+}
+
+html.hd-reveal-ready [data-hd-reveal].is-hd-revealed {
+  animation: hd-scroll-reveal 1120ms var(--hd-reveal-delay, 0ms) var(--reveal-ease) both;
+}
+
+@keyframes hd-scroll-reveal {
+  from { opacity: .08; transform: translate3d(var(--reveal-x), var(--reveal-y), 0) scale(.982); }
+  15%  { opacity: 1; }
+  74%  { transform: translate3d(0, -2px, 0) scale(1); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -181,26 +224,30 @@ html.is-changing.is-rendering .transition-page[data-page="home"] .hero-actions >
 }
 
 @keyframes hero-enter-left {
-  from { opacity: .12; transform: translate3d(var(--hero-enter-left), 0, 0) scale(.985); }
-  72%  { opacity: 1; transform: translate3d(5px, 0, 0) scale(1); }
+  from { opacity: .16; transform: translate3d(var(--hero-enter-left), 0, 0) scale(.982); }
+  16%  { opacity: 1; }
+  78%  { opacity: 1; transform: translate3d(4px, 0, 0) scale(1); }
   to   { opacity: 1; transform: none; }
 }
 
 @keyframes hero-enter-right {
-  from { opacity: .12; transform: translate3d(var(--hero-enter-x), 0, 0) scale(.975); }
-  76%  { opacity: 1; transform: translate3d(-5px, 0, 0) scale(1); }
+  from { opacity: .16; transform: translate3d(var(--hero-enter-x), 0, 0) scale(.972); }
+  14%  { opacity: 1; }
+  80%  { opacity: 1; transform: translate3d(-5px, 0, 0) scale(1); }
   to   { opacity: 1; transform: none; }
 }
 
 @keyframes hero-enter-top {
-  from { opacity: .12; transform: translate3d(0, var(--hero-enter-top), 0) scale(.985); }
-  72%  { opacity: 1; transform: translate3d(0, 4px, 0) scale(1); }
+  from { opacity: .16; transform: translate3d(0, var(--hero-enter-top), 0) scale(.982); }
+  16%  { opacity: 1; }
+  78%  { opacity: 1; transform: translate3d(0, 4px, 0) scale(1); }
   to   { opacity: 1; transform: none; }
 }
 
 @keyframes hero-enter-bottom {
-  from { opacity: .12; transform: translate3d(0, var(--hero-enter-y), 0) scale(.985); }
-  72%  { opacity: 1; transform: translate3d(0, -4px, 0) scale(1); }
+  from { opacity: .16; transform: translate3d(0, var(--hero-enter-y), 0) scale(.982); }
+  16%  { opacity: 1; }
+  78%  { opacity: 1; transform: translate3d(0, -4px, 0) scale(1); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -247,6 +294,10 @@ html.hd-first-load .hero-bg {
     --hero-enter-left: -38px;
     --hero-enter-top: -34px;
   }
+  html.hd-reveal-ready [data-hd-reveal="left"] { --reveal-x: -36px; }
+  html.hd-reveal-ready [data-hd-reveal="right"] { --reveal-x: 36px; }
+  html.hd-reveal-ready [data-hd-reveal="top"] { --reveal-y: -32px; }
+  html.hd-reveal-ready [data-hd-reveal="bottom"] { --reveal-y: 32px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -262,6 +313,7 @@ html.hd-first-load .hero-bg {
   }
   html.is-changing.is-rendering .transition-page,
   html.is-changing.is-rendering .transition-page > *,
+  html.hd-reveal-ready [data-hd-reveal],
   html.hd-first-load .hero-bg,
   html.hd-first-load .hero-copy > *,
   html.hd-first-load .hero-actions > *,
@@ -269,5 +321,6 @@ html.hd-first-load .hero-bg {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
 }
