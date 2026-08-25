@@ -1129,9 +1129,60 @@ body {
   background: var(--paper-raised);
 }
 
+/* AutoAnimate không quan sát `hidden`; giữ node tại chỗ tránh tháo/chèn cả bộ
+   bài và chỉ làm mềm khoảnh khắc những kết quả phù hợp quay lại màn hình. */
+.library-grid.is-filter-motion-ready .tarot-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.18s ease;
+}
+.library-grid.is-filter-motion-ready .tarot-card.is-filter-entering {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.keyword-list [data-symbol-trigger] {
+  cursor: help;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+.keyword-list [data-symbol-trigger]:focus-visible {
+  outline: 3px solid var(--gold-ink);
+  outline-offset: 3px;
+}
+.symbol-tooltip {
+  position: fixed;
+  z-index: 100;
+  display: grid;
+  gap: 4px;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 24px));
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 24%, transparent);
+  font-size: 13px;
+  line-height: 1.45;
+  pointer-events: none;
+}
+.symbol-tooltip[hidden] { display: none; }
+.symbol-tooltip-title { color: var(--gold); }
+.symbol-tooltip-meaning { color: var(--paper); }
+.symbol-tooltip-arrow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  transform: rotate(45deg);
+}
+
 .daily-card-result[hidden] { display: none; }
 .daily-card-art { margin: 0; padding: 10px; border: 1px solid var(--brown); background: var(--paper); }
-.daily-card-art img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: var(--img-radius); }
+.daily-card-flip { position: relative; aspect-ratio: 2 / 3; perspective: 1100px; transform-style: preserve-3d; }
+.daily-card-flip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: var(--img-radius); backface-visibility: hidden; }
+.daily-card-flip [data-daily-back] { z-index: 2; }
+.daily-card-flip [data-daily-image] { z-index: 1; }
 .daily-card-art img.is-reversed { transform: rotate(180deg); }
 .daily-card-art figcaption { padding: 10px 4px 2px; color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; }
 .daily-card-reading h2 { margin-bottom: 8px; }

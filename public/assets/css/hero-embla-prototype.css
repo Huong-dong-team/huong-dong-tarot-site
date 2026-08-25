@@ -1,0 +1,47 @@
+/* Chỉ bản thử thủ công nạp tệp này. Carousel production không dùng các luật
+   track của Embla nên trạng thái HTML tĩnh và critical CSS vẫn nguyên vẹn. */
+.hero-embla-prototype {
+  display: grid;
+  min-width: 0;
+}
+
+.hero-embla-prototype-label {
+  min-height: 2.8em;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-embla-prototype-viewport {
+  min-width: 0;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+.hero-embla-prototype-container {
+  display: flex;
+  align-items: stretch;
+  margin-left: -12px;
+}
+
+.hero-embla-prototype-slide {
+  display: grid;
+  flex: 0 0 100%;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  margin-left: 12px;
+  gap: 4px;
+  transform: none;
+}
+
+.hero-embla-prototype-slide[aria-hidden="true"] {
+  visibility: visible;
+}
+
+.hero-embla-prototype-dots {
+  margin-bottom: 0;
+}

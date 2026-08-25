@@ -5,7 +5,7 @@ import path from "node:path";
 const root = path.resolve("dist");
 const portFlag = process.argv.indexOf("--port");
 const port = Number(portFlag >= 0 ? process.argv[portFlag + 1] : process.env.PORT || 8080);
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json", ".xml": "application/xml", ".webp": "image/webp", ".png": "image/png", ".svg": "image/svg+xml" };
+const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json", ".xml": "application/xml", ".webp": "image/webp", ".png": "image/png", ".svg": "image/svg+xml" };
 http.createServer(async (request, response) => {
   try {
     const urlPath = decodeURIComponent(new URL(request.url, `http://${request.headers.host}`).pathname);
