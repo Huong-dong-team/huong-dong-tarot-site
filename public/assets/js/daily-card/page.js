@@ -3,9 +3,38 @@ import { vietnamDateKey } from "./time.js";
 import { motionGate } from "../motion-gate.js";
 import { animate as animateMini } from "/assets/vendor/motion-mini.mjs";
 
-const root = document.querySelector("[data-daily-card]");
+/* Trang "Lá bài hôm nay".
 
-if (root) {
+   Xuất init() thay vì chạy ngay lúc import: Swup thay DOM chứ không tải lại
+   trang, nên module phải dựng được nhiều lần trong cùng một phiên và phải trả
+   lại mọi thứ nó mượn — cổng chuyển động, animation đang chạy, và script
+   astronomy nạp trễ. */
+
+/* astronomy.browser.min.js là script cổ điển gán window.Astronomy. Trước đây nó
+   được nhúng cứng vào trang; giờ module tự nạp và nhớ Promise, nên quay lại
+   trang này lần thứ hai không tải lại 250 KB thiên văn.
+
+   URL lấy từ data-astronomy-src trên DOM chứ không viết cứng ở đây: build.js
+   đóng vân tay nội dung vào thuộc tính đó, nên bản sửa lỗi của gói thiên văn
+   tới được người dùng ngay thay vì đợi cache hết hạn. */
+let astronomyPromise = null;
+function loadAstronomy(src) {
+  if (window.Astronomy) return Promise.resolve(window.Astronomy);
+  if (!src) return Promise.reject(new Error("astronomy-src-missing"));
+  if (astronomyPromise) return astronomyPromise;
+  astronomyPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve(window.Astronomy);
+    script.onerror = () => { astronomyPromise = null; reject(new Error("astronomy-failed")); };
+    document.head.append(script);
+  });
+  return astronomyPromise;
+}
+
+export function init() {
+  const root = document.querySelector("[data-daily-card]");
+  if (!root) return () => {};
   const drawButton = root.querySelector("[data-daily-draw]");
   const status = root.querySelector("[data-daily-status]");
   const result = root.querySelector("[data-daily-result]");
@@ -42,7 +71,7 @@ if (root) {
     resetRevealStyles();
   }
 
-  motionGate(root, {
+  const closeMotionGate = motionGate(root, {
     onEnter() {
       motionAllowed = true;
     },
@@ -263,13 +292,14 @@ if (root) {
       refreshDate(now, cards);
       let freshDraw = false;
       if (!memoryResult) {
-        if (!window.Astronomy) throw new Error("astronomy-unavailable");
+        const astronomy = await loadAstronomy(root.dataset.astronomySrc);
+        if (!astronomy) throw new Error("astronomy-unavailable");
         freshDraw = true;
         memoryResult = createDailyReading({
           cards,
           deviceId: anonymousDeviceId(),
           moment: now,
-          astronomy: window.Astronomy,
+          astronomy,
         });
         writeJson(resultKey, memoryResult);
       }
@@ -284,4 +314,12 @@ if (root) {
 
   root.querySelector("[data-daily-share]")?.addEventListener("click", () => memoryResult && shareReading(memoryResult));
   root.querySelector("[data-daily-copy]")?.addEventListener("click", () => memoryResult && shareReading(memoryResult, true));
+
+  return () => {
+    // cancelReveal() gọi complete() trên mọi animation còn chạy, nếu không thì
+    // Promise `finished` của Motion Mini treo mãi và giữ tham chiếu tới một
+    // phần tử đã rời khỏi cây DOM.
+    cancelReveal();
+    closeMotionGate();
+  };
 }

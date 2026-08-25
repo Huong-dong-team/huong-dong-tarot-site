@@ -13,7 +13,7 @@ const read = (file) => readFile(path.join(root, file), "utf8");
 test("CSS và JS mang dấu phiên bản theo nội dung", async () => {
   for (const file of ["dist/index.html", "dist/la-bai/index.html", "dist/admin/index.html"]) {
     const html = await read(file);
-    for (const [whole, url] of html.matchAll(/(?:src|href)="(\/(?:assets|admin)\/[^"]+\.(?:css|js)[^"]*)"/g)) {
+    for (const [whole, url] of html.matchAll(/(?:src|href|data-astronomy-src)="(\/(?:assets|admin)\/[^"]+\.(?:css|js)[^"]*)"/g)) {
       assert.match(url, /\?v=[0-9a-f]{8}$/, `${file}: ${whole} thiếu dấu phiên bản`);
     }
   }

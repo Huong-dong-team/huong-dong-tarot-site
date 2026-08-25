@@ -294,7 +294,10 @@ function layout({ title, description, path: routePath, image, type, schemas, con
 // theo; nội dung không đổi thì URL giữ nguyên và cache vẫn phát huy tác dụng.
 const assetStamps = new Map();
 async function stampAssets(html) {
-  const pattern = /(?:src|href)="(\/(?:assets|admin)\/[^"?]+\.(?:css|js))"/g;
+  // data-astronomy-src cũng phải được đóng dấu: gói thiên văn giờ do
+  // daily-card/page.js nạp lúc chạy, nên nó không còn nằm trong một thẻ <script>
+  // để regex src= bắt được, mà vẫn cần vân tay nội dung như mọi tệp JS khác.
+  const pattern = /(?:src|href|data-astronomy-src)="(\/(?:assets|admin)\/[^"?]+\.(?:css|js))"/g;
   const files = [...new Set([...html.matchAll(pattern)].map((match) => match[1]))];
   for (const file of files) {
     if (!assetStamps.has(file)) {
@@ -536,7 +539,10 @@ await emit("/la-bai-hom-nay/", layout({
   schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }])],
   content: dailyContent,
   bodyClass: "daily-card-page",
-  pageScripts: '<script src="/assets/vendor/astronomy.browser.min.js"></script><script type="module" src="/assets/js/daily-card/page.js"></script>',
+  // Không nhúng script cứng nữa: page/registry.js đọc <main data-page="daily">
+  // rồi tự import module và tự nạp astronomy. Thẻ <script> nằm ngoài container
+  // Swup sẽ không bao giờ chạy lại sau một lần chuyển cảnh, nên nhúng cứng là
+  // đúng một lần đầu rồi im lặng hỏng từ lần thứ hai trở đi.
 }));
 
 // 34 trang toàn văn Lĩnh Nam chích quái.

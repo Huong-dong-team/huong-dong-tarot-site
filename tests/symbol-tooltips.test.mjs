@@ -33,11 +33,11 @@ test("ánh xạ tooltip chỉ dùng quan hệ keyword và symbol có thật tron
 
 test("popover dùng Floating UI, hỗ trợ bàn phím và không nạp trên trang không có trigger", async () => {
   const [site, build, main] = await Promise.all([
-    read("public/assets/js/site.js"),
+    read("public/assets/js/ui/symbol-tooltips.js"),
     read("scripts/build.js"),
     read("public/assets/css/main.css"),
   ]);
-  assert.match(site, /if \(!triggers\.length\) return;[\s\S]*import\("\/assets\/vendor\/floating-ui\.mjs"\)/);
+  assert.match(site, /if \(!triggers\.length\) return \(\) => \{\};[\s\S]*import\("\/assets\/vendor\/floating-ui\.mjs"\)/);
   assert.match(site, /trigger\.tabIndex = 0;[\s\S]*setAttribute\("role", "button"\)/,
     "chỉ JS đang hoạt động mới được biến nhãn tĩnh thành control");
   assert.match(site, /computePosition\(anchor, tooltip/);

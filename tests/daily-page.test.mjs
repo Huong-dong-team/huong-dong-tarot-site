@@ -42,10 +42,17 @@ test("trang nhúng đúng 78 lá tối thiểu và JSON không thể đóng th�
   }
 });
 
-test("gói thiên văn và module trang có dấu phiên bản, kích thước được chặn", async () => {
+test("gói thiên văn có dấu phiên bản, module trang được registry nạp, kích thước được chặn", async () => {
   const html = await read("dist/la-bai-hom-nay/index.html");
-  assert.match(html, /src="\/assets\/vendor\/astronomy\.browser\.min\.js\?v=[0-9a-f]{8}"/);
-  assert.match(html, /type="module" src="\/assets\/js\/daily-card\/page\.js\?v=[0-9a-f]{8}"/);
+  // Từ khi website chuyển cảnh bằng Swup, trang không nhúng cứng hai thẻ <script>
+  // nữa: thẻ nằm ngoài container Swup sẽ không chạy lại sau lần điều hướng đầu
+  // tiên. page/registry.js đọc data-page rồi import() module, còn URL gói thiên
+  // văn nằm ở data-astronomy-src để build vẫn đóng được vân tay nội dung.
+  assert.match(html, /data-astronomy-src="\/assets\/vendor\/astronomy\.browser\.min\.js\?v=[0-9a-f]{8}"/);
+  assert.match(html, /<main id="noi-dung-chinh"[^>]*data-page="daily"/);
+  assert.match(html, /type="module" src="\/assets\/js\/site\.js\?v=[0-9a-f]{8}"/);
+  assert.doesNotMatch(html, /<script[^>]*src="\/assets\/js\/daily-card\/page\.js/,
+    "module của trang phải do registry nạp, không nhúng cứng vào HTML");
   const vendor = await stat(path.join(root, "dist/assets/vendor/astronomy.browser.min.js"));
   assert.ok(vendor.size <= 130_000, `gói thiên văn quá lớn: ${vendor.size} byte`);
 });
