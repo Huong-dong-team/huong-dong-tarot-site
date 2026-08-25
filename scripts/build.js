@@ -89,10 +89,10 @@ const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card
 // trang và nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn thì
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
 // trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn
-// hơn khoảng 2 KB. Không có chuỗi nào trong hai tệp chứa "/*" nên phép thay
+// hơn khoảng 2 KB. Không có chuỗi nào trong ba tệp chứa "/*" nên phép thay
 // này an toàn; test critical-css.test.mjs canh cả ngân sách lẫn các mốc bắt buộc.
 async function loadCriticalCss() {
-  const files = ["fonts.css", "critical.css"];
+  const files = ["fonts.css", "custom-fonts.css", "critical.css"];
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
   if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
   return css
@@ -274,12 +274,20 @@ const layoutSettings = {
  * @returns {string} HTML đầy đủ của trang
  */
 function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
+  const bodyFontPreloads = [
+    '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
+    '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
+  ];
+  const displayFontPreload = bodyClass === "home-page"
+    ? '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>'
+    : '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
   return renderString(templates._layout, {
     ...layoutSettings,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
     pageScripts,
+    fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),
     heroPreloads: bodyClass === "home-page"
       ? '<link rel="preload" as="image" fetchpriority="high" href="/assets/img/hero-1536.avif" media="(min-width: 901px)">'
       : "",

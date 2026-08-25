@@ -10,12 +10,9 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Ảnh hero chỉ preload trên trang chủ; build.js để trống khối này ở route khác. -->
   {{{heroPreloads}}}
-  <!-- Preload đúng hai kiểu chữ xuất hiện ở màn hình đầu và đủ cả dải Việt/Latin
-       để tránh font swap làm dịch chuyển bố cục. -->
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/charm-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/charm-700.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Mỗi route chỉ preload đúng font hiển thị của khung đầu: Fontasia ở trang
+       chủ, Harmoni ở trang trong. Be Vietnam Pro giữ cho UI và nhãn tiếng Việt. -->
+  {{{fontPreloads}}}
   <style data-critical>{{{criticalCss}}}</style>
   <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/assets/css/main.css"></noscript>

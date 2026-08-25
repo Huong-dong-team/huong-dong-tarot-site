@@ -38,8 +38,15 @@ test("tối ưu hiệu ứng không làm mất nền hero và carousel", async (
   assert.match(main, /\.hero-carousel \.hero-card\.is-active/);
   assert.match(main, /content-visibility:\s*auto/);
   assert.match(critical, /content-visibility:\s*auto/);
-  assert.match(main, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
-  assert.match(critical, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
+  // Fontasia dùng font-display: optional và được preload theo route, nên mobile
+  // không cần ép về Georgia. Giữ cùng một token nhận diện mà vẫn tránh đổi font
+  // muộn trên thiết bị yếu.
+  const finalTypography = main.slice(main.indexOf("0.13 —"));
+  assert.match(finalTypography, /--script:\s*"Fontasia VH"/);
+  assert.match(finalTypography, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
+  assert.match(critical, /--script:\s*"Fontasia VH"/);
+  assert.match(critical, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
+  assert.doesNotMatch(critical, /\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
 });
 
 test("bộ lọc 78 lá giữ hidden và chỉ tăng cường chuyển động khi motionGate cho phép", async () => {

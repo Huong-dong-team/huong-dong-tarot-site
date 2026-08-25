@@ -3,8 +3,8 @@
  *
  *   node scripts/fetch-fonts.mjs
  *
- * Vì sao tự host: hai request tới fonts.googleapis.com chặn render ~990ms. Mỗi
- * request là một vòng DNS + TLS tới host khác, xảy ra TRƯỚC khi trình duyệt biết
+ * Vì sao tự host: request tới fonts.googleapis.com chặn render. Đó là một vòng
+ * DNS + TLS tới host khác, xảy ra TRƯỚC khi trình duyệt biết
  * mình cần file .woff2 nào — nên nó nằm thẳng trên đường tới khung hình đầu tiên.
  *
  * Giữ nguyên unicode-range mà Google khai, để trình duyệt chỉ tải dải ký tự thật
@@ -19,8 +19,6 @@ const OUT_CSS = "../public/assets/css/fonts.css";
 
 const FAMILIES = [
   "Be+Vietnam+Pro:wght@400;500;600;700",
-  "Cormorant+Garamond:wght@500;600;700",
-  "Charm:wght@400;700",
 ];
 
 mkdirSync(OUT_FONTS, { recursive: true });

@@ -496,15 +496,18 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
    Tên tệp được giữ để không đổi thứ tự tài nguyên đang chạy; bảng màu
    Bình Minh do khối token trong main.css làm nguồn duy nhất.
 
-   Sans công nghiệp dùng cho thân bài và đa số tiêu đề;
-   Charm chỉ dùng làm điểm nhấn ở hero và logo.
+   Be Vietnam Pro giữ phần đọc dài và giao diện. Bộ chữ Việt hóa do chủ dự án
+   cung cấp đảm nhiệm các lớp nhận diện: Harmoni cho tiêu đề, Fontasia cho hero,
+   Ganh cho tên nội dung và Mon Cheri cho trích dẫn.
    ============================================================ */
 
 :root {
   /* Typography vẫn ở tệp nạp sau để giữ đúng cơ cấu hiện tại. */
-  --display: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
+  --display: "DFVN TAN Harmoni", Georgia, serif;
   --body: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
-  --script: "Charm", cursive;
+  --script: "Fontasia VH", "DFVN TAN Harmoni", Georgia, serif;
+  --editorial: "DFVN TAN Mon Cheri", "Ganh", sans-serif;
+  --sans-display: "Ganh", "Be Vietnam Pro", system-ui, sans-serif;
 }
 
 body {
@@ -512,22 +515,57 @@ body {
   color: var(--ink);
 }
 
-/* Tiêu đề: sans, siết letter-spacing cho gọn — chất "công nghiệp". */
+/* Harmoni có tương phản nét và chân chữ mạnh; giữ đúng weight gốc để trình duyệt
+   không tự làm đậm, làm mất chi tiết của mặt chữ. */
 h1, h2, h3, h4 {
   font-family: var(--display);
-  letter-spacing: -0.015em;
-  font-weight: 600;
+  letter-spacing: 0.005em;
+  font-weight: 400;
   color: var(--ink);
 }
-h1 { font-weight: 700; letter-spacing: -0.025em; }
+h1 { line-height: 1.02; }
+h2 { line-height: 1.06; }
+h3 { line-height: 1.12; }
 
-/* Thư pháp giờ nằm sẵn trong ảnh wordmark; chỉ hero trang chủ còn dùng font Charm. */
+/* Fontasia chỉ xuất hiện ở thông điệp thương hiệu lớn; không dùng cho nội dung
+   dài vì nét viết tay làm giảm tốc độ đọc ở cỡ nhỏ. */
 .home-page .page-hero h1,
 .home-page .hero h1 {
   font-family: var(--script);
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  padding-inline-start: .16em;
+  font-size: clamp(62px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
   color: var(--gold-ink);
+}
+
+/* Ganh rõ và gọn ở cỡ trung bình, phù hợp tên lá/bài viết nhưng vẫn giữ
+   Be Vietnam Pro cho đoạn văn và thành phần điều khiển. */
+.tarot-card h2,
+.tarot-card h3,
+.news-grid h2,
+.news-grid h3,
+.site-footer strong {
+  font-family: var(--sans-display);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+/* Mon Cheri là lớp điểm nhấn biên tập, chỉ dùng ở trích dẫn để độ rộng và nét
+   mảnh của font không ảnh hưởng bố cục điều hướng hay khả năng đọc đoạn dài. */
+blockquote {
+  font-family: var(--editorial);
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 900px) {
+  .home-page .page-hero h1,
+  .home-page .hero h1 {
+    font-size: clamp(54px, 15vw, 70px);
+  }
 }
 
 /* Vỏ trang */
