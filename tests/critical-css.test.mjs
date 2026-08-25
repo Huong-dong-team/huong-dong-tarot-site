@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -33,21 +33,51 @@ test("chỉ trang chủ preload ảnh hero", async () => {
 });
 
 test("preload đúng font dùng ở màn hình đầu", async () => {
-  const html = await read("dist/index.html");
+  const home = await read("dist/index.html");
+  const card = await read("dist/la-bai/the-star/index.html");
   for (const font of [
     "be-vietnam-pro-700-vietnamese.woff2",
     "be-vietnam-pro-700.woff2",
-    "charm-700-vietnamese.woff2",
-    "charm-700.woff2",
   ]) {
-    assert.match(html, new RegExp(`rel="preload" href="/assets/fonts/${font.replace(".", "\\.")}"`));
+    const pattern = new RegExp(`rel="preload" href="/assets/fonts/${font.replace(".", "\\.")}"`);
+    assert.match(home, pattern);
+    assert.match(card, pattern);
   }
-  assert.doesNotMatch(html, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-(?:400|600)/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
+  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.match(card, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
+  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:be-vietnam-pro-(?:400|600)|charm-)/);
 });
 
 test("font tiêu đề không đổi mặt muộn trên mạng chậm", async () => {
-  const fonts = await read("public/assets/css/fonts.css");
-  const charm700 = fonts.match(/@font-face\s*\{[^}]*font-family:\s*"Charm";[^}]*font-weight:\s*700;[^}]*\}/gs) || [];
-  assert.equal(charm700.length, 2);
-  for (const face of charm700) assert.match(face, /font-display:\s*optional/);
+  const fonts = await read("public/assets/css/custom-fonts.css");
+  for (const family of ["Fontasia VH", "DFVN TAN Harmoni"]) {
+    const face = fonts.match(new RegExp(`@font-face\\s*\\{[^}]*font-family:\\s*"${family}";[^}]*\\}`, "s"))?.[0] || "";
+    assert.ok(face, `thiếu @font-face của ${family}`);
+    assert.match(face, /font-display:\s*optional/);
+  }
+});
+
+test("đủ bốn họ font Việt hóa và các biến thể Ganh", async () => {
+  const files = [
+    "fontasia-vh.woff2",
+    "dfvn-tan-harmoni.woff2",
+    "dfvn-tan-mon-cheri.woff2",
+    "ganh-100.woff2",
+    "ganh-100-italic.woff2",
+    "ganh-400.woff2",
+    "ganh-400-italic.woff2",
+  ];
+  for (const file of files) {
+    const info = await stat(path.join(root, "public", "assets", "fonts", file));
+    assert.ok(info.size > 8_000, `${file} rỗng hoặc bị hỏng`);
+  }
+
+  const critical = await read("public/assets/css/critical.css");
+  const main = await read("public/assets/css/main.css");
+  assert.match(critical, /--display:\s*"DFVN TAN Harmoni"/);
+  assert.match(critical, /--script:\s*"Fontasia VH"/);
+  assert.match(main, /--sans-display:\s*"Ganh"/);
+  assert.match(main, /--editorial:\s*"DFVN TAN Mon Cheri"/);
 });

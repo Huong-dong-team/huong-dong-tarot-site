@@ -35,9 +35,11 @@
   --shadow: 0 24px 70px rgb(139 99 57 / 14%);
   --danger: #C0272D;
   --img-radius: clamp(10px, 1.4vw, 18px);
-  --display: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
+  --display: "DFVN TAN Harmoni", Georgia, serif;
   --body: "Be Vietnam Pro", "Inter", system-ui, sans-serif;
-  --script: "Charm", cursive;
+  --script: "Fontasia VH", "DFVN TAN Harmoni", Georgia, serif;
+  --editorial: "DFVN TAN Mon Cheri", "Ganh", sans-serif;
+  --sans-display: "Ganh", "Be Vietnam Pro", system-ui, sans-serif;
   --shell: min(1180px, calc(100% - 32px));
   --hd-scroll: 0;
   --hd-hero: 0;
@@ -156,12 +158,12 @@ h1, h2, h3, h4, p { margin-top: 0; }
 h1, h2, h3, h4 {
   color: var(--ink);
   font-family: var(--display);
-  font-weight: 600;
-  letter-spacing: -.015em;
+  font-weight: 400;
+  letter-spacing: .005em;
 }
-h1 { font-size: clamp(50px, 7vw, 90px); line-height: .94; font-weight: 700; letter-spacing: -.025em; }
-h2 { font-size: clamp(40px, 5.6vw, 68px); line-height: 1; }
-h3 { font-size: 30px; line-height: 1.08; }
+h1 { font-size: clamp(50px, 7vw, 90px); line-height: 1.02; }
+h2 { font-size: clamp(40px, 5.6vw, 68px); line-height: 1.06; }
+h3 { font-size: 30px; line-height: 1.12; }
 .eyebrow {
   margin-bottom: 16px;
   color: var(--brown);
@@ -220,8 +222,11 @@ h3 { font-size: 30px; line-height: 1.08; }
   margin-bottom: 24px;
   color: var(--gold-ink);
   font-family: var(--script);
-  font-weight: 700;
-  letter-spacing: .01em;
+  padding-inline-start: .16em;
+  font-size: clamp(62px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
 }
 .hero .eyebrow { color: var(--muted); }
 .hero-copy > p:not(.eyebrow) { max-width: 650px; color: var(--ink-soft); font-size: 18px; }
@@ -381,9 +386,9 @@ h3 { font-size: 30px; line-height: 1.08; }
     overscroll-behavior: contain;
   }
   .hero { padding-top: 70px; }
-  /* Mobile ưu tiên font hệ thống cho LCP: không chờ/đổi mặt chữ trên thiết bị
-     yếu. Desktop vẫn dùng Charm theo hệ nhận diện. */
-  .home-page .hero h1 { font-family: Georgia, "Times New Roman", serif; }
+  /* Fontasia đã được preload và dùng font-display: optional, nên thiết bị yếu
+     tự giữ fallback mà không cần đổi riêng mặt chữ ở breakpoint này. */
+  .home-page .hero h1 { font-size: clamp(54px, 15vw, 70px); }
   /* Trên màn hình hẹp, lớp phủ gần như che hoàn toàn tranh nền. Không vẽ ảnh
      trang trí này để tránh biến nó thành LCP của cả khung hero dài. */
   .hero-bg { display: none; }

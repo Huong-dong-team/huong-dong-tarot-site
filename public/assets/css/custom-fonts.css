@@ -1,0 +1,59 @@
+/* Bộ chữ Việt hóa do chủ dự án cung cấp, chuyển sang WOFF2 để tự host.
+   Fontasia và Harmoni dùng optional vì nằm trên đường LCP: nếu mạng quá chậm,
+   trình duyệt giữ fallback đã vẽ thay vì đổi mặt chữ muộn và gây CLS. */
+
+@font-face {
+  font-family: "Fontasia VH";
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url("/assets/fonts/fontasia-vh.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DFVN TAN Harmoni";
+  font-style: normal;
+  font-weight: 400;
+  font-display: optional;
+  src: url("/assets/fonts/dfvn-tan-harmoni.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "DFVN TAN Mon Cheri";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/dfvn-tan-mon-cheri.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Ganh";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/fonts/ganh-100.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Ganh";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/fonts/ganh-100-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Ganh";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/ganh-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Ganh";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/ganh-400-italic.woff2") format("woff2");
+}
