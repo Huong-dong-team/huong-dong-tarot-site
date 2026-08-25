@@ -48,6 +48,11 @@ let generation = 0;
  * @returns {Promise<void>} hoàn tất khi tất cả module đã init xong
  */
 export async function startPage() {
+  // Chốt an toàn: vòng đời Swup luôn gọi stopPage() ở visit:start trước khi tới
+  // đây, nhưng nếu một đường gọi nào đó bỏ sót thì danh sách hàm huỷ cũ sẽ bị
+  // ghi đè và rò vĩnh viễn. Dọn trước rẻ hơn nhiều so với đi tìm chỗ rò sau này.
+  if (teardowns.length) stopPage();
+
   const main = document.querySelector("#noi-dung-chinh");
   const page = main?.dataset.page || "";
   const features = [...new Set([...(PAGES[page] || []), ...SHARED])];
