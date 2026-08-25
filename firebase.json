@@ -12,6 +12,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "headers": [
       {
+        "source": "**/*.@(html)",
+        "headers": [{ "key": "Cache-Control", "value": "public,no-cache" }]
+      },
+      {
         "source": "**/*.@(webp|png|jpg|jpeg|svg)",
         "headers": [{ "key": "Cache-Control", "value": "public,max-age=86400" }]
       },
