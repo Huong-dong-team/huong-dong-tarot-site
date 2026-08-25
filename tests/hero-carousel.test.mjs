@@ -99,3 +99,20 @@ test("ảnh dùng ở màn hình đầu đủ nhẹ", async () => {
     assert.ok(size < limitKb * 1024, `${file} nặng ${Math.round(size / 1024)} KB, vượt ngưỡng ${limitKb} KB`);
   }
 });
+
+test("dòng eyebrow của hero giữ chỗ đủ hai dòng trên màn hình hẹp", async () => {
+  const [critical, main] = await Promise.all([
+    readFile(path.join(root, "public/assets/css/critical.css"), "utf8"),
+    readFile(path.join(root, "public/assets/css/main.css"), "utf8"),
+  ]);
+  // hero-carousel.js ghi lại dòng này mỗi 7 giây, mà năm chuỗi không dài bằng
+  // nhau: một chuỗi vừa một dòng, bốn chuỗi "Tarot …" xuống hai dòng dưới ~400px.
+  // Không giữ chỗ thì cứ 7 giây cả cột chữ bên dưới nhảy 15px — đo được CLS
+  // 0,027 chỉ từ mỗi việc này, và nó tích luỹ suốt thời gian người đọc ở lại.
+  assert.match(critical, /\.hero \.eyebrow \{ min-height: 2\.4em; \}/);
+  assert.match(main, /\.hero \.eyebrow\{min-height:2\.4em\}/);
+  // 2.4em phải khớp 2 dòng × line-height khai trong .eyebrow. Đổi line-height mà
+  // quên chỗ này thì hoặc chừa thừa, hoặc chừa thiếu và CLS quay lại.
+  const lineHeight = critical.match(/\.eyebrow \{[\s\S]*?font: 700 \d+px\/([\d.]+)/)?.[1];
+  assert.equal(Number(lineHeight) * 2, 2.4, `line-height .eyebrow là ${lineHeight}, min-height phải là ${Number(lineHeight) * 2}em`);
+});
