@@ -43,37 +43,74 @@
    prefers-reduced-motion phải tắt sạch animation mới, xem khối cuối tệp. */
 
 :root {
-  --page-out: 1ms;
-  --page-in: 1ms;
+  --page-out: 280ms;
+  --page-in: 1950ms;
   --page-ease-out: cubic-bezier(.4, 0, .7, .3);
-  --page-ease-in: cubic-bezier(.22, .68, .24, 1);
+  --page-ease-in: cubic-bezier(.16, .86, .22, 1);
+  --page-enter-x: 0px;
+  --page-enter-y: 42px;
+  --hero-enter-x: 82px;
+  --hero-enter-y: 62px;
+  --hero-enter-left: -82px;
+  --hero-enter-top: -62px;
 }
 
-/* Móc sẵn cho animation mới. Giữ lại dù đang rỗng: Swup đo thời lượng qua chính
-   phần tử này, và animationSelector mặc định là [class*="transition-"]. Bỏ nó đi
-   thì Swup cảnh báo "No elements found matching animationSelector" ở console. */
+/* Container chỉ rời đi bằng opacity/transform. Ở pha đi vào, nó tuyệt đối không
+   chạm opacity: các section con tự lo độ sáng, tránh phép nhân opacity cha × con
+   từng gây ra một khoảng trắng 60ms. */
 .transition-page {
-  transition: opacity var(--page-out) var(--page-ease-out);
+  transition:
+    opacity var(--page-out) var(--page-ease-out),
+    transform var(--page-out) var(--page-ease-out),
+    filter var(--page-out) var(--page-ease-out);
 }
 
 html.is-changing.is-leaving .transition-page {
   opacity: 0;
+  transform: translate3d(0, -10px, 0) scale(.994);
+  filter: saturate(.88) brightness(1.025);
 }
 
 html.is-changing.is-rendering .transition-page {
-  transition: opacity var(--page-in) var(--page-ease-in);
+  transition: none;
+  animation: page-in var(--page-in) var(--page-ease-in) both;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .transition-page,
-  html.is-changing.is-rendering .transition-page {
-    transition-duration: 1ms;
-    transform: none !important;
-    filter: none !important;
-  }
-  html.is-changing.is-rendering .transition-page > * {
-    animation: none !important;
-  }
+@keyframes page-in {
+  from { transform: translate3d(0, 0, 0) scale(.996); }
+  to   { transform: none; }
+}
+
+/* Mỗi section đi vào từ một phương khác nhau. Trang chủ loại hero khỏi nhịp
+   chung vì các thành phần bên trong hero có choreography riêng ở khối dưới. */
+html.is-changing.is-rendering .transition-page > *:not(.hero) {
+  animation: page-stagger 1100ms var(--page-ease-in) both;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(4n + 1):not(.hero) {
+  --page-enter-x: -54px;
+  --page-enter-y: 0px;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(4n + 2):not(.hero) {
+  --page-enter-x: 0px;
+  --page-enter-y: -42px;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(4n + 3):not(.hero) {
+  --page-enter-x: 54px;
+  --page-enter-y: 0px;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(4n):not(.hero) {
+  --page-enter-x: 0px;
+  --page-enter-y: 42px;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 120ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 240ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 360ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(n + 5) { animation-delay: 480ms; }
+
+@keyframes page-stagger {
+  from { opacity: 0; transform: translate3d(var(--page-enter-x), var(--page-enter-y), 0); }
+  14%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
 }
 
 /* Vùng thông báo cho trình đọc màn hình: có mặt trong cây accessibility nhưng
@@ -90,6 +127,81 @@ html.is-changing.is-rendering .transition-page {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
+}
+
+/* --- Hero: bốn phương cùng đặt nội dung vào ---------------------------- */
+
+/* Một choreography, hai thời điểm chạy:
+   · .hd-first-load: người dùng vừa mở website thật;
+   · .is-rendering: Swup vừa đưa người dùng quay lại trang chủ.
+
+   Các selector bám vào cấu trúc ngữ nghĩa sẵn có, không gắn logic vào nội dung
+   chữ hay thứ tự route. Tất cả tổng thời gian đều ≤ --page-in (1950ms), nên
+   Swup không thể gỡ lớp trạng thái giữa chừng. */
+html.hd-first-load .hero-copy .eyebrow,
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-copy .eyebrow {
+  animation: hero-enter-left 1050ms 200ms var(--page-ease-in) both;
+}
+
+html.hd-first-load .hero-copy h1,
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-copy h1 {
+  animation: hero-enter-left 1250ms 280ms var(--page-ease-in) both;
+}
+
+html.hd-first-load .hero-copy > p:not(.eyebrow),
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-copy > p:not(.eyebrow) {
+  animation: hero-enter-bottom 1100ms 570ms var(--page-ease-in) both;
+}
+
+html.hd-first-load .hero-copy .proof,
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-copy .proof {
+  animation: hero-enter-top 1000ms 120ms var(--page-ease-in) both;
+}
+
+html.hd-first-load .hero-stage,
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-stage {
+  animation: hero-enter-right 1550ms 380ms var(--page-ease-in) both;
+}
+
+html.hd-first-load .hero-actions > :nth-child(1),
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-actions > :nth-child(1) {
+  animation: hero-enter-bottom 900ms 730ms var(--page-ease-in) both;
+}
+html.hd-first-load .hero-actions > :nth-child(2),
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-actions > :nth-child(2) {
+  animation: hero-enter-bottom 900ms 820ms var(--page-ease-in) both;
+}
+html.hd-first-load .hero-actions > :nth-child(3),
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-actions > :nth-child(3) {
+  animation: hero-enter-bottom 900ms 910ms var(--page-ease-in) both;
+}
+html.hd-first-load .hero-actions > :nth-child(n + 4),
+html.is-changing.is-rendering .transition-page[data-page="home"] .hero-actions > :nth-child(n + 4) {
+  animation: hero-enter-bottom 900ms 1000ms var(--page-ease-in) both;
+}
+
+@keyframes hero-enter-left {
+  from { opacity: .12; transform: translate3d(var(--hero-enter-left), 0, 0) scale(.985); }
+  72%  { opacity: 1; transform: translate3d(5px, 0, 0) scale(1); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-enter-right {
+  from { opacity: .12; transform: translate3d(var(--hero-enter-x), 0, 0) scale(.975); }
+  76%  { opacity: 1; transform: translate3d(-5px, 0, 0) scale(1); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-enter-top {
+  from { opacity: .12; transform: translate3d(0, var(--hero-enter-top), 0) scale(.985); }
+  72%  { opacity: 1; transform: translate3d(0, 4px, 0) scale(1); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes hero-enter-bottom {
+  from { opacity: .12; transform: translate3d(0, var(--hero-enter-y), 0) scale(.985); }
+  72%  { opacity: 1; transform: translate3d(0, -4px, 0) scale(1); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* --- Tranh phong cảnh mở đầu ------------------------------------------- */
@@ -126,6 +238,36 @@ html.hd-first-load .hero-bg {
   to   { opacity: 1; transform: none; }
 }
 
+@media (max-width: 900px) {
+  :root {
+    --page-enter-x: 0px;
+    --page-enter-y: 28px;
+    --hero-enter-x: 38px;
+    --hero-enter-y: 34px;
+    --hero-enter-left: -38px;
+    --hero-enter-top: -34px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-bg { animation: none; }
+  :root {
+    --page-out: 1ms;
+    --page-in: 1ms;
+  }
+  .transition-page,
+  html.is-changing.is-rendering .transition-page {
+    transition-duration: 1ms;
+    transform: none !important;
+    filter: none !important;
+  }
+  html.is-changing.is-rendering .transition-page,
+  html.is-changing.is-rendering .transition-page > *,
+  html.hd-first-load .hero-bg,
+  html.hd-first-load .hero-copy > *,
+  html.hd-first-load .hero-actions > *,
+  html.hd-first-load .hero-stage {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
