@@ -38,9 +38,9 @@ test("tối ưu hiệu ứng không làm mất nền hero và carousel", async (
   assert.match(main, /\.hero-carousel \.hero-card\.is-active/);
   assert.match(main, /content-visibility:\s*auto/);
   assert.match(critical, /content-visibility:\s*auto/);
-  // Fontasia dùng font-display: optional và được preload theo route, nên mobile
-  // không cần ép về Georgia. Giữ cùng một token nhận diện mà vẫn tránh đổi font
-  // muộn trên thiết bị yếu.
+  // Fontasia dùng font-display: swap và được preload theo route, nên desktop và
+  // mobile đều thay đúng font nhận diện sau khi tệp tải xong mà không cần ép
+  // về Georgia ở breakpoint hẹp.
   const finalTypography = main.slice(main.indexOf("0.13 —"));
   assert.match(finalTypography, /--script:\s*"Fontasia VH"/);
   assert.match(finalTypography, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);

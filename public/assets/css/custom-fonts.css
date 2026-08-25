@@ -1,12 +1,12 @@
 /* Bộ chữ Việt hóa do chủ dự án cung cấp, chuyển sang WOFF2 để tự host.
-   Fontasia và Harmoni dùng optional vì nằm trên đường LCP: nếu mạng quá chậm,
-   trình duyệt giữ fallback đã vẽ thay vì đổi mặt chữ muộn và gây CLS. */
+   Fontasia và Harmoni dùng swap để mọi trình duyệt thay font nhận diện vào sau
+   khi tải xong. Hai tệp được preload theo route nên thời gian dùng fallback ngắn. */
 
 @font-face {
   font-family: "Fontasia VH";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: url("/assets/fonts/fontasia-vh.woff2") format("woff2");
 }
 
@@ -14,7 +14,7 @@
   font-family: "DFVN TAN Harmoni";
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: url("/assets/fonts/dfvn-tan-harmoni.woff2") format("woff2");
 }
 
