@@ -50,6 +50,14 @@ async function loadData() {
 
 const data = await loadData();
 data.site.baseUrl = process.env.SITE_BASE_URL || data.site.baseUrl;
+// Giá bộ bài là một quyết định sản phẩm, không phải câu chữ rải rác. Giữ cả
+// giá trị máy đọc và hai cách hiển thị ở một chỗ để HTML, FAQ và JSON-LD luôn
+// đổi cùng nhau khi chủ dự án chốt giá mới.
+const PACK_PRICE = Object.freeze({
+  vnd: 690000,
+  label: "690.000đ",
+  compactLabel: "690k",
+});
 const lncq22 = JSON.parse(await readFile(path.join(root, "data", "lncq-22.json"), "utf8"));
 // Khối Lĩnh Nam chích quái cho lá Ẩn chính. Dẫn nguồn theo CHƯƠNG (bản này không có số trang).
 function lncqBlock(slug) {
@@ -85,23 +93,34 @@ function lncqChapterHtml(c, prev, next) {
 }
 
 const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
-// Critical CSS được nhúng thẳng vào MỌI trang, nên mỗi byte ở đây nhân với số
-// trang và nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn thì
+// Critical CSS nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
-// trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn
-// hơn khoảng 2 KB. Không có chuỗi nào trong ba tệp chứa "/*" nên phép thay
-// này an toàn; test critical-css.test.mjs canh cả ngân sách lẫn các mốc bắt buộc.
-async function loadCriticalCss() {
-  const files = ["fonts.css", "custom-fonts.css", "critical.css"];
+// trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn.
+//
+// Sau khi gỡ chú thích thì gộp luôn xuống dòng và thụt lề. Các tệp nguồn được
+// viết dạng dễ đọc — mỗi khai báo một dòng, thụt hai dấu cách — và toàn bộ chỗ
+// trắng đó đang được gửi đi kèm MỌI trang. Gộp lại tiết kiệm ~2,7 KB mỗi lượt
+// tải đầu, đủ để ngân sách 20 KB từ chỗ chỉ còn ~800 ký tự nới ra gấp đôi.
+//
+// Cố ý KHÔNG nén sâu hơn. Bỏ khoảng trắng quanh { } : ; , thì gọn thêm ~1,9 KB
+// nữa, nhưng ba tệp này có 65 chuỗi trong ngoặc kép (tên font) và 3 selector có
+// khoảng trắng trước dấu hai chấm — regex sẽ nuốt nhầm và làm hỏng luật. Muốn
+// mức đó thì phải dùng parser CSS thật, tức thêm một phụ thuộc; repo này giữ
+// đúng hai phụ thuộc chạy thật nên không đáng đổi.
+async function loadCriticalCss(files) {
   const css = (await Promise.all(files.map((file) => readFile(path.join(root, "public", "assets", "css", file), "utf8")))).join("\n");
   if (/<\/style/i.test(css)) throw new Error("Critical CSS chứa chuỗi đóng thẻ style không an toàn.");
   return css
     .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\n{2,}/g, "\n")
-    .replace(/^[ \t]+$/gm, "")
+    .replace(/\n\s*/g, " ")
+    .replace(/ {2,}/g, " ")
     .trim();
 }
-const criticalCss = await loadCriticalCss();
+// Trang chủ và trang trong có hai khung đầu khác nhau. Chỉ phần nền tảng/font
+// là dùng chung; critical-inner.css không đi theo trang chủ, tránh gửi các luật
+// card-detail/v2-prose không bao giờ dùng ở route `/`.
+const criticalBaseCss = await loadCriticalCss(["fonts.css", "custom-fonts.css", "critical.css"]);
+const criticalInnerCss = `${criticalBaseCss} ${await loadCriticalCss(["critical-inner.css"])}`;
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
 const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"][number] || String(number);
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
@@ -245,7 +264,6 @@ const navPostsHtml = [
 const layoutSettings = {
   navPostsHtml,
   analytics: analyticsSnippet(data.site),
-  criticalCss,
   tagline: data.site.tagline || "",
   contactEmail: data.site.contactEmail || "",
   socialHtml: socialLinks.length
@@ -283,6 +301,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     : '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
   return renderString(templates._layout, {
     ...layoutSettings,
+    criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
     content,
     bodyClass,
@@ -381,13 +400,75 @@ const immortals = immortalSpecs.map((spec, index) => {
   };
 });
 
-const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals });
+/* Câu hỏi thường gặp. MỘT nguồn duy nhất cho cả phần hiển thị lẫn JSON-LD:
+   viết hai chỗ thì sớm muộn hai bên lệch nhau, mà FAQPage không khớp nội dung
+   người đọc nhìn thấy là vi phạm hướng dẫn dữ liệu có cấu trúc của Google.
+
+   Năm câu này đều là nghi ngại có thật, và câu trả lời phải khớp với lập trường
+   đã ghi ở các trang khác — nhất là câu 3: trang này không bán huyền sử như sử
+   liệu, nên phần FAQ cũng không được nói khác đi. */
+const faqs = [
+  {
+    q: "Tarot ở đây có phải là bói không?",
+    a: "Không. Hường Đông dùng Tarot làm công cụ tự phản tư và học tập. Trang không đưa lời phán, và Tarot không thay thế tư vấn y tế, pháp lý hay tài chính.",
+  },
+  {
+    q: "Tôi đã đọc Rider–Waite–Smith rồi, có phải học lại từ đầu không?",
+    a: "Không. Cấu trúc nghĩa của RWS giữ nguyên: vẫn 22 Ẩn Chính và 56 Ẩn Phụ, vẫn bốn chất, vẫn nghĩa xuôi và nghĩa ngược. Chỉ lớp hình ảnh và liên tưởng là Việt, và mỗi lá đều ghi rõ nó ứng với lá RWS nào.",
+  },
+  {
+    q: "Những tích trong bộ bài có phải lịch sử không?",
+    a: "Không. Phần lớn rút từ Lĩnh Nam chích quái của Trần Thế Pháp, là sách chép truyện huyền sử chứ không phải sử liệu đã được chứng minh. Mỗi lá đều ghi nguồn và phân loại rõ: truyền thuyết, dã sử, chính sử hay khảo cổ học.",
+  },
+  {
+    q: "Bao giờ mở bán và giá bao nhiêu?",
+    a: `Bộ bài chưa mở bán. Giá dự kiến của bản in đầu là ${PACK_PRICE.label}, số lượng giới hạn theo số người đăng ký. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.`,
+  },
+  {
+    q: "Người mới nên bắt đầu từ đâu?",
+    a: "Bắt đầu với 22 lá Ẩn Chính thay vì cả 78 lá: ít lá hơn, chủ đề lớn hơn, dễ nhớ hơn. Trang Tarot là gì có phần thử một lá, và khoá học qua email đi hết 22 lá trong 22 tuần.",
+  },
+];
+
+/* Bộ bài là hàng chưa mở bán, nên availability phải là PreOrder chứ không phải
+   InStock. Giá ở đây là giá DỰ KIẾN của bản in đầu: đổi giá trong FAQ hay trang
+   Cửa hàng thì phải đổi cả con số này, nếu không dữ liệu có cấu trúc sẽ nói một
+   đằng còn trang nói một nẻo. */
+const packSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Hường Đông Tarot — bộ 78 lá",
+  description: "Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, kể lại bằng huyền sử và dã sử Việt. In offset trên giấy 350gsm, khổ 70×120mm, cạnh mạ đồng, hộp cứng nắp từ, kèm sách nhỏ 96 trang ghi rõ nguồn từng câu chuyện.",
+  image: absoluteUrl(data.site.baseUrl, "/assets/img/product-hop-bai.webp"),
+  brand: { "@type": "Brand", name: data.site.siteName },
+  inLanguage: "vi",
+  offers: {
+    "@type": "Offer",
+    price: String(PACK_PRICE.vnd),
+    priceCurrency: "VND",
+    availability: "https://schema.org/PreOrder",
+    url: absoluteUrl(data.site.baseUrl, "/cua-hang/"),
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+};
+
+const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, faqs, packPrice: PACK_PRICE });
 await emit("/", layout({
   title: data.site.siteName,
   description: data.site.description,
   path: "/",
   image: data.site.defaultOgImage,
-  schemas: [organizationSchema(), { "@context": "https://schema.org", "@type": "WebSite", name: data.site.siteName, url: data.site.baseUrl, inLanguage: "vi" }],
+  schemas: [
+    organizationSchema(),
+    { "@context": "https://schema.org", "@type": "WebSite", name: data.site.siteName, url: data.site.baseUrl, inLanguage: "vi" },
+    packSchema,
+    faqSchema,
+  ],
   content: homeContent,
   bodyClass: "home-page",
 }));
@@ -462,7 +543,7 @@ for (const page of newPages) {
     description: page.description,
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
-    content: templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
+    content: renderString(templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
   }));
 }
 

@@ -48,11 +48,12 @@ test("năm ảnh carousel đều tải lười và không tranh tài nguyên v�
 
 test("hero carousel có nút đi tới Lá bài hôm nay", async () => {
   const html = await home();
-  assert.match(html, /<h1>Tarot qua lời kể của<br>văn hóa Việt Nam<\/h1>/);
-  assert.match(
-    html,
-    /class="button hero-daily-button" href="\/la-bai-hom-nay\/">Lá bài hôm nay/,
-  );
+  // Canh ĐƯỜNG ĐI, không canh chữ. Bản trước ghi cứng cả câu h1 lẫn nhãn nút,
+  // nên mọi lần sửa chữ tiếp thị đều làm đỏ một test về carousel — chỗ không
+  // liên quan. Điều phải bảo đảm ở đây là hero luôn có một lối sang trang rút
+  // lá trong ngày; viết nhãn thế nào là việc của nội dung.
+  assert.match(html, /<h1>[^<]*(<br>)?[^<]*<\/h1>/, "hero phải có h1");
+  assert.match(html, /class="button hero-daily-button" href="\/la-bai-hom-nay\/"/);
 });
 
 test("mỗi vị có bảng kể chuyện kèm nguồn và lối sang trang lá", async () => {
