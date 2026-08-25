@@ -414,3 +414,52 @@ h3 { font-size: 30px; line-height: 1.12; }
 @media (prefers-reduced-motion: reduce) {
   * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+/* 0.14 — lớp nền sơn mài tối thiểu cho lần sơn đầu. main.css bổ sung hoa văn
+   và các dải section bên dưới; các luật này ngăn nền đổi màu khi CSS đầy đủ về. */
+:root {
+  --lacquer-son: color-mix(in srgb, var(--dau) 72%, var(--brown));
+  --lacquer-gold: color-mix(in srgb, var(--gold) 72%, var(--brown));
+  --lacquer-ink: color-mix(in srgb, var(--ink) 86%, var(--brown));
+  --lacquer-wash: color-mix(in srgb, var(--paper) 94%, transparent);
+  --lacquer-band: color-mix(in srgb, var(--paper-band) 88%, transparent);
+}
+body {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 72% 42% at 8% 10%, color-mix(in srgb, var(--lacquer-son) 8%, transparent), transparent 72%),
+    radial-gradient(ellipse 64% 38% at 92% 34%, color-mix(in srgb, var(--lacquer-gold) 12%, transparent), transparent 74%),
+    repeating-linear-gradient(106deg, transparent 0 34px, color-mix(in srgb, var(--brown) 2.5%, transparent) 35px, transparent 36px 72px);
+  background-attachment: fixed;
+}
+body::before,
+body::after { content: ""; position: fixed; inset: 0; pointer-events: none; }
+body::before {
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 58% 34% at 12% 18%, color-mix(in srgb, var(--lacquer-son) 13%, transparent), transparent 72%),
+    radial-gradient(ellipse 52% 30% at 88% 68%, color-mix(in srgb, var(--lacquer-gold) 16%, transparent), transparent 74%);
+  opacity: .46;
+}
+body::after {
+  z-index: -1;
+  background-image: url("/assets/img/trong-dong-640.avif"), url("/assets/img/chim-lac-640.avif");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 180px) 12%, -150px 78%;
+  background-size: min(720px, 56vw), min(560px, 48vw);
+  opacity: .026;
+  mix-blend-mode: multiply;
+}
+.hero, .card-detail, .not-found { background-color: var(--lacquer-wash); }
+.page-hero { background: var(--lacquer-band); }
+.site-header {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--lacquer-gold) 18%, transparent);
+}
+@media (max-width: 900px) {
+  body { background-attachment: scroll; }
+  body::after { background-position: calc(100% + 130px) 18%, -110px 82%; background-size: min(520px, 88vw), min(420px, 82vw); opacity: .021; }
+}
+@media (prefers-reduced-motion: reduce) { body::before { opacity: .54; transition: none; } }

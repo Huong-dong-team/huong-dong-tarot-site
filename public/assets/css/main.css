@@ -1275,3 +1275,107 @@ body {
 .houses-figure::before,
 .lac-figure::before,
 .news-grid article::before { content: "OpenBeta"; }
+
+/* ============================================================
+   0.14 — nền sơn mài Hường Đông
+
+   PatternBolt gợi cách xếp hoa văn thành lớp độc lập; Made in India CSS gợi
+   cách dựng chất liệu bằng nhiều gradient nhẹ. Ở đây chỉ mượn nguyên lý, dùng
+   lại token và hình chim Lạc/trống đồng sẵn có để nền vẫn thuộc nhận diện
+   Hường Đông, không kéo thêm thư viện hoặc ảnh ngoài vào production.
+   ============================================================ */
+:root {
+  --lacquer-son: color-mix(in srgb, var(--dau) 72%, var(--brown));
+  --lacquer-gold: color-mix(in srgb, var(--gold) 72%, var(--brown));
+  --lacquer-ink: color-mix(in srgb, var(--ink) 86%, var(--brown));
+  --lacquer-wash: color-mix(in srgb, var(--paper) 94%, transparent);
+  --lacquer-band: color-mix(in srgb, var(--paper-band) 88%, transparent);
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse 72% 42% at 8% 10%, color-mix(in srgb, var(--lacquer-son) 8%, transparent), transparent 72%),
+    radial-gradient(ellipse 64% 38% at 92% 34%, color-mix(in srgb, var(--lacquer-gold) 12%, transparent), transparent 74%),
+    repeating-linear-gradient(106deg, transparent 0 34px, color-mix(in srgb, var(--brown) 2.5%, transparent) 35px, transparent 36px 72px);
+  background-attachment: fixed;
+}
+
+/* Hai lớp cố định tạo chiều sâu như mặt vóc: sắc son/vàng nằm dưới, hoa văn
+   dân gian cực nhạt nằm trên. Không nhận tương tác và không tham gia layout. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 58% 34% at 12% 18%, color-mix(in srgb, var(--lacquer-son) 13%, transparent), transparent 72%),
+    radial-gradient(ellipse 52% 30% at 88% 68%, color-mix(in srgb, var(--lacquer-gold) 16%, transparent), transparent 74%),
+    linear-gradient(118deg, transparent 18%, color-mix(in srgb, var(--lacquer-ink) 3%, transparent) 48%, transparent 76%);
+  opacity: calc(.46 + var(--hd-scroll) * .24);
+  transition: opacity .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+body::after {
+  z-index: -1;
+  background-image: url("/assets/img/trong-dong-640.avif"), url("/assets/img/chim-lac-640.avif");
+  background-repeat: no-repeat;
+  background-position: calc(100% + 180px) 12%, -150px 78%;
+  background-size: min(720px, 56vw), min(560px, 48vw);
+  opacity: .026;
+  mix-blend-mode: multiply;
+}
+
+/* Các dải nội dung vẫn giữ đúng màu cũ, chỉ giảm độ đặc để lớp vóc chung nối
+   toàn trang. Đây là thay đổi background; kích thước và bố cục không đổi. */
+.hero,
+.card-detail,
+.not-found { background-color: var(--lacquer-wash); }
+
+.story-section,
+.houses-section,
+.news-section,
+.pack-section { background: color-mix(in srgb, var(--paper-raised) 91%, transparent); }
+
+.featured,
+.immortals-section,
+.page-hero,
+.inline-waitlist { background: var(--lacquer-band); }
+
+.site-header {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--lacquer-gold) 18%, transparent);
+}
+
+.waitlist {
+  background:
+    radial-gradient(ellipse 62% 120% at 4% 0%, color-mix(in srgb, var(--gold) 72%, transparent), transparent 64%),
+    radial-gradient(ellipse 54% 90% at 96% 100%, color-mix(in srgb, var(--rose) 34%, transparent), transparent 70%),
+    linear-gradient(132deg, var(--paper-band), color-mix(in srgb, var(--orange) 42%, var(--paper-band)) 58%, color-mix(in srgb, var(--rose) 38%, var(--paper-band)));
+}
+
+.site-footer {
+  background:
+    radial-gradient(ellipse 48% 180% at 84% 0%, color-mix(in srgb, var(--lacquer-son) 44%, transparent), transparent 72%),
+    linear-gradient(112deg, var(--lacquer-ink), color-mix(in srgb, var(--brown) 76%, var(--ink)));
+}
+
+@media (max-width: 900px) {
+  body { background-attachment: scroll; }
+  body::after {
+    background-position: calc(100% + 130px) 18%, -110px 82%;
+    background-size: min(520px, 88vw), min(420px, 82vw);
+    opacity: .021;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before { opacity: .54; transition: none; }
+}
