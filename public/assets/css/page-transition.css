@@ -29,7 +29,16 @@
      thứ tạo cảm giác mượt; rút ngắn nó thì chuyển cảnh sẽ "đến nơi" cộc lốc dù
      tổng thời lượng không đổi. */
   --page-ease-in: cubic-bezier(.22, .68, .24, 1);
+  --page-enter-x: 0px;
+  --page-enter-y: 18px;
 }
+
+/* Hướng được direction.js chọn từ vị trí link vừa bấm. Khoảng dịch chỉ 30px:
+   đủ để mắt nhận hướng nhưng không biến điều hướng thành một cú trượt dài. */
+html.to-from-left  { --page-enter-x: -30px; --page-enter-y: 0px; }
+html.to-from-right { --page-enter-x: 30px;  --page-enter-y: 0px; }
+html.to-from-top   { --page-enter-x: 0px;   --page-enter-y: -24px; }
+html.to-from-bottom { --page-enter-x: 0px;  --page-enter-y: 24px; }
 
 /* --- Trang: rời đi và đi vào ------------------------------------------- */
 
@@ -99,7 +108,7 @@ html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-d
    theo cả lúc nội dung hiện ra chậm đi, mà đó là hai thứ khác nhau: người dùng
    muốn chuyển động mượt, không muốn phải chờ lâu hơn mới đọc được. */
 @keyframes page-stagger {
-  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  from { opacity: 0; transform: translate3d(var(--page-enter-x), var(--page-enter-y), 0); }
   38%  { opacity: 1; }
   to   { opacity: 1; transform: none; }
 }

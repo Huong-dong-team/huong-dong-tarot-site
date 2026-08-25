@@ -646,6 +646,51 @@ blockquote {
 }
 .nav-group:hover .nav-sub,
 .nav-group:focus-within .nav-sub { display: block; }
+
+/* Menu con vào theo vị trí của nhóm trên thanh điều hướng; từng dòng sau đó
+   đan trái/phải/trên để tạo nhịp đa hướng mà không di chuyển khung menu. */
+.nav-group { --nav-enter-x: 0px; --nav-enter-y: -8px; }
+.nav-group:nth-child(-n + 2) { --nav-enter-x: -10px; --nav-enter-y: 0px; }
+.nav-group:nth-child(n + 6) { --nav-enter-x: 10px; --nav-enter-y: 0px; }
+.nav-group:hover .nav-sub,
+.nav-group:focus-within .nav-sub {
+  transform-origin: top center;
+  animation: nav-panel-enter 180ms cubic-bezier(.16, .84, .3, 1) both;
+}
+.nav-sub li {
+  opacity: 0;
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(.16, .84, .3, 1);
+  animation-fill-mode: both;
+}
+.nav-group:hover .nav-sub li:nth-child(3n + 1),
+.nav-group:focus-within .nav-sub li:nth-child(3n + 1) { animation-name: nav-item-enter-left; }
+.nav-group:hover .nav-sub li:nth-child(3n + 2),
+.nav-group:focus-within .nav-sub li:nth-child(3n + 2) { animation-name: nav-item-enter-top; }
+.nav-group:hover .nav-sub li:nth-child(3n),
+.nav-group:focus-within .nav-sub li:nth-child(3n) { animation-name: nav-item-enter-right; }
+.nav-sub li:nth-child(2) { animation-delay: 22ms; }
+.nav-sub li:nth-child(3) { animation-delay: 44ms; }
+.nav-sub li:nth-child(4) { animation-delay: 66ms; }
+.nav-sub li:nth-child(5) { animation-delay: 88ms; }
+.nav-sub li:nth-child(n + 6) { animation-delay: 110ms; }
+
+@keyframes nav-panel-enter {
+  from { transform: translate3d(var(--nav-enter-x), var(--nav-enter-y), 0) scale(.985); }
+  to { transform: none; }
+}
+@keyframes nav-item-enter-left {
+  from { opacity: 0; transform: translate3d(-10px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nav-item-enter-right {
+  from { opacity: 0; transform: translate3d(10px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nav-item-enter-top {
+  from { opacity: 0; transform: translate3d(0, -7px, 0); }
+  to { opacity: 1; transform: none; }
+}
 #main-nav .nav-sub a {
   display: block;
   padding: 8px 16px;
@@ -655,6 +700,33 @@ blockquote {
 }
 #main-nav .nav-sub a:hover,
 #main-nav .nav-sub a:focus-visible { background: color-mix(in srgb, var(--gold) 22%, transparent); opacity: 1; }
+
+@media (max-width: 900px) {
+  .nav-group .nav-sub,
+  .nav-group .nav-sub li { animation: none; opacity: 1; transform: none; }
+  #main-nav[data-open] > :nth-child(3n + 1) {
+    animation: nav-item-enter-left 260ms cubic-bezier(.16, .84, .3, 1) both;
+  }
+  #main-nav[data-open] > :nth-child(3n + 2) {
+    animation: nav-item-enter-top 260ms cubic-bezier(.16, .84, .3, 1) both;
+  }
+  #main-nav[data-open] > :nth-child(3n) {
+    animation: nav-item-enter-right 260ms cubic-bezier(.16, .84, .3, 1) both;
+  }
+  #main-nav[data-open] > :nth-child(2) { animation-delay: 25ms; }
+  #main-nav[data-open] > :nth-child(3) { animation-delay: 50ms; }
+  #main-nav[data-open] > :nth-child(4) { animation-delay: 75ms; }
+  #main-nav[data-open] > :nth-child(5) { animation-delay: 100ms; }
+  #main-nav[data-open] > :nth-child(6) { animation-delay: 125ms; }
+  #main-nav[data-open] > :nth-child(7) { animation-delay: 150ms; }
+  #main-nav[data-open] > :nth-child(n + 8) { animation-delay: 175ms; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-group .nav-sub,
+  .nav-group .nav-sub li { animation: none !important; opacity: 1; transform: none !important; }
+  #main-nav[data-open] > * { animation: none !important; opacity: 1; transform: none !important; }
+}
 
 /* Ảnh nền mờ được hạ cường độ để hoa văn không tranh chấp với nội dung. */
 .drum-watermark::before,
