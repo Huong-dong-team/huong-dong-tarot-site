@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "prepare:seed": "node --experimental-strip-types scripts/prepare-seed.mjs",
     "dev": "node scripts/serve.js",
@@ -11,6 +13,7 @@
     "build": "node scripts/build.js",
     "build:local": "USE_SEED_DATA=true node scripts/build.js",
     "test": "node --test tests/*.test.mjs",
+    "check:types": "tsc -p tsconfig.check.json",
     "names:vi": "node tools/scripts/gen-names-vi.mjs",
     "serve": "node scripts/serve.js",
     "deploy": "npm run build && firebase deploy --only hosting"
@@ -21,5 +24,9 @@
   },
   "overrides": {
     "uuid": "^11.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.19",
+    "typescript": "^5.9.3"
   }
 }

@@ -4,6 +4,23 @@ export function absoluteUrl(baseUrl, path = "/") {
   return new URL(path, `${baseUrl.replace(/\/$/, "")}/`).toString();
 }
 
+/**
+ * Sinh khối <head> đầy đủ: title, meta, Open Graph, Twitter Card và JSON-LD.
+ *
+ * jsonLd mặc định là mảng rỗng, nên nếu không khai kiểu thì TypeScript suy ra
+ * never[] và mọi lời gọi truyền mảng thật đều bị từ chối.
+ *
+ * @param {object} options
+ * @param {{ baseUrl: string, siteName: string, defaultOgImage: string }} options.site
+ * @param {string} options.title
+ * @param {string} options.description
+ * @param {string} options.path
+ * @param {string} [options.image]    ảnh OG riêng; để trống thì dùng defaultOgImage
+ * @param {string} [options.type]     og:type
+ * @param {object[]|object} [options.jsonLd]
+ * @param {string} [options.robots]
+ * @returns {string}
+ */
 export function seoHead({ site, title, description, path, image, type = "website", jsonLd = [], robots = "" }) {
   const canonical = absoluteUrl(site.baseUrl, path);
   const ogImage = absoluteUrl(site.baseUrl, image || site.defaultOgImage);

@@ -24,6 +24,12 @@ await loadEnv();
 const useSeed = process.env.USE_SEED_DATA === "true";
 const readJson = async (name) => JSON.parse(await readFile(path.join(root, "seed", name), "utf8"));
 
+/**
+ * Đọc dữ liệu site: Firestore là nguồn thật, seed/*.json dùng khi
+ * USE_SEED_DATA=true hoặc để bù trường Ẩn Phụ còn trống.
+ *
+ * @returns {Promise<import("./lib/types.js").SiteData>}
+ */
 async function loadData() {
   if (useSeed) return { cards: await readJson("cards.json"), posts: await readJson("posts.json"), site: await readJson("settings.json") };
   if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) throw new Error("Thiếu GOOGLE_APPLICATION_CREDENTIALS. Dùng npm run build:local để xem dữ liệu mẫu.");
@@ -37,8 +43,9 @@ async function loadData() {
   const normalize = (data) => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, value?.toDate ? value.toDate().toISOString() : value]));
   // Firestore là nguồn ưu tiên; seed chỉ bù trường chi tiết Ẩn Phụ còn trống,
   // không đè giá trị đang có. Xem lib/minor-details-fallback.js.
-  const liveCards = cardSnap.docs.map((doc) => normalize(doc.data()));
-  return { cards: fillMinorDetails(liveCards, await readJson("cards.json")), posts: postSnap.docs.map((doc) => normalize(doc.data())), site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
+  const liveCards = /** @type {import("./lib/types.js").Card[]} */ (cardSnap.docs.map((doc) => normalize(doc.data())));
+  const livePosts = /** @type {import("./lib/types.js").Post[]} */ (postSnap.docs.map((doc) => normalize(doc.data())));
+  return { cards: fillMinorDetails(liveCards, await readJson("cards.json")), posts: livePosts, site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
 }
 
 const data = await loadData();
@@ -190,6 +197,7 @@ function minorDetailsHtml(card) {
   return `${context}${applications}${guidance}${citations}`;
 }
 
+/** @type {import("./lib/types.js").EnrichedCard[]} */
 const cards = data.cards.map((card) => ({
   ...card,
   nameFolk: card.nameFolk || card.nameVi,
@@ -245,6 +253,26 @@ const layoutSettings = {
     : "",
 };
 
+/**
+ * Dựng một trang hoàn chỉnh từ template _layout.
+ *
+ * image và type để trống là chuyện bình thường — seoHead tự lùi về
+ * site.defaultOgImage và "website". Phải khai báo optional trong JSDoc, nếu
+ * không mọi lời gọi không truyền hai trường đó đều bị báo thiếu tham số.
+ *
+ * @param {object} options
+ * @param {string} options.title
+ * @param {string} options.description
+ * @param {string} options.path            đường dẫn route, ví dụ "/la-bai/"
+ * @param {object[]} options.schemas       các khối JSON-LD
+ * @param {string} options.content         HTML thân trang, đã render sẵn
+ * @param {string} [options.image]         ảnh OG riêng của trang
+ * @param {string} [options.type]          og:type, mặc định "website"
+ * @param {string} [options.bodyClass]
+ * @param {string} [options.robots]
+ * @param {string} [options.pageScripts]
+ * @returns {string} HTML đầy đủ của trang
+ */
 function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
   return renderString(templates._layout, {
     ...layoutSettings,
@@ -391,7 +419,7 @@ for (let page = 1; page <= pageCount; page += 1) {
 
 for (const post of posts) {
   const content = renderString(templates["post-detail"], { post });
-  const article = { "@context": "https://schema.org", "@type": "Article", headline: post.title, description: post.excerpt, image: absoluteUrl(data.site.baseUrl, post.seo.ogImage || post.coverImage.url), datePublished: post.publishedAt, dateModified: post.updatedAt, author: { "@type": "Person", name: post.author }, publisher: organizationSchema() };
+  const article = { "@context": "https://schema.org", "@type": "Article", headline: post.title, description: post.excerpt, image: absoluteUrl(data.site.baseUrl, post.seo.ogImage || post.coverImage?.url || data.site.defaultOgImage), datePublished: post.publishedAt, dateModified: post.updatedAt, author: { "@type": "Person", name: post.author }, publisher: organizationSchema() };
   await emit(`/tin-tuc/${post.slug}/`, layout({ title: post.seo.title, description: post.seo.description, path: `/tin-tuc/${post.slug}/`, image: post.seo.ogImage, type: "article", schemas: [article, breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Tin tức", path: "/tin-tuc/" }, { name: post.title, path: `/tin-tuc/${post.slug}/` }])], content }));
 }
 
