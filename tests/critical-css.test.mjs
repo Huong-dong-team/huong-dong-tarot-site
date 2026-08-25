@@ -20,7 +20,10 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
     assert.ok(critical.includes(marker), `critical CSS thiếu ${marker}`);
   }
   assert.match(html, /<link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}" media="print" onload="this\.media='all'">/);
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}"><\/noscript>/);
+  // <noscript> chứa main.css và landing-drag.css: tầng scroll-snap của dải kéo
+  // là CSS thuần và phải chạy được cả khi JavaScript bị chặn.
+  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}">/);
+  assert.match(html, /<noscript>[^<]*(?:<link[^>]*>)*<link rel="stylesheet" href="\/assets\/css\/landing-drag\.css\?v=[0-9a-f]{8}"><\/noscript>/);
   assert.doesNotMatch(html, /<link rel="stylesheet" href="\/assets\/css\/fonts\.css/);
 });
 

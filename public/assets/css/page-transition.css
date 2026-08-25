@@ -1,0 +1,196 @@
+/* Chuyển cảnh giữa các trang — "bình minh".
+
+   Hường Đông là ánh hồng phương Đông, và website đã có sẵn một hành trình ánh
+   sáng theo trục cuộn (light-journey.js). Chuyển cảnh mượn đúng ngôn ngữ ấy:
+   trang cũ lắng xuống như chiều tắt, một vệt sáng ấm quét ngang như mặt trời
+   ló, rồi trang mới dựng lên theo tầng.
+
+   Ràng buộc tự đặt cho mình, không được phá:
+     · CHỈ transform, opacity và filter — ba thuộc tính compositor xử lý được
+       mà không cần layout lại. Không đụng width/height/top/margin, nên hiệu ứng
+       không đóng góp một pixel nào vào CLS.
+     · Không có khung nào để trang trắng: trang cũ chỉ mờ tới 0 sau khi vệt sáng
+       đã phủ, và nền vẫn là màu giấy của website.
+     · prefers-reduced-motion tắt sạch, kể cả vệt sáng.
+
+   Swup gắn các lớp trạng thái lên <html> (animationScope: "html"):
+     .is-changing   suốt cả chuyến đi
+     .is-leaving    trang cũ đang rời
+     .is-rendering  trang mới đang vào
+     .is-popstate   chuyến đi do nút Back/Forward, không phải do bấm link */
+
+:root {
+  --page-out: 260ms;
+  --page-in: 420ms;
+  /* Đường cong "rời đi": nhanh dần rồi dứt khoát. */
+  --page-ease-out: cubic-bezier(.55, 0, .85, .35);
+  /* Đường cong "đi vào": bật ra nhanh rồi hãm lại êm, giống rèm kéo lên. */
+  --page-ease-in: cubic-bezier(.16, .84, .3, 1);
+}
+
+/* --- Trang: rời đi và đi vào ------------------------------------------- */
+
+.transition-page {
+  transition:
+    opacity var(--page-out) var(--page-ease-out),
+    transform var(--page-out) var(--page-ease-out),
+    filter var(--page-out) var(--page-ease-out);
+}
+
+/* Lùi ra xa và ngả sáng lên — cảm giác trang cũ "bay lên" chứ không phải bị xoá. */
+html.is-changing.is-leaving .transition-page {
+  opacity: 0;
+  transform: translate3d(0, -14px, 0) scale(.985);
+  filter: saturate(.75) brightness(1.06);
+}
+
+/* Trang mới đi vào bằng @keyframes chứ không bằng transition, và transition bị
+   tắt hẳn trong pha này. Lý do là cách Swup đo thời lượng: nó đọc computed style
+   rồi chờ sự kiện transitionend/animationend. Một transition được khai báo nhưng
+   không có thuộc tính nào thực sự đổi giá trị sẽ KHÔNG bao giờ bắn sự kiện, và
+   Swup phải rơi vào bộ đếm giờ dự phòng. Dùng animation thì animationend luôn
+   tới đúng hẹn. */
+html.is-changing.is-rendering .transition-page {
+  transition: none;
+  animation: page-in var(--page-in) var(--page-ease-in) both;
+}
+
+@keyframes page-in {
+  from { opacity: .55; transform: translate3d(0, 0, 0) scale(.992); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Tầng nội dung: mỗi khối vào sau khối trước một nhịp ---------------- */
+
+/* Chỉ áp cho sáu khối đầu. Trang chủ có tám section; nếu để chạy hết thì khối
+   cuối phải chờ gần nửa giây, mà nó vốn nằm ngoài màn hình — không ai thấy,
+   chỉ tốn compositor. */
+html.is-changing.is-rendering .transition-page > * {
+  animation: page-stagger var(--page-in) var(--page-ease-in) both;
+}
+html.is-changing.is-rendering .transition-page > :nth-child(1) { animation-delay: 0ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(2) { animation-delay: 45ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(3) { animation-delay: 80ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(4) { animation-delay: 105ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(5) { animation-delay: 120ms; }
+html.is-changing.is-rendering .transition-page > :nth-child(n + 6) { animation-delay: 130ms; }
+
+@keyframes page-stagger {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Vệt bình minh ------------------------------------------------------ */
+
+/* Một dải sáng quét từ trái sang phải, đúng hướng đọc. Nó nằm trên cùng nhưng
+   pointer-events:none nên không bao giờ chặn được cú bấm của người dùng — kể cả
+   khi mạng chậm và chuyến đi kéo dài hơn dự kiến. */
+.page-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  /* Chặn hai thứ cùng lúc: trình duyệt không phải tính lại layout của cả trang vì
+     một lớp phủ trang trí, và vệt sáng chạy 280vw không tràn ra ngoài tạo thanh
+     cuộn ngang. */
+  contain: layout paint;
+}
+
+.page-sweep::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  width: 60%;
+  transform: translate3d(0, 0, 0) skewX(-12deg);
+  background: linear-gradient(
+    100deg,
+    rgba(255, 251, 235, 0) 0%,
+    rgba(255, 226, 168, .55) 35%,
+    rgba(255, 172, 120, .78) 55%,
+    rgba(214, 108, 74, .35) 78%,
+    rgba(255, 251, 235, 0) 100%
+  );
+  filter: blur(14px);
+}
+
+html.is-changing .page-sweep {
+  opacity: 1;
+}
+
+/* Vệt chạy hết một lượt trong đúng tổng thời lượng của cả chuyến đi, nên nó
+   luôn ra khỏi màn hình trước khi trang mới ổn định. */
+html.is-changing .page-sweep::before {
+  animation: page-sweep-run calc(var(--page-out) + var(--page-in)) var(--page-ease-in) both;
+}
+
+@keyframes page-sweep-run {
+  from { transform: translate3d(0, 0, 0) skewX(-12deg); }
+  to   { transform: translate3d(280vw, 0, 0) skewX(-12deg); }
+}
+
+/* Back/Forward đi ngược chiều đọc, nên vệt sáng cũng phải quét ngược. Nếu không,
+   thao tác lùi lại vẫn "cảm thấy" như đang tiến tới và người dùng mất phương
+   hướng — đây là lý do duy nhất website phân biệt popstate với click. */
+html.is-changing.is-popstate .page-sweep::before {
+  left: auto;
+  right: -60%;
+  animation-name: page-sweep-run-back;
+}
+html.is-changing.is-popstate.is-leaving .transition-page {
+  transform: translate3d(0, 14px, 0) scale(.985);
+}
+html.is-changing.is-popstate.is-rendering .transition-page > * {
+  animation-name: page-stagger-back;
+}
+
+@keyframes page-sweep-run-back {
+  from { transform: translate3d(0, 0, 0) skewX(12deg); }
+  to   { transform: translate3d(-280vw, 0, 0) skewX(12deg); }
+}
+
+@keyframes page-stagger-back {
+  from { opacity: 0; transform: translate3d(0, -18px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Giảm chuyển động --------------------------------------------------- */
+
+/* Tắt sạch, không thay bằng một hiệu ứng "nhẹ hơn". Người đã yêu cầu giảm
+   chuyển động thì thứ họ cần là trang xuất hiện, không phải một phiên bản dịu
+   hơn của cùng chuyển động đó. Thời lượng 1ms chứ không phải 0: Swup chờ sự
+   kiện transitionend, và transition 0s không bao giờ bắn sự kiện ấy. */
+@media (prefers-reduced-motion: reduce) {
+  .transition-page {
+    transition-duration: 1ms;
+    transform: none !important;
+    filter: none !important;
+  }
+  html.is-changing.is-rendering .transition-page {
+    animation: none !important;
+  }
+  html.is-changing.is-rendering .transition-page > * {
+    animation: none !important;
+  }
+  .page-sweep {
+    display: none;
+  }
+}
+
+/* Vùng thông báo cho trình đọc màn hình: có mặt trong cây accessibility nhưng
+   không chiếm một pixel nào. Không dùng display:none — phần tử ẩn kiểu đó không
+   được đọc lên. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
