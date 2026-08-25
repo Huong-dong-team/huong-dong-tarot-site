@@ -1675,3 +1675,58 @@ body::after {
   max-width: 62ch;
   color: var(--muted);
 }
+
+/* --- Hai nhịp biên tập phá lưới --------------------------------------- */
+
+/* Chỉ đổi bố cục ở màn hình rộng; thứ tự DOM vẫn tuyến tính và bản di động
+   dùng lại khung một cột sẵn có. Không dùng transform nên các khối này không
+   tạo thêm lớp compositor hoặc va chạm với entrance của PR #43. */
+@media (min-width: 901px) {
+  /* Tranh nguồn mở sát hai biên trái, phần dẫn chuyện nằm trong cột phải như
+     một trang sách mở. Ba thẻ số liệu quay lại shell ngay bên dưới. */
+  #cau-chuyen { padding-inline: 0; }
+  #cau-chuyen > .section-heading {
+    width: 100%;
+    grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr);
+    gap: 0;
+    align-items: stretch;
+  }
+  #cau-chuyen > .section-heading > .heading-art { min-height: clamp(520px, 56vw, 720px); }
+  #cau-chuyen > .section-heading > .heading-art img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    border-radius: 0;
+    object-fit: cover;
+  }
+  #cau-chuyen > .section-heading > .eyebrow,
+  #cau-chuyen > .section-heading > h2,
+  #cau-chuyen > .section-heading > p:not(.eyebrow) {
+    padding-inline: clamp(32px, 5vw, 72px) max(16px, calc((100vw - 1180px) / 2));
+  }
+  #cau-chuyen > .section-heading > .eyebrow { padding-top: clamp(64px, 8vw, 110px); }
+  #cau-chuyen > .section-heading > p:not(.eyebrow) { padding-bottom: clamp(64px, 8vw, 110px); }
+
+  /* Ảnh hộp bài chiếm cột lớn bên phải; lời giới thiệu, giá và CTA tạo thành
+     một cột thông tin hẹp bên trái giống trang catalogue, không còn xếp bốn
+     khối cùng tâm theo đúng một công thức section-heading. */
+  #bao-bai {
+    display: grid;
+    grid-template-columns: minmax(280px, .78fr) minmax(460px, 1.22fr);
+    column-gap: clamp(42px, 6vw, 84px);
+    max-width: 1180px;
+    align-items: start;
+  }
+  #bao-bai > .section-heading { grid-column: 1; width: auto; display: block; margin: 0; }
+  #bao-bai > .pack-figure {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    margin: 0;
+  }
+  #bao-bai > .pack-figure img { height: 100%; object-fit: cover; }
+  #bao-bai > .pack-spec { grid-column: 1; width: 100%; margin: 32px 0 0; }
+  #bao-bai > .pack-cta { grid-column: 1; margin: 28px 0 0; }
+}
