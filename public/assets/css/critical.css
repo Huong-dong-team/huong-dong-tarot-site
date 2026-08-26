@@ -431,6 +431,17 @@ body::after {
   mix-blend-mode: multiply;
 }
 .hero { background-color: var(--lacquer-wash); }
+
+/* Tầng đáy của hero cho lớp nền sơn mài. Chỉ khai chỗ đứng; ảnh và quãng vào
+   nằm trong lacquer-art.css vì chúng không thuộc khung hình đầu. Dùng ::before
+   vì ::after bị kiểm thử hiệu năng khoá. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  opacity: 0;
+}
 .site-header {
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--lacquer-gold) 18%, transparent);

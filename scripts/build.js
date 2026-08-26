@@ -271,6 +271,90 @@ const layoutSettings = {
     : "",
 };
 
+/* Tranh sơn mài của Layer 2, gắn theo route đúng bảng §3 của bản bàn giao
+   "Layer 1–2 trang con" v1.0 (26/08/2026).
+
+   Đặt ở đây thay vì rải vào 14 template vì hai lý do. Một: bàn giao đã nói
+   dùng data-page-art chứ đừng dò URL trong JS, và build là chỗ duy nhất biết
+   chắc route của từng trang. Hai: mọi trang đều đi qua layout(), nên một chỗ
+   sửa là cả website đổi theo — không có đường nào để một route lọt lưới.
+
+   Trang chủ KHÔNG có mặt trong bảng này: phạm vi đã được chốt lại là chỉ trang
+   con. Các dải nội dung của trang chủ đang phủ giấy đục 88–91%, mà tranh ở 9%
+   nằm dưới chúng thì còn lộ chưa tới 1% — thấy như không có. Muốn làm trang chủ
+   thì phải mở nền các dải đó ra trước, và đó là một quyết định khác.
+
+   Ba route cuối không nằm trong bảng §3 của bàn giao; chúng dùng bức của
+   home-content để không trang nào bị trơ. */
+const PAGE_ART = [
+  { id: "trai-bai",          match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
+  { id: "la-bai",            match: (p) => p.startsWith("/la-bai/") },
+  { id: "tarot-la-gi",       match: (p) => p === "/tarot-la-gi/" },
+  { id: "huyen-su",          match: (p) => p.startsWith("/huyen-su/") },
+  { id: "healing",           match: (p) => p === "/healing/" },
+  { id: "chuyen-huong-dong", match: (p) => p.startsWith("/tin-tuc/") },
+  { id: "cua-hang",          match: (p) => p === "/cua-hang/" },
+  { id: "home-content",      match: (p) => p === "/gioi-thieu/" || p === "/quyen-rieng-tu/" || p === "/404.html" },
+];
+
+/**
+ * Tranh nào thuộc route này.
+ * @param {string} routePath
+ * @returns {string} id trong PAGE_ART, hoặc chuỗi rỗng nếu route không có tranh
+ */
+function pageArtId(routePath) {
+  return PAGE_ART.find((entry) => entry.match(routePath))?.id || "";
+}
+
+/**
+ * Chèn Layer 2 vào thân trang và bọc phần nội dung lại.
+ *
+ * Bàn giao yêu cầu bọc CHỈ các section sau .page-hero. Trang lá và trang bài
+ * viết không có .page-hero — chúng mở thẳng bằng <article> — nên ở đó bọc trọn
+ * phần trong <main>. Cắt theo thẻ </section> đầu tiên là an toàn với bộ template
+ * hiện tại: không template nào lồng <section> bên trong .page-hero, kể cả bản
+ * .has-cover của Huyền sử vốn chỉ lồng <figure>.
+ *
+ * @param {string} content HTML thân trang đã render
+ * @param {string} artId   id tranh, rỗng thì trả nguyên content
+ * @returns {string}
+ */
+function withPageArt(content, artId) {
+  if (!artId) return content;
+
+  // Tệp template kết thúc bằng một dòng trống; cắt trước khi soi hai đầu chuỗi.
+  const trimmed = content.trim();
+  const openMain = trimmed.match(/^<main\b[^>]*>/);
+  if (!openMain) return content;
+  const closeMain = "</main>";
+  if (!trimmed.endsWith(closeMain)) return content;
+
+  const head = openMain[0].replace(/>$/, ` data-page-art="${artId}">`);
+  let body = trimmed.slice(openMain[0].length, -closeMain.length);
+
+  // Trang có .page-hero: giữ hero đứng ngoài khung tranh, đúng §4.
+  let hero = "";
+  if (/^\s*<section[^>]*class="[^"]*\bpage-hero\b/.test(body)) {
+    const end = body.indexOf("</section>");
+    if (end !== -1) {
+      hero = body.slice(0, end + "</section>".length);
+      body = body.slice(end + "</section>".length);
+    }
+  }
+
+  const src = (w, ext) => `/assets/img/subpage/${artId}-${w}.${ext}`;
+  // Ảnh trang trí thuần: aria-hidden + alt rỗng để nó không vào cây trợ năng.
+  // width/height khai đúng tỉ lệ master nên không có lần dịch bố cục nào.
+  const art = '<picture class="subpage-artwork" aria-hidden="true">'
+    + `<source media="(max-width: 1023px)" type="image/avif" srcset="${src(1024, "avif")}">`
+    + `<source media="(max-width: 1023px)" type="image/webp" srcset="${src(1024, "webp")}">`
+    + `<source type="image/avif" srcset="${src(1536, "avif")}">`
+    + `<img src="${src(1536, "webp")}" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">`
+    + "</picture>";
+
+  return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}`;
+}
+
 /**
  * Dựng một trang hoàn chỉnh từ template _layout.
  *
@@ -303,7 +387,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
-    content,
+    content: withPageArt(content, bodyClass === "home-page" ? "" : pageArtId(routePath)),
     bodyClass,
     pageScripts,
     fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),

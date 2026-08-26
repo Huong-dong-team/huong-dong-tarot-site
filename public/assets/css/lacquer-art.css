@@ -1,0 +1,303 @@
+/* ============================================================
+   LỚP 1–2 SƠN MÀI
+   Theo bản bàn giao "Layer 1–2 — tranh sơn mài trang con" v1.0 · 26/08/2026.
+
+   Phạm vi: TRANG CON. Trang chủ không có mặt ở đây — các dải nội dung của nó
+   đang phủ giấy đục 88–91%, tranh ở 9% nằm dưới thì lộ chưa tới 1%, tức là
+   không thấy gì. Mở nền các dải đó ra là một quyết định riêng, chưa chốt.
+
+   Ngoại lệ duy nhất của trang chủ là lớp nền dưới hero ở cuối tệp: đó là việc
+   đã được yêu cầu riêng và dựng trước bản bàn giao này, giữ nguyên.
+
+   Xếp lớp trong .subpage-content-frame:
+     ::before          z 0   Layer 1 — vệt son, vàng, thớ vóc bằng gradient
+     .subpage-artwork  z 1   Layer 2 — tranh của route, mix-blend-mode multiply
+     mọi con khác      z 2   Layer 3 — chữ, card, form, CTA
+   ============================================================ */
+
+/* --- Layer 1 · lacquer atmosphere (§5) -------------------------------- */
+
+.subpage-content-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Gradient thuần, dùng lại đúng token --lacquer-* đang có. Không thư viện,
+   không canvas, không ảnh texture. Blend để normal vì bản thân các chặng màu
+   đã được pha trong suốt bằng color-mix — chồng thêm multiply sẽ tối gấp đôi.
+
+   Opacity KHÔNG nối vào --hd-scroll: lớp này phải đứng yên, nếu không mỗi cú
+   cuộn là một lần nền đổi độ đậm và mắt đọc ra thành rung. */
+.subpage-content-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 30% at 8% 12%,
+      color-mix(in srgb, var(--lacquer-son) 10%, transparent), transparent 72%),
+    radial-gradient(ellipse 56% 28% at 94% 62%,
+      color-mix(in srgb, var(--lacquer-gold) 12%, transparent), transparent 74%),
+    linear-gradient(112deg, transparent 18%,
+      color-mix(in srgb, var(--lacquer-ink) 2.5%, transparent) 50%, transparent 78%);
+  opacity: .62;
+}
+
+/* body::before đang làm đúng việc của Layer 1 trên toàn website. Ở trang con
+   giờ có thêm một bản nữa trong khung nội dung, nên phải hạ bản toàn trang
+   xuống — không thì vùng nội dung nhận hai lớp cùng vai trò và đậm gấp đôi so
+   với hiện tại. Trang chủ không đụng tới. */
+body:not(.home-page)::before { opacity: calc(.2 + var(--hd-scroll) * .1); }
+
+/* --- Layer 2 · subpage artwork (§6) ----------------------------------- */
+
+/* Neo ở đỉnh khung nội dung chứ không kéo giãn xuống hết trang. §6 cho hai cách
+   xử lý trang dài; đây là cách thứ hai — tranh phủ vùng mở đầu rồi nhường lại
+   cho Layer 1. Cách kia (lặp tranh so le mỗi 1000–1400px) tốn thêm một lần vẽ
+   toàn khung cho mỗi lần lặp, mà trang con ở đây phần lớn là chữ.
+
+   mask ở đáy để tranh tan dần vào Layer 1 thay vì bị cắt ngang một đường. Đây
+   là mask tĩnh, không phải blur động — không có gì chạy theo cú cuộn. */
+.subpage-artwork {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: min(100%, var(--art-height, 92vh));
+  opacity: var(--art-opacity, .10);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+}
+
+.subpage-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--art-position, center top);
+}
+
+.subpage-content-frame > :not(.subpage-artwork) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Bốn khối này là con trực tiếp của khung và đang phủ giấy đục — để nguyên thì
+   chúng che mất chính bức tranh vừa đặt xuống dưới. Chỉ mở độ đục; màu, kích
+   thước, khoảng đệm và thứ tự đều không đổi. .inline-waitlist cố ý KHÔNG có
+   trong danh sách: dải vàng đó là một điểm nghỉ trong nhịp đọc, giữ đặc. */
+.subpage-content-frame > :is(.card-detail, .not-found, .news-section, .library-page) {
+  background: transparent;
+}
+
+/* Ba token chữ phụ, hạ sắc độ vừa đủ để qua ngưỡng AA khi có tranh phía dưới.
+
+   Vì sao phải đụng tới chúng: §9 bắt tương phản tối thiểu 4,5:1 sau khi bật cả
+   hai lớp, nhưng --muted và --brown vốn chỉ đạt 5,24 và 5,14 trên giấy trơn —
+   dư chưa tới 0,7. Bảng opacity §3 làm nền tối đi khoảng một phần mười là đủ
+   đẩy chúng xuống 4,05–4,19. Hai điều khoản của bàn giao không thể cùng đúng ở
+   đây, và điều khoản trợ năng là điều khoản không được nhường.
+
+   Con số lấy từ phép đo WCAG trên nền khắc nghiệt nhất trong cả 8 route —
+   rgb(230 226 210) — chứ không ước lượng bằng mắt. Hue giữ nguyên, chỉ lệch độ
+   sáng 2,4–2,8%. Chỉ áp trong khung nội dung trang con; hero, trang chủ, header
+   và footer vẫn dùng đúng bảng màu thương hiệu.
+
+   Chữ thân bài không có trong danh sách vì nó dùng --ink và đang ở 12,75:1. */
+.subpage-content-frame {
+  --muted: #736051;
+  --brown: #815C35;
+  --gold-ink: #7F5D00;
+}
+
+/* Ba khối này có nền giấy đục riêng nên chữ trong đó không hề đứng trên tranh —
+   trả lại đúng sắc độ đã duyệt. */
+.subpage-content-frame :is(.tarot-card, .news-grid article, .filters) {
+  --muted: #7A6656;
+  --brown: #8B6339;
+  --gold-ink: #8B6600;
+}
+
+/* --- Opacity theo route (§3) ------------------------------------------ */
+
+[data-page-art="home-content"]      { --art-opacity: .09;  }
+[data-page-art="tarot-la-gi"]       { --art-opacity: .11;  }
+[data-page-art="la-bai"]            { --art-opacity: .10;  }
+[data-page-art="trai-bai"]          { --art-opacity: .095; }
+[data-page-art="huyen-su"]          { --art-opacity: .10;  }
+[data-page-art="healing"]           { --art-opacity: .105; }
+[data-page-art="chuyen-huong-dong"] { --art-opacity: .09;  }
+[data-page-art="cua-hang"]          { --art-opacity: .10;  }
+
+/* --- Responsive (§7) --------------------------------------------------- */
+
+/* Tablet: giảm khoảng 15–20% và bắt đầu kéo motif về phía cạnh.
+
+   Cột "vị trí mobile" của §3 ghi dạng ba token — "right 38% top", "left 30% top",
+   "right 20% bottom". Dạng đó không hợp lệ với object-position: đặc tả chỉ nhận
+   một, hai hoặc bốn giá trị, nên trình duyệt vứt cả khai báo và ảnh rơi về
+   50% 50%. Đo được đúng như vậy. Ở đây viết lại thành dạng bốn giá trị, giữ
+   nguyên ý: neo vào đúng cạnh đó rồi lùi vào theo phần trăm đã ghi. */
+@media (max-width: 1023px) {
+  .subpage-artwork { --art-height: 78vh; }
+
+  [data-page-art="home-content"]      { --art-opacity: .075; --art-position: center top; }
+  [data-page-art="tarot-la-gi"]       { --art-opacity: .09;  --art-position: right 38% top 0%; }
+  [data-page-art="la-bai"]            { --art-opacity: .085; --art-position: left 30% top 0%; }
+  [data-page-art="trai-bai"]          { --art-opacity: .08;  --art-position: center bottom; }
+  [data-page-art="huyen-su"]          { --art-opacity: .085; --art-position: left 22% top 0%; }
+  [data-page-art="healing"]           { --art-opacity: .085; --art-position: right 24% top 0%; }
+  [data-page-art="chuyen-huong-dong"] { --art-opacity: .075; --art-position: left 18% top 0%; }
+  [data-page-art="cua-hang"]          { --art-opacity: .08;  --art-position: right 20% bottom 0%; }
+}
+
+/* Điện thoại: chỉ giữ một cụm motif theo đúng cột "vị trí mobile" của §3.
+   Không cần thấy đủ bức tranh — cần một dấu hiệu nhận diện rồi nhường chỗ cho
+   chữ, nên khung tranh thấp hẳn xuống và không chạy dưới các đoạn dài. */
+@media (max-width: 767px) {
+  .subpage-artwork { --art-height: 56vh; }
+
+  [data-page-art="home-content"]      { --art-opacity: .055; }
+  [data-page-art="tarot-la-gi"]       { --art-opacity: .065; }
+  [data-page-art="la-bai"]            { --art-opacity: .06;  }
+  [data-page-art="trai-bai"]          { --art-opacity: .055; }
+  [data-page-art="huyen-su"]          { --art-opacity: .06;  }
+  [data-page-art="healing"]           { --art-opacity: .06;  }
+  [data-page-art="chuyen-huong-dong"] { --art-opacity: .05;  }
+  [data-page-art="cua-hang"]          { --art-opacity: .055; }
+}
+
+/* Máy hẹp nhất: bớt thêm một nấc để thớ tranh không làm bẩn chữ thân bài. */
+@media (max-width: 429px) {
+  .subpage-artwork { opacity: calc(var(--art-opacity, .10) - .008); }
+}
+
+/* --- Entrance ---------------------------------------------------------- */
+
+/* Hai lớp này nằm TRONG #noi-dung-chinh, tức trong container mà Swup thay mỗi
+   lần điều hướng. Phần tử mới được dựng lại thì animation tự chạy lại — không
+   cần cờ .hd-first-load, không cần hai tên keyframe, không cần một dòng JS.
+
+   Đây là entrance, không phải hiệu ứng theo cuộn: nó chạy đúng một lần lúc
+   trang vào rồi thôi. Ràng buộc "không scroll-linked" của bàn giao vẫn nguyên. */
+@keyframes lacquer-atmos-in {
+  from { opacity: 0; }
+  to   { opacity: .62; }
+}
+
+/* Dịch dọc chứ KHÔNG scale. Phần tử này rộng đúng bằng khung nội dung, nên
+   scale(1.035) đẩy mỗi mép ra ngoài 17px và trình duyệt dựng luôn thanh cuộn
+   ngang trong suốt 1,4 giây — đo được đúng như vậy trước khi đổi. Trượt theo
+   trục dọc cho cùng cảm giác chiều sâu mà không đụng vào bề ngang, và quãng
+   hở ở đáy thì đã nằm trong vùng mask nên không ai thấy. */
+@keyframes lacquer-art-in {
+  from { opacity: 0; transform: translate3d(0, -1.6%, 0); }
+  to   { opacity: var(--art-opacity, .10); transform: none; }
+}
+
+.subpage-content-frame::before {
+  animation: lacquer-atmos-in 900ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.subpage-artwork {
+  animation: lacquer-art-in 1400ms cubic-bezier(.22, 1, .36, 1) 120ms both;
+}
+
+/* --- Trạng thái đặc biệt (§9) ------------------------------------------ */
+
+/* Cả hai lớp vốn không chuyển động sau khi vào, nên ở đây chỉ cần bỏ nốt quãng
+   vào. Tranh vẫn hiện — người bật thiết lập này muốn ít chuyển động, không
+   phải ít giao diện. */
+@media (prefers-reduced-motion: reduce) {
+  .subpage-content-frame::before,
+  .subpage-artwork { animation: none; }
+}
+
+@media print {
+  .subpage-content-frame::before,
+  .subpage-artwork { display: none; }
+}
+
+@media (forced-colors: active) {
+  .subpage-content-frame::before,
+  .subpage-artwork { display: none; }
+}
+
+/* ============================================================
+   NỀN SƠN MÀI DƯỚI HERO — trang chủ
+
+   Nằm ngoài phạm vi bản bàn giao và được giữ lại có chủ ý: đây là việc đã yêu
+   cầu riêng trước đó. Bức Mẫu Liễu Hạnh không bị đụng tới, kể cả diễn hoạt
+   hero-art-reveal trong page-transition.css — keyframe đó cố ý bắt đầu ở
+   opacity .22 để không hoãn LCP.
+
+   Lớp này chỉ chèn thêm một tầng ở ĐÁY hero. Thứ tự vẽ thành: nền hero →
+   TRANH SƠN MÀI (-3) → tranh Mẫu Liễu Hạnh (-2) → lớp phủ đọc chữ (-1) →
+   nội dung (1). .hero đã có isolation: isolate nên tầng -3 không thoát lên
+   tầng gốc. Dùng ::before vì ::after bị kiểm thử hiệu năng khoá.
+
+   Nền đi nhanh hơn bức hero (760ms so với 1400ms) và thu về từ mức phóng lớn
+   hơn. Lệch nhịp và lệch biên độ là thứ làm mắt đọc ra "mặt vóc mở ra trước,
+   bức tranh nổi lên trên nó" mà không ai phải chờ thêm mili giây nào.
+   ============================================================ */
+
+/* Ba nhánh loại trừ nhau, không phải một luật gốc rồi media query đè lên: cách
+   mobile-first quen thuộc làm trình duyệt phát yêu cầu cho bản nhỏ ngay khi gặp
+   luật gốc, trước khi biết có luật sau đè — đo trên máy 1280px là tải cả hai. */
+@media (max-width: 900px) {
+  .hero::before {
+    background-image: url("/assets/img/son-mai-800.webp");
+    background-image: image-set(
+      url("/assets/img/son-mai-800.avif") type("image/avif"),
+      url("/assets/img/son-mai-800.webp") type("image/webp"));
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1499px) {
+  .hero::before {
+    background-image: url("/assets/img/son-mai-1280.webp");
+    background-image: image-set(
+      url("/assets/img/son-mai-1280.avif") type("image/avif"),
+      url("/assets/img/son-mai-1280.webp") type("image/webp"));
+  }
+}
+
+@media (min-width: 1500px) {
+  .hero::before {
+    background-image: url("/assets/img/son-mai-1520.webp");
+    background-image: image-set(
+      url("/assets/img/son-mai-1520.avif") type("image/avif"),
+      url("/assets/img/son-mai-1520.webp") type("image/webp"));
+  }
+}
+
+.hero::before {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 1;
+}
+
+@keyframes hero-lacquer-rise {
+  from { opacity: 0; transform: scale(1.09); }
+  28%  { opacity: 1; }
+  to   { opacity: 1; transform: none; }
+}
+
+html.hd-first-load .hero::before {
+  animation: hero-lacquer-rise 760ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@media (max-width: 900px) {
+  @keyframes hero-lacquer-rise {
+    from { opacity: 0; transform: scale(1.05); }
+    40%  { opacity: 1; }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hd-first-load .hero::before { animation: none; opacity: 1; }
+}
