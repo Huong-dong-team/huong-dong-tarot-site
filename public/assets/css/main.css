@@ -597,6 +597,48 @@ blockquote {
   border-color: var(--line);
   color: var(--on-brown);
 }
+.footer-brand { display: grid; justify-items: start; gap: 4px; }
+.footer-brand p { margin: 0; }
+.ambient-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 7px 12px;
+  border: 1px solid color-mix(in srgb, var(--gold) 58%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lacquer-ink) 58%, transparent);
+  color: var(--on-brown);
+  font-size: 12px;
+  font-weight: 700;
+}
+.ambient-sound-toggle:hover,
+.ambient-sound-toggle:focus-visible,
+.ambient-sound-toggle[data-active] {
+  border-color: var(--gold);
+  background: color-mix(in srgb, var(--lacquer-son) 46%, var(--lacquer-ink));
+}
+.ambient-sound-toggle:disabled { cursor: not-allowed; opacity: .58; }
+.ambient-sound-mark {
+  width: 9px;
+  height: 9px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+}
+.ambient-sound-toggle[data-active] .ambient-sound-mark { background: var(--gold); }
+.ambient-sound-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 #main-nav a { color: var(--ink); opacity: 0.85; }
 #main-nav a:hover,
 #main-nav a[aria-current="page"] { opacity: 1; color: var(--gold-ink); }
