@@ -271,22 +271,18 @@ const layoutSettings = {
     : "",
 };
 
-/* Tranh sơn mài của Layer 2, gắn theo route đúng bảng §3 của bản bàn giao
-   "Layer 1–2 trang con" v1.0 (26/08/2026).
+/* Tranh sơn mài của Layer 2, gắn theo route đúng đặc tả JSON v1.0.0
+   (26/08/2026). Trang chủ chỉ nhận tranh ở phần nội dung SAU hero.
 
    Đặt ở đây thay vì rải vào 14 template vì hai lý do. Một: bàn giao đã nói
    dùng data-page-art chứ đừng dò URL trong JS, và build là chỗ duy nhất biết
    chắc route của từng trang. Hai: mọi trang đều đi qua layout(), nên một chỗ
    sửa là cả website đổi theo — không có đường nào để một route lọt lưới.
 
-   Trang chủ KHÔNG có mặt trong bảng này: phạm vi đã được chốt lại là chỉ trang
-   con. Các dải nội dung của trang chủ đang phủ giấy đục 88–91%, mà tranh ở 9%
-   nằm dưới chúng thì còn lộ chưa tới 1% — thấy như không có. Muốn làm trang chủ
-   thì phải mở nền các dải đó ra trước, và đó là một quyết định khác.
-
-   Ba route cuối không nằm trong bảng §3 của bàn giao; chúng dùng bức của
-   home-content để không trang nào bị trơ. */
+   Không tự gắn tranh cho route ngoài bảng: /gioi-thieu/, /quyen-rieng-tu/ và
+   /404.html giữ nguyên Layer 0 thay vì mượn sai tranh home-content. */
 const PAGE_ART = [
+  { id: "home-content",      match: (p) => p === "/" },
   { id: "trai-bai",          match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
   { id: "la-bai",            match: (p) => p.startsWith("/la-bai/") },
   { id: "tarot-la-gi",       match: (p) => p === "/tarot-la-gi/" },
@@ -294,7 +290,6 @@ const PAGE_ART = [
   { id: "healing",           match: (p) => p === "/healing/" },
   { id: "chuyen-huong-dong", match: (p) => p.startsWith("/tin-tuc/") },
   { id: "cua-hang",          match: (p) => p === "/cua-hang/" },
-  { id: "home-content",      match: (p) => p === "/gioi-thieu/" || p === "/quyen-rieng-tu/" || p === "/404.html" },
 ];
 
 /**
@@ -309,11 +304,11 @@ function pageArtId(routePath) {
 /**
  * Chèn Layer 2 vào thân trang và bọc phần nội dung lại.
  *
- * Bàn giao yêu cầu bọc CHỈ các section sau .page-hero. Trang lá và trang bài
- * viết không có .page-hero — chúng mở thẳng bằng <article> — nên ở đó bọc trọn
- * phần trong <main>. Cắt theo thẻ </section> đầu tiên là an toàn với bộ template
- * hiện tại: không template nào lồng <section> bên trong .page-hero, kể cả bản
- * .has-cover của Huyền sử vốn chỉ lồng <figure>.
+ * Đặc tả yêu cầu bọc CHỈ các section sau hero. Trang trong dùng .page-hero,
+ * trang chủ dùng .hero; cả hai phải đứng ngoài khung Layer 1–2. Trang lá và
+ * trang bài viết không có hero thì bọc trọn phần trong <main>. Cắt theo thẻ
+ * </section> đầu tiên là an toàn với các template hiện tại: không hero nào lồng
+ * một <section> khác bên trong.
  *
  * @param {string} content HTML thân trang đã render
  * @param {string} artId   id tranh, rỗng thì trả nguyên content
@@ -327,14 +322,18 @@ function withPageArt(content, artId) {
   const openMain = trimmed.match(/^<main\b[^>]*>/);
   if (!openMain) return content;
   const closeMain = "</main>";
-  if (!trimmed.endsWith(closeMain)) return content;
+  const closeAt = trimmed.lastIndexOf(closeMain);
+  if (closeAt === -1) return content;
 
   const head = openMain[0].replace(/>$/, ` data-page-art="${artId}">`);
-  let body = trimmed.slice(openMain[0].length, -closeMain.length);
+  let body = trimmed.slice(openMain[0].length, closeAt);
+  // Trang chủ còn một script nhỏ sau </main>; giữ nguyên đúng vị trí thay vì
+  // coi template phải kết thúc tuyệt đối bằng thẻ đóng main.
+  const tail = trimmed.slice(closeAt + closeMain.length);
 
-  // Trang có .page-hero: giữ hero đứng ngoài khung tranh, đúng §4.
+  // Giữ cả hero trang trong và hero trang chủ đứng ngoài khung tranh.
   let hero = "";
-  if (/^\s*<section[^>]*class="[^"]*\bpage-hero\b/.test(body)) {
+  if (/^\s*<section[^>]*class="[^"]*\b(?:page-hero|hero)\b/.test(body)) {
     const end = body.indexOf("</section>");
     if (end !== -1) {
       hero = body.slice(0, end + "</section>".length);
@@ -352,7 +351,7 @@ function withPageArt(content, artId) {
     + `<img src="${src(1536, "webp")}" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">`
     + "</picture>";
 
-  return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}`;
+  return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}${tail}`;
 }
 
 /**
@@ -387,7 +386,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
-    content: withPageArt(content, bodyClass === "home-page" ? "" : pageArtId(routePath)),
+    content: withPageArt(content, pageArtId(routePath)),
     bodyClass,
     pageScripts,
     fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),

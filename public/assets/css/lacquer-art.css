@@ -2,12 +2,8 @@
    LỚP 1–2 SƠN MÀI
    Theo bản bàn giao "Layer 1–2 — tranh sơn mài trang con" v1.0 · 26/08/2026.
 
-   Phạm vi: TRANG CON. Trang chủ không có mặt ở đây — các dải nội dung của nó
-   đang phủ giấy đục 88–91%, tranh ở 9% nằm dưới thì lộ chưa tới 1%, tức là
-   không thấy gì. Mở nền các dải đó ra là một quyết định riêng, chưa chốt.
-
-   Ngoại lệ duy nhất của trang chủ là lớp nền dưới hero ở cuối tệp: đó là việc
-   đã được yêu cầu riêng và dựng trước bản bàn giao này, giữ nguyên.
+   Phạm vi: nội dung trang con và nội dung trang chủ sau hero. Hero không thuộc
+   Layer 1–2 và không được thay đổi bởi stylesheet này.
 
    Xếp lớp trong .subpage-content-frame:
      ::before          z 0   Layer 1 — vệt son, vàng, thớ vóc bằng gradient
@@ -44,11 +40,10 @@
   opacity: .62;
 }
 
-/* body::before đang làm đúng việc của Layer 1 trên toàn website. Ở trang con
-   giờ có thêm một bản nữa trong khung nội dung, nên phải hạ bản toàn trang
-   xuống — không thì vùng nội dung nhận hai lớp cùng vai trò và đậm gấp đôi so
-   với hiện tại. Trang chủ không đụng tới. */
-body:not(.home-page)::before { opacity: calc(.2 + var(--hd-scroll) * .1); }
+/* Trang con có thêm Layer 1 trong khung nội dung nên hạ lớp toàn trang về một
+   giá trị tĩnh. Không nối vào --hd-scroll: đặc tả cấm hiệu ứng theo cuộn. Trang
+   chủ giữ nguyên lớp nền hiện hữu để hero không đổi. */
+body:not(.home-page)::before { opacity: .2; }
 
 /* --- Layer 2 · subpage artwork (§6) ----------------------------------- */
 
@@ -169,51 +164,7 @@ body:not(.home-page)::before { opacity: calc(.2 + var(--hd-scroll) * .1); }
   [data-page-art="cua-hang"]          { --art-opacity: .055; }
 }
 
-/* Máy hẹp nhất: bớt thêm một nấc để thớ tranh không làm bẩn chữ thân bài. */
-@media (max-width: 429px) {
-  .subpage-artwork { opacity: calc(var(--art-opacity, .10) - .008); }
-}
-
-/* --- Entrance ---------------------------------------------------------- */
-
-/* Hai lớp này nằm TRONG #noi-dung-chinh, tức trong container mà Swup thay mỗi
-   lần điều hướng. Phần tử mới được dựng lại thì animation tự chạy lại — không
-   cần cờ .hd-first-load, không cần hai tên keyframe, không cần một dòng JS.
-
-   Đây là entrance, không phải hiệu ứng theo cuộn: nó chạy đúng một lần lúc
-   trang vào rồi thôi. Ràng buộc "không scroll-linked" của bàn giao vẫn nguyên. */
-@keyframes lacquer-atmos-in {
-  from { opacity: 0; }
-  to   { opacity: .62; }
-}
-
-/* Dịch dọc chứ KHÔNG scale. Phần tử này rộng đúng bằng khung nội dung, nên
-   scale(1.035) đẩy mỗi mép ra ngoài 17px và trình duyệt dựng luôn thanh cuộn
-   ngang trong suốt 1,4 giây — đo được đúng như vậy trước khi đổi. Trượt theo
-   trục dọc cho cùng cảm giác chiều sâu mà không đụng vào bề ngang, và quãng
-   hở ở đáy thì đã nằm trong vùng mask nên không ai thấy. */
-@keyframes lacquer-art-in {
-  from { opacity: 0; transform: translate3d(0, -1.6%, 0); }
-  to   { opacity: var(--art-opacity, .10); transform: none; }
-}
-
-.subpage-content-frame::before {
-  animation: lacquer-atmos-in 900ms cubic-bezier(.22, 1, .36, 1) both;
-}
-
-.subpage-artwork {
-  animation: lacquer-art-in 1400ms cubic-bezier(.22, 1, .36, 1) 120ms both;
-}
-
 /* --- Trạng thái đặc biệt (§9) ------------------------------------------ */
-
-/* Cả hai lớp vốn không chuyển động sau khi vào, nên ở đây chỉ cần bỏ nốt quãng
-   vào. Tranh vẫn hiện — người bật thiết lập này muốn ít chuyển động, không
-   phải ít giao diện. */
-@media (prefers-reduced-motion: reduce) {
-  .subpage-content-frame::before,
-  .subpage-artwork { animation: none; }
-}
 
 @media print {
   .subpage-content-frame::before,
@@ -223,81 +174,4 @@ body:not(.home-page)::before { opacity: calc(.2 + var(--hd-scroll) * .1); }
 @media (forced-colors: active) {
   .subpage-content-frame::before,
   .subpage-artwork { display: none; }
-}
-
-/* ============================================================
-   NỀN SƠN MÀI DƯỚI HERO — trang chủ
-
-   Nằm ngoài phạm vi bản bàn giao và được giữ lại có chủ ý: đây là việc đã yêu
-   cầu riêng trước đó. Bức Mẫu Liễu Hạnh không bị đụng tới, kể cả diễn hoạt
-   hero-art-reveal trong page-transition.css — keyframe đó cố ý bắt đầu ở
-   opacity .22 để không hoãn LCP.
-
-   Lớp này chỉ chèn thêm một tầng ở ĐÁY hero. Thứ tự vẽ thành: nền hero →
-   TRANH SƠN MÀI (-3) → tranh Mẫu Liễu Hạnh (-2) → lớp phủ đọc chữ (-1) →
-   nội dung (1). .hero đã có isolation: isolate nên tầng -3 không thoát lên
-   tầng gốc. Dùng ::before vì ::after bị kiểm thử hiệu năng khoá.
-
-   Nền đi nhanh hơn bức hero (760ms so với 1400ms) và thu về từ mức phóng lớn
-   hơn. Lệch nhịp và lệch biên độ là thứ làm mắt đọc ra "mặt vóc mở ra trước,
-   bức tranh nổi lên trên nó" mà không ai phải chờ thêm mili giây nào.
-   ============================================================ */
-
-/* Ba nhánh loại trừ nhau, không phải một luật gốc rồi media query đè lên: cách
-   mobile-first quen thuộc làm trình duyệt phát yêu cầu cho bản nhỏ ngay khi gặp
-   luật gốc, trước khi biết có luật sau đè — đo trên máy 1280px là tải cả hai. */
-@media (max-width: 900px) {
-  .hero::before {
-    background-image: url("/assets/img/son-mai-800.webp");
-    background-image: image-set(
-      url("/assets/img/son-mai-800.avif") type("image/avif"),
-      url("/assets/img/son-mai-800.webp") type("image/webp"));
-  }
-}
-
-@media (min-width: 901px) and (max-width: 1499px) {
-  .hero::before {
-    background-image: url("/assets/img/son-mai-1280.webp");
-    background-image: image-set(
-      url("/assets/img/son-mai-1280.avif") type("image/avif"),
-      url("/assets/img/son-mai-1280.webp") type("image/webp"));
-  }
-}
-
-@media (min-width: 1500px) {
-  .hero::before {
-    background-image: url("/assets/img/son-mai-1520.webp");
-    background-image: image-set(
-      url("/assets/img/son-mai-1520.avif") type("image/avif"),
-      url("/assets/img/son-mai-1520.webp") type("image/webp"));
-  }
-}
-
-.hero::before {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  opacity: 1;
-}
-
-@keyframes hero-lacquer-rise {
-  from { opacity: 0; transform: scale(1.09); }
-  28%  { opacity: 1; }
-  to   { opacity: 1; transform: none; }
-}
-
-html.hd-first-load .hero::before {
-  animation: hero-lacquer-rise 760ms cubic-bezier(.22, 1, .36, 1) both;
-}
-
-@media (max-width: 900px) {
-  @keyframes hero-lacquer-rise {
-    from { opacity: 0; transform: scale(1.05); }
-    40%  { opacity: 1; }
-    to   { opacity: 1; transform: none; }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.hd-first-load .hero::before { animation: none; opacity: 1; }
 }

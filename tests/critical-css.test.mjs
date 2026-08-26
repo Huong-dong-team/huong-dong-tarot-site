@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("critical CSS được nhúng và stylesheet đầy đủ tải không chặn render", async () => {
+test("critical CSS được nhúng và stylesheet thiết yếu không phụ thuộc callback", async () => {
   const html = await read("dist/index.html");
   const critical = html.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
   assert.ok(critical.length > 8_000, "critical CSS bị thiếu hoặc quá ngắn");
@@ -25,11 +25,15 @@ test("critical CSS được nhúng và stylesheet đầy đủ tải không ch�
   for (const marker of [".page-hero", ".card-detail", ".v2-prose", ".post-detail", ".not-found"]) {
     assert.ok(!critical.includes(marker), `critical CSS trang chủ còn chứa ${marker}`);
   }
-  assert.match(html, /<link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}" media="print" onload="this\.media='all'">/);
-  // <noscript> chứa main.css và landing-drag.css: tầng scroll-snap của dải kéo
-  // là CSS thuần và phải chạy được cả khi JavaScript bị chặn.
-  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/css\/main\.css\?v=[0-9a-f]{8}">/);
-  assert.match(html, /<noscript>[^<]*(?:<link[^>]*>)*<link rel="stylesheet" href="\/assets\/css\/landing-drag\.css\?v=[0-9a-f]{8}"><\/noscript>/);
+  for (const file of ["main", "lacquer-art"]) {
+    const blocking = new RegExp(`<link rel="stylesheet" href="/assets/css/${file}\\.css\\?v=[0-9a-f]{8}">`);
+    const deferred = new RegExp(`<link rel="stylesheet" href="/assets/css/${file}\\.css[^>]+media="print"`);
+    assert.match(html, blocking, `${file}.css phải áp dụng mà không chờ inline onload`);
+    assert.doesNotMatch(html, deferred, `${file}.css không được quay lại đường media=print`);
+  }
+  // landing-drag.css là tăng cường CSS thuần nên vẫn cần đường lui khi JS tắt.
+  assert.match(html, /<noscript><link rel="stylesheet" href="\/assets\/css\/landing-drag\.css\?v=[0-9a-f]{8}"><\/noscript>/);
+  assert.doesNotMatch(html, /<noscript>[^<]*(?:<link[^>]*>)*<link rel="stylesheet" href="\/assets\/css\/(?:main|lacquer-art)\.css/);
   assert.doesNotMatch(html, /<link rel="stylesheet" href="\/assets\/css\/fonts\.css/);
 });
 
