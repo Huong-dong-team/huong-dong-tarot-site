@@ -71,3 +71,54 @@ Sửa các trường này rồi phải xuất bản lại mới thấy thay đ�
 - Hai mươi hai lá Ẩn Chính dùng tranh và tên Việt hóa hiện hành; 56 lá Ẩn Phụ dùng phù hiệu bốn nhà cho đến khi có tranh riêng.
 - Nội dung mẫu được đánh dấu để đội nội dung tiếp tục biên tập; không tự bịa phần dẫn nguồn còn thiếu.
 - Bản Firebase được dựng song song, không tự động thay thế website Sites đang công khai.
+
+## Nhật ký phối hợp · bản vá Layer 1–2 ngày 26/08/2026
+
+Branch: `fix/reliable-lacquer-css` — tách từ `origin/main` tại merge commit
+`3cbf003`. Chủ dự án là người merge; chưa merge thì production vẫn là bản cũ.
+
+### Nguyên nhân và quyết định
+
+- Production từng có thể chỉ áp dụng critical CSS vì `main.css` và
+  `lacquer-art.css` đều dùng `media="print"` rồi chờ inline `onload` đổi sang
+  `all`. Khi callback không hoàn tất, hero Huyền sử cao 1.272px và ảnh bị xếp
+  xuống dưới chữ.
+- `main.css` và `lacquer-art.css` nay là stylesheet chuẩn, không phụ thuộc
+  callback. `page-transition.css` và `landing-drag.css` vẫn là tăng cường tải
+  hoãn; chúng không quyết định bố cục nền tảng.
+- Đặc tả JSON v1.0.0 ngày 26/08/2026 là nguồn chuẩn: route `/` dùng
+  `home-content` chỉ sau hero; route ngoài bảng không mượn tranh; Layer 1–2 đều
+  tĩnh. Không khôi phục `hero-lacquer-rise`, animation Layer hoặc selector
+  `.hero::before` trong `lacquer-art.css`.
+- Rule giảm thêm opacity dưới 430px đã gỡ. Giá trị mobile cuối cùng bám đúng
+  bảng JSON (`huyen-su: 0.06`, `home-content: 0.055`).
+
+### Phạm vi file
+
+- `templates/_layout.html`: tải chắc chắn hai stylesheet thiết yếu.
+- `scripts/build.js`: ánh xạ đúng route, giữ `.hero`/`.page-hero` ngoài khung
+  tranh và bảo toàn phần script nằm sau `</main>` của trang chủ.
+- `public/assets/css/critical.css`, `critical-inner.css`: chuyển khung chống CLS
+  thành critical CSS dùng chung cho trang chủ và trang con.
+- `public/assets/css/lacquer-art.css`: Layer tĩnh, không vẽ vào hero, không nối
+  độ đậm Layer với cuộn.
+- `tests/critical-css.test.mjs`, `tests/lacquer-background.test.mjs`: khóa các
+  hồi quy nói trên.
+
+### Xác minh đã chạy
+
+```text
+npm run build:local   PASS — 86 URL
+npm run test          PASS — 29/29 tệp test
+npm run check:types   PASS
+```
+
+Trình duyệt cục bộ:
+
+- `/huyen-su/` desktop 1366px: hero 700px, `display:grid`, tranh AVIF 1536,
+  opacity 0.10, không tràn ngang.
+- `/huyen-su/` mobile 390px: hero 660px, tranh AVIF 1024, opacity 0.06,
+  không tràn ngang.
+- `/` desktop/mobile: `home-content` bắt đầu sau hero, opacity 0.09/0.055;
+  hero không chứa `.subpage-artwork`.
+- Mọi lần đo đều đạt `document.readyState = complete`.

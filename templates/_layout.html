@@ -14,17 +14,17 @@
        chủ, Harmoni ở trang trong. Be Vietnam Pro giữ cho UI và nhãn tiếng Việt. -->
   {{{fontPreloads}}}
   <style data-critical>{{{criticalCss}}}</style>
-  <link rel="stylesheet" href="/assets/css/main.css" media="print" onload="this.media='all'">
-  <!-- Hai lớp tăng cường tách riêng khỏi main.css để sửa được mà không đụng vào
-       54 KB nền tảng. landing-drag.css phải có mặt cả trong <noscript>: tầng
-       scroll-snap của dải kéo là CSS thuần và vẫn phải chạy khi JS bị chặn. -->
+  <!-- Hai stylesheet quyết định bố cục và Layer 1–2 phải tải theo đường chuẩn.
+       Không phụ thuộc inline onload: callback bị chặn hoặc về trễ từng làm trang
+       chỉ còn critical CSS và xếp ảnh hero xuống dưới nội dung. -->
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/lacquer-art.css">
+  <!-- Hai lớp tăng cường không quyết định bố cục. landing-drag.css phải có mặt
+       trong <noscript>: tầng scroll-snap của dải kéo là CSS thuần và vẫn phải
+       chạy khi JavaScript bị chặn. -->
   <link rel="stylesheet" href="/assets/css/page-transition.css" media="print" onload="this.media='all'">
-  <!-- Lớp 1–2 sơn mài. Phần chống dịch bố cục nằm trong critical CSS nên khung
-       tranh đúng chỗ ngay khung hình đầu; tệp này mang màu, độ đục theo route và
-       quãng vào. Về trễ thì trang vẫn đủ nền — đúng nghĩa tăng cường. -->
-  <link rel="stylesheet" href="/assets/css/lacquer-art.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="/assets/css/lacquer-art.css"><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
+  <noscript><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
   {{{head}}}
   {{{analytics}}}
 </head>

@@ -1,19 +1,3 @@
-/* Khung Layer 1–2 của trang con. Có mặt ở critical vì .subpage-artwork là một
-   <picture> thật trong DOM: thiếu position: absolute thì ảnh 1536x1024 chiếm chỗ
-   và đẩy cả trang xuống. Màu, độ đục theo route và quãng vào ở lacquer-art.css. */
-.subpage-content-frame { position: relative; isolation: isolate; }
-.subpage-artwork {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 1;
-  height: min(100%, 92vh);
-  opacity: .1;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-.subpage-artwork img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-.subpage-content-frame > :not(.subpage-artwork) { position: relative; z-index: 2; }
-
 /* CSS khung đầu chỉ dành cho trang trong. Không nhúng các luật này vào trang
    chủ: main.css vẫn giữ bản đầy đủ, còn build.js chỉ nối tệp này vào route
    không mang body class home-page. */
