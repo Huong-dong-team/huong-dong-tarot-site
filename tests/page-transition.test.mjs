@@ -48,8 +48,8 @@ test("bootstrap không import Swup tĩnh và có đường lui khi Swup hỏng",
   assert.doesNotMatch(source, /^import .*swup\.mjs/m,
     "import tĩnh mà lỗi sẽ kéo chết cả module, mất luôn menu và nội dung tương tác");
   assert.match(source, /import\("\/assets\/vendor\/swup\.mjs"\)/);
-  assert.match(source, /initMenu\(\);\s*\nstartPage\(\);/,
-    "menu và module của trang phải dựng trước khi thử bật Swup");
+  assert.match(source, /initMenu\(\);\s*\ninitAmbientSound\(\);\s*\nstartPage\(\);/,
+    "điều khiển cố định và module của trang phải dựng trước khi thử bật Swup");
   assert.match(source, /bootSwup\(\)\.catch\(/, "Swup hỏng thì link phải quay về điều hướng trình duyệt");
 });
 

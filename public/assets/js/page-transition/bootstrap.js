@@ -1,4 +1,5 @@
 import { startPage } from "../page/registry.js";
+import { init as initAmbientSound } from "../ui/ambient-sound.js";
 import { init as initMenu } from "../ui/menu.js";
 
 /* Điểm vào của toàn bộ front-end.
@@ -29,6 +30,7 @@ const DISABLED = document.body.dataset.noTransitions !== undefined;
 document.documentElement.classList.add("hd-first-load");
 
 initMenu();
+initAmbientSound();
 startPage();
 
 if (!DISABLED && supportsTransitions()) {
