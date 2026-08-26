@@ -20,6 +20,8 @@ test("critical CSS được nhúng và stylesheet thiết yếu không phụ thu
   for (const marker of ["@font-face", ".site-header", ".hero-bg", ".hero-carousel", ".nav-sub"]) {
     assert.ok(critical.includes(marker), `critical CSS thiếu ${marker}`);
   }
+  assert.match(critical, /\.subpage-artwork\s*\{[^}]*opacity:\s*0/,
+    "critical CSS phải giữ Layer 2 ẩn cho tới lượt reveal");
   // Trang chủ không dựng các khung trang trong. Nếu một selector dưới đây lọt
   // lại vào gói chung, 86 URL sẽ cùng trả giá cho CSS mà route `/` không dùng.
   for (const marker of [".page-hero", ".card-detail", ".v2-prose", ".post-detail", ".not-found"]) {

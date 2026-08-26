@@ -16,6 +16,9 @@
 .subpage-content-frame {
   position: relative;
   isolation: isolate;
+  --lacquer-layer-1-duration: 420ms;
+  --lacquer-layer-2-delay: var(--lacquer-layer-1-duration);
+  --lacquer-layer-2-duration: 620ms;
 }
 
 /* Gradient thuần, dùng lại đúng token --lacquer-* đang có. Không thư viện,
@@ -38,6 +41,8 @@
     linear-gradient(112deg, transparent 18%,
       color-mix(in srgb, var(--lacquer-ink) 2.5%, transparent) 50%, transparent 78%);
   opacity: .62;
+  animation: lacquer-atmosphere-reveal var(--lacquer-layer-1-duration)
+    cubic-bezier(.22, .61, .36, 1) both;
 }
 
 /* Trang con có thêm Layer 1 trong khung nội dung nên hạ lớp toàn trang về một
@@ -63,8 +68,22 @@ body:not(.home-page)::before { opacity: .2; }
   mix-blend-mode: multiply;
   pointer-events: none;
   user-select: none;
+  animation: lacquer-artwork-reveal var(--lacquer-layer-2-duration)
+    cubic-bezier(.22, .61, .36, 1) var(--lacquer-layer-2-delay) both;
   -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
+}
+
+/* Layer 2 chỉ bắt đầu khi Layer 1 đã hoàn tất. Đây là entrance một lần khi
+   khung nội dung được dựng, không nối với vị trí cuộn hay trạng thái viewport. */
+@keyframes lacquer-atmosphere-reveal {
+  from { opacity: 0; }
+  to { opacity: .62; }
+}
+
+@keyframes lacquer-artwork-reveal {
+  from { opacity: 0; }
+  to { opacity: var(--art-opacity, .10); }
 }
 
 .subpage-artwork img {
@@ -174,4 +193,9 @@ body:not(.home-page)::before { opacity: .2; }
 @media (forced-colors: active) {
   .subpage-content-frame::before,
   .subpage-artwork { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subpage-content-frame::before,
+  .subpage-artwork { animation: none; }
 }

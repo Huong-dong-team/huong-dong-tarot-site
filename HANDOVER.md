@@ -16,7 +16,8 @@ npm run test
 
 ## Kiểm thử thủ công
 
-- Trang chủ hiển thị hero, trống đồng, chim Lạc, sáu lá nổi bật và form chờ.
+- Trang chủ hiển thị hero, sáu lá nổi bật và form chờ; không còn watermark chim
+  Lạc hoặc trống đồng trên trang khách.
 - `/la-bai/` hiện đủ 78 lá; bộ lọc 22/56 và bốn chất trả đúng số lượng.
 - Trang chi tiết có nghĩa xuôi/ngược, câu chuyện, biểu tượng, chia sẻ và lá trước/sau.
 - Xem nguồn HTML: OG, Twitter Card và JSON-LD đã có sẵn.
@@ -122,3 +123,41 @@ Trình duyệt cục bộ:
 - `/` desktop/mobile: `home-content` bắt đầu sau hero, opacity 0.09/0.055;
   hero không chứa `.subpage-artwork`.
 - Mọi lần đo đều đạt `document.readyState = complete`.
+
+## Nhật ký phối hợp · trình tự Layer 1–2 và gỡ họa tiết ngày 26/08/2026
+
+Branch: `fix/layer-sequence-remove-motifs` — tách từ `origin/main` tại merge
+commit `07e4adb` của PR #47. Chủ dự án tiếp tục là người merge.
+
+### Yêu cầu và quyết định
+
+- Yêu cầu mới của chủ dự án thay thế riêng điều kiện `animated=false` trong bàn
+  giao v1.0 và quyết định “Layer tĩnh” của PR #47; các giới hạn còn lại vẫn giữ.
+- Layer 1 hiện trong `420ms`; Layer 2 giữ ẩn đúng `420ms`, sau đó hiện trong
+  `620ms`. Hai hiệu ứng chỉ chạy một lần khi khung nội dung được dựng, không
+  liên kết với cuộn và không chạm hero.
+- `prefers-reduced-motion: reduce` bỏ animation và trả hai lớp về trạng thái
+  cuối ngay lập tức.
+- Gỡ watermark chim Lạc và trống đồng khỏi CSS trang khách, gồm watermark của
+  section và lớp `body::after`. Giữ nguyên asset nguồn, biểu tượng quản trị và
+  hình trang trí riêng của mặt lưng lá bài vì chúng không phải watermark nền.
+- Critical CSS giữ Layer 2 ở `opacity: 0` để tranh không lóe lên trước Layer 1.
+
+### Xác minh
+
+```text
+npm run build:local   PASS — 86 URL
+npm run test          PASS — 29/29 tệp test
+npm run check:types   PASS
+```
+
+Trình duyệt cục bộ tại `/huyen-su/`:
+
+- Desktop 1366×768: khi Layer 1 đang tăng `0.534 → 0.619`, Layer 2 vẫn bằng
+  `0`; sau mốc `420ms`, Layer 1 đứng ở `0.62` và Layer 2 mới tăng tới `0.10`.
+  Ảnh `huyen-su-1536.avif`, `naturalWidth=1536`, `multiply`, không tràn ngang.
+- Mobile 390×844: `0ms` hai lớp cùng bằng `0`; tại `180ms`, Layer 1 là `0.260`
+  còn Layer 2 vẫn `0`; tại khoảng `440ms`, Layer 2 vẫn `0`; sau đó tranh tăng
+  tới `0.06`. Ảnh `huyen-su-1024.avif`, `naturalWidth=1024`, không tràn ngang.
+- Cả hai viewport: `body::after` có `background-image: none`; CSS trang khách
+  không còn tham chiếu `trong-dong-640.avif` hoặc `chim-lac-640.avif`.
