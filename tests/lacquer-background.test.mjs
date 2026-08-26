@@ -17,8 +17,12 @@ test("nền sơn mài dùng token thương hiệu và không thêm thư viện r
   for (const css of [main, critical]) {
     assert.match(css, /--lacquer-son:/);
     assert.match(css, /--lacquer-gold:/);
-    assert.match(css, /body::after[\s\S]*trong-dong-640\.avif/);
-    assert.match(css, /body::after[\s\S]*chim-lac-640\.avif/);
+    assert.doesNotMatch(css, /trong-dong-640\.avif/,
+      "trang khách không còn vẽ biểu tượng trống đồng");
+    assert.doesNotMatch(css, /chim-lac-640\.avif/,
+      "trang khách không còn vẽ biểu tượng chim Lạc");
+    assert.doesNotMatch(css, /body::after/,
+      "lớp toàn trang từng chứa hai biểu tượng phải được gỡ");
     assert.match(css, /prefers-reduced-motion:\s*reduce/);
   }
 
@@ -27,14 +31,18 @@ test("nền sơn mài dùng token thương hiệu và không thêm thư viện r
   assert.doesNotMatch(layout, /gsap|lenis|patternbolt|made-in-india/i);
 });
 
-test("Layer 1–2 tĩnh và không chạm hero", async () => {
+test("Layer 1 hiện xong trước Layer 2 và không chạm hero", async () => {
   const [lacquer, critical] = await Promise.all([
     read("public/assets/css/lacquer-art.css"),
     read("public/assets/css/critical.css"),
   ]);
 
-  assert.doesNotMatch(lacquer, /@keyframes\s+(?:lacquer|hero-lacquer)/,
-    "đặc tả đánh dấu cả hai layer animated=false");
+  assert.match(lacquer, /--lacquer-layer-1-duration:\s*420ms/);
+  assert.match(lacquer, /--lacquer-layer-2-delay:\s*var\(--lacquer-layer-1-duration\)/,
+    "Layer 2 phải chờ đúng thời lượng hiện của Layer 1");
+  assert.match(lacquer, /@keyframes\s+lacquer-atmosphere-reveal/);
+  assert.match(lacquer, /@keyframes\s+lacquer-artwork-reveal/);
+  assert.match(lacquer, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*animation:\s*none/);
   assert.doesNotMatch(lacquer, /\.hero::before/,
     "stylesheet Layer 1–2 không được vẽ vào hero");
   assert.doesNotMatch(critical, /Tầng đáy của hero cho lớp nền sơn mài/);
