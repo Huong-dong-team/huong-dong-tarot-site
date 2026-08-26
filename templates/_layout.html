@@ -19,8 +19,12 @@
        54 KB nền tảng. landing-drag.css phải có mặt cả trong <noscript>: tầng
        scroll-snap của dải kéo là CSS thuần và vẫn phải chạy khi JS bị chặn. -->
   <link rel="stylesheet" href="/assets/css/page-transition.css" media="print" onload="this.media='all'">
+  <!-- Lớp 1–2 sơn mài. Phần chống dịch bố cục nằm trong critical CSS nên khung
+       tranh đúng chỗ ngay khung hình đầu; tệp này mang màu, độ đục theo route và
+       quãng vào. Về trễ thì trang vẫn đủ nền — đúng nghĩa tăng cường. -->
+  <link rel="stylesheet" href="/assets/css/lacquer-art.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
+  <noscript><link rel="stylesheet" href="/assets/css/main.css"><link rel="stylesheet" href="/assets/css/lacquer-art.css"><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
   {{{head}}}
   {{{analytics}}}
 </head>
