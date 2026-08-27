@@ -165,9 +165,10 @@ test("dòng eyebrow của hero giữ chỗ đủ hai dòng trên màn hình hẹ
   assert.equal(Number(lineHeight) * 2, 2.4, `line-height .eyebrow là ${lineHeight}, min-height phải là ${Number(lineHeight) * 2}em`);
 });
 
-test("khẩu hiệu trang chủ là điểm nhấn lớn nhất và có bóng nhẹ", async () => {
-  const [critical, main] = await Promise.all([
+test("Headline tăng đúng 30%, Headline/Subheadline dùng vàng chanh có bóng", async () => {
+  const [critical, criticalInner, main] = await Promise.all([
     read("public/assets/css/critical.css"),
+    read("public/assets/css/critical-inner.css"),
     read("public/assets/css/main.css"),
   ]);
   // Cỡ chữ và weight phải khớp nhau từng con số giữa hai tệp: lệch một chỗ là
@@ -181,22 +182,36 @@ test("khẩu hiệu trang chủ là điểm nhấn lớn nhất và có bóng nh
     assert.equal(clamps.length, 2, `${ten}: khẩu hiệu phải có đúng hai cỡ — rộng và hẹp`);
     const [rong, hep] = clamps.sort((a, b) => b[2] - a[2]);
 
-    // Rộng: đủ 20% so với bản trước ở cả ba mốc (62 / 7vw / 96).
-    assert.deepEqual(rong, [74, 8.4, 115], `${ten}: sai cỡ khẩu hiệu ở màn hình rộng`);
-    // Hẹp: trần cũng tăng đủ 20% (70 → 84px), nhưng hệ số vw bị chặn bởi bề
-    // ngang thật của khẩu hiệu — trên 15,5vw thì câu vỡ thành bốn dòng ở 390px.
-    assert.equal(hep[2], 84, `${ten}: trần khẩu hiệu hẹp phải là 84px (70px + 20%)`);
-    assert.ok(hep[1] <= 15, `${ten}: ${hep[1]}vw làm khẩu hiệu vỡ dòng ở 390px`);
-    assert.ok(hep[0] <= 48, `${ten}: sàn ${hep[0]}px làm khẩu hiệu vỡ dòng ở 320px`);
+    // Lấy production trước PR #51 làm mốc: rộng 62 / 7vw / 96 và hẹp
+    // 54 / 15vw / 70. Nhân đúng 1,3 ở từng số, không cộng lên mức +20% thử.
+    assert.deepEqual(rong, [80.6, 9.1, 124.8], `${ten}: sai cỡ khẩu hiệu rộng +30%`);
+    assert.deepEqual(hep, [70.2, 19.5, 91], `${ten}: sai cỡ khẩu hiệu hẹp +30%`);
 
     assert.match(css.match(/\.home-page \.hero h1 \{([^}]*)\}/)?.[1] || "", /font-weight:\s*700/,
       `${ten}: khẩu hiệu phải in đậm`);
   }
-  // Bóng phải nhẹ. Một lớp duy nhất ở độ đục cao đọc ra thành vệt xám dưới chân
-  // chữ ở cỡ ~100px — đó là lý do bản trước bị thay.
-  const shadow = main.match(/\.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-  assert.match(shadow, /text-shadow:/);
-  for (const [, percent] of shadow.matchAll(/var\(--ink\)\s*(\d+)%/g)) {
-    assert.ok(Number(percent) <= 30, `bóng khẩu hiệu ở ${percent}% là quá đậm`);
+
+  // Vàng chanh trên nền tranh sáng cần biên tối kín bốn phía, không chỉ một
+  // vệt mờ phía dưới. Critical và CSS đầy đủ phải cùng màu để không nháy màu.
+  for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
+    assert.match(css, /--hero-lemon:\s*#F6FF4A/i, `${ten}: thiếu token vàng chanh`);
+    assert.match(css.match(/\.home-page \.hero h1 \{([\s\S]*?)\}/)?.[1] || "", /color:\s*var\(--hero-lemon\)/,
+      `${ten}: Headline trang chủ chưa dùng vàng chanh`);
   }
+  const shadow = main.match(/\.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
+  assert.match(shadow, /text-shadow:[\s\S]*-1px -1px 0 rgb\(43 27 18 \/ 94%\)[\s\S]*1px 1px 0 rgb\(43 27 18 \/ 94%\)/,
+    "bóng Headline phải bao kín bốn phía để tách vàng chanh khỏi nền sáng");
+
+  for (const [ten, css] of [["critical-inner.css", criticalInner], ["main.css", main]]) {
+    assert.match(css, /\.page-hero > h1\s*\{[\s\S]*?font-size:\s*clamp\(65px,\s*9\.1vw,\s*117px\)/,
+      `${ten}: Headline trang trong chưa tăng đúng 30% ở khung rộng`);
+    assert.match(css, /@media\s*\(max-width:\s*620px\)[\s\S]*?\.page-hero > h1\s*\{\s*font-size:\s*63\.7px/,
+      `${ten}: Headline trang trong chưa tăng đúng 30% trên mobile`);
+    assert.match(css, /\.page-hero > p:not\(\.eyebrow\)\s*\{[\s\S]*?color:\s*var\(--hero-lemon\)/,
+      `${ten}: Subheadline trang trong chưa dùng vàng chanh`);
+  }
+  assert.match(critical, /\.hero-copy > p:not\(\.eyebrow\)\s*\{[\s\S]*?color:\s*var\(--hero-lemon\)/,
+    "critical CSS thiếu vàng chanh của Subheadline trang chủ");
+  assert.match(main, /\.home-page \.hero-copy > p:not\(\.eyebrow\),[\s\S]*?\.page-hero > p:not\(\.eyebrow\)\s*\{[\s\S]*?color:\s*var\(--hero-lemon\)/,
+    "CSS đầy đủ phải áp vàng chanh cho Subheadline cả trang chủ và trang trong");
 });

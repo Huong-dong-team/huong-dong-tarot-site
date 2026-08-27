@@ -8,6 +8,7 @@
   --ink-soft: #5C4433;
   --muted: #7A6656;
   --gold: #FFD45A;
+  --hero-lemon: #F6FF4A;
   --amber: #FFA95A;
   --orange: #FF8B5A;
   --coral: #FF5A5A;
@@ -213,20 +214,33 @@ h3 { font-size: 30px; line-height: 1.12; }
    nhảy một nhịp đúng lúc main.css về. Xem giải thích ở main.css. */
 .home-page .hero h1 {
   margin-bottom: 24px;
-  color: var(--gold-ink);
+  color: var(--hero-lemon);
   font-family: var(--script);
   padding-inline-start: .16em;
-  font-size: clamp(74px, 8.4vw, 115px);
+  font-size: clamp(80.6px, 9.1vw, 124.8px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0;
   text-wrap: balance;
   text-shadow:
-    0 1px 2px color-mix(in srgb, var(--ink) 18%, transparent),
-    0 .28rem 1.6rem color-mix(in srgb, var(--ink) 22%, transparent);
+    -1px -1px 0 rgb(43 27 18 / 94%),
+    1px -1px 0 rgb(43 27 18 / 94%),
+    -1px 1px 0 rgb(43 27 18 / 94%),
+    1px 1px 0 rgb(43 27 18 / 94%),
+    0 .32rem 1.4rem rgb(43 27 18 / 58%);
 }
 .hero .eyebrow { color: var(--muted); }
-.hero-copy > p:not(.eyebrow) { max-width: 650px; color: var(--ink-soft); font-size: 18px; }
+.hero-copy > p:not(.eyebrow) {
+  max-width: 650px;
+  color: var(--hero-lemon);
+  font-size: 18px;
+  text-shadow:
+    -1px -1px 0 rgb(43 27 18 / 92%),
+    1px -1px 0 rgb(43 27 18 / 92%),
+    -1px 1px 0 rgb(43 27 18 / 92%),
+    1px 1px 0 rgb(43 27 18 / 92%),
+    0 .2rem .8rem rgb(43 27 18 / 52%);
+}
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -359,10 +373,9 @@ h3 { font-size: 30px; line-height: 1.12; }
   .hero { padding-top: 70px; }
   /* Fontasia đã được preload và dùng font-display: swap, nên trình duyệt thay
      đúng font nhận diện ngay khi tệp tải xong ở mọi kích thước màn hình. */
-  /* Trần tăng đủ 20%; hệ số vw giữ cho mỗi vế của khẩu hiệu nằm trọn một dòng
-     ở 320–430px, và bỏ khoảng thụt .16em để lấy lại ~10px cuối cùng.
-     Xem giải thích đầy đủ ở main.css. */
-  .home-page .hero h1 { font-size: clamp(48px, 15vw, 84px); padding-inline-start: 0; }
+  /* Cả ba mốc là đúng 130% của production cũ. Màn hình hẹp có thể thêm dòng;
+     đó là hệ quả chủ dự án đã chấp nhận khi chốt cùng tỷ lệ ở mọi breakpoint. */
+  .home-page .hero h1 { font-size: clamp(70.2px, 19.5vw, 91px); padding-inline-start: 0; }
   /* Tranh nền GIỮ LẠI trên màn hình hẹp. Trước đây nó bị display:none để không
      thành LCP của khung hero cao 1067px; đổi lại thì điện thoại — tức gần như
      toàn bộ người đọc — không bao giờ thấy tranh mở đầu của bộ bài.
