@@ -426,6 +426,22 @@ body::before {
 }
 .subpage-artwork img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .subpage-content-frame > :not(.subpage-artwork) { position: relative; z-index: 2; }
+
+/* Tranh của bảy nhóm trang trong nằm ngay trong Hero. Neo picture trước khi
+   stylesheet đầy đủ về để ảnh eager không bao giờ chiếm chỗ trong flow. */
+.lacquer-hero { position: relative; isolation: isolate; overflow: hidden; }
+.subpage-hero-artwork {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.subpage-hero-artwork img { width: 100%; height: 100%; object-fit: cover; }
+.lacquer-hero > :not(.subpage-hero-artwork) { position: relative; z-index: 3; }
 .site-header {
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--lacquer-gold) 18%, transparent);

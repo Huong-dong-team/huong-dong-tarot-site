@@ -21,13 +21,15 @@ test("critical CSS được nhúng và stylesheet thiết yếu không phụ thu
     assert.ok(critical.includes(marker), `critical CSS thiếu ${marker}`);
   }
   assert.match(critical, /\.subpage-artwork\s*\{[^}]*opacity:\s*0/,
-    "critical CSS phải giữ Layer 2 ẩn cho tới lượt reveal");
+    "critical CSS phải giữ tranh home-content ẩn cho tới lượt reveal");
+  assert.match(critical, /\.subpage-hero-artwork\s*\{[^}]*position:\s*absolute[^}]*opacity:\s*0/,
+    "tranh Hero eager phải được neo tuyệt đối và giữ ở frame đầu ngay trong critical CSS");
   // Trang chủ không dựng các khung trang trong. Nếu một selector dưới đây lọt
   // lại vào gói chung, 86 URL sẽ cùng trả giá cho CSS mà route `/` không dùng.
   for (const marker of [".page-hero", ".card-detail", ".v2-prose", ".post-detail", ".not-found"]) {
     assert.ok(!critical.includes(marker), `critical CSS trang chủ còn chứa ${marker}`);
   }
-  for (const file of ["main", "lacquer-art"]) {
+  for (const file of ["main", "lacquer-art", "page-transition"]) {
     const blocking = new RegExp(`<link rel="stylesheet" href="/assets/css/${file}\\.css\\?v=[0-9a-f]{8}">`);
     const deferred = new RegExp(`<link rel="stylesheet" href="/assets/css/${file}\\.css[^>]+media="print"`);
     assert.match(html, blocking, `${file}.css phải áp dụng mà không chờ inline onload`);
@@ -55,7 +57,7 @@ test("trang trong nhận đúng critical CSS theo loại nội dung", async () =
   assert.ok(spreadCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
 });
 
-test("chỉ trang chủ preload ảnh hero, và preload đúng bản cho từng dải màn hình", async () => {
+test("mỗi route preload đúng tranh Hero, home-content sau Hero không preload", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
   // Đúng MỘT preload, và nó phải đi qua cùng logic chọn ảnh với <img>. Preload
@@ -70,7 +72,13 @@ test("chỉ trang chủ preload ảnh hero, và preload đúng bản cho từng 
   // imagesizes phải khớp sizes của chính thẻ <img>, lệch nhau là chọn lệch bản.
   const heroImg = home.match(/<img class="hero-bg"[\s\S]*?>/)?.[0] || "";
   assert.match(heroImg, /sizes="100vw"/);
-  assert.doesNotMatch(card, /rel="preload" as="image"[^>]+hero-/);
+  const cardPreloads = [...card.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
+  assert.equal(cardPreloads.length, 1, "route lá chỉ preload một tranh Hero route");
+  assert.match(cardPreloads[0], /subpage\/la-bai-1024\.avif 1024w/);
+  assert.match(cardPreloads[0], /subpage\/la-bai-1536\.avif 1536w/);
+  assert.doesNotMatch(card, /rel="preload" as="image"[^>]+\/hero-/);
+  assert.doesNotMatch(home, /rel="preload" as="image"[^>]+home-content-/,
+    "home-content nằm sau Hero nên không được tranh băng thông với LCP");
 });
 
 test("preload đúng font dùng ở màn hình đầu", async () => {

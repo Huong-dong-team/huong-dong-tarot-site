@@ -294,32 +294,6 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   outline: 2px solid var(--muted);
 }
 
-/* Bìa Lĩnh Nam chích quái ở đầu trang Huyền sử.
-   Đặt cạnh chữ trên màn rộng, xuống dưới trên màn hẹp — bìa là tranh ngang
-   1536x1024, ép vào cột hẹp thì chi tiết đắp đê và chim Lạc mất sạch. */
-.page-hero.has-cover {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(28px, 4vw, 56px);
-  align-items: center;
-}
-/* Giữ nội dung của page hero nằm trên các lớp nền. */
-.page-hero.has-cover > * { position: relative; z-index: 1; }
-.page-hero-text > h1,
-.page-hero-text > p { max-width: 900px; }
-.page-hero-text > p:last-child { color: var(--ink-soft); font-size: 18px; }
-.page-hero-cover { margin: 0; }
-.page-hero-cover img {
-  width: 100%;
-  height: auto;
-  border: 1px solid var(--line);
-  border-radius: var(--img-radius);
-  box-shadow: var(--shadow);
-}
-@media (max-width: 900px) {
-  .page-hero.has-cover { grid-template-columns: 1fr; }
-}
-
 /* Pha thêm 5% đen vào nền mọi mục dưới hero, để màn hình đầu sáng hơn phần
    còn lại. Dùng color-mix thay vì gõ tay mã màu mới: các biến gốc vẫn là một
    nguồn duy nhất, đổi bảng màu thương hiệu thì phần tối này đổi theo. */

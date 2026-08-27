@@ -1,18 +1,13 @@
 /* ============================================================
-   LỚP 1–2 SƠN MÀI
-   Theo bản bàn giao "Layer 1–2 — tranh sơn mài trang con" v1.0 · 26/08/2026.
+   SƠN MÀI HƯỜNG ĐÔNG · HERO V2 · 27/08/2026
 
-   Phạm vi: nội dung trang con và nội dung trang chủ sau hero. Hero không thuộc
-   Layer 1–2 và không được thay đổi bởi stylesheet này.
-
-   Xếp lớp trong .subpage-content-frame:
-     ::before          z 0   Layer 1 — vệt son, vàng, thớ vóc bằng gradient
-     .subpage-artwork  z 1   Layer 2 — tranh của route, mix-blend-mode multiply
-     mọi con khác      z 2   Layer 3 — chữ, card, form, CTA
+   Trang trong: Layer 1 màu → Layer 2 tranh route → lớp bảo vệ chữ → nội dung.
+   Trang chủ: home-content vẫn bắt đầu sau Hero theo bàn giao v1.
+   Motion chỉ dùng opacity/transform và nằm trong page-transition.css.
    ============================================================ */
 
-/* --- Layer 1 · lacquer atmosphere (§5) -------------------------------- */
-
+/* Layer 1 tiếp tục nối nền các section sau Hero. Layer 2 không còn lặp ở đây
+   trên trang trong; chỉ trang chủ có .subpage-artwork trong khung này. */
 .subpage-content-frame {
   position: relative;
   isolation: isolate;
@@ -21,12 +16,6 @@
   --lacquer-layer-2-duration: 620ms;
 }
 
-/* Gradient thuần, dùng lại đúng token --lacquer-* đang có. Không thư viện,
-   không canvas, không ảnh texture. Blend để normal vì bản thân các chặng màu
-   đã được pha trong suốt bằng color-mix — chồng thêm multiply sẽ tối gấp đôi.
-
-   Opacity KHÔNG nối vào --hd-scroll: lớp này phải đứng yên, nếu không mỗi cú
-   cuộn là một lần nền đổi độ đậm và mắt đọc ra thành rung. */
 .subpage-content-frame::before {
   content: "";
   position: absolute;
@@ -41,41 +30,32 @@
     linear-gradient(112deg, transparent 18%,
       color-mix(in srgb, var(--lacquer-ink) 2.5%, transparent) 50%, transparent 78%);
   opacity: .62;
-  animation: lacquer-atmosphere-reveal var(--lacquer-layer-1-duration)
-    cubic-bezier(.22, .61, .36, 1) both;
 }
 
-/* Trang con có thêm Layer 1 trong khung nội dung nên hạ lớp toàn trang về một
-   giá trị tĩnh. Không nối vào --hd-scroll: đặc tả cấm hiệu ứng theo cuộn. Trang
-   chủ giữ nguyên lớp nền hiện hữu để hero không đổi. */
 body:not(.home-page)::before { opacity: .2; }
 
-/* --- Layer 2 · subpage artwork (§6) ----------------------------------- */
-
-/* Neo ở đỉnh khung nội dung chứ không kéo giãn xuống hết trang. §6 cho hai cách
-   xử lý trang dài; đây là cách thứ hai — tranh phủ vùng mở đầu rồi nhường lại
-   cho Layer 1. Cách kia (lặp tranh so le mỗi 1000–1400px) tốn thêm một lần vẽ
-   toàn khung cho mỗi lần lặp, mà trang con ở đây phần lớn là chữ.
-
-   mask ở đáy để tranh tan dần vào Layer 1 thay vì bị cắt ngang một đường. Đây
-   là mask tĩnh, không phải blur động — không có gì chạy theo cú cuộn. */
+/* Tranh nội dung riêng của trang chủ. */
 .subpage-artwork {
   position: absolute;
   inset: 0 0 auto;
   z-index: 1;
+  width: 100%;
   height: min(100%, var(--art-height, 92vh));
-  opacity: var(--art-opacity, .10);
+  opacity: var(--art-opacity, .09);
   mix-blend-mode: multiply;
   pointer-events: none;
   user-select: none;
   animation: lacquer-artwork-reveal var(--lacquer-layer-2-duration)
-    cubic-bezier(.22, .61, .36, 1) var(--lacquer-layer-2-delay) both;
+    cubic-bezier(.22, 1, .36, 1) var(--lacquer-layer-2-delay) both;
   -webkit-mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 58%, transparent 100%);
 }
 
-/* Layer 2 chỉ bắt đầu khi Layer 1 đã hoàn tất. Đây là entrance một lần khi
-   khung nội dung được dựng, không nối với vị trí cuộn hay trạng thái viewport. */
+.home-page .subpage-content-frame::before {
+  animation: lacquer-atmosphere-reveal var(--lacquer-layer-1-duration)
+    cubic-bezier(.22, 1, .36, 1) both;
+}
+
 @keyframes lacquer-atmosphere-reveal {
   from { opacity: 0; }
   to { opacity: .62; }
@@ -83,7 +63,7 @@ body:not(.home-page)::before { opacity: .2; }
 
 @keyframes lacquer-artwork-reveal {
   from { opacity: 0; }
-  to { opacity: var(--art-opacity, .10); }
+  to { opacity: var(--art-opacity, .09); }
 }
 
 .subpage-artwork img {
@@ -98,101 +78,163 @@ body:not(.home-page)::before { opacity: .2; }
   z-index: 2;
 }
 
-/* Bốn khối này là con trực tiếp của khung và đang phủ giấy đục — để nguyên thì
-   chúng che mất chính bức tranh vừa đặt xuống dưới. Chỉ mở độ đục; màu, kích
-   thước, khoảng đệm và thứ tự đều không đổi. .inline-waitlist cố ý KHÔNG có
-   trong danh sách: dải vàng đó là một điểm nghỉ trong nhịp đọc, giữ đặc. */
 .subpage-content-frame > :is(.card-detail, .not-found, .news-section, .library-page) {
   background: transparent;
 }
 
-/* Ba token chữ phụ, hạ sắc độ vừa đủ để qua ngưỡng AA khi có tranh phía dưới.
-
-   Vì sao phải đụng tới chúng: §9 bắt tương phản tối thiểu 4,5:1 sau khi bật cả
-   hai lớp, nhưng --muted và --brown vốn chỉ đạt 5,24 và 5,14 trên giấy trơn —
-   dư chưa tới 0,7. Bảng opacity §3 làm nền tối đi khoảng một phần mười là đủ
-   đẩy chúng xuống 4,05–4,19. Hai điều khoản của bàn giao không thể cùng đúng ở
-   đây, và điều khoản trợ năng là điều khoản không được nhường.
-
-   Con số lấy từ phép đo WCAG trên nền khắc nghiệt nhất trong cả 8 route —
-   rgb(230 226 210) — chứ không ước lượng bằng mắt. Hue giữ nguyên, chỉ lệch độ
-   sáng 2,4–2,8%. Chỉ áp trong khung nội dung trang con; hero, trang chủ, header
-   và footer vẫn dùng đúng bảng màu thương hiệu.
-
-   Chữ thân bài không có trong danh sách vì nó dùng --ink và đang ở 12,75:1. */
+/* Chữ phụ sau Hero vẫn phải đạt AA trên Layer 1. */
 .subpage-content-frame {
   --muted: #736051;
   --brown: #815C35;
   --gold-ink: #7F5D00;
 }
 
-/* Ba khối này có nền giấy đục riêng nên chữ trong đó không hề đứng trên tranh —
-   trả lại đúng sắc độ đã duyệt. */
 .subpage-content-frame :is(.tarot-card, .news-grid article, .filters) {
   --muted: #7A6656;
   --brown: #8B6339;
   --gold-ink: #8B6600;
 }
 
-/* --- Opacity theo route (§3) ------------------------------------------ */
+[data-page-art="home-content"] { --art-opacity: .09; --art-position: center top; }
 
-[data-page-art="home-content"]      { --art-opacity: .09;  }
-[data-page-art="tarot-la-gi"]       { --art-opacity: .11;  }
-[data-page-art="la-bai"]            { --art-opacity: .10;  }
-[data-page-art="trai-bai"]          { --art-opacity: .095; }
-[data-page-art="huyen-su"]          { --art-opacity: .10;  }
-[data-page-art="healing"]           { --art-opacity: .105; }
-[data-page-art="chuyen-huong-dong"] { --art-opacity: .09;  }
-[data-page-art="cua-hang"]          { --art-opacity: .10;  }
+/* --- Hero trang trong ------------------------------------------------ */
 
-/* --- Responsive (§7) --------------------------------------------------- */
+.lacquer-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --hero-layer-opacity: .76;
+}
 
-/* Tablet: giảm khoảng 15–20% và bắt đầu kéo motif về phía cạnh.
+/* Layer 1: màu son/vàng xuất hiện trước tranh. */
+.lacquer-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--hero-layer-opacity);
+  background:
+    radial-gradient(ellipse 72% 94% at 8% 18%,
+      color-mix(in srgb, var(--lacquer-son) 17%, transparent), transparent 72%),
+    radial-gradient(ellipse 64% 88% at 92% 72%,
+      color-mix(in srgb, var(--lacquer-gold) 20%, transparent), transparent 74%),
+    linear-gradient(112deg,
+      color-mix(in srgb, var(--paper-band) 40%, transparent),
+      transparent 54%,
+      color-mix(in srgb, var(--lacquer-ink) 5%, transparent));
+}
 
-   Cột "vị trí mobile" của §3 ghi dạng ba token — "right 38% top", "left 30% top",
-   "right 20% bottom". Dạng đó không hợp lệ với object-position: đặc tả chỉ nhận
-   một, hai hoặc bốn giá trị, nên trình duyệt vứt cả khai báo và ảnh rơi về
-   50% 50%. Đo được đúng như vậy. Ở đây viết lại thành dạng bốn giá trị, giữ
-   nguyên ý: neo vào đúng cạnh đó rồi lùi vào theo phần trăm đã ghi. */
+.subpage-hero-artwork {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  opacity: var(--hero-art-opacity, .13);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+}
+
+.subpage-hero-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--hero-art-position, center top);
+}
+
+/* Lớp bảo vệ chữ chỉ nằm ở vùng copy. Nó trong suốt dần về phía motif chính,
+   không phải một tấm kem đục phủ toàn tranh. */
+.lacquer-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 1;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--paper-band) 64%, transparent) 0%,
+    color-mix(in srgb, var(--paper-band) 46%, transparent) 42%,
+    transparent 76%);
+}
+
+.lacquer-hero > :not(.subpage-hero-artwork) {
+  position: relative;
+  z-index: 3;
+}
+
+/* Chi tiết lá đặt copy ở cột phải; lớp bảo vệ chữ cũng phải đổi phía. */
+.card-detail.lacquer-hero::after {
+  background: linear-gradient(270deg,
+    color-mix(in srgb, var(--paper) 70%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 48%, transparent) 46%,
+    transparent 78%);
+}
+
+/* Header bài viết có ảnh bìa nằm dưới copy, nên gradient tan theo trục dọc. */
+.post-detail > header.lacquer-hero::after {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--paper) 68%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 44%, transparent) 38%,
+    transparent 72%);
+}
+
+/* Độ rõ cuối: desktop .12–.14. Mỗi route giữ nhịp sáng/tối riêng của master. */
+[data-page-art="tarot-la-gi"]       { --hero-art-opacity: .14;  --hero-art-position: center top; }
+[data-page-art="la-bai"]            { --hero-art-opacity: .135; --hero-art-position: center top; }
+[data-page-art="trai-bai"]          { --hero-art-opacity: .13;  --hero-art-position: center center; }
+[data-page-art="huyen-su"]          { --hero-art-opacity: .14;  --hero-art-position: center top; }
+[data-page-art="healing"]           { --hero-art-opacity: .14;  --hero-art-position: center top; }
+[data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .12;  --hero-art-position: center top; }
+[data-page-art="cua-hang"]          { --hero-art-opacity: .135; --hero-art-position: center bottom; }
+
+/* Tablet: .095–.11. */
 @media (max-width: 1023px) {
-  .subpage-artwork { --art-height: 78vh; }
-
-  [data-page-art="home-content"]      { --art-opacity: .075; --art-position: center top; }
-  [data-page-art="tarot-la-gi"]       { --art-opacity: .09;  --art-position: right 38% top 0%; }
-  [data-page-art="la-bai"]            { --art-opacity: .085; --art-position: left 30% top 0%; }
-  [data-page-art="trai-bai"]          { --art-opacity: .08;  --art-position: center bottom; }
-  [data-page-art="huyen-su"]          { --art-opacity: .085; --art-position: left 22% top 0%; }
-  [data-page-art="healing"]           { --art-opacity: .085; --art-position: right 24% top 0%; }
-  [data-page-art="chuyen-huong-dong"] { --art-opacity: .075; --art-position: left 18% top 0%; }
-  [data-page-art="cua-hang"]          { --art-opacity: .08;  --art-position: right 20% bottom 0%; }
+  [data-page-art="home-content"]      { --art-opacity: .075; }
+  [data-page-art="tarot-la-gi"]       { --hero-art-opacity: .11;  --hero-art-position: right 38% top 0%; }
+  [data-page-art="la-bai"]            { --hero-art-opacity: .105; --hero-art-position: left 30% top 0%; }
+  [data-page-art="trai-bai"]          { --hero-art-opacity: .10;  --hero-art-position: center bottom; }
+  [data-page-art="huyen-su"]          { --hero-art-opacity: .11;  --hero-art-position: left 22% top 0%; }
+  [data-page-art="healing"]           { --hero-art-opacity: .11;  --hero-art-position: right 24% top 0%; }
+  [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .095; --hero-art-position: left 18% top 0%; }
+  [data-page-art="cua-hang"]          { --hero-art-opacity: .10;  --hero-art-position: right 20% bottom 0%; }
 }
 
-/* Điện thoại: chỉ giữ một cụm motif theo đúng cột "vị trí mobile" của §3.
-   Không cần thấy đủ bức tranh — cần một dấu hiệu nhận diện rồi nhường chỗ cho
-   chữ, nên khung tranh thấp hẳn xuống và không chạy dưới các đoạn dài. */
+/* Mobile: .07–.08; gradient theo chiều dọc để bảo vệ cột chữ. */
 @media (max-width: 767px) {
-  .subpage-artwork { --art-height: 56vh; }
-
   [data-page-art="home-content"]      { --art-opacity: .055; }
-  [data-page-art="tarot-la-gi"]       { --art-opacity: .065; }
-  [data-page-art="la-bai"]            { --art-opacity: .06;  }
-  [data-page-art="trai-bai"]          { --art-opacity: .055; }
-  [data-page-art="huyen-su"]          { --art-opacity: .06;  }
-  [data-page-art="healing"]           { --art-opacity: .06;  }
-  [data-page-art="chuyen-huong-dong"] { --art-opacity: .05;  }
-  [data-page-art="cua-hang"]          { --art-opacity: .055; }
-}
+  [data-page-art="tarot-la-gi"]       { --hero-art-opacity: .08; }
+  [data-page-art="la-bai"]            { --hero-art-opacity: .075; }
+  [data-page-art="trai-bai"]          { --hero-art-opacity: .075; }
+  [data-page-art="huyen-su"]          { --hero-art-opacity: .08; }
+  [data-page-art="healing"]           { --hero-art-opacity: .08; }
+  [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .07; }
+  [data-page-art="cua-hang"]          { --hero-art-opacity: .075; }
 
-/* --- Trạng thái đặc biệt (§9) ------------------------------------------ */
+  .lacquer-hero::after,
+  .card-detail.lacquer-hero::after {
+    background: radial-gradient(ellipse 120% 68% at 24% 30%,
+      color-mix(in srgb, var(--paper-band) 58%, transparent) 0%,
+      color-mix(in srgb, var(--paper-band) 32%, transparent) 54%,
+      transparent 84%);
+  }
+}
 
 @media print {
   .subpage-content-frame::before,
-  .subpage-artwork { display: none; }
+  .subpage-artwork,
+  .subpage-hero-artwork,
+  .lacquer-hero::before,
+  .lacquer-hero::after { display: none; }
 }
 
 @media (forced-colors: active) {
   .subpage-content-frame::before,
-  .subpage-artwork { display: none; }
+  .subpage-artwork,
+  .subpage-hero-artwork,
+  .lacquer-hero::before,
+  .lacquer-hero::after { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

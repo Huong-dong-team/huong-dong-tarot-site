@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#FFFBEB">
+  <!-- Đánh dấu lần tải đầu trước khi trình duyệt vẽ Hero, tránh trạng thái cuối
+       lóe lên rồi mới quay về frame đầu của entrance. -->
+  <script>document.documentElement.classList.add("hd-first-load")</script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -19,10 +22,9 @@
        chỉ còn critical CSS và xếp ảnh hero xuống dưới nội dung. -->
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="stylesheet" href="/assets/css/lacquer-art.css">
-  <!-- Hai lớp tăng cường không quyết định bố cục. landing-drag.css phải có mặt
-       trong <noscript>: tầng scroll-snap của dải kéo là CSS thuần và vẫn phải
-       chạy khi JavaScript bị chặn. -->
-  <link rel="stylesheet" href="/assets/css/page-transition.css" media="print" onload="this.media='all'">
+  <!-- Motion Hero nay quyết định trạng thái đầu của tranh và chữ nên phải tải
+       chắc chắn. landing-drag.css vẫn là tăng cường thuần CSS. -->
+  <link rel="stylesheet" href="/assets/css/page-transition.css">
   <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
   {{{head}}}

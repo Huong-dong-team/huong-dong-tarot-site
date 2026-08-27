@@ -228,7 +228,7 @@ test("tranh phong cảnh hiện trên cả màn hình hẹp", async () => {
   );
 });
 
-test("tranh phong cảnh không nạp trễ và không fade từ trong suốt", async () => {
+test("tranh phong cảnh nạp ưu tiên và entrance đúng từ opacity 0", async () => {
   const [home, css] = await Promise.all([
     read("templates/home.html"),
     read("public/assets/css/page-transition.css"),
@@ -241,26 +241,31 @@ test("tranh phong cảnh không nạp trễ và không fade từ trong suốt", 
   assert.match(heroImg, /loading="eager"/);
   assert.match(heroImg, /fetchpriority="high"/);
   assert.doesNotMatch(heroImg, /loading="lazy"/);
-  const reveal = css.match(/@keyframes hero-art-reveal \{([\s\S]*?)\n\}/)?.[1];
-  assert.ok(reveal, "thiếu @keyframes hero-art-reveal");
-  // Fade từ opacity 0 sẽ đẩy mốc LCP ra sau đúng bằng thời lượng animation:
-  // trình duyệt bỏ qua phần tử trong suốt khi chọn phần tử LCP.
+  const reveal = css.match(/@keyframes hero-art-in \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(reveal, "thiếu @keyframes hero-art-in");
+  // Đặc tả v2 yêu cầu tranh mở từ trong suốt và tiến thẳng tới opacity cuối,
+  // không có mốc giữa sáng quá rồi tối lại.
   const start = Number(reveal.match(/from \{ opacity: ([\d.]+)/)?.[1]);
-  assert.ok(start >= 0.1, `phải bắt đầu từ opacity đủ thấy được, đang là ${start}`);
+  assert.equal(start, 0);
+  assert.match(reveal, /to \{ opacity: var\(--hero-art-opacity, 1\); transform: none; \}/);
+  assert.doesNotMatch(reveal, /\d+%\s*\{/);
 });
 
-test("tranh chỉ chạy nhịp riêng ở lần tải đầu, không chạy lại sau mỗi chuyển cảnh", async () => {
-  const [css, bootstrap] = await Promise.all([
+test("Hero chạy cùng choreography ở lần tải đầu và khi Swup thay trang", async () => {
+  const [css, bootstrap, layout] = await Promise.all([
     read("public/assets/css/page-transition.css"),
     read("public/assets/js/page-transition/bootstrap.js"),
+    read("templates/_layout.html"),
   ]);
-  // Section mẹ đã chạy page-stagger; chồng thêm nhịp của tranh lên trên là mờ
-  // kép, đúng lỗi đã sửa ở lần trước.
-  assert.match(css, /html\.hd-first-load \.hero-bg \{\s*\n\s*animation: hero-art-reveal/);
+  assert.match(css, /:is\(html\.hd-first-load, html\.is-changing\.is-rendering\)[\s\S]*\.hero-bg/);
+  assert.doesNotMatch(css, /page-stagger/,
+    "motion cũ không được chồng transform lên choreography Hero v2");
   // .swup-enabled KHÔNG dùng được: Swup gắn lớp đó ngay lúc khởi động, tức ngay
   // trong lần tải đầu, nên hiệu ứng sẽ bị cắt đúng lúc đáng lẽ phải chạy.
   assert.doesNotMatch(css, /swup-enabled[^\n]*hero-bg|hero-bg[^\n]*swup-enabled/);
   assert.match(bootstrap, /classList\.add\("hd-first-load"\)/);
+  assert.match(layout, /<script>document\.documentElement\.classList\.add\("hd-first-load"\)<\/script>/,
+    "class frame đầu phải có trước lần vẽ Hero đầu tiên");
   assert.match(bootstrap, /content:replace[\s\S]{0,160}classList\.remove\("hd-first-load"\)[\s\S]{0,80}once: true/);
 });
 

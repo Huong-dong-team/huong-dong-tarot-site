@@ -31,23 +31,28 @@ test("nền sơn mài dùng token thương hiệu và không thêm thư viện r
   assert.doesNotMatch(layout, /gsap|lenis|patternbolt|made-in-india/i);
 });
 
-test("Layer 1 hiện xong trước Layer 2 và không chạm hero", async () => {
-  const [lacquer, critical] = await Promise.all([
+test("Hero v2 xếp đúng Layer 1 → tranh multiply → gradient bảo vệ chữ", async () => {
+  const [lacquer, motion, critical] = await Promise.all([
     read("public/assets/css/lacquer-art.css"),
+    read("public/assets/css/page-transition.css"),
     read("public/assets/css/critical.css"),
   ]);
 
-  assert.match(lacquer, /--lacquer-layer-1-duration:\s*420ms/);
-  assert.match(lacquer, /--lacquer-layer-2-delay:\s*var\(--lacquer-layer-1-duration\)/,
-    "Layer 2 phải chờ đúng thời lượng hiện của Layer 1");
-  assert.match(lacquer, /@keyframes\s+lacquer-atmosphere-reveal/);
-  assert.match(lacquer, /@keyframes\s+lacquer-artwork-reveal/);
-  assert.match(lacquer, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*animation:\s*none/);
+  assert.match(lacquer, /\.lacquer-hero::before\s*\{[\s\S]*z-index:\s*0/);
+  assert.match(lacquer, /\.subpage-hero-artwork\s*\{[\s\S]*z-index:\s*1[\s\S]*mix-blend-mode:\s*multiply/);
+  assert.match(lacquer, /\.lacquer-hero::after\s*\{[\s\S]*z-index:\s*2[\s\S]*linear-gradient/);
+  assert.match(lacquer, /\.lacquer-hero > :not\(\.subpage-hero-artwork\)[\s\S]*z-index:\s*3/);
+  const heroRule = lacquer.match(/\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
+  assert.doesNotMatch(heroRule, /--hero-art-(?:opacity|position):/,
+    "giá trị mặc định trên Hero con sẽ chặn biến route kế thừa từ main");
+  assert.match(motion, /--hero-base-duration:\s*420ms/);
+  assert.match(motion, /--hero-art-delay:\s*420ms/,
+    "tranh phải bắt đầu sau khi Layer 1 hoàn tất");
+  assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in 650ms/);
+  assert.match(motion, /prefers-reduced-motion:\s*reduce[\s\S]*\.subpage-hero-artwork[\s\S]*animation:\s*none !important/);
   assert.doesNotMatch(lacquer, /\.hero::before/,
-    "stylesheet Layer 1–2 không được vẽ vào hero");
-  assert.doesNotMatch(critical, /Tầng đáy của hero cho lớp nền sơn mài/);
-  assert.doesNotMatch(lacquer, /max-width:\s*429px[\s\S]*opacity:\s*calc/,
-    "mobileOpacity trong JSON là giá trị cuối, không tự trừ thêm ở màn hẹp");
+    "tranh trang trong không được mượn pseudo của Hero trang chủ");
+  assert.match(critical, /\.subpage-hero-artwork\s*\{[\s\S]*opacity:\s*0/);
   assert.match(lacquer, /body:not\(\.home-page\)::before\s*\{\s*opacity:\s*\.2;\s*\}/);
   assert.doesNotMatch(
     lacquer.match(/body:not\(\.home-page\)::before[^}]*\}/)?.[0] || "",
@@ -56,7 +61,39 @@ test("Layer 1 hiện xong trước Layer 2 và không chạm hero", async () => 
   );
 });
 
-test("route nhận đúng tranh và trang chủ chỉ nhận Layer 1–2 sau hero", async () => {
+test("bảy nhóm route nhận đúng tranh trong Hero và không lặp Layer 2 sau Hero", async () => {
+  const routes = [
+    ["dist/tarot-la-gi/index.html", "tarot-la-gi"],
+    ["dist/la-bai/index.html", "la-bai"],
+    ["dist/trai-bai/index.html", "trai-bai"],
+    ["dist/huyen-su/index.html", "huyen-su"],
+    ["dist/healing/index.html", "healing"],
+    ["dist/tin-tuc/index.html", "chuyen-huong-dong"],
+    ["dist/cua-hang/index.html", "cua-hang"],
+  ];
+
+  for (const [file, artId] of routes) {
+    const html = await read(file);
+    assert.match(html, new RegExp(`data-page-art="${artId}"`), `${file}: sai data-page-art`);
+    const hero = html.match(/<(?:section|article|header)[^>]*lacquer-hero[^>]*>[\s\S]*?<\/(?:section|article|header)>/)?.[0] || "";
+    assert.match(hero, new RegExp(`<picture class="subpage-hero-artwork"[\\s\\S]*${artId}-1536\\.webp`),
+      `${file}: tranh không nằm trong Hero`);
+    assert.match(hero, /loading="eager"[\s\S]*fetchpriority="high"/);
+    assert.doesNotMatch(html, /<div class="subpage-content-frame"><picture class="subpage-hero-artwork"/,
+      `${file}: Layer 2 bị lặp sau Hero`);
+  }
+
+  const [card, post, spread] = await Promise.all([
+    read("dist/la-bai/the-star/index.html"),
+    read("dist/tin-tuc/vi-sao-huong-dong-giu-he-nghia-rws/index.html"),
+    read("dist/trai-bai/ba-la/index.html"),
+  ]);
+  assert.match(card, /<article class="card-detail[^"]*lacquer-hero">[\s\S]*la-bai-1536\.webp/);
+  assert.match(post, /<header class="lacquer-hero">[\s\S]*chuyen-huong-dong-1536\.webp/);
+  assert.match(spread, /<section class="page-hero[^"]*lacquer-hero">[\s\S]*trai-bai-1536\.webp/);
+});
+
+test("trang chủ giữ home-content sau Hero và route ngoài bảng không mượn tranh", async () => {
   const [home, history, about] = await Promise.all([
     read("dist/index.html"),
     read("dist/huyen-su/index.html"),
@@ -73,8 +110,8 @@ test("route nhận đúng tranh và trang chủ chỉ nhận Layer 1–2 sau her
   assert.doesNotMatch(home.slice(heroStart, heroEnd), /subpage-artwork|home-content/,
     "hero không được chứa Layer 1–2");
 
-  assert.match(history, /data-page-art="huyen-su"/);
-  assert.match(history, /huyen-su-1536\.webp/);
+  assert.doesNotMatch(history, /page-hero-cover|huyen-su-cover/,
+    "bìa Huyền sử cũ không được chồng lên tranh Hero route");
   const aboutMain = about.match(/<main\b[\s\S]*?<\/main>/)?.[0] || "";
   assert.doesNotMatch(aboutMain, /data-page-art=|subpage-artwork/,
     "route ngoài bảng không được mượn tranh home-content");
@@ -82,4 +119,29 @@ test("route nhận đúng tranh và trang chủ chỉ nhận Layer 1–2 sau her
   const homeCritical = home.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
   assert.match(homeCritical, /\.subpage-artwork/,
     "critical CSS trang chủ phải neo picture tuyệt đối để không gây dịch bố cục");
+});
+
+test("opacity responsive đúng dải mới và tương phản bảo thủ vẫn trên 4.5:1", async () => {
+  const css = await read("public/assets/css/lacquer-art.css");
+  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08"]) {
+    assert.match(css, new RegExp(`--hero-art-opacity:\\s*\\${value.replace(".", ".")}`));
+  }
+
+  const luminance = (rgb) => {
+    const [r, g, b] = rgb.map((value) => {
+      const channel = value / 255;
+      return channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4;
+    });
+    return .2126 * r + .7152 * g + .0722 * b;
+  };
+  const contrast = (a, b) => {
+    const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+    return (bright + .05) / (dark + .05);
+  };
+  // Trường hợp khắc nghiệt hơn ảnh thật: pixel tranh đen tuyệt đối ở opacity
+  // desktop tối đa .14 trên paper-band, chưa tính gradient sáng bảo vệ copy.
+  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * .86));
+  assert.ok(contrast([43, 27, 18], worstHeroBackground) >= 4.5, "Headline không đạt AA");
+  assert.ok(contrast([92, 68, 51], worstHeroBackground) >= 4.5, "Subheadline không đạt AA");
+  assert.ok(contrast([43, 27, 18], [255, 212, 90]) >= 4.5, "CTA vàng không đạt AA");
 });
