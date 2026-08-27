@@ -405,3 +405,51 @@ Chromium cục bộ (headless, đo qua CDP để cuộn được thật):
   Headline và Subheadline vẫn tách bạch.
 - `/la-bai/the-star/` 1440×900: `.card-detail` không đổi — chứng minh mức mới
   không tràn sang Hero chi tiết.
+
+### Đợt bổ sung cùng branch · tranh Hero trang trong lên .82
+
+Chủ dự án duyệt cả năm mục ở trên, kèm một yêu cầu tiếp: tranh sơn mài ở Hero
+trang trong phải rõ hơn nữa. Đây là đợt thứ ba của cùng một con số:
+`.40` (PR #50) → `.52` → **`.82`**.
+
+Từ mức này trở đi opacity không còn kéo được một mình. Ở mask cũ (`.35`), `.82`
+đẩy vùng chữ lên hiệu dụng `.287` và Subheadline rơi khỏi AA. Nên đợt này đổi
+bốn thứ **như một gói** — sửa một mà quên ba thứ kia là mở lại đúng lỗ đã bịt:
+
+1. Đỉnh `.52 → .82` (tablet `.36 → .56`, mobile `.21 → .33`). Vùng trống bên
+   phải sáng thêm 58%.
+2. Alpha mask vùng copy `.35 → .28` (tablet `.40 → .32`, mobile `.50 → .40`),
+   nên vùng chữ chỉ lên `.23` (+26%) chứ không lên `.287`.
+3. Chữ trong Hero đậm lại, chỉ trong phạm vi `.page-hero.lacquer-hero`:
+   `--brown: #5E3F19` và `--ink-soft: #463122`.
+4. Chữ bị bó lại đúng bằng vùng phẳng của mask: `52%` ở desktop, `56%` ở tablet,
+   bỏ bó ở mobile (nơi lớp bảo vệ là radial `::after`, không phải mask ngang).
+
+**Lỗ hổng có sẵn từ trước, tới `.82` mới đủ lộ.** `.page-hero > h1, > p` rộng
+tới `900px`, tức ở màn 1024px chữ chạy tới ~91% bề ngang Hero — chỗ mask đã mở
+gần hết. Phép kiểm AA thì lại chỉ canh alpha THẤP NHẤT của mask, nên nó mô tả
+đúng đầu dòng và bỏ qua cuối dòng. Đo trên `/trai-bai/` 1024px: cuối dòng
+"…từ một góc khác" ngồi trên tranh ở opacity hiệu dụng ~`.5` trong khi phép kiểm
+canh `.23`. Mục 4 ở trên bịt lỗ đó, và `tests/lacquer-background.test.mjs` nay
+canh **cặp số** — bó chiều rộng chữ phải bằng mốc kết thúc vùng phẳng của mask ở
+từng breakpoint. Đã thử làm lệch (52% → 70%) để chắc phép kiểm thật sự bắt.
+
+**Eyebrow trước đợt này đã dưới chuẩn mà không ai bắt.** `--brown` gốc `#8B6339`
+chỉ đạt 3,03 ngay ở mức `.52` (ngưỡng 4,5). Test AA cũ chỉ canh Headline,
+Subheadline và CTA. Nay canh cả ba màu chữ đang thật sự dùng trong Hero.
+
+Tương phản ở trường hợp xấu nhất (pixel tranh đen tuyệt đối, hiệu dụng `.23`):
+Headline **8,27** · Subheadline **6,09** · Eyebrow **4,76** · CTA **11,68**.
+
+Hero trang chủ **không đổi** trong đợt này — chủ dự án chọn giữ nguyên.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 135/135
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ: `/huyen-su/` và `/tarot-la-gi/` 1440×900, `/trai-bai/` 1024×900,
+`/huyen-su/` 390×844 — tranh nổi rõ ở phía phải, Headline/Subheadline/Eyebrow
+vẫn tách bạch, và ở 1024px dòng subheadline nay kết thúc trước khi chạm tranh.
