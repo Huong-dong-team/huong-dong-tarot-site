@@ -271,8 +271,9 @@ const layoutSettings = {
     : "",
 };
 
-/* Tranh sơn mài của Layer 2, gắn theo route đúng đặc tả JSON v1.0.0
-   (26/08/2026). Trang chủ chỉ nhận tranh ở phần nội dung SAU hero.
+/* Tranh sơn mài gắn theo route. Đặc tả v2 ngày 27/08/2026 thay thế hai điều
+   của bản v1: tranh của bảy nhóm trang trong nằm ở Hero và có entrance.
+   Trang chủ vẫn chỉ nhận home-content ở phần nội dung SAU Hero.
 
    Đặt ở đây thay vì rải vào 14 template vì hai lý do. Một: bàn giao đã nói
    dùng data-page-art chứ đừng dò URL trong JS, và build là chỗ duy nhất biết
@@ -302,13 +303,44 @@ function pageArtId(routePath) {
 }
 
 /**
- * Chèn Layer 2 vào thân trang và bọc phần nội dung lại.
+ * Tạo picture responsive cho một bức tranh route.
+ * @param {string} artId
+ * @param {"hero"|"content"} placement
+ * @returns {string}
+ */
+function pageArtworkPicture(artId, placement) {
+  const src = (w, ext) => `/assets/img/subpage/${artId}-${w}.${ext}`;
+  const isHero = placement === "hero";
+  const className = isHero ? "subpage-hero-artwork" : "subpage-artwork";
+  const loading = isHero
+    ? 'loading="eager" decoding="async" fetchpriority="high"'
+    : 'loading="lazy" decoding="async" fetchpriority="low"';
+
+  return `<picture class="${className}" aria-hidden="true">`
+    + `<source type="image/avif" srcset="${src(1024, "avif")} 1024w, ${src(1536, "avif")} 1536w" sizes="100vw">`
+    + `<source type="image/webp" srcset="${src(1024, "webp")} 1024w, ${src(1536, "webp")} 1536w" sizes="100vw">`
+    + `<img src="${src(1536, "webp")}" srcset="${src(1024, "webp")} 1024w, ${src(1536, "webp")} 1536w" sizes="100vw" width="1536" height="1024" alt="" ${loading}>`
+    + "</picture>";
+}
+
+function addClass(openTag, className) {
+  if (/\bclass="[^"]*"/.test(openTag)) {
+    return openTag.replace(/\bclass="([^"]*)"/, (_whole, classes) => {
+      const next = new Set(classes.split(/\s+/).filter(Boolean));
+      next.add(className);
+      return `class="${[...next].join(" ")}"`;
+    });
+  }
+  return openTag.replace(/>$/, ` class="${className}">`);
+}
+
+/**
+ * Đặt tranh vào khung mở đầu thật sự của route.
  *
- * Đặc tả yêu cầu bọc CHỈ các section sau hero. Trang trong dùng .page-hero,
- * trang chủ dùng .hero; cả hai phải đứng ngoài khung Layer 1–2. Trang lá và
- * trang bài viết không có hero thì bọc trọn phần trong <main>. Cắt theo thẻ
- * </section> đầu tiên là an toàn với các template hiện tại: không hero nào lồng
- * một <section> khác bên trong.
+ * .page-hero là trường hợp chuẩn. Chi tiết lá dùng .card-detail như Hero mở
+ * đầu; bài viết dùng <header> bên trong .post-detail. Nhờ vậy các pattern /*
+ * trong bảng route vẫn có tranh mà không cần dựng thêm một Hero giả.
+ * Phần nội dung sau Hero giữ Layer 1 nhưng không lặp lại Layer 2.
  *
  * @param {string} content HTML thân trang đã render
  * @param {string} artId   id tranh, rỗng thì trả nguyên content
@@ -331,27 +363,44 @@ function withPageArt(content, artId) {
   // coi template phải kết thúc tuyệt đối bằng thẻ đóng main.
   const tail = trimmed.slice(closeAt + closeMain.length);
 
-  // Giữ cả hero trang trong và hero trang chủ đứng ngoài khung tranh.
-  let hero = "";
-  if (/^\s*<section[^>]*class="[^"]*\b(?:page-hero|hero)\b/.test(body)) {
-    const end = body.indexOf("</section>");
+  if (artId === "home-content") {
+    let hero = "";
+    if (/^\s*<section[^>]*class="[^"]*\bhero\b/.test(body)) {
+      const end = body.indexOf("</section>");
+      if (end !== -1) {
+        hero = body.slice(0, end + "</section>".length);
+        body = body.slice(end + "</section>".length);
+      }
+    }
+    const art = pageArtworkPicture(artId, "content");
+    return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}${tail}`;
+  }
+
+  const heroArt = pageArtworkPicture(artId, "hero");
+  const leadingHero = body.match(/^\s*<(section|article)\b[^>]*class="[^"]*\b(page-hero|card-detail)\b[^"]*"[^>]*>/);
+  if (leadingHero) {
+    const [openTag, tagName] = leadingHero;
+    const start = leadingHero.index ?? 0;
+    const closeTag = `</${tagName}>`;
+    const end = body.indexOf(closeTag, openTag.length);
     if (end !== -1) {
-      hero = body.slice(0, end + "</section>".length);
-      body = body.slice(end + "</section>".length);
+      const leadEnd = end + closeTag.length;
+      const decoratedOpen = addClass(openTag, "lacquer-hero");
+      const hero = body.slice(0, start)
+        + decoratedOpen + heroArt
+        + body.slice(start + openTag.length, leadEnd);
+      body = body.slice(leadEnd);
+      return `${head}${hero}<div class="subpage-content-frame">${body}</div>${closeMain}${tail}`;
     }
   }
 
-  const src = (w, ext) => `/assets/img/subpage/${artId}-${w}.${ext}`;
-  // Ảnh trang trí thuần: aria-hidden + alt rỗng để nó không vào cây trợ năng.
-  // width/height khai đúng tỉ lệ master nên không có lần dịch bố cục nào.
-  const art = '<picture class="subpage-artwork" aria-hidden="true">'
-    + `<source media="(max-width: 1023px)" type="image/avif" srcset="${src(1024, "avif")}">`
-    + `<source media="(max-width: 1023px)" type="image/webp" srcset="${src(1024, "webp")}">`
-    + `<source type="image/avif" srcset="${src(1536, "avif")}">`
-    + `<img src="${src(1536, "webp")}" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">`
-    + "</picture>";
+  // Bài viết giữ nguyên cấu trúc article để schema và chiều rộng bài đọc không
+  // đổi; chỉ header đầu bài trở thành bề mặt Hero.
+  if (/^\s*<article\b[^>]*class="[^"]*\bpost-detail\b/.test(body)) {
+    body = body.replace(/<header\b[^>]*>/, (openTag) => `${addClass(openTag, "lacquer-hero")}${heroArt}`);
+  }
 
-  return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}${tail}`;
+  return `${head}${body}${closeMain}${tail}`;
 }
 
 /**
@@ -375,6 +424,7 @@ function withPageArt(content, artId) {
  * @returns {string} HTML đầy đủ của trang
  */
 function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
+  const artId = pageArtId(routePath);
   const bodyFontPreloads = [
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
@@ -386,7 +436,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
-    content: withPageArt(content, pageArtId(routePath)),
+    content: withPageArt(content, artId),
     bodyClass,
     pageScripts,
     fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),
@@ -405,7 +455,11 @@ function layout({ title, description, path: routePath, image, type, schemas, con
       ? '<link rel="preload" as="image" fetchpriority="high"'
         + ' imagesrcset="/assets/img/hero-800.avif 800w, /assets/img/hero-1200.avif 1200w, /assets/img/hero-1536.avif 1536w"'
         + ' imagesizes="100vw" href="/assets/img/hero-1200.avif">'
-      : "",
+      : artId && artId !== "home-content"
+        ? '<link rel="preload" as="image" fetchpriority="high"'
+          + ` imagesrcset="/assets/img/subpage/${artId}-1024.avif 1024w, /assets/img/subpage/${artId}-1536.avif 1536w"`
+          + ` imagesizes="100vw" href="/assets/img/subpage/${artId}-1536.avif">`
+        : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
   });

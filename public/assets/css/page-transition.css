@@ -1,19 +1,24 @@
-/* Entrance tối giản cho Hường Đông.
-
-   Chỉ chạy khi mở website hoặc khi Swup thay trang. Không có animation theo
-   cú cuộn. Mỗi phần tử chỉ có một chủ sở hữu transform, quỹ đạo luôn tiến thẳng
-   về 0 và không vượt đích; nhờ vậy không còn phép cộng transform gây lắc.
-
-   Container .transition-page chỉ giữ đồng hồ cho Swup. Nó không đổi opacity ở
-   pha đi vào vì opacity cha và con sẽ nhân nhau, tạo một nhịp trắng. */
+/* Entrance Hero Hường Đông v2.
+   Mỗi phần tử chỉ có một chủ sở hữu transform; không scroll-linked, không
+   overshoot. Nhịp trang trong bắt đầu sau khi Layer 1 màu đã ổn định. */
 
 :root {
   --page-out: 220ms;
-  --page-in: 920ms;
+  --page-in: 1400ms;
   --page-ease-out: cubic-bezier(.42, 0, .72, .24);
   --page-ease-in: cubic-bezier(.22, 1, .36, 1);
-  --enter-x: 0px;
-  --enter-y: 32px;
+  --hero-base-duration: 420ms;
+  --hero-art-delay: 420ms;
+  --hero-shadow-delay: 490ms;
+  --hero-headline-delay: 600ms;
+  --hero-subheadline-delay: 700ms;
+  --hero-cta-delay: 800ms;
+  --headline-x: clamp(-120px, -14vw, -52px);
+  --headline-y: clamp(-80px, -10vh, -36px);
+  --subheadline-x: clamp(-96px, -10vw, -38px);
+  --subheadline-y: clamp(36px, 10vh, 80px);
+  --cta-x: clamp(42px, 12vw, 110px);
+  --cta-y: clamp(38px, 12vh, 90px);
 }
 
 .transition-page {
@@ -32,135 +37,107 @@ html.is-changing.is-rendering .transition-page {
   animation: page-in var(--page-in) linear both;
 }
 
-/* Đồng hồ animation cho Swup, không tạo thêm chuyển động lên nội dung con. */
 @keyframes page-in {
   from { transform: none; }
-  to   { transform: none; }
+  to { transform: none; }
 }
 
-/* Một keyframe dùng chung cho bốn hướng. Nội dung sáng đủ sau 122ms nhưng vẫn
-   trượt nhẹ đến đích trong 760ms. Không scale, không filter, không overshoot. */
-@keyframes page-stagger {
-  from { opacity: .14; transform: translate3d(var(--enter-x), var(--enter-y), 0); }
-  16%  { opacity: 1; }
-  to   { opacity: 1; transform: none; }
+@keyframes hero-layer-in {
+  from { opacity: 0; }
+  to { opacity: var(--hero-fade-end, 1); }
 }
 
-/* --- Trang con: chỉ vùng nội dung đầu tiên ----------------------------- */
-
-/* Lần tải thật và lần Swup đưa trang mới vào dùng cùng một choreography.
-   Chỉ các con trực tiếp của section/article đầu trang được động; mọi content
-   section phía dưới đứng yên cả khi tải lẫn khi cuộn. */
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > * {
-  animation: page-stagger 760ms var(--page-ease-in) both;
+@keyframes hero-art-in {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: var(--hero-art-opacity, 1); transform: none; }
 }
 
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 1) {
-  --enter-x: -48px;
-  --enter-y: 0px;
+@keyframes hero-converge {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--hero-enter-x), var(--hero-enter-y), 0);
+  }
+  24% { opacity: 1; }
+  to { opacity: 1; transform: none; }
 }
 
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 2) {
-  --enter-x: 0px;
-  --enter-y: -34px;
+/* --- Trang trong: Layer 1 → tranh → bóng → copy --------------------- */
+
+:is(html.hd-first-load, html.is-changing.is-rendering) .lacquer-hero::before {
+  --hero-fade-end: var(--hero-layer-opacity);
+  animation: hero-layer-in var(--hero-base-duration) var(--page-ease-in) both;
 }
 
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 3) {
-  --enter-x: 48px;
-  --enter-y: 0px;
+:is(html.hd-first-load, html.is-changing.is-rendering) .subpage-hero-artwork {
+  animation: hero-art-in 650ms var(--page-ease-in) var(--hero-art-delay) both;
 }
 
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n) {
-  --enter-x: 0px;
-  --enter-y: 34px;
+:is(html.hd-first-load, html.is-changing.is-rendering) .lacquer-hero::after {
+  --hero-fade-end: 1;
+  animation: hero-layer-in 500ms var(--page-ease-in) var(--hero-shadow-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(2) {
-  animation-delay: 50ms;
+  :is(.lacquer-hero > .eyebrow, .lacquer-hero > h1,
+    .lacquer-hero .page-hero-text > .eyebrow,
+    .lacquer-hero .page-hero-text > h1,
+    .lacquer-hero .card-intro > .eyebrow,
+    .lacquer-hero .card-intro > h1) {
+  --hero-enter-x: var(--headline-x);
+  --hero-enter-y: var(--headline-y);
+  animation: hero-converge 720ms var(--page-ease-in) var(--hero-headline-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(3) {
-  animation-delay: 100ms;
+  :is(.lacquer-hero > p:not(.eyebrow),
+    .lacquer-hero .page-hero-text > p:not(.eyebrow),
+    .lacquer-hero .card-intro > :is(.card-original, .lead)) {
+  --hero-enter-x: var(--subheadline-x);
+  --hero-enter-y: var(--subheadline-y);
+  animation: hero-converge 650ms var(--page-ease-in) var(--hero-subheadline-delay) both;
+}
+
+:is(html.hd-first-load, html.is-changing.is-rendering) .lacquer-hero .hero-actions {
+  --hero-enter-x: var(--cta-x);
+  --hero-enter-y: var(--cta-y);
+  animation: hero-converge 580ms var(--page-ease-in) var(--hero-cta-delay) both;
+}
+
+/* --- Trang chủ: đúng timeline 0 / 70 / 180 / 280 / 380ms ------------ */
+
+:is(html.hd-first-load, html.is-changing.is-rendering)
+  .transition-page[data-page="home"] .hero-bg {
+  --hero-art-opacity: 1;
+  animation: hero-art-in 650ms var(--page-ease-in) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page:not([data-page="home"]) > :first-child > :nth-child(n + 4) {
-  animation-delay: 150ms;
-}
-
-/* --- Trang chủ: hero từ bốn hướng ------------------------------------ */
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"]
-  :is(.hero-copy .eyebrow, .hero-copy h1, .hero-copy > p:not(.eyebrow),
-      .hero-copy .hero-actions, .hero-copy .proof, .hero-stage) {
-  animation: page-stagger 760ms var(--page-ease-in) both;
+  .transition-page[data-page="home"] .hero-overlay {
+  --hero-fade-end: 1;
+  animation: hero-layer-in 500ms var(--page-ease-in) 70ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] :is(.hero-copy .eyebrow, .hero-copy h1) {
-  --enter-x: -56px;
-  --enter-y: 0px;
+  --hero-enter-x: var(--headline-x);
+  --hero-enter-y: var(--headline-y);
+  animation: hero-converge 720ms var(--page-ease-in) 180ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] :is(.hero-copy > p:not(.eyebrow), .hero-copy .hero-actions) {
-  --enter-x: 0px;
-  --enter-y: 40px;
-}
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] .hero-copy .proof {
-  --enter-x: 0px;
-  --enter-y: -34px;
-}
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] .hero-stage {
-  --enter-x: 56px;
-  --enter-y: 0px;
-}
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] .hero-copy .eyebrow {
-  animation-delay: 40ms;
-}
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] :is(.hero-copy h1, .hero-copy .proof) {
-  animation-delay: 80ms;
-}
-
-:is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] :is(.hero-copy > p:not(.eyebrow), .hero-stage) {
-  animation-delay: 120ms;
+  .transition-page[data-page="home"] .hero-copy > p:not(.eyebrow) {
+  --hero-enter-x: var(--subheadline-x);
+  --hero-enter-y: var(--subheadline-y);
+  animation: hero-converge 650ms var(--page-ease-in) 280ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] .hero-copy .hero-actions {
-  animation-delay: 150ms;
+  --hero-enter-x: var(--cta-x);
+  --hero-enter-y: var(--cta-y);
+  animation: hero-converge 580ms var(--page-ease-in) 380ms both;
 }
 
-/* Tranh nền chỉ thở nhẹ ở lần tải thật. Bắt đầu đủ sáng để không trì hoãn LCP;
-   không chạy lại khi Swup đưa người dùng về trang chủ. */
-html.hd-first-load .hero-bg {
-  animation: hero-art-reveal 1400ms cubic-bezier(.22, 1, .36, 1) both;
-}
-
-@keyframes hero-art-reveal {
-  from { opacity: .22; transform: scale(1.035); }
-  36%  { opacity: 1; }
-  to   { opacity: 1; transform: none; }
-}
-
-/* Vùng thông báo cho trình đọc màn hình, không chiếm không gian bố cục. */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -172,41 +149,6 @@ html.hd-first-load .hero-bg {
   clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
-}
-
-@media (max-width: 900px) {
-  :root {
-    --enter-x: 0px;
-    --enter-y: 24px;
-  }
-
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 1),
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page[data-page="home"] :is(.hero-copy .eyebrow, .hero-copy h1) {
-    --enter-x: -28px;
-  }
-
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 3),
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page[data-page="home"] .hero-stage {
-    --enter-x: 28px;
-  }
-
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n + 2),
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page[data-page="home"] .hero-copy .proof {
-    --enter-y: -22px;
-  }
-
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page:not([data-page="home"]) > :first-child > :nth-child(4n),
-  :is(html.hd-first-load, html.is-changing.is-rendering)
-    .transition-page[data-page="home"] :is(.hero-copy > p:not(.eyebrow), .hero-copy .hero-actions) {
-    --enter-y: 24px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -224,6 +166,29 @@ html.hd-first-load .hero-bg {
   html.is-changing.is-rendering .transition-page,
   html.is-changing.is-rendering .transition-page *,
   html.hd-first-load .transition-page * {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .lacquer-hero::before {
+    animation: none !important;
+    opacity: var(--hero-layer-opacity) !important;
+  }
+
+  .lacquer-hero::after,
+  .hero-overlay {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  .subpage-hero-artwork {
+    animation: none !important;
+    opacity: var(--hero-art-opacity, .13) !important;
+    transform: none !important;
+  }
+
+  .hero-bg,
+  .lacquer-hero > :not(.subpage-hero-artwork) {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

@@ -161,3 +161,77 @@ Trình duyệt cục bộ tại `/huyen-su/`:
   tới `0.06`. Ảnh `huyen-su-1024.avif`, `naturalWidth=1024`, không tràn ngang.
 - Cả hai viewport: `body::after` có `background-image: none`; CSS trang khách
   không còn tham chiếu `trong-dong-640.avif` hoặc `chim-lac-640.avif`.
+
+## Nhật ký phối hợp · Hero sơn mài v2 ngày 27/08/2026
+
+Branch: `feat/subpage-hero-lacquer-v2` — tách từ `origin/main` tại merge commit
+`cd3f110` của PR #48. Chủ dự án là người merge; branch này không tự triển khai.
+
+### Chỉ dẫn mới thay thế bàn giao v1
+
+- Hai điều `noHeroChanges: true` và `animated: false` của manifest v1.0.0 không
+  còn hiệu lực với bảy nhóm route trang trong. Bảy tranh master trong ZIP là
+  tranh Hero, không phải tranh lặp dưới phần nội dung.
+- `reference/huong-dong-lacquer-content-layer-v1.png` vẫn chỉ dùng cho nội dung
+  trang chủ sau Hero; không dùng làm Hero trang chủ.
+- Thứ tự trang trong: Layer 1 màu `0–420ms`; tranh route `420–1070ms`; bóng
+  `490–990ms`; Headline `600–1320ms`; Subheadline `700–1350ms`; CTA hiện có
+  `800–1380ms`. Easing chung `cubic-bezier(.22, 1, .36, 1)`.
+- Timeline trang chủ giữ mốc đã duyệt: tranh `0ms`, overlay `70ms`, Headline
+  `180ms`, Subheadline `280ms`, CTA `380ms`. Không tự thêm CTA vào trang trong.
+- Opacity cuối của tranh Hero: desktop `.12–.14`, tablet `.095–.11`, mobile
+  `.07–.08`; `mix-blend-mode: multiply`. Gradient bảo vệ chữ chỉ nằm quanh vùng
+  copy, không phủ một tấm kem đục lên toàn bộ tranh.
+
+### Ánh xạ và cấu trúc
+
+| Route | `data-page-art` / asset |
+| --- | --- |
+| `/tarot-la-gi/` | `tarot-la-gi` |
+| `/la-bai/*` | `la-bai` |
+| `/trai-bai/*`, `/la-bai-hom-nay/` | `trai-bai` |
+| `/huyen-su/*` | `huyen-su` |
+| `/healing/` | `healing` |
+| `/tin-tuc/*` | `chuyen-huong-dong` |
+| `/cua-hang/` | `cua-hang` |
+
+- `scripts/build.js` chèn `<picture class="subpage-hero-artwork">` vào
+  `.page-hero`. Chi tiết lá dùng `.card-detail` làm khung mở đầu; bài viết dùng
+  `<header>` của `.post-detail`, nên các pattern `/*` không bị rơi khỏi bảng.
+- Mỗi Hero chỉ tải đúng một AVIF/WebP route, `eager`, `fetchpriority="high"` và
+  preload responsive. `home-content` giữ `lazy`/ưu tiên thấp sau Hero.
+- Bìa Huyền sử cũ được gỡ khỏi template để không chồng hai tranh trong cùng Hero.
+- Layer 2 route không còn trong `.subpage-content-frame`; Layer 1 tĩnh vẫn nối
+  nền các section sau Hero. Route ngoài bảng tiếp tục không mượn tranh.
+- Critical CSS neo picture tuyệt đối và giữ frame đầu ở opacity `0`, tránh CLS
+  hoặc lóe trạng thái cuối. `page-transition.css` chuyển sang stylesheet chuẩn
+  vì nay nó quyết định trạng thái đầu của nội dung trên màn hình đầu.
+
+### Lỗi cascade bắt được khi đo thật
+
+Lần đầu `.lacquer-hero` khai báo mặc định `--hero-art-opacity: .13` và
+`--hero-art-position: center top`. Hai biến này nằm trên phần tử con nên chặn
+giá trị theo route kế thừa từ `<main>`, khiến mọi route cùng rơi về `.13`.
+Đã bỏ khai báo chặn và đặt fallback ngay tại `var(...)`; test hồi quy cấm hai
+biến route xuất hiện lại trong rule `.lacquer-hero`.
+
+### Xác minh
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ `/huyen-su/` sau khi animation kết thúc:
+
+- Desktop 1366px: Hero `1351 × 551px`, opacity `0.14`, AVIF 1536, position
+  `50% 0%`, `multiply`, `scrollWidth - clientWidth = 0`.
+- Mobile 390px: Hero `390 × 403px`, opacity `0.08`, AVIF 1024, position
+  `22% 0%`, `multiply`, `scrollWidth - clientWidth = 0`.
+- Mẫu thời gian mobile: Layer 1 gần hoàn tất trong khi tranh còn `0`; tranh tăng
+  đơn điệu `0 → .04932 → .07986 → .08`. Không có mốc sáng quá rồi tối lại.
+- Phép tính tương phản bảo thủ dùng pixel tranh đen tuyệt đối ở opacity `.14`
+  trên `--paper-band`: Headline `10.41:1`, Subheadline `5.67:1`; CTA vàng với
+  chữ `--ink` là `11.68:1`, đều vượt mục tiêu `4.5:1`.

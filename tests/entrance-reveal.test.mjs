@@ -19,27 +19,30 @@ test("không còn runtime entrance khi cuộn", async () => {
   assert.doesNotMatch(registry + css, /IntersectionObserver/);
 });
 
-test("stylesheet entrance nằm trong ngân sách 8 KB và chỉ có ba keyframe", async () => {
+test("stylesheet entrance nằm trong ngân sách 8 KB và chỉ có bốn keyframe có vai trò riêng", async () => {
   const file = "public/assets/css/page-transition.css";
   const [css, info] = await Promise.all([read(file), stat(path.join(root, file))]);
   const names = [...css.matchAll(/@keyframes\s+([\w-]+)/g)].map((match) => match[1]);
 
   assert.ok(info.size <= 8_000, `CSS entrance đang ${info.size} byte, vượt ngân sách 8 KB`);
-  assert.deepEqual(names, ["page-in", "page-stagger", "hero-art-reveal"]);
+  assert.deepEqual(names, ["page-in", "hero-layer-in", "hero-art-in", "hero-converge"]);
 });
 
-test("chỉ hero và vùng đầu trang con được entrance", async () => {
+test("chỉ các lớp và copy của Hero được entrance", async () => {
   const css = await read("public/assets/css/page-transition.css");
 
-  assert.match(css, /:is\(html\.hd-first-load, html\.is-changing\.is-rendering\)[\s\S]*?\.transition-page:not\(\[data-page="home"\]\) > :first-child > \*/);
-  assert.match(css, /\.transition-page\[data-page="home"\][\s\S]*?\.hero-stage/);
-  assert.doesNotMatch(css, /\.transition-page > \*:not\(\.hero\)/,
-    "không được diễn hoạt mọi content section của trang");
+  assert.match(css, /\.lacquer-hero::before[\s\S]*hero-layer-in/);
+  assert.match(css, /\.subpage-hero-artwork[\s\S]*hero-art-in 650ms/);
+  assert.match(css, /\.transition-page\[data-page="home"\] \.hero-bg/);
+  assert.doesNotMatch(css, /> :first-child > \*/,
+    "không được diễn hoạt con trực tiếp theo vị trí DOM như choreography cũ");
+  assert.doesNotMatch(css, /\.hero-stage\s*\{/,
+    "stage không thuộc timeline Headline/Subheadline/CTA đã chốt");
 });
 
 test("quỹ đạo không có overshoot hoặc animation lồng trên CTA", async () => {
   const css = await read("public/assets/css/page-transition.css");
-  const stagger = css.match(/@keyframes page-stagger \{([\s\S]*?)\n\}/)?.[1] || "";
+  const stagger = css.match(/@keyframes hero-converge \{([\s\S]*?)\n\}/)?.[1] || "";
 
   assert.match(stagger, /from \{[^}]*transform:/);
   assert.match(stagger, /to\s+\{[^}]*transform:\s*none/);
@@ -47,4 +50,22 @@ test("quỹ đạo không có overshoot hoặc animation lồng trên CTA", asyn
     "transform ở mốc giữa tạo overshoot rồi quay đầu, gây cảm giác lắc");
   assert.doesNotMatch(css, /\.hero-actions\s*>\s*:/,
     "CTA cha và từng nút con không được cùng animate transform");
+});
+
+test("timeline Hero trang trong nối đúng nhịp sau Layer 1", async () => {
+  const css = await read("public/assets/css/page-transition.css");
+  for (const [token, value] of [
+    ["--hero-base-duration", "420ms"],
+    ["--hero-art-delay", "420ms"],
+    ["--hero-shadow-delay", "490ms"],
+    ["--hero-headline-delay", "600ms"],
+    ["--hero-subheadline-delay", "700ms"],
+    ["--hero-cta-delay", "800ms"],
+  ]) {
+    assert.match(css, new RegExp(`${token}:\\s*${value}`));
+  }
+  assert.match(css, /--page-ease-in:\s*cubic-bezier\(\.22, 1, \.36, 1\)/);
+  assert.match(css, /hero-converge 720ms[\s\S]*var\(--hero-headline-delay\)/);
+  assert.match(css, /hero-converge 650ms[\s\S]*var\(--hero-subheadline-delay\)/);
+  assert.match(css, /hero-converge 580ms[\s\S]*var\(--hero-cta-delay\)/);
 });
