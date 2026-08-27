@@ -144,27 +144,24 @@ body:not(.home-page)::before { opacity: .2; }
   object-position: var(--hero-art-position, center top);
 }
 
-/* Hero đầu trang có khoảng thở ở bên phải: tranh đạt đỉnh 82% tại vùng trống,
-   còn alpha của mask giữ phần nằm dưới copy ở mức hiệu dụng 23% (.82 × .28).
+/* Hero đầu trang có khoảng thở ở bên phải: tranh đạt opacity 1 tại vùng trống,
+   còn alpha của mask giữ phần nằm dưới copy ở mức hiệu dụng 23% (1 × .23).
    Chi tiết lá/bài viết không dùng mask này vì vị trí copy của chúng khác.
 
-   Ba đợt: .40 (PR #50) → .52 (rõ thêm 30% toàn tranh) → .82.
+   Bốn đợt: .40 (PR #50) → .52 → .82 (PR #51) → 1.
 
-   Đợt .82 không còn kéo được bằng một mình con số opacity. Ở mask cũ (.35) thì
-   .82 đẩy vùng chữ lên hiệu dụng .287, và Subheadline rơi xuống dưới ngưỡng AA.
-   Nên đợt này đổi cả ba thứ cùng lúc, và phải đọc chúng như một gói:
+   Đợt 1 không kéo mask lên cùng opacity. Làm vậy sẽ tăng cả độ đậm dưới chữ.
+   Thay vào đó mask vùng copy hạ .28 → .23, nên nền dưới chữ giữ nguyên mức
+   hiệu dụng xấp xỉ .23; chỉ vùng trống mở hoàn toàn và rõ như Hero trang chủ.
 
-   1. Đỉnh .52 → .82. Vùng trống bên phải sáng thêm 58%.
-   2. Alpha mask vùng copy .35 → .28, nên vùng chữ chỉ lên .23 (+26%) chứ không
-      lên .287. Tranh vẫn rõ hơn ở mọi điểm ảnh, chỉ là phía phải rõ nhanh hơn.
-   3. Chữ trong Hero đậm lại để bù: --brown và --ink-soft dưới đây.
+   Headline/Subheadline nay dùng vàng chanh với biên bóng nâu ở main.css;
+   --brown đậm dưới đây tiếp tục bảo vệ riêng Eyebrow.
 
    Tương phản ở trường hợp xấu nhất (pixel tranh đen tuyệt đối, hiệu dụng .23):
-   Headline 8,27 · Subheadline 6,09 · Eyebrow 4,76 — cả ba trên ngưỡng AA 4,5.
-   Eyebrow trước đợt này mới là chỗ mỏng nhất: --brown gốc #8B6339 chỉ đạt 3,03
-   ngay ở mức .52, tức nó đã dưới chuẩn từ trước mà không phép kiểm nào bắt. */
+   Eyebrow #5E3F19 vẫn đạt 4,76:1. Vàng chanh được tách khỏi nền bằng text-shadow
+   bốn phía màu #2B1B12, không cần tăng lớp giấy đục phủ toàn tranh. */
 .page-hero.lacquer-hero {
-  --hero-art-opacity: .82;
+  --hero-art-opacity: 1;
   /* Chỉ đậm lại trong Hero trang trong. Cùng họ nâu, chỉ hạ độ sáng đủ để giữ
      AA trên nền tranh đậm hơn — không đổi sang màu khác. */
   --brown: #5E3F19;
@@ -173,13 +170,13 @@ body:not(.home-page)::before { opacity: .2; }
 
 .page-hero.lacquer-hero .subpage-hero-artwork {
   -webkit-mask-image: linear-gradient(90deg,
-    rgb(0 0 0 / 28%) 0%,
-    rgb(0 0 0 / 28%) 52%,
+    rgb(0 0 0 / 23%) 0%,
+    rgb(0 0 0 / 23%) 52%,
     rgb(0 0 0 / 62%) 74%,
     #000 88%);
   mask-image: linear-gradient(90deg,
-    rgb(0 0 0 / 28%) 0%,
-    rgb(0 0 0 / 28%) 52%,
+    rgb(0 0 0 / 23%) 0%,
+    rgb(0 0 0 / 23%) 52%,
     rgb(0 0 0 / 62%) 74%,
     #000 88%);
   -webkit-mask-repeat: no-repeat;
@@ -257,17 +254,17 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .095; --hero-art-position: left 18% top 0%; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .10;  --hero-art-position: right 20% bottom 0%; }
 
-  /* Đỉnh .56 ở vùng trống; vùng copy giữ xấp xỉ .179 (.56 × .32). */
-  .page-hero.lacquer-hero { --hero-art-opacity: .56; }
+  /* Đỉnh 1 ở vùng trống; vùng copy giữ xấp xỉ .18 (1 × .18). */
+  .page-hero.lacquer-hero { --hero-art-opacity: 1; }
   .page-hero.lacquer-hero .subpage-hero-artwork {
     -webkit-mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 32%) 0%,
-      rgb(0 0 0 / 32%) 56%,
+      rgb(0 0 0 / 18%) 0%,
+      rgb(0 0 0 / 18%) 56%,
       rgb(0 0 0 / 68%) 78%,
       #000 94%);
     mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 32%) 0%,
-      rgb(0 0 0 / 32%) 56%,
+      rgb(0 0 0 / 18%) 0%,
+      rgb(0 0 0 / 18%) 56%,
       rgb(0 0 0 / 68%) 78%,
       #000 94%);
   }
@@ -287,17 +284,17 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .07; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .075; }
 
-  /* Mobile không còn vùng trống rộng: tăng vừa đủ, giữ copy ở .132 hiệu dụng. */
-  .page-hero.lacquer-hero { --hero-art-opacity: .33; }
+  /* Mobile: ảnh vẫn đạt 1 ở mép mở; vùng copy giữ .13 hiệu dụng. */
+  .page-hero.lacquer-hero { --hero-art-opacity: 1; }
   .page-hero.lacquer-hero .subpage-hero-artwork {
     -webkit-mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 40%) 0%,
-      rgb(0 0 0 / 40%) 52%,
+      rgb(0 0 0 / 13%) 0%,
+      rgb(0 0 0 / 13%) 52%,
       rgb(0 0 0 / 74%) 78%,
       #000 100%);
     mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 40%) 0%,
-      rgb(0 0 0 / 40%) 52%,
+      rgb(0 0 0 / 13%) 0%,
+      rgb(0 0 0 / 13%) 52%,
       rgb(0 0 0 / 74%) 78%,
       #000 100%);
   }

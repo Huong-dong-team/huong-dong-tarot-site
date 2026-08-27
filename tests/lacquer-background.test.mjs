@@ -129,21 +129,21 @@ test("trang chủ giữ home-content sau Hero và route ngoài bảng không mư
     "critical CSS trang chủ phải neo picture tuyệt đối để không gây dịch bố cục");
 });
 
-test("Hero đầu trang đạt 82% ở vùng trống và vẫn bảo vệ tương phản vùng chữ", async () => {
+test("Hero đầu trang đạt opacity 1 ở vùng trống và vẫn bảo vệ vùng chữ", async () => {
   const css = await read("public/assets/css/lacquer-art.css");
-  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", ".82", ".56", ".33"]) {
-    assert.match(css, new RegExp(`--hero-art-opacity:\\s*\\${value.replace(".", ".")}`));
+  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", "1"]) {
+    const literal = value.replace(".", "\\.");
+    assert.match(css, new RegExp(`--hero-art-opacity:\\s*${literal}(?:;|\\b)`));
   }
-  assert.match(css, /\.page-hero\.lacquer-hero\s*\{[\s\S]*?--hero-art-opacity:\s*\.82/,
-    "Hero desktop phải đạt opacity đỉnh 82% ở phía phải");
-  assert.match(css, /\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{[\s\S]*rgb\(0 0 0 \/ 28%\)[\s\S]*#000 88%/,
-    "mask phải giữ vùng copy ở 28% alpha và mở hoàn toàn về bên phải");
-  // Ba con số này là một GÓI. Kéo đỉnh lên mà quên hạ alpha mask, hoặc quên đậm
-  // lại chữ, là đúng cách làm Subheadline và Eyebrow rơi khỏi AA.
+  const peakRules = [...css.matchAll(/\.page-hero\.lacquer-hero\s*\{[^}]*--hero-art-opacity:\s*1;/g)];
+  assert.equal(peakRules.length, 3, "desktop, tablet và mobile đều phải đạt opacity đỉnh 1");
+  assert.match(css, /\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{[\s\S]*rgb\(0 0 0 \/ 23%\)[\s\S]*#000 88%/,
+    "mask desktop phải giữ vùng copy ở 23% alpha và mở hoàn toàn về bên phải");
+  // Opacity đỉnh và mask là một gói: 1 × .23 giữ nền dưới chữ đúng mức an toàn
+  // của bản .82 × .28, trong khi vùng trống được mở hoàn toàn.
   const heroRule = css.match(/\.page-hero\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
   assert.match(heroRule, /--brown:\s*#5E3F19/i,
     "Eyebrow dùng --brown; màu gốc #8B6339 không đạt AA trên nền tranh đậm này");
-  assert.match(heroRule, /--ink-soft:\s*#463122/i, "Subheadline phải đậm lại cùng đợt");
 
   const luminance = (rgb) => {
     const [r, g, b] = rgb.map((value) => {
@@ -156,14 +156,12 @@ test("Hero đầu trang đạt 82% ở vùng trống và vẫn bảo vệ tươn
     const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
     return (bright + .05) / (dark + .05);
   };
-  // Trường hợp khắc nghiệt hơn ảnh thật: picture đạt .82 nhưng mask vùng copy
-  // chỉ có alpha .28, nên pixel tranh đen tuyệt đối có opacity hiệu dụng .23.
-  // Đây là chốt chặn thật của đợt này — và nó canh ĐÚNG ba màu chữ đang dùng
-  // trong Hero trang trong, kể cả Eyebrow, thứ bản trước bỏ sót.
-  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * (1 - .82 * .28)));
-  assert.ok(contrast([43, 27, 18], worstHeroBackground) >= 4.5, "Headline không đạt AA");
-  assert.ok(contrast([70, 49, 34], worstHeroBackground) >= 4.5, "Subheadline (--ink-soft) không đạt AA");
+  // Pixel tranh đen tuyệt đối dưới copy có opacity hiệu dụng .23. Eyebrow vẫn
+  // là chữ nâu trực tiếp; Headline/Subheadline vàng chanh dùng biên bóng ink.
+  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * (1 - 1 * .23)));
   assert.ok(contrast([94, 63, 25], worstHeroBackground) >= 4.5, "Eyebrow (--brown) không đạt AA");
+  assert.ok(contrast([43, 27, 18], worstHeroBackground) >= 4.5, "biên bóng nâu không tách được khỏi nền");
+  assert.ok(contrast([246, 255, 74], [43, 27, 18]) >= 4.5, "vàng chanh không tách được khỏi biên bóng");
   assert.ok(contrast([43, 27, 18], [255, 212, 90]) >= 4.5, "CTA vàng không đạt AA");
 
   // Phép tính trên chỉ đúng nếu chữ nằm TRỌN trong vùng phẳng của mask. Bó

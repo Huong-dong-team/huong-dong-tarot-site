@@ -1,4 +1,4 @@
-:root{--paper:#FFFBEB;--paper-raised:#FFFFFF;--paper-band:#FFEF9F;--ink:#2B1B12;--ink-soft:#5C4433;--muted:#7A6656;--gold:#FFD45A;--amber:#FFA95A;--orange:#FF8B5A;--coral:#FF5A5A;--peach:#F8966A;--rose:#F0557B;--brown:#8B6339;--gold-ink:#8B6600;--coral-ink:#DB0000;--rose-ink:#D51343;--magenta-ink:#CF1F61;--tre:#46843E;--tre-ink:#407939;--dau:#C0272D;--dau-ink:#C0272D;--sen:#E1407C;--sen-ink:#CE2061;--lua:#F89E31;--lua-ink:#A15B05;--on-brown:#FFFBEB;--line:rgb(139 99 57 / 22%);--shadow:0 24px 70px rgb(139 99 57 / 14%);--danger:#C0272D;--img-radius:clamp(10px,1.4vw,18px);--shell:min(1180px,calc(100% - 32px));--display:"DFVN TAN Harmoni",Georgia,serif;--body:"Be Vietnam Pro","Inter",system-ui,sans-serif;--script:"Fontasia VH","DFVN TAN Harmoni",Georgia,serif;--editorial:"DFVN TAN Mon Cheri","Ganh",sans-serif;--sans-display:"Ganh","Be Vietnam Pro",system-ui,sans-serif;--hd-scroll:0;--hd-hero:0;--lacquer-son:color-mix(in srgb,var(--dau) 72%,var(--brown));--lacquer-gold:color-mix(in srgb,var(--gold) 72%,var(--brown));--lacquer-ink:color-mix(in srgb,var(--ink) 86%,var(--brown));--lacquer-wash:color-mix(in srgb,var(--paper) 94%,transparent);--lacquer-band:color-mix(in srgb,var(--paper-band) 88%,transparent)}
+:root{--paper:#FFFBEB;--paper-raised:#FFFFFF;--paper-band:#FFEF9F;--ink:#2B1B12;--ink-soft:#5C4433;--muted:#7A6656;--gold:#FFD45A;--hero-lemon:#F6FF4A;--amber:#FFA95A;--orange:#FF8B5A;--coral:#FF5A5A;--peach:#F8966A;--rose:#F0557B;--brown:#8B6339;--gold-ink:#8B6600;--coral-ink:#DB0000;--rose-ink:#D51343;--magenta-ink:#CF1F61;--tre:#46843E;--tre-ink:#407939;--dau:#C0272D;--dau-ink:#C0272D;--sen:#E1407C;--sen-ink:#CE2061;--lua:#F89E31;--lua-ink:#A15B05;--on-brown:#FFFBEB;--line:rgb(139 99 57 / 22%);--shadow:0 24px 70px rgb(139 99 57 / 14%);--danger:#C0272D;--img-radius:clamp(10px,1.4vw,18px);--shell:min(1180px,calc(100% - 32px));--display:"DFVN TAN Harmoni",Georgia,serif;--body:"Be Vietnam Pro","Inter",system-ui,sans-serif;--script:"Fontasia VH","DFVN TAN Harmoni",Georgia,serif;--editorial:"DFVN TAN Mon Cheri","Ganh",sans-serif;--sans-display:"Ganh","Be Vietnam Pro",system-ui,sans-serif;--hd-scroll:0;--hd-hero:0;--lacquer-son:color-mix(in srgb,var(--dau) 72%,var(--brown));--lacquer-gold:color-mix(in srgb,var(--gold) 72%,var(--brown));--lacquer-ink:color-mix(in srgb,var(--ink) 86%,var(--brown));--lacquer-wash:color-mix(in srgb,var(--paper) 94%,transparent);--lacquer-band:color-mix(in srgb,var(--paper-band) 88%,transparent)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;text-rendering:optimizeLegibility}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}:focus-visible{outline:3px solid #4285f4;outline-offset:3px}.skip-link{position:fixed;z-index:1000;left:16px;top:12px;padding:10px 14px;background:#fff;color:#000;transform:translateY(-160%)}.skip-link:focus{transform:none}
 .site-header{position:sticky;z-index:60;top:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;min-height:76px;padding:10px max(16px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);color:var(--ink);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;color:var(--ink)}.brand img{width:85px;height:45px;object-fit:contain}.site-header nav{display:flex;align-items:center;gap:28px;font-size:14px;font-weight:600}.site-header nav a:not(.nav-cta){border-bottom:1px solid transparent}.site-header nav a:hover{border-color:var(--magenta-ink)}.nav-cta{padding:9px 16px;border:1px solid var(--magenta-ink);border-radius:999px;background:var(--magenta-ink);color:var(--on-brown)}.menu-toggle{display:none;border:1px solid var(--magenta-ink);background:transparent;padding:8px 12px;border-radius:999px;color:var(--ink)}
 h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.025em}h1{font-size:clamp(50px,7vw,90px);line-height:.94;font-weight:600}h2{font-size:clamp(40px,5.6vw,68px);line-height:1;font-weight:600}h3{font-size:30px;line-height:1.08}.eyebrow{margin-bottom:16px;color:var(--brown);font:700 12px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase}
@@ -221,14 +221,16 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   color: var(--magenta-ink);
 }
 
-/* Bóng chữ để khẩu hiệu đọc rõ trên nền phong cảnh sáng. Hai lớp: một lớp sát
-   chân chữ tách nét khỏi nền, một lớp toả rộng và rất nhạt làm nền cho cả khối
-   chữ. Cả hai đều nhẹ — mục đích là nâng tương phản, không phải đổ bóng thấy
-   được. Bản trước dùng một lớp .55 và ở cỡ chữ mới nó đọc ra thành vệt xám. */
+/* Vàng chanh cần một đường bóng nâu kín bốn phía để không chìm vào vùng giấy
+   vàng của tranh. Đây vẫn là text-shadow, không phải stroke: nét Fontasia giữ
+   nguyên độ thanh, còn biên tối tạo ranh giới đọc được trên cả mảng sáng/tối. */
 .hero h1 {
   text-shadow:
-    0 1px 2px color-mix(in srgb, var(--ink) 18%, transparent),
-    0 .28rem 1.6rem color-mix(in srgb, var(--ink) 22%, transparent);
+    -1px -1px 0 rgb(43 27 18 / 94%),
+    1px -1px 0 rgb(43 27 18 / 94%),
+    -1px 1px 0 rgb(43 27 18 / 94%),
+    1px 1px 0 rgb(43 27 18 / 94%),
+    0 .32rem 1.4rem rgb(43 27 18 / 58%);
 }
 
 /* Bảng kể chuyện của từng vị. Dùng <dialog> để trình duyệt lo sẵn phần khoá
@@ -533,8 +535,9 @@ h3 { line-height: 1.12; }
 
 /* Fontasia chỉ xuất hiện ở thông điệp thương hiệu lớn; không dùng cho nội dung
    dài vì nét viết tay làm giảm tốc độ đọc ở cỡ nhỏ. */
-/* Khẩu hiệu là thứ duy nhất trang chủ phải nói. Cỡ chữ tăng 20% so với bản
-   trước (62→74 / 7→8.4vw / 96→115) và chuyển sang in đậm.
+/* Kích thước cuối lấy production trước PR #51 làm mốc và nhân đúng 1,3:
+   62→80,6 / 7→9,1vw / 96→124,8. Không cộng tiếp 30% lên mức thử +20% của
+   PR #51, vì như vậy thành +56% so với thứ chủ dự án đang nhìn trên production.
 
    Fontasia VH chỉ có một weight 400, nên 700 ở đây là chữ đậm do trình duyệt
    tổng hợp. Với mặt chữ viết tay ở cỡ ~100px thì cách này giữ được nét gốc; ép
@@ -543,7 +546,7 @@ h3 { line-height: 1.12; }
 .home-page .hero h1 {
   font-family: var(--script);
   padding-inline-start: .16em;
-  font-size: clamp(74px, 8.4vw, 115px);
+  font-size: clamp(80.6px, 9.1vw, 124.8px);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0;
@@ -551,7 +554,32 @@ h3 { line-height: 1.12; }
      phải ngắt thêm một lần nữa bên trong một vế; balance chọn điểm ngắt cân
      giữa các dòng thay vì đẩy đúng một chữ xuống dòng cuối. */
   text-wrap: balance;
-  color: var(--gold-ink);
+  color: var(--hero-lemon);
+}
+
+/* Headline trang trong dùng cỡ H1 production 50 / 7vw / 90 nhân đúng 1,3.
+   Subheadline không đổi cỡ; cả hai dùng cùng vàng chanh và bóng nâu để đứng
+   được trên tranh opacity 1 mà không cần phủ giấy đục lên toàn Hero. */
+.page-hero > h1 {
+  color: var(--hero-lemon);
+  font-size: clamp(65px, 9.1vw, 117px);
+  text-shadow:
+    -1px -1px 0 rgb(43 27 18 / 94%),
+    1px -1px 0 rgb(43 27 18 / 94%),
+    -1px 1px 0 rgb(43 27 18 / 94%),
+    1px 1px 0 rgb(43 27 18 / 94%),
+    0 .32rem 1.4rem rgb(43 27 18 / 58%);
+}
+
+.home-page .hero-copy > p:not(.eyebrow),
+.page-hero > p:not(.eyebrow) {
+  color: var(--hero-lemon);
+  text-shadow:
+    -1px -1px 0 rgb(43 27 18 / 92%),
+    1px -1px 0 rgb(43 27 18 / 92%),
+    -1px 1px 0 rgb(43 27 18 / 92%),
+    1px 1px 0 rgb(43 27 18 / 92%),
+    0 .2rem .8rem rgb(43 27 18 / 52%);
 }
 
 /* Ganh rõ và gọn ở cỡ trung bình, phù hợp tên lá/bài viết nhưng vẫn giữ
@@ -575,24 +603,20 @@ blockquote {
   letter-spacing: 0.01em;
 }
 
-/* Màn hình hẹp: TRẦN tăng đủ 20% (70 → 84px), nhưng hệ số vw phải giữ nguyên
-   15vw. Đo thật trên Fontasia VH ở khung 358px của máy 390px: 60px là cỡ lớn
-   nhất mà hai vế của khẩu hiệu còn mỗi vế một dòng; 61px là ba dòng, 65px là
-   bốn dòng. 15vw cho 58,5px ở 390px và 48px ở 320px — sát trần vật lý đó.
-
-   Nói thẳng: dưới ~560px bề ngang màn hình mới là thứ quyết định, không phải
-   con số 20%. Trần 84px có tác dụng từ 560px trở lên; ở đó khẩu hiệu nhận đủ
-   20%. Sàn hạ từ 54 xuống 48 để máy 320px cũng giữ được hai dòng — bản trước
-   ép 54px ở đó và câu đã vỡ sẵn. */
+/* Màn hình hẹp cũng nhân đúng 1,3 như chủ dự án chốt: production
+   54 / 15vw / 70 → 70,2 / 19,5vw / 91. Câu sẽ chiếm nhiều dòng hơn trên máy
+   hẹp; đây là hệ quả đã được chấp nhận của yêu cầu “đúng 30% mọi breakpoint”. */
 @media (max-width: 900px) {
   .home-page .page-hero h1,
   .home-page .hero h1 {
-    font-size: clamp(48px, 15vw, 84px);
-    /* Khoảng thụt .16em bù cho vai trái của Fontasia ở cỡ lớn. Ở màn hình hẹp
-       nó ăn đúng ~10px — vừa đủ để vế dài của khẩu hiệu tràn sang dòng thứ ba.
-       Bỏ đi thì khẩu hiệu cũng thẳng lề với đoạn giới thiệu ngay dưới. */
+    font-size: clamp(70.2px, 19.5vw, 91px);
+    /* Bỏ khoảng thụt .16em để lấy lại bề ngang và thẳng lề với Subheadline. */
     padding-inline-start: 0;
   }
+}
+
+@media (max-width: 620px) {
+  .page-hero > h1 { font-size: 63.7px; }
 }
 
 /* Vỏ trang */

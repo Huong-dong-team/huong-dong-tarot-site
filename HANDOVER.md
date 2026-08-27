@@ -453,3 +453,70 @@ git diff --check      PASS
 Chromium cục bộ: `/huyen-su/` và `/tarot-la-gi/` 1440×900, `/trai-bai/` 1024×900,
 `/huyen-su/` 390×844 — tranh nổi rõ ở phía phải, Headline/Subheadline/Eyebrow
 vẫn tách bạch, và ở 1024px dòng subheadline nay kết thúc trước khi chạm tranh.
+
+## Nhật ký phối hợp · Headline vàng chanh và tranh Hero 1.0 ngày 27/08/2026
+
+Branch: `feat/hero-headline-lemon-entrance` — tách từ `origin/main` tại merge
+commit `1e8f67b` của PR #51. Chủ dự án tiếp tục là người merge; branch không tự
+triển khai production.
+
+### Phạm vi đã chốt
+
+1. Headline Hero trang chủ và mọi `.page-hero` trang trong lớn hơn production
+   trước PR #51 đúng `30%` ở desktop, tablet và mobile.
+2. Headline và Subheadline Hero của cả trang chủ/trang trong dùng vàng chanh
+   sáng `#F6FF4A`, kèm text-shadow nâu kín bốn phía và một bóng tỏa.
+3. Ảnh Hero trang chủ phải entrance khi tải trang.
+4. Tranh `.page-hero` trang trong đạt opacity đỉnh `1`, rõ như ảnh Hero trang
+   chủ; vùng dưới copy tiếp tục được mask bảo vệ.
+5. Không đổi cỡ Subheadline, CTA, nội dung, cấu trúc layout hoặc Hero detail.
+
+### Xử lý xung đột với PR #51
+
+- PR #51 đã merge nhưng chưa deploy tại lúc yêu cầu này bắt đầu. Nó đã tăng
+  Headline trang chủ `20%` và đã nối cả `.hero-bg` lẫn `.hero-carousel` vào
+  `hero-art-in`. Không tạo animation thứ hai; giữ nguyên code đó và test lại.
+- Chủ dự án đang nhìn production trước PR #51, nên “đúng 30%” lấy các con số
+  production làm gốc, không nhân thêm `1.3` lên mức thử `+20%`:
+  - Home rộng: `62 / 7vw / 96` → `80.6 / 9.1vw / 124.8`.
+  - Home hẹp: `54 / 15vw / 70` → `70.2 / 19.5vw / 91`.
+  - Trang trong rộng: `50 / 7vw / 90` → `65 / 9.1vw / 117`.
+  - Trang trong `≤620px`: `49` → `63.7px`.
+- Ở 390/320px, khẩu hiệu trang chủ thành bốn dòng. Đây là hệ quả trực tiếp của
+  yêu cầu giữ đúng `30%` trên mobile đã được chủ dự án xác nhận; không bóp cỡ
+  hoặc đổi câu để che đi.
+
+### Tranh trang trong và khả năng đọc
+
+- Desktop/tablet/mobile đều có `--hero-art-opacity: 1` ở vùng mask mở.
+- Alpha vùng copy hạ tương ứng để không tăng độ đậm nền dưới chữ:
+  - Desktop `.82 × .28 ≈ .23` → `1 × .23 = .23`.
+  - Tablet `.56 × .32 ≈ .18` → `1 × .18 = .18`.
+  - Mobile `.33 × .40 ≈ .13` → `1 × .13 = .13`.
+- Headline/Subheadline vàng chanh dùng biên bóng `#2B1B12` ở opacity
+  `92–94%`. Màu vàng tách khỏi biên nâu, biên nâu tách khỏi nền tranh; không
+  thêm tấm kem đục phủ toàn Hero.
+- `.card-detail` và header bài viết giữ opacity route cũ, mask `none`.
+
+### Xác minh trên branch
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ, sau entrance:
+
+- Home 1440×900: Headline `124.8px`, màu `rgb(246,255,74)`; `.hero-bg` và
+  `.hero-carousel` cùng báo animation `hero-art-in`; overflow ngang `0`.
+- Home 390×844: Headline `76.05px`; Home 320×740: `70.2px`; màu/bóng đúng,
+  CTA vẫn hiển thị, overflow ngang `0`.
+- `/huyen-su/` 1440×900: Headline `117px`, artwork opacity `1`, mask `.23 → 1`,
+  AVIF 1536, `multiply`, overflow ngang `0`.
+- `/huyen-su/` 900×900: Headline `81.9px`, artwork opacity `1`, mask `.18 → 1`,
+  AVIF 1024, overflow ngang `0`.
+- `/huyen-su/` 390×844: Headline `63.7px`, artwork opacity `1`, mask `.13 → 1`,
+  AVIF 1024, overflow ngang `0`.
+- `/la-bai/the-star/`: `.card-detail` giữ opacity `.135`, mask `none`.

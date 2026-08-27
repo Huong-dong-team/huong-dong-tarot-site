@@ -23,7 +23,26 @@
   color: var(--ink);
 }
 .page-hero > h1, .page-hero > p { max-width: 900px; }
-.page-hero > p:last-child { color: var(--ink-soft); font-size: 18px; }
+.page-hero > h1 {
+  color: var(--hero-lemon);
+  font-size: clamp(65px, 9.1vw, 117px);
+  text-shadow:
+    -1px -1px 0 rgb(43 27 18 / 94%),
+    1px -1px 0 rgb(43 27 18 / 94%),
+    -1px 1px 0 rgb(43 27 18 / 94%),
+    1px 1px 0 rgb(43 27 18 / 94%),
+    0 .32rem 1.4rem rgb(43 27 18 / 58%);
+}
+.page-hero > p:not(.eyebrow) {
+  color: var(--hero-lemon);
+  font-size: 18px;
+  text-shadow:
+    -1px -1px 0 rgb(43 27 18 / 92%),
+    1px -1px 0 rgb(43 27 18 / 92%),
+    -1px 1px 0 rgb(43 27 18 / 92%),
+    1px 1px 0 rgb(43 27 18 / 92%),
+    0 .2rem .8rem rgb(43 27 18 / 52%);
+}
 .card-detail {
   display: grid;
   grid-template-columns: minmax(280px, 430px) 1fr;
@@ -47,4 +66,7 @@
 @media (max-width: 900px) {
   .card-detail { grid-template-columns: 1fr; }
   .card-art { width: min(420px, 100%); margin: auto; }
+}
+@media (max-width: 620px) {
+  .page-hero > h1 { font-size: 63.7px; }
 }
