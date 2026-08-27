@@ -144,22 +144,9 @@ body:not(.home-page)::before { opacity: .2; }
   object-position: var(--hero-art-position, center top);
 }
 
-/* Hero đầu trang có khoảng thở ở bên phải: tranh đạt opacity 1 tại vùng trống,
-   còn alpha của mask giữ phần nằm dưới copy ở mức hiệu dụng 23% (1 × .23).
-   Chi tiết lá/bài viết không dùng mask này vì vị trí copy của chúng khác.
-
-   Bốn đợt: .40 (PR #50) → .52 → .82 (PR #51) → 1.
-
-   Đợt 1 không kéo mask lên cùng opacity. Làm vậy sẽ tăng cả độ đậm dưới chữ.
-   Thay vào đó mask vùng copy hạ .28 → .23, nên nền dưới chữ giữ nguyên mức
-   hiệu dụng xấp xỉ .23; chỉ vùng trống mở hoàn toàn và rõ như Hero trang chủ.
-
-   Headline/Subheadline nay dùng vàng chanh với biên bóng nâu ở main.css;
-   --brown đậm dưới đây tiếp tục bảo vệ riêng Eyebrow.
-
-   Tương phản ở trường hợp xấu nhất (pixel tranh đen tuyệt đối, hiệu dụng .23):
-   Eyebrow #5E3F19 vẫn đạt 4,76:1. Vàng chanh được tách khỏi nền bằng text-shadow
-   bốn phía màu #2B1B12, không cần tăng lớp giấy đục phủ toàn tranh. */
+/* Hero đầu trang hiển thị tranh nguyên vẹn ở opacity 1 trên toàn khung.
+   Không dùng mask: opacity không còn bị hạ riêng xuống 23%/18%/13% ở vùng copy.
+   Chi tiết lá và bài viết tiếp tục dùng opacity/lớp bảo vệ riêng của chúng. */
 .page-hero.lacquer-hero {
   --hero-art-opacity: 1;
   /* Chỉ đậm lại trong Hero trang trong. Cùng họ nâu, chỉ hạ độ sáng đủ để giữ
@@ -169,31 +156,11 @@ body:not(.home-page)::before { opacity: .2; }
 }
 
 .page-hero.lacquer-hero .subpage-hero-artwork {
-  -webkit-mask-image: linear-gradient(90deg,
-    rgb(0 0 0 / 23%) 0%,
-    rgb(0 0 0 / 23%) 52%,
-    rgb(0 0 0 / 62%) 74%,
-    #000 88%);
-  mask-image: linear-gradient(90deg,
-    rgb(0 0 0 / 23%) 0%,
-    rgb(0 0 0 / 23%) 52%,
-    rgb(0 0 0 / 62%) 74%,
-    #000 88%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
-/* Chữ phải nằm TRỌN trong vùng phẳng của mask, nếu không phép tính AA ở trên
-   chỉ đúng cho phần đầu dòng.
-
-   Đây là lỗ hổng có sẵn từ trước, chỉ tới mức .82 mới đủ lộ: `.page-hero > p`
-   rộng tới 900px, tức ở 1024px nó chạy tới ~91% bề ngang hero — nơi mask đã mở
-   gần hết. Đo trên `/trai-bai/` 1024px: cuối dòng "…từ một góc khác" ngồi trên
-   tranh ở opacity hiệu dụng ~.5, trong khi phép kiểm chỉ canh .23.
-
-   52% khớp đúng mốc kết thúc vùng phẳng của mask ở trên. Đổi một trong hai con
-   số mà quên con số kia là mở lại đúng lỗ hổng này. Kèm theo, 900px ở 18px là
-   khoảng 110 ký tự một dòng — dài hơn khổ đọc dễ chịu, nên bó lại còn có lợi. */
+/* Giữ nguyên khổ copy hiện tại để đợt tăng độ rõ tranh không làm đổi layout. */
 .page-hero.lacquer-hero > :is(h1, p) {
   max-width: min(900px, 52%);
 }
@@ -211,6 +178,12 @@ body:not(.home-page)::before { opacity: .2; }
     color-mix(in srgb, var(--paper-band) 64%, transparent) 0%,
     color-mix(in srgb, var(--paper-band) 46%, transparent) 42%,
     transparent 76%);
+}
+
+/* Hero đầu trang không phủ gradient kem lên tranh. Các Hero chi tiết bên dưới
+   vẫn dùng ::after riêng theo vị trí copy của chúng. */
+.page-hero.lacquer-hero::after {
+  background: none;
 }
 
 .lacquer-hero > :not(.subpage-hero-artwork) {
@@ -254,22 +227,7 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .095; --hero-art-position: left 18% top 0%; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .10;  --hero-art-position: right 20% bottom 0%; }
 
-  /* Đỉnh 1 ở vùng trống; vùng copy giữ xấp xỉ .18 (1 × .18). */
-  .page-hero.lacquer-hero { --hero-art-opacity: 1; }
-  .page-hero.lacquer-hero .subpage-hero-artwork {
-    -webkit-mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 18%) 0%,
-      rgb(0 0 0 / 18%) 56%,
-      rgb(0 0 0 / 68%) 78%,
-      #000 94%);
-    mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 18%) 0%,
-      rgb(0 0 0 / 18%) 56%,
-      rgb(0 0 0 / 68%) 78%,
-      #000 94%);
-  }
-
-  /* Khớp mốc 56% của vùng phẳng ngay trên. */
+  /* Giữ nguyên khổ copy tablet của layout hiện tại. */
   .page-hero.lacquer-hero > :is(h1, p) { max-width: min(900px, 56%); }
 }
 
@@ -284,23 +242,7 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .07; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .075; }
 
-  /* Mobile: ảnh vẫn đạt 1 ở mép mở; vùng copy giữ .13 hiệu dụng. */
-  .page-hero.lacquer-hero { --hero-art-opacity: 1; }
-  .page-hero.lacquer-hero .subpage-hero-artwork {
-    -webkit-mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 13%) 0%,
-      rgb(0 0 0 / 13%) 52%,
-      rgb(0 0 0 / 74%) 78%,
-      #000 100%);
-    mask-image: linear-gradient(90deg,
-      rgb(0 0 0 / 13%) 0%,
-      rgb(0 0 0 / 13%) 52%,
-      rgb(0 0 0 / 74%) 78%,
-      #000 100%);
-  }
-
-  /* Màn hình hẹp không có vùng trống ngang để né. Lớp bảo vệ chữ ở đây là
-     radial ::after bên dưới, nên chữ được dùng lại trọn bề ngang. */
+  /* Mobile dùng lại trọn bề ngang như layout hiện tại. */
   .page-hero.lacquer-hero > :is(h1, p) { max-width: none; }
 
   .lacquer-hero::after,

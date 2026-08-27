@@ -194,7 +194,7 @@ test("Headline tăng đúng 30%, Headline/Subheadline dùng vàng chanh có bón
   // Vàng chanh trên nền tranh sáng cần biên tối kín bốn phía, không chỉ một
   // vệt mờ phía dưới. Critical và CSS đầy đủ phải cùng màu để không nháy màu.
   for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
-    assert.match(css, /--hero-lemon:\s*#F6FF4A/i, `${ten}: thiếu token vàng chanh`);
+    assert.match(css, /--hero-lemon:\s*#FEDB44/i, `${ten}: thiếu token vàng chanh #FEDB44`);
     assert.match(css.match(/\.home-page \.hero h1 \{([\s\S]*?)\}/)?.[1] || "", /color:\s*var\(--hero-lemon\)/,
       `${ten}: Headline trang chủ chưa dùng vàng chanh`);
   }
