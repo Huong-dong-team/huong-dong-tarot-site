@@ -235,3 +235,56 @@ Chromium cục bộ `/huyen-su/` sau khi animation kết thúc:
 - Phép tính tương phản bảo thủ dùng pixel tranh đen tuyệt đối ở opacity `.14`
   trên `--paper-band`: Headline `10.41:1`, Subheadline `5.67:1`; CTA vàng với
   chữ `--ink` là `11.68:1`, đều vượt mục tiêu `4.5:1`.
+
+## Nhật ký phối hợp · tăng độ rõ phía phải Hero ngày 27/08/2026
+
+Branch: `tune/subpage-hero-right-opacity` — tách từ `origin/main` tại merge
+commit `ca7ce57` của PR #49. Chủ dự án tiếp tục là người merge; branch không tự
+triển khai production.
+
+### Phạm vi và cách hiểu
+
+- “Transparency 40%” được triển khai thành opacity đỉnh `.40` của tranh ở vùng
+  trống phía phải Hero trang trong; không phải làm tranh trong suốt hơn.
+- Không tăng đều toàn khung. Mask alpha theo chiều ngang giữ phần tranh nằm dưới
+  Headline/Subheadline ở opacity hiệu dụng `.14` (`.40 × .35`), sau đó tăng dần
+  và mở hoàn toàn ở phía phải.
+- Tablet dùng đỉnh `.28`, vùng chữ xấp xỉ `.11`; mobile dùng đỉnh `.16`, vùng
+  chữ `.08`. Hai breakpoint này không có khoảng trống ngang lớn như desktop.
+- Chỉ `.page-hero.lacquer-hero` nhận mức mới. `.card-detail`, header bài viết,
+  phần nội dung trang chủ và Hero trang chủ giữ nguyên vì copy/motif nằm ở vị
+  trí khác.
+- Giữ `mix-blend-mode: multiply`, Layer 1, gradient bảo vệ chữ và toàn bộ
+  entrance timeline. Animation tranh vẫn đi đơn điệu từ `0` đến đúng opacity
+  cuối, không có mốc sáng lên rồi tối lại.
+
+### Xác minh cần giữ khi tiếp tục
+
+- Desktop: computed opacity của picture `.40`; mask có alpha `.35` ở trái và
+  alpha `1` ở phải.
+- Tablet/mobile: computed opacity lần lượt `.28`/`.16`; không tràn ngang.
+- Vùng chữ desktop dùng kịch bản tương phản bảo thủ là pixel tranh đen tuyệt đối
+  ở opacity hiệu dụng `.14`; Headline, Subheadline và CTA phải tiếp tục đạt AA.
+- Bảy route top-level đều phải nhận rule; route chi tiết vẫn giữ mức theo bảng
+  v2 (`.12–.14` desktop).
+
+### Kết quả xác minh trên branch
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ sau khi entrance kết thúc:
+
+- `/huyen-su/` 1366×768: opacity `.40`, mask trái `.35` → phải `1`, AVIF
+  1536, `multiply`, không tràn ngang.
+- `/huyen-su/` 900×900: opacity `.28`, mask trái `.40` → phải `1`, AVIF
+  1024, không tràn ngang.
+- `/huyen-su/` 390×844: opacity `.16`, mask trái `.50` → phải `1`, AVIF
+  1024, không tràn ngang.
+- `/la-bai/the-star/` 1366×768: `.card-detail` vẫn opacity `.135`, mask
+  `none`; chứng minh rule mới không tràn sang Hero chi tiết.
+- `/` 1366×768: Hero trang chủ không có `.subpage-hero-artwork`; không đổi.

@@ -144,6 +144,28 @@ body:not(.home-page)::before { opacity: .2; }
   object-position: var(--hero-art-position, center top);
 }
 
+/* Hero đầu trang có khoảng thở ở bên phải: tranh đạt đỉnh 40% tại vùng trống,
+   nhưng alpha của mask giữ phần nằm dưới copy ở mức hiệu dụng 14% (.40 × .35).
+   Chi tiết lá/bài viết không dùng mask này vì vị trí copy của chúng khác. */
+.page-hero.lacquer-hero {
+  --hero-art-opacity: .40;
+}
+
+.page-hero.lacquer-hero .subpage-hero-artwork {
+  -webkit-mask-image: linear-gradient(90deg,
+    rgb(0 0 0 / 35%) 0%,
+    rgb(0 0 0 / 35%) 42%,
+    rgb(0 0 0 / 68%) 68%,
+    #000 88%);
+  mask-image: linear-gradient(90deg,
+    rgb(0 0 0 / 35%) 0%,
+    rgb(0 0 0 / 35%) 42%,
+    rgb(0 0 0 / 68%) 68%,
+    #000 88%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
 /* Lớp bảo vệ chữ chỉ nằm ở vùng copy. Nó trong suốt dần về phía motif chính,
    không phải một tấm kem đục phủ toàn tranh. */
 .lacquer-hero::after {
@@ -199,6 +221,21 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="healing"]           { --hero-art-opacity: .11;  --hero-art-position: right 24% top 0%; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .095; --hero-art-position: left 18% top 0%; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .10;  --hero-art-position: right 20% bottom 0%; }
+
+  /* Đỉnh .28 ở vùng trống; vùng copy giữ xấp xỉ .11 (.28 × .40). */
+  .page-hero.lacquer-hero { --hero-art-opacity: .28; }
+  .page-hero.lacquer-hero .subpage-hero-artwork {
+    -webkit-mask-image: linear-gradient(90deg,
+      rgb(0 0 0 / 40%) 0%,
+      rgb(0 0 0 / 40%) 44%,
+      rgb(0 0 0 / 72%) 72%,
+      #000 94%);
+    mask-image: linear-gradient(90deg,
+      rgb(0 0 0 / 40%) 0%,
+      rgb(0 0 0 / 40%) 44%,
+      rgb(0 0 0 / 72%) 72%,
+      #000 94%);
+  }
 }
 
 /* Mobile: .07–.08; gradient theo chiều dọc để bảo vệ cột chữ. */
@@ -211,6 +248,21 @@ body:not(.home-page)::before { opacity: .2; }
   [data-page-art="healing"]           { --hero-art-opacity: .08; }
   [data-page-art="chuyen-huong-dong"] { --hero-art-opacity: .07; }
   [data-page-art="cua-hang"]          { --hero-art-opacity: .075; }
+
+  /* Mobile không còn vùng trống rộng: tăng vừa đủ, giữ copy ở .08 hiệu dụng. */
+  .page-hero.lacquer-hero { --hero-art-opacity: .16; }
+  .page-hero.lacquer-hero .subpage-hero-artwork {
+    -webkit-mask-image: linear-gradient(90deg,
+      rgb(0 0 0 / 50%) 0%,
+      rgb(0 0 0 / 50%) 52%,
+      rgb(0 0 0 / 78%) 78%,
+      #000 100%);
+    mask-image: linear-gradient(90deg,
+      rgb(0 0 0 / 50%) 0%,
+      rgb(0 0 0 / 50%) 52%,
+      rgb(0 0 0 / 78%) 78%,
+      #000 100%);
+  }
 
   .lacquer-hero::after,
   .card-detail.lacquer-hero::after {
