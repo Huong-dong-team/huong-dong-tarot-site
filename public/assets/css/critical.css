@@ -195,27 +195,35 @@ h3 { font-size: 30px; line-height: 1.12; }
   object-fit: cover;
   object-position: center;
 }
+/* Đục nhất ở đúng vùng chữ. Mặc định theo trục dọc (một cột: chữ trên, tranh
+   dưới); hai cột thì đổi sang 270deg vì cột chữ nằm bên phải. Xem main.css. */
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(90deg,
-    color-mix(in srgb, var(--paper) 92%, transparent) 0%,
-    color-mix(in srgb, var(--paper) 72%, transparent) 44%,
-    color-mix(in srgb, var(--paper) 38%, transparent) 100%);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--paper) 88%, transparent) 0%,
+    color-mix(in srgb, var(--paper) 64%, transparent) 60%,
+    color-mix(in srgb, var(--paper) 46%, transparent) 100%);
 }
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 .hero-copy { max-width: 700px; }
+/* Khẩu hiệu: cỡ chữ và weight phải khớp main.css từng con số, nếu không trang
+   nhảy một nhịp đúng lúc main.css về. Xem giải thích ở main.css. */
 .home-page .hero h1 {
   margin-bottom: 24px;
   color: var(--gold-ink);
   font-family: var(--script);
   padding-inline-start: .16em;
-  font-size: clamp(62px, 7vw, 96px);
-  font-weight: 400;
+  font-size: clamp(74px, 8.4vw, 115px);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0;
+  text-wrap: balance;
+  text-shadow:
+    0 1px 2px color-mix(in srgb, var(--ink) 18%, transparent),
+    0 .28rem 1.6rem color-mix(in srgb, var(--ink) 22%, transparent);
 }
 .hero .eyebrow { color: var(--muted); }
 .hero-copy > p:not(.eyebrow) { max-width: 650px; color: var(--ink-soft); font-size: 18px; }
@@ -234,7 +242,7 @@ h3 { font-size: 30px; line-height: 1.12; }
 .proof dt { color: var(--muted); font: 600 36px/1 var(--display); }
 .proof dd { margin: 6px 0 0; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 
-.hero-stage { width: min(100%, 440px); justify-self: end; perspective: 1100px; }
+.hero-stage { width: min(100%, 460px); justify-self: center; }
 .hero-carousel { position: relative; display: grid; justify-items: center; }
 .hero-carousel .hero-card {
   position: relative;
@@ -245,7 +253,7 @@ h3 { font-size: 30px; line-height: 1.12; }
   margin: 0;
   padding: 8px 8px 12px;
   gap: 4px;
-  justify-self: end;
+  justify-self: center;
   border: 1px solid var(--muted);
   border-radius: calc(var(--img-radius) + 4px);
   background: var(--paper-raised);
@@ -258,7 +266,6 @@ h3 { font-size: 30px; line-height: 1.12; }
 .hero-carousel .hero-card.is-active { display: grid; z-index: 2; visibility: visible; opacity: 1; }
 .hero-carousel .hero-card:not(.is-active) { display: none; }
 .hero-card img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--img-radius); object-fit: cover; }
-.hero-card--pack img { aspect-ratio: 2 / 3; background: var(--paper); }
 .hero-card-label, .hero-card-power, .hero-card-cue {
   padding: 4px 2px 10px;
   color: var(--muted);
@@ -298,16 +305,29 @@ h3 { font-size: 30px; line-height: 1.12; }
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
-.hero-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
-.hero-dots button { display: grid; width: 44px; height: 26px; padding: 0; place-items: center; border: 0; background: none; }
-.hero-dots button::before { width: 9px; height: 9px; border: 1px solid var(--brown); border-radius: 50%; content: ""; }
-.hero-dots button[aria-current="true"]::before { background: var(--brown); transform: scale(1.25); }
-
 .drum-watermark, .lac-watermark { position: relative; isolation: isolate; overflow: hidden; }
+/* Hai cột: TRANH bên trái, chữ bên phải. Đảo bằng grid-column, không đảo thứ
+   tự DOM — ở một cột thứ tự đọc phải là khẩu hiệu trước, tranh sau.
+   Breakpoint 1101px phải khớp main.css từng con số; lệch nhau là trang nhảy
+   một nhịp đúng lúc main.css về. */
+@media (min-width: 1101px) {
+  .hero { grid-template-columns: minmax(300px, .84fr) minmax(0, 1.16fr); }
+  .hero-overlay {
+    background: linear-gradient(270deg,
+      color-mix(in srgb, var(--paper) 92%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 70%, transparent) 55%,
+      color-mix(in srgb, var(--paper) 34%, transparent) 100%);
+  }
+  /* Cả hàng lẫn cột: auto-placement không lùi được về cột 1 sau khi đã đặt
+     .hero-copy vào cột 2, và stage sẽ rơi xuống hàng thứ hai. */
+  .hero-stage { grid-area: 1 / 1; justify-self: start; }
+  /* Cột đã bó chiều rộng; max-width 700px ở đây sẽ ngắt khẩu hiệu giữa cụm. */
+  .hero-copy { grid-area: 1 / 2; max-width: none; }
+}
 @media (max-width: 1100px) {
   .hero { grid-template-columns: 1fr; }
   .hero-stage { justify-self: center; }
-  .hero-carousel .hero-card { max-width: min(620px, 92vw); justify-self: center; }
+  .hero-carousel .hero-card { max-width: min(620px, 92vw); }
 }
 @media (max-width: 900px) {
   .menu-toggle { display: block; }
@@ -339,7 +359,10 @@ h3 { font-size: 30px; line-height: 1.12; }
   .hero { padding-top: 70px; }
   /* Fontasia đã được preload và dùng font-display: swap, nên trình duyệt thay
      đúng font nhận diện ngay khi tệp tải xong ở mọi kích thước màn hình. */
-  .home-page .hero h1 { font-size: clamp(54px, 15vw, 70px); }
+  /* Trần tăng đủ 20%; hệ số vw giữ cho mỗi vế của khẩu hiệu nằm trọn một dòng
+     ở 320–430px, và bỏ khoảng thụt .16em để lấy lại ~10px cuối cùng.
+     Xem giải thích đầy đủ ở main.css. */
+  .home-page .hero h1 { font-size: clamp(48px, 15vw, 84px); padding-inline-start: 0; }
   /* Tranh nền GIỮ LẠI trên màn hình hẹp. Trước đây nó bị display:none để không
      thành LCP của khung hero cao 1067px; đổi lại thì điện thoại — tức gần như
      toàn bộ người đọc — không bao giờ thấy tranh mở đầu của bộ bài.

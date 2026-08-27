@@ -1,24 +1,38 @@
-/* Entrance Hero Hường Đông v2.
+/* Entrance Hero Hường Đông v3.
    Mỗi phần tử chỉ có một chủ sở hữu transform; không scroll-linked, không
-   overshoot. Nhịp trang trong bắt đầu sau khi Layer 1 màu đã ổn định. */
+   overshoot. Nhịp trang trong bắt đầu sau khi Layer 1 màu đã ổn định.
+
+   v3 làm mượt lại toàn bộ quỹ đạo, không đổi kiến trúc:
+   - Easing đổi sang expo-out (.16, 1, .3, 1): tăng tốc rất sớm rồi trôi dài về
+     đích, nên mắt không bắt được khoảnh khắc phần tử "dừng lại".
+   - Quãng đường đi vào rút còn khoảng một nửa v2. Quãng dài + thời gian ngắn là
+     thứ đọc ra thành "bay vào rồi phanh"; quãng ngắn + thời gian dài đọc ra
+     thành "trôi tới".
+   - Thời lượng mỗi lớp kéo dài ~35%, và các lớp chồng lấn nhau nhiều hơn thay
+     vì nối đuôi, nên không còn cảm giác giật từng nấc.
+   - Opacity đầy ở mốc 18% (trước là 24%): chữ đọc được sớm hơn — vừa giữ LCP,
+     vừa để phần còn lại của quỹ đạo diễn ra trên chữ đã rõ, đúng cảm giác mượt. */
 
 :root {
-  --page-out: 220ms;
-  --page-in: 1400ms;
+  --page-out: 260ms;
+  /* Swup chỉ đo .transition-page. Mọi delay + duration của Hero phải nằm gọn
+     trong con số này, nếu không lớp .is-rendering bị gỡ giữa chừng và phần tử
+     đang chạy sẽ snap về trạng thái cuối — thấy rõ là một cú giật. */
+  --page-in: 1900ms;
   --page-ease-out: cubic-bezier(.42, 0, .72, .24);
-  --page-ease-in: cubic-bezier(.22, 1, .36, 1);
-  --hero-base-duration: 420ms;
-  --hero-art-delay: 420ms;
-  --hero-shadow-delay: 490ms;
-  --hero-headline-delay: 600ms;
-  --hero-subheadline-delay: 700ms;
+  --page-ease-in: cubic-bezier(.16, 1, .3, 1);
+  --hero-base-duration: 520ms;
+  --hero-art-delay: 360ms;
+  --hero-shadow-delay: 460ms;
+  --hero-headline-delay: 560ms;
+  --hero-subheadline-delay: 680ms;
   --hero-cta-delay: 800ms;
-  --headline-x: clamp(-120px, -14vw, -52px);
-  --headline-y: clamp(-80px, -10vh, -36px);
-  --subheadline-x: clamp(-96px, -10vw, -38px);
-  --subheadline-y: clamp(36px, 10vh, 80px);
-  --cta-x: clamp(42px, 12vw, 110px);
-  --cta-y: clamp(38px, 12vh, 90px);
+  --headline-x: clamp(-64px, -7vw, -28px);
+  --headline-y: clamp(-42px, -5vh, -18px);
+  --subheadline-x: clamp(-52px, -5.4vw, -22px);
+  --subheadline-y: clamp(20px, 5.4vh, 44px);
+  --cta-x: clamp(24px, 6.4vw, 58px);
+  --cta-y: clamp(22px, 6.4vh, 50px);
 }
 
 .transition-page {
@@ -48,7 +62,7 @@ html.is-changing.is-rendering .transition-page {
 }
 
 @keyframes hero-art-in {
-  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  from { opacity: 0; transform: translate3d(0, var(--hero-art-rise, 14px), 0); }
   to { opacity: var(--hero-art-opacity, 1); transform: none; }
 }
 
@@ -57,7 +71,7 @@ html.is-changing.is-rendering .transition-page {
     opacity: 0;
     transform: translate3d(var(--hero-enter-x), var(--hero-enter-y), 0);
   }
-  24% { opacity: 1; }
+  18% { opacity: 1; }
   to { opacity: 1; transform: none; }
 }
 
@@ -69,12 +83,12 @@ html.is-changing.is-rendering .transition-page {
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering) .subpage-hero-artwork {
-  animation: hero-art-in 650ms var(--page-ease-in) var(--hero-art-delay) both;
+  animation: hero-art-in 900ms var(--page-ease-in) var(--hero-art-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering) .lacquer-hero::after {
   --hero-fade-end: 1;
-  animation: hero-layer-in 500ms var(--page-ease-in) var(--hero-shadow-delay) both;
+  animation: hero-layer-in 560ms var(--page-ease-in) var(--hero-shadow-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
@@ -85,7 +99,7 @@ html.is-changing.is-rendering .transition-page {
     .lacquer-hero .card-intro > h1) {
   --hero-enter-x: var(--headline-x);
   --hero-enter-y: var(--headline-y);
-  animation: hero-converge 720ms var(--page-ease-in) var(--hero-headline-delay) both;
+  animation: hero-converge 980ms var(--page-ease-in) var(--hero-headline-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
@@ -94,48 +108,58 @@ html.is-changing.is-rendering .transition-page {
     .lacquer-hero .card-intro > :is(.card-original, .lead)) {
   --hero-enter-x: var(--subheadline-x);
   --hero-enter-y: var(--subheadline-y);
-  animation: hero-converge 650ms var(--page-ease-in) var(--hero-subheadline-delay) both;
+  animation: hero-converge 920ms var(--page-ease-in) var(--hero-subheadline-delay) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering) .lacquer-hero .hero-actions {
   --hero-enter-x: var(--cta-x);
   --hero-enter-y: var(--cta-y);
-  animation: hero-converge 580ms var(--page-ease-in) var(--hero-cta-delay) both;
+  animation: hero-converge 860ms var(--page-ease-in) var(--hero-cta-delay) both;
 }
 
-/* --- Trang chủ: đúng timeline 0 / 70 / 180 / 280 / 380ms ------------ */
+/* --- Trang chủ: tranh nền → lớp phủ → tranh sơn mài → copy ----------- */
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] .hero-bg {
   --hero-art-opacity: 1;
-  animation: hero-art-in 650ms var(--page-ease-in) both;
+  animation: hero-art-in 900ms var(--page-ease-in) both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] .hero-overlay {
   --hero-fade-end: 1;
-  animation: hero-layer-in 500ms var(--page-ease-in) 70ms both;
+  animation: hero-layer-in 560ms var(--page-ease-in) 70ms both;
+}
+
+/* Tranh trong khung Hero đi cùng nhịp với tranh nền, chỉ trễ lại một chút.
+   Neo vào .hero-carousel chứ không phải .hero-stage: stage giữ layout của cột,
+   phần tử con lo phần chuyển động, nên không có gì phải đo lại giữa chừng. */
+:is(html.hd-first-load, html.is-changing.is-rendering)
+  .transition-page[data-page="home"] .hero-carousel {
+  --hero-art-opacity: 1;
+  --hero-art-rise: 22px;
+  animation: hero-art-in 900ms var(--page-ease-in) 140ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] :is(.hero-copy .eyebrow, .hero-copy h1) {
   --hero-enter-x: var(--headline-x);
   --hero-enter-y: var(--headline-y);
-  animation: hero-converge 720ms var(--page-ease-in) 180ms both;
+  animation: hero-converge 980ms var(--page-ease-in) 200ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] .hero-copy > p:not(.eyebrow) {
   --hero-enter-x: var(--subheadline-x);
   --hero-enter-y: var(--subheadline-y);
-  animation: hero-converge 650ms var(--page-ease-in) 280ms both;
+  animation: hero-converge 920ms var(--page-ease-in) 320ms both;
 }
 
 :is(html.hd-first-load, html.is-changing.is-rendering)
-  .transition-page[data-page="home"] .hero-copy .hero-actions {
+  .transition-page[data-page="home"] .hero-copy :is(.hero-actions, .proof) {
   --hero-enter-x: var(--cta-x);
   --hero-enter-y: var(--cta-y);
-  animation: hero-converge 580ms var(--page-ease-in) 380ms both;
+  animation: hero-converge 860ms var(--page-ease-in) 440ms both;
 }
 
 .visually-hidden {

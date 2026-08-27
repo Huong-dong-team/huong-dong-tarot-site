@@ -45,10 +45,15 @@ test("Hero v2 xếp đúng Layer 1 → tranh multiply → gradient bảo vệ ch
   const heroRule = lacquer.match(/(?:^|\n)\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
   assert.doesNotMatch(heroRule, /--hero-art-(?:opacity|position):/,
     "giá trị mặc định trên Hero con sẽ chặn biến route kế thừa từ main");
-  assert.match(motion, /--hero-base-duration:\s*420ms/);
-  assert.match(motion, /--hero-art-delay:\s*420ms/,
-    "tranh phải bắt đầu sau khi Layer 1 hoàn tất");
-  assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in 650ms/);
+  // Tranh phải bắt đầu sau khi Layer 1 màu đã ổn định — nếu không, hai lớp
+  // cùng sáng lên một lúc và không còn đọc ra thành hai lớp nữa. Canh quan hệ
+  // giữa hai con số, không canh chính con số: thời lượng còn được tinh chỉnh.
+  const baseDuration = Number(motion.match(/--hero-base-duration:\s*(\d+)ms/)?.[1]);
+  const artDelay = Number(motion.match(/--hero-art-delay:\s*(\d+)ms/)?.[1]);
+  assert.ok(baseDuration > 0 && artDelay > 0, "thiếu mốc thời gian của Layer 1 hoặc tranh");
+  assert.ok(artDelay >= baseDuration * .6,
+    `tranh bắt đầu ở ${artDelay}ms, quá sớm so với Layer 1 dài ${baseDuration}ms`);
+  assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in \d+ms/);
   assert.match(motion,
     /@keyframes hero-art-in\s*\{\s*from\s*\{\s*opacity:\s*0;[^}]*\}\s*to\s*\{\s*opacity:\s*var\(--hero-art-opacity,\s*1\);[^}]*\}\s*\}/,
     "tranh phải tăng thẳng từ 0 đến đúng opacity cuối, không có mốc nhấp sáng");
@@ -124,13 +129,13 @@ test("trang chủ giữ home-content sau Hero và route ngoài bảng không mư
     "critical CSS trang chủ phải neo picture tuyệt đối để không gây dịch bố cục");
 });
 
-test("Hero đầu trang đạt 40% ở vùng trống và vẫn bảo vệ tương phản vùng chữ", async () => {
+test("Hero đầu trang đạt 52% ở vùng trống và vẫn bảo vệ tương phản vùng chữ", async () => {
   const css = await read("public/assets/css/lacquer-art.css");
-  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", ".40", ".28", ".16"]) {
+  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", ".52", ".36", ".21"]) {
     assert.match(css, new RegExp(`--hero-art-opacity:\\s*\\${value.replace(".", ".")}`));
   }
-  assert.match(css, /\.page-hero\.lacquer-hero\s*\{\s*--hero-art-opacity:\s*\.40/,
-    "Hero desktop phải đạt opacity đỉnh 40% ở phía phải");
+  assert.match(css, /\.page-hero\.lacquer-hero\s*\{\s*--hero-art-opacity:\s*\.52/,
+    "Hero desktop phải đạt opacity đỉnh 52% ở phía phải");
   assert.match(css, /\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{[\s\S]*rgb\(0 0 0 \/ 35%\)[\s\S]*#000 88%/,
     "mask phải giữ vùng copy ở 35% alpha và mở hoàn toàn về bên phải");
 
@@ -145,9 +150,11 @@ test("Hero đầu trang đạt 40% ở vùng trống và vẫn bảo vệ tươn
     const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
     return (bright + .05) / (dark + .05);
   };
-  // Trường hợp khắc nghiệt hơn ảnh thật: picture đạt .40 nhưng mask vùng copy
-  // chỉ có alpha .35, nên pixel tranh đen tuyệt đối có opacity hiệu dụng .14.
-  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * .86));
+  // Trường hợp khắc nghiệt hơn ảnh thật: picture đạt .52 nhưng mask vùng copy
+  // chỉ có alpha .35, nên pixel tranh đen tuyệt đối có opacity hiệu dụng .182.
+  // Đây là chốt chặn thật của đợt "rõ thêm 30%": kéo đỉnh cao hơn nữa mà không
+  // hạ alpha mask thì subheadline rơi xuống dưới 4,5 và test này đỏ.
+  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * .818));
   assert.ok(contrast([43, 27, 18], worstHeroBackground) >= 4.5, "Headline không đạt AA");
   assert.ok(contrast([92, 68, 51], worstHeroBackground) >= 4.5, "Subheadline không đạt AA");
   assert.ok(contrast([43, 27, 18], [255, 212, 90]) >= 4.5, "CTA vàng không đạt AA");

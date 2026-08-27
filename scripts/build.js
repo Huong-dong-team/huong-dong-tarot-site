@@ -506,7 +506,8 @@ await cp(
 const featuredSlugs = ["the-fool", "the-empress", "the-chariot", "the-tower", "the-star", "the-world"];
 const featuredCards = featuredSlugs.map((slug) => cards.find((card) => card.slug === slug)).filter(Boolean);
 
-// Tứ Bất Tử: bốn vị dùng chung cho carousel hero và bảng liệt kê phía dưới.
+// Tứ Bất Tử: bốn vị dùng cho bảng liệt kê #tu-bat-tu, và MỘT vị trong số đó
+// đứng làm tranh mở đầu Hero trang chủ (xem heroImmortal bên dưới).
 // Số La Mã, tên gọi và dòng "lực" lấy nguyên văn bản đã duyệt của chủ dự án;
 // ảnh chân dung nằm ở immortals/, khác với tranh lá bài trong cards/.
 // Phần truyện đọc từ trường story của chính lá đó, nên biên tập trong /admin/
@@ -517,7 +518,7 @@ const immortalSpecs = [
   { slug: "the-hermit", roman: "III", cardLabel: "IX · THE HERMIT", name: "Chử Đồng Tử", power: "Khai mở minh triết", portrait: "chu-dong-tu" },
   { slug: "the-star", roman: "IV", cardLabel: "XVII · THE STAR", name: "Mẫu Liễu Hạnh", power: "Hy vọng chỉ đường", portrait: "mau-lieu-hanh" },
 ];
-const immortals = immortalSpecs.map((spec, index) => {
+const immortals = immortalSpecs.map((spec) => {
   const card = cards.find((item) => item.slug === spec.slug);
   if (!card) throw new Error(`Thiếu lá ${spec.slug} cho mục Tứ Bất Tử.`);
   return {
@@ -527,15 +528,28 @@ const immortals = immortalSpecs.map((spec, index) => {
     href: `/la-bai/${card.slug}/`,
     storyHtml: card.story || "",
     eyebrow: `Tarot ${spec.cardLabel.split(" · ")[0]} · ${card.nameEn} · ${spec.name}`,
-    // Dựng sẵn ở đây thay vì lồng {{#if}} trong template: renderString dùng
-    // regex non-greedy nên điều kiện lồng nhau sẽ đóng sai thẻ.
-    activeClass: index === 0 ? " is-active" : "",
-    // Cả bốn chân dung bắt đầu ở trạng thái ẩn nên để lazy; slide hộp bài trong
-    // template cũng tải lười vì nằm gần cuối khung mobile. Nhờ vậy carousel
-    // không tranh băng thông và decode với tiêu đề LCP.
-    imgAttrs: 'loading="lazy" decoding="async"',
   };
 });
+
+/* Tranh mở đầu Hero trang chủ. Một bức duy nhất, chọn cố định ở đây thay vì để
+   template lấy phần tử đầu của danh sách: thứ tự trong immortalSpecs là thứ tự
+   La Mã I–IV của mục #tu-bat-tu, đổi thứ tự đó không được kéo theo việc đổi
+   tranh Hero.
+
+   Mẫu Liễu Hạnh được chọn vì bức của bà là bức duy nhất có đủ ba lớp chiều sâu
+   — sen ở tiền cảnh, dáng người ở trung cảnh, cổng đền ở hậu cảnh — nên đứng
+   một mình vẫn không trống, và vì chòm sao trên đầu bà chính là lá XVII · The
+   Star, lá mà dòng eyebrow của Hero vẫn luôn gọi tên. */
+const heroImmortal = (() => {
+  const chosen = immortals.find((item) => item.slug === "the-star");
+  if (!chosen) throw new Error("Thiếu lá the-star cho tranh mở đầu Hero trang chủ.");
+  return {
+    ...chosen,
+    // 400w cho màn hình hẹp, 800w cho khung 460px ở mật độ 2x. Không có bản lớn
+    // hơn trong immortals/, và cũng không cần: khung không bao giờ rộng quá 620px.
+    srcset: `/assets/img/immortals/${chosen.portrait}-400.avif 400w, /assets/img/immortals/${chosen.portrait}-800.avif 800w`,
+  };
+})();
 
 /* Câu hỏi thường gặp. MỘT nguồn duy nhất cho cả phần hiển thị lẫn JSON-LD:
    viết hai chỗ thì sớm muộn hai bên lệch nhau, mà FAQPage không khớp nội dung
@@ -594,7 +608,7 @@ const faqSchema = {
   mainEntity: faqs.map(({ q, a }) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
 };
 
-const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, faqs, packPrice: PACK_PRICE });
+const homeContent = renderString(templates.home, { featuredCards, latestPosts: posts.slice(0, 3), immortals, heroImmortal, faqs, packPrice: PACK_PRICE });
 await emit("/", layout({
   title: data.site.siteName,
   description: data.site.description,
