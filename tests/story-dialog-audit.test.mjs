@@ -25,7 +25,6 @@ test("bảng kể chuyện dùng một dialog native, không có iframe hay moda
 test("dialog có nhãn động và không tự tranh quyền xử lý Esc", async () => {
   const site = await read("public/assets/js/ui/hero-carousel.js");
   assert.match(site, /dialog\.setAttribute\("aria-label", panel\.querySelector\("h2"\)/);
-  const dialogBlock = site.slice(site.indexOf("const dialog = document.querySelector"), site.indexOf("// Dừng khi hover"));
-  assert.doesNotMatch(dialogBlock, /keydown|Escape|\.focus\(/,
+  assert.doesNotMatch(site, /keydown|Escape|\.focus\(/,
     "hãy để dialog native quản lý Esc và đường trả focus");
 });

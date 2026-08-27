@@ -1,0 +1,38 @@
+/* Fade khi cuộn tới các mục nội dung · 27/08/2026
+
+   Vì sao KHÔNG dùng IntersectionObserver: bản 0.10 từng làm đúng thế và phải gỡ
+   — mỗi mục là một observer, mỗi lần Swup thay trang là một vòng dựng/huỷ, và
+   toàn bộ chuyển động chạy trên luồng chính. Ở đây dùng scroll-driven animation
+   thuần CSS: trình duyệt tự chạy trên compositor, không có một dòng JS nào, và
+   không có gì để dọn khi rời trang.
+
+   Vì sao nằm ở tệp riêng: page-transition.css có ngân sách 8 KB và chỉ nói về
+   entrance của Hero. Hai loại chuyển động này không bao giờ chạy cùng lúc trên
+   cùng một phần tử, nên tách ra thì mỗi tệp còn đọc được.
+
+   Đường lui: @supports bọc toàn bộ. Trình duyệt chưa có animation-timeline
+   (Firefox tính tới nay) đơn giản là không thấy khối này và nội dung hiện
+   nguyên vẹn — không có trạng thái nào kẹt ở opacity 0. */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Chỉ các mục nội dung SAU Hero. Hero đã có choreography riêng trong
+       page-transition.css; chồng thêm một timeline nữa lên nó là hai chủ sở hữu
+       transform trên cùng một phần tử. */
+    .subpage-content-frame > section,
+    .subpage-content-frame > nav,
+    .transition-page > section:not(.hero):not(.page-hero):not(.lacquer-hero) {
+      animation: section-fade-in linear both;
+      animation-timeline: view();
+      /* Kết thúc ở entry 42%: mục đã sáng hẳn khi mới nhô lên khoảng một phần ba
+         chiều cao của chính nó. Để dải chạy tới cover/exit thì mục cuối trang —
+         thứ không bao giờ cuộn hết được — sẽ đứng lại ở nửa chừng độ mờ. */
+      animation-range: entry 2% entry 42%;
+    }
+  }
+}
+
+@keyframes section-fade-in {
+  from { opacity: 0; transform: translate3d(0, 26px, 0); }
+  to { opacity: 1; transform: none; }
+}

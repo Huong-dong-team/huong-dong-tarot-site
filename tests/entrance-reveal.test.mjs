@@ -32,7 +32,7 @@ test("chỉ các lớp và copy của Hero được entrance", async () => {
   const css = await read("public/assets/css/page-transition.css");
 
   assert.match(css, /\.lacquer-hero::before[\s\S]*hero-layer-in/);
-  assert.match(css, /\.subpage-hero-artwork[\s\S]*hero-art-in 650ms/);
+  assert.match(css, /\.subpage-hero-artwork[\s\S]*hero-art-in 900ms/);
   assert.match(css, /\.transition-page\[data-page="home"\] \.hero-bg/);
   assert.doesNotMatch(css, /> :first-child > \*/,
     "không được diễn hoạt con trực tiếp theo vị trí DOM như choreography cũ");
@@ -54,18 +54,41 @@ test("quỹ đạo không có overshoot hoặc animation lồng trên CTA", asyn
 
 test("timeline Hero trang trong nối đúng nhịp sau Layer 1", async () => {
   const css = await read("public/assets/css/page-transition.css");
-  for (const [token, value] of [
-    ["--hero-base-duration", "420ms"],
-    ["--hero-art-delay", "420ms"],
-    ["--hero-shadow-delay", "490ms"],
-    ["--hero-headline-delay", "600ms"],
-    ["--hero-subheadline-delay", "700ms"],
-    ["--hero-cta-delay", "800ms"],
-  ]) {
-    assert.match(css, new RegExp(`${token}:\\s*${value}`));
+  // Thứ tự mới ràng buộc chặt hơn cột mốc: mỗi lớp phải bắt đầu SAU lớp trước
+  // nhưng TRƯỚC khi lớp trước kết thúc. Nối đuôi nhau đọc ra thành từng nấc;
+  // chồng lấn mới ra một dải liên tục. Đó là toàn bộ khác biệt của v3.
+  const token = (name) => Number(css.match(new RegExp(`${name}:\\s*(\\d+)ms`))?.[1]);
+  const moc = [
+    ["--hero-art-delay", 900],
+    ["--hero-shadow-delay", 560],
+    ["--hero-headline-delay", 980],
+    ["--hero-subheadline-delay", 920],
+    ["--hero-cta-delay", 860],
+  ].map(([name, duration]) => ({ name, delay: token(name), duration }));
+
+  assert.ok(token("--hero-base-duration") > 0, "thiếu --hero-base-duration");
+  for (const [truoc, sau] of moc.slice(0, -1).map((item, i) => [item, moc[i + 1]])) {
+    assert.ok(sau.delay > truoc.delay, `${sau.name} phải bắt đầu sau ${truoc.name}`);
+    assert.ok(sau.delay < truoc.delay + truoc.duration,
+      `${sau.name} bắt đầu sau khi ${truoc.name} đã xong — nối đuôi thì thấy từng nấc`);
   }
-  assert.match(css, /--page-ease-in:\s*cubic-bezier\(\.22, 1, \.36, 1\)/);
-  assert.match(css, /hero-converge 720ms[\s\S]*var\(--hero-headline-delay\)/);
-  assert.match(css, /hero-converge 650ms[\s\S]*var\(--hero-subheadline-delay\)/);
-  assert.match(css, /hero-converge 580ms[\s\S]*var\(--hero-cta-delay\)/);
+
+  // Swup chỉ giữ .is-rendering trong --page-in. Lớp nào chạy quá mốc đó sẽ bị
+  // snap về trạng thái cuối giữa chừng, thấy rõ là một cú giật.
+  const pageIn = Number(css.match(/--page-in:\s*(\d+)ms/)?.[1]);
+  assert.ok(pageIn > 0);
+  for (const { name, delay, duration } of moc) {
+    assert.ok(delay + duration <= pageIn, `${name}: ${delay} + ${duration} vượt --page-in ${pageIn}ms`);
+  }
+
+  // Easing phải là một đường ra (out): tăng tốc sớm rồi trôi dài. Bất kỳ đường
+  // nào có điểm điều khiển thứ hai < 1 sẽ phanh ở cuối — đúng thứ v3 gỡ bỏ.
+  const ease = css.match(/--page-ease-in:\s*cubic-bezier\(([^)]*)\)/)?.[1].split(",").map(Number);
+  assert.ok(ease && ease.length === 4, "thiếu --page-ease-in");
+  assert.equal(ease[3], 1, "điểm cuối phải nằm ở 1: đường ra không được phanh");
+  assert.ok(ease[1] >= 1, "điểm điều khiển thứ hai phải ≥ 1");
+
+  assert.match(css, /hero-converge 980ms[\s\S]*var\(--hero-headline-delay\)/);
+  assert.match(css, /hero-converge 920ms[\s\S]*var\(--hero-subheadline-delay\)/);
+  assert.match(css, /hero-converge 860ms[\s\S]*var\(--hero-cta-delay\)/);
 });

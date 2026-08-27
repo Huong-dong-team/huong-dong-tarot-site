@@ -45,10 +45,15 @@ test("Hero v2 xếp đúng Layer 1 → tranh multiply → gradient bảo vệ ch
   const heroRule = lacquer.match(/(?:^|\n)\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
   assert.doesNotMatch(heroRule, /--hero-art-(?:opacity|position):/,
     "giá trị mặc định trên Hero con sẽ chặn biến route kế thừa từ main");
-  assert.match(motion, /--hero-base-duration:\s*420ms/);
-  assert.match(motion, /--hero-art-delay:\s*420ms/,
-    "tranh phải bắt đầu sau khi Layer 1 hoàn tất");
-  assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in 650ms/);
+  // Tranh phải bắt đầu sau khi Layer 1 màu đã ổn định — nếu không, hai lớp
+  // cùng sáng lên một lúc và không còn đọc ra thành hai lớp nữa. Canh quan hệ
+  // giữa hai con số, không canh chính con số: thời lượng còn được tinh chỉnh.
+  const baseDuration = Number(motion.match(/--hero-base-duration:\s*(\d+)ms/)?.[1]);
+  const artDelay = Number(motion.match(/--hero-art-delay:\s*(\d+)ms/)?.[1]);
+  assert.ok(baseDuration > 0 && artDelay > 0, "thiếu mốc thời gian của Layer 1 hoặc tranh");
+  assert.ok(artDelay >= baseDuration * .6,
+    `tranh bắt đầu ở ${artDelay}ms, quá sớm so với Layer 1 dài ${baseDuration}ms`);
+  assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in \d+ms/);
   assert.match(motion,
     /@keyframes hero-art-in\s*\{\s*from\s*\{\s*opacity:\s*0;[^}]*\}\s*to\s*\{\s*opacity:\s*var\(--hero-art-opacity,\s*1\);[^}]*\}\s*\}/,
     "tranh phải tăng thẳng từ 0 đến đúng opacity cuối, không có mốc nhấp sáng");
@@ -124,15 +129,21 @@ test("trang chủ giữ home-content sau Hero và route ngoài bảng không mư
     "critical CSS trang chủ phải neo picture tuyệt đối để không gây dịch bố cục");
 });
 
-test("Hero đầu trang đạt 40% ở vùng trống và vẫn bảo vệ tương phản vùng chữ", async () => {
+test("Hero đầu trang đạt 82% ở vùng trống và vẫn bảo vệ tương phản vùng chữ", async () => {
   const css = await read("public/assets/css/lacquer-art.css");
-  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", ".40", ".28", ".16"]) {
+  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", ".82", ".56", ".33"]) {
     assert.match(css, new RegExp(`--hero-art-opacity:\\s*\\${value.replace(".", ".")}`));
   }
-  assert.match(css, /\.page-hero\.lacquer-hero\s*\{\s*--hero-art-opacity:\s*\.40/,
-    "Hero desktop phải đạt opacity đỉnh 40% ở phía phải");
-  assert.match(css, /\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{[\s\S]*rgb\(0 0 0 \/ 35%\)[\s\S]*#000 88%/,
-    "mask phải giữ vùng copy ở 35% alpha và mở hoàn toàn về bên phải");
+  assert.match(css, /\.page-hero\.lacquer-hero\s*\{[\s\S]*?--hero-art-opacity:\s*\.82/,
+    "Hero desktop phải đạt opacity đỉnh 82% ở phía phải");
+  assert.match(css, /\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{[\s\S]*rgb\(0 0 0 \/ 28%\)[\s\S]*#000 88%/,
+    "mask phải giữ vùng copy ở 28% alpha và mở hoàn toàn về bên phải");
+  // Ba con số này là một GÓI. Kéo đỉnh lên mà quên hạ alpha mask, hoặc quên đậm
+  // lại chữ, là đúng cách làm Subheadline và Eyebrow rơi khỏi AA.
+  const heroRule = css.match(/\.page-hero\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
+  assert.match(heroRule, /--brown:\s*#5E3F19/i,
+    "Eyebrow dùng --brown; màu gốc #8B6339 không đạt AA trên nền tranh đậm này");
+  assert.match(heroRule, /--ink-soft:\s*#463122/i, "Subheadline phải đậm lại cùng đợt");
 
   const luminance = (rgb) => {
     const [r, g, b] = rgb.map((value) => {
@@ -145,10 +156,35 @@ test("Hero đầu trang đạt 40% ở vùng trống và vẫn bảo vệ tươn
     const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
     return (bright + .05) / (dark + .05);
   };
-  // Trường hợp khắc nghiệt hơn ảnh thật: picture đạt .40 nhưng mask vùng copy
-  // chỉ có alpha .35, nên pixel tranh đen tuyệt đối có opacity hiệu dụng .14.
-  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * .86));
+  // Trường hợp khắc nghiệt hơn ảnh thật: picture đạt .82 nhưng mask vùng copy
+  // chỉ có alpha .28, nên pixel tranh đen tuyệt đối có opacity hiệu dụng .23.
+  // Đây là chốt chặn thật của đợt này — và nó canh ĐÚNG ba màu chữ đang dùng
+  // trong Hero trang trong, kể cả Eyebrow, thứ bản trước bỏ sót.
+  const worstHeroBackground = [255, 239, 159].map((channel) => Math.round(channel * (1 - .82 * .28)));
   assert.ok(contrast([43, 27, 18], worstHeroBackground) >= 4.5, "Headline không đạt AA");
-  assert.ok(contrast([92, 68, 51], worstHeroBackground) >= 4.5, "Subheadline không đạt AA");
+  assert.ok(contrast([70, 49, 34], worstHeroBackground) >= 4.5, "Subheadline (--ink-soft) không đạt AA");
+  assert.ok(contrast([94, 63, 25], worstHeroBackground) >= 4.5, "Eyebrow (--brown) không đạt AA");
   assert.ok(contrast([43, 27, 18], [255, 212, 90]) >= 4.5, "CTA vàng không đạt AA");
-});
+
+  // Phép tính trên chỉ đúng nếu chữ nằm TRỌN trong vùng phẳng của mask. Bó
+  // chiều rộng chữ và mốc kết thúc vùng phẳng phải là cùng một con số; lệch
+  // nhau là cuối dòng trôi ra chỗ tranh đã mở, và AA chỉ còn đúng ở đầu dòng.
+  // Ba cặp, theo thứ tự: desktop, tablet (≤1023px), mobile (≤767px).
+  const masks = [...css.matchAll(/\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{([\s\S]*?)\n\s*\}/g)]
+    .map((match) => {
+      const stops = [...match[1].matchAll(/rgb\(0 0 0 \/ (\d+)%\)\s+(\d+)%/g)].map((s) => [Number(s[1]), Number(s[2])]);
+      const alphaDay = stops[0][0];
+      // Mốc kết thúc vùng phẳng: điểm cuối cùng còn giữ đúng alpha thấp nhất.
+      return Math.max(...stops.filter(([alpha]) => alpha === alphaDay).map(([, position]) => position));
+    });
+  const widths = [...css.matchAll(/\.page-hero\.lacquer-hero > :is\(h1, p\)\s*\{([^}]*)\}/g)]
+    .map((match) => match[1].match(/min\(900px,\s*(\d+)%\)/)?.[1])
+    .map((value) => (value === undefined ? null : Number(value)));
+
+  assert.equal(masks.length, 3, "phải có đúng ba mask: desktop, tablet, mobile");
+  assert.equal(widths.length, 3, "mỗi breakpoint phải khai bó chiều rộng chữ của riêng nó");
+  for (const [i, ten] of ["desktop", "tablet", "mobile"].entries()) {
+    if (widths[i] === null) continue; // mobile cố ý bỏ bó ngang, xem ghi chú trong CSS
+    assert.equal(widths[i], masks[i],
+      `${ten}: chữ rộng ${widths[i]}% nhưng vùng phẳng của mask kết thúc ở ${masks[i]}%`);
+  }});

@@ -288,3 +288,168 @@ Chromium cục bộ sau khi entrance kết thúc:
 - `/la-bai/the-star/` 1366×768: `.card-detail` vẫn opacity `.135`, mask
   `none`; chứng minh rule mới không tràn sang Hero chi tiết.
 - `/` 1366×768: Hero trang chủ không có `.subpage-hero-artwork`; không đổi.
+
+## Nhật ký phối hợp · landing trang chủ và motion v3 ngày 27/08/2026
+
+Branch: `feat/landing-motion-polish` — tách từ `origin/main` tại merge commit
+`274a8be` của PR #50. Chủ dự án tiếp tục là người merge; branch không tự triển
+khai production.
+
+### Năm yêu cầu và cách triển khai
+
+1. **Entrance mượt hơn (Hero trang chủ và Hero trang trong).**
+   `page-transition.css` lên v3. Ba thay đổi, không đổi kiến trúc: easing sang
+   expo-out `cubic-bezier(.16, 1, .3, 1)`; quãng đường đi vào rút còn khoảng một
+   nửa (`--headline-x` từ `clamp(-120px, -14vw, -52px)` xuống
+   `clamp(-64px, -7vw, -28px)`, các trục khác tương tự); thời lượng mỗi lớp kéo
+   dài ~35% và các lớp chồng lấn nhau thay vì nối đuôi. Mốc opacity đầy hạ từ
+   24% xuống 18% để chữ đọc được sớm hơn. `--page-in` lên `1900ms` — Swup chỉ
+   giữ `.is-rendering` trong khoảng đó, lớp nào chạy quá sẽ bị snap giữa chừng.
+   Hàng số liệu `.proof` của trang chủ nay đi cùng đợt CTA thay vì hiện tức thì.
+
+2. **Fade khi cuộn tới các mục nội dung.**
+   Tệp mới `public/assets/css/scroll-fade.css`, nạp theo đường chuẩn trong
+   `_layout.html`. Dùng scroll-driven animation thuần CSS
+   (`animation-timeline: view()`), **không** IntersectionObserver và không thêm
+   một dòng JS nào — ràng buộc "không entrance chạy theo cú cuộn ở runtime" của
+   `tests/entrance-reveal.test.mjs` vẫn nguyên. Toàn bộ khối bọc trong
+   `@supports (animation-timeline: view())` nên trình duyệt chưa hỗ trợ chỉ đơn
+   giản không thấy nó và nội dung hiện đầy đủ. `animation-range: entry 2%
+   entry 42%` — dừng ở 42% để mục cuối trang, thứ không bao giờ cuộn hết được,
+   không đứng lại ở nửa chừng độ mờ.
+
+3. **Hero trang chủ: tranh sang trái, chữ sang phải, một bức tĩnh.**
+   Vòng quay năm lá đã được gỡ: không còn timer, không còn `.hero-dots`, không
+   còn `hero-tilt.js` (nghiêng theo chuột), và dòng eyebrow nay là chữ tĩnh.
+   `hero-carousel.js` rút lại còn đúng một việc — bấm vào lá thì mở bảng kể
+   chuyện. Lớp `.hero-carousel` và hook `data-hero-carousel` **giữ nguyên tên**
+   vì critical CSS, `main.css` và bố cục cột đều neo vào chúng.
+
+   Bức được chọn: **Mẫu Liễu Hạnh (XVII · The Star)**. Đây là bức duy nhất trong
+   bốn bức có đủ ba lớp chiều sâu — sen tiền cảnh, dáng người trung cảnh, cổng
+   đền hậu cảnh — nên đứng một mình vẫn không trống; và chòm sao trên đầu bà
+   đúng là lá mà dòng eyebrow của Hero vẫn luôn gọi tên. Chọn cố định trong
+   `build.js` (`heroImmortal`), không lấy phần tử đầu của `immortals`: thứ tự
+   mảng đó là thứ tự La Mã I–IV của mục `#tu-bat-tu`.
+
+   Ba vị còn lại không mất khỏi trang — mục `#tu-bat-tu` vẫn dẫn sang trang lá
+   của từng vị, và toàn văn truyện luôn nằm ở `/la-bai/<slug>/`.
+
+4. **Tranh Hero trang trong rõ thêm 30% toàn tranh.**
+   Chỉ đổi opacity đỉnh: desktop `.40 → .52`, tablet `.28 → .36`,
+   mobile `.16 → .21`. Alpha của mask **giữ nguyên** — chính chỗ đó khiến mọi
+   điểm ảnh của bức, cả vùng dưới copy lẫn vùng trống, cùng nhân 1,3. Kéo cả
+   mask lên thì phía phải sáng thêm nhiều hơn phía trái và bức mất cân.
+   Vùng chữ desktop nay ở opacity hiệu dụng `.182` (`.52 × .35`); tương phản
+   Subheadline còn **5,12** trên ngưỡng AA 4,5 — đây là trần thật của đợt này.
+   `.card-detail`, header bài viết và Hero trang chủ không đổi.
+
+5. **Khẩu hiệu là trọng tâm trang chủ.**
+   Cỡ chữ +20% ở màn hình rộng: `clamp(62px, 7vw, 96px)` →
+   `clamp(74px, 8.4vw, 115px)`, `font-weight` 400 → 700. Bóng chữ đổi từ một lớp
+   `.55` — ở cỡ mới nó đọc ra thành vệt xám — sang hai lớp nhẹ (`18%` sát chân
+   chữ, `22%` toả rộng). `.hero-copy` bỏ `max-width: 700px` ở hai cột để hai vế
+   của khẩu hiệu mỗi vế nằm trọn một dòng.
+
+### Hai chỗ đo thật mới lộ ra, phải giữ nguyên
+
+- **Breakpoint hai cột là 1101px, không phải 901px.** Khối
+  `@media (max-width: 1100px) { .hero { grid-template-columns: 1fr } }` nằm ở
+  cuối `main.css` mới là nơi thật sự hạ Hero xuống một cột. Đặt rule hoán vị cột
+  ở 901px thì trong dải 901–1100 hai bên đánh nhau: cột về `1fr` trong khi
+  `.hero-copy` vẫn xin cột 2, browser sinh thêm một cột ẩn và bóp `.hero-stage`
+  xuống còn ~180px.
+- **Phải ghi `grid-area`, không phải `grid-column`.** Auto-placement chỉ đi tới,
+  không lùi: đặt `.hero-copy` vào cột 2 rồi mới xin cột 1 cho `.hero-stage` thì
+  con trỏ đã qua cột 1 của hàng 1, và stage rơi xuống hàng 2 — Hero cao gấp đôi.
+
+Kèm theo: `.hero-overlay` đổi từ `90deg` sang `270deg` ở hai cột. Lớp phủ giấy
+phải đục nhất ở đúng chỗ có chữ; cột chữ đã sang phải nên giữ `90deg` thì khẩu
+hiệu ngồi lên đúng phần cảnh còn rõ nhất, còn khung tranh bên trái thì nằm trên
+một mảng giấy trắng. Dưới 1101px lớp phủ chạy theo trục dọc, khớp với bố cục một
+cột.
+
+### Giới hạn vật lý ở màn hình hẹp — đã cân nhắc, không phải bỏ sót
+
+Ở `≤900px`, **trần** cỡ chữ vẫn tăng đủ 20% (`70px → 84px`) nhưng hệ số vw giữ
+nguyên `15vw`. Đo thật trên Fontasia VH trong khung 358px của máy 390px: 60px là
+cỡ lớn nhất mà hai vế của khẩu hiệu còn mỗi vế một dòng; 61px thành ba dòng,
+65px thành bốn dòng. Nói thẳng: dưới ~560px bề ngang màn hình mới là thứ quyết
+định, không phải con số 20%. Trần 84px có tác dụng từ 560px trở lên. Sàn hạ từ
+`54px` xuống `48px` để máy 320px cũng giữ được hai dòng — bản trước ép 54px ở đó
+và câu đã vỡ sẵn. Nếu chủ dự án muốn đúng 20% ở mọi bề ngang và chấp nhận khẩu
+hiệu vỡ bốn dòng trên điện thoại, đổi đúng một chỗ: `15vw → 18vw`.
+
+### Xác minh đã chạy
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 135/135
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ (headless, đo qua CDP để cuộn được thật):
+
+- `/` ở 1440 / 1200: hai cột, tranh cột 1 (x=16), chữ cột 2; khẩu hiệu đúng hai
+  dòng ở cỡ `115px` / `100.8px`; CTA và hàng `.proof` nằm trên nếp gấp; không
+  tràn ngang.
+- `/` ở 1000 / 768: một cột, thứ tự đọc là khẩu hiệu → copy → CTA → tranh.
+- `/` ở 390 / 360 / 320: khẩu hiệu hai dòng ở `58.5px` / `54px` / `48px`.
+- Fade khi cuộn: ở `scrollY≈1400` mục `#cau-chuyen` đang mờ dần; ở `≈1700` đã
+  sáng hẳn; ở đáy trang `.waitlist` opacity `1` — không mục nào kẹt nửa chừng.
+- Entrance: chụp khung ở 350 / 600 / 850 / 1150 / 1600ms trên `/` và
+  450 / 700 / 950 / 1300 / 1800ms trên `/huyen-su/`; các lớp chồng lấn liên tục,
+  không có mốc nào phần tử đứng lại rồi đi tiếp.
+- `/huyen-su/`, `/cua-hang/` 1440×900: tranh Hero rõ hơn hẳn ở phía phải,
+  Headline và Subheadline vẫn tách bạch.
+- `/la-bai/the-star/` 1440×900: `.card-detail` không đổi — chứng minh mức mới
+  không tràn sang Hero chi tiết.
+
+### Đợt bổ sung cùng branch · tranh Hero trang trong lên .82
+
+Chủ dự án duyệt cả năm mục ở trên, kèm một yêu cầu tiếp: tranh sơn mài ở Hero
+trang trong phải rõ hơn nữa. Đây là đợt thứ ba của cùng một con số:
+`.40` (PR #50) → `.52` → **`.82`**.
+
+Từ mức này trở đi opacity không còn kéo được một mình. Ở mask cũ (`.35`), `.82`
+đẩy vùng chữ lên hiệu dụng `.287` và Subheadline rơi khỏi AA. Nên đợt này đổi
+bốn thứ **như một gói** — sửa một mà quên ba thứ kia là mở lại đúng lỗ đã bịt:
+
+1. Đỉnh `.52 → .82` (tablet `.36 → .56`, mobile `.21 → .33`). Vùng trống bên
+   phải sáng thêm 58%.
+2. Alpha mask vùng copy `.35 → .28` (tablet `.40 → .32`, mobile `.50 → .40`),
+   nên vùng chữ chỉ lên `.23` (+26%) chứ không lên `.287`.
+3. Chữ trong Hero đậm lại, chỉ trong phạm vi `.page-hero.lacquer-hero`:
+   `--brown: #5E3F19` và `--ink-soft: #463122`.
+4. Chữ bị bó lại đúng bằng vùng phẳng của mask: `52%` ở desktop, `56%` ở tablet,
+   bỏ bó ở mobile (nơi lớp bảo vệ là radial `::after`, không phải mask ngang).
+
+**Lỗ hổng có sẵn từ trước, tới `.82` mới đủ lộ.** `.page-hero > h1, > p` rộng
+tới `900px`, tức ở màn 1024px chữ chạy tới ~91% bề ngang Hero — chỗ mask đã mở
+gần hết. Phép kiểm AA thì lại chỉ canh alpha THẤP NHẤT của mask, nên nó mô tả
+đúng đầu dòng và bỏ qua cuối dòng. Đo trên `/trai-bai/` 1024px: cuối dòng
+"…từ một góc khác" ngồi trên tranh ở opacity hiệu dụng ~`.5` trong khi phép kiểm
+canh `.23`. Mục 4 ở trên bịt lỗ đó, và `tests/lacquer-background.test.mjs` nay
+canh **cặp số** — bó chiều rộng chữ phải bằng mốc kết thúc vùng phẳng của mask ở
+từng breakpoint. Đã thử làm lệch (52% → 70%) để chắc phép kiểm thật sự bắt.
+
+**Eyebrow trước đợt này đã dưới chuẩn mà không ai bắt.** `--brown` gốc `#8B6339`
+chỉ đạt 3,03 ngay ở mức `.52` (ngưỡng 4,5). Test AA cũ chỉ canh Headline,
+Subheadline và CTA. Nay canh cả ba màu chữ đang thật sự dùng trong Hero.
+
+Tương phản ở trường hợp xấu nhất (pixel tranh đen tuyệt đối, hiệu dụng `.23`):
+Headline **8,27** · Subheadline **6,09** · Eyebrow **4,76** · CTA **11,68**.
+
+Hero trang chủ **không đổi** trong đợt này — chủ dự án chọn giữ nguyên.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 135/135
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ: `/huyen-su/` và `/tarot-la-gi/` 1440×900, `/trai-bai/` 1024×900,
+`/huyen-su/` 390×844 — tranh nổi rõ ở phía phải, Headline/Subheadline/Eyebrow
+vẫn tách bạch, và ở 1024px dòng subheadline nay kết thúc trước khi chạm tranh.

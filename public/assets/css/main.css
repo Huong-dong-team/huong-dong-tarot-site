@@ -44,23 +44,50 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   transform: translateX(120%);
 }
 
-/* Khung carousel giữ vị trí tĩnh; hiệu ứng bay vào đã bỏ ở 0.10 để nội dung
-   màn hình đầu không bị giữ opacity 0 trong lúc CSS đầy đủ tải về. */
+/* Khung tranh giữ vị trí tĩnh; hiệu ứng bay vào đã bỏ ở 0.10 để nội dung màn
+   hình đầu không bị giữ opacity 0 trong lúc CSS đầy đủ tải về. Entrance duy
+   nhất của nó nằm ở page-transition.css và chạy trên .hero-carousel bên trong,
+   để .hero-stage không bao giờ phải đo lại giữa chừng. */
 .hero-stage {
   position: relative;
-  width: min(100%, 440px);
-  justify-self: end;
+  width: min(100%, 460px);
+  justify-self: center;
 }
 
-/* Chỉ áp dụng ở bố cục hai cột. Cột phải được nới để giữ nguyên kích thước
-   carousel trên màn hình rộng. */
-@media (min-width: 901px) {
+/* Bố cục hai cột: TRANH bên trái, chữ bên phải.
+
+   Đảo bằng grid-column chứ không đảo thứ tự trong template. Ở một cột (≤900px)
+   thứ tự DOM là thứ tự đọc, và thứ tự đọc đúng phải là khẩu hiệu trước, tranh
+   sau — người vào bằng điện thoại cần gặp câu "Hường Đông kể Tarot bằng câu
+   chuyện Việt" ngay, không phải cuộn qua một bức tranh cao 1,5 lần chiều rộng
+   mới tới. Nên: DOM giữ chữ trước, và chỉ ở hai cột mới hoán vị bằng CSS.
+
+   Breakpoint là 1101px, KHÔNG phải 901px: khối @media (max-width: 1100px) ở
+   cuối tệp mới là nơi thật sự hạ Hero xuống một cột, và nó nằm sau khối này nên
+   luôn thắng. Đặt 901px ở đây thì trong dải 901–1100 hai bên đánh nhau — cột
+   trở về 1fr trong khi .hero-copy vẫn xin cột 2, browser sinh thêm một cột ẩn
+   và bóp .hero-stage xuống còn ~180px. */
+@media (min-width: 1101px) {
   .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, calc(440px + 2cm));
+    grid-template-columns: minmax(300px, .84fr) minmax(0, 1.16fr);
   }
 
+  /* Phải ghi cả grid-row. Auto-placement chỉ đi tới, không lùi: đặt .hero-copy
+     vào cột 2 rồi mới xin cột 1 cho .hero-stage thì con trỏ đã qua cột 1 của
+     hàng 1, và stage rơi xuống hàng 2 — hai cột biến thành hai tầng chồng lên
+     nhau, cao gấp đôi màn hình. */
   .hero-stage {
-    margin-right: 2cm;
+    grid-area: 1 / 1;
+    justify-self: start;
+  }
+
+  .hero-copy {
+    grid-area: 1 / 2;
+    /* Cột đã bó chiều rộng rồi; giữ thêm max-width 700px ở đây thì khẩu hiệu
+       ở cỡ mới bị ngắt giữa cụm ("Hường Đông kể" / "Tarot"), đúng thứ mà cặp
+       <br> trong template dựng ra để tránh. Đoạn giới thiệu vẫn có max-width
+       650px riêng nên khổ đọc không đổi. */
+    max-width: none;
   }
 }
 
@@ -86,10 +113,10 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 
-/* Nghiêng theo chuột (desktop): JS chỉ xoay .hero-carousel để không làm thay đổi
-   layout của .hero-stage. */
-.hero-stage { perspective: 1100px; }
-.hero-carousel { transition: transform .25s ease; transform-style: preserve-3d; }
+/* Nghiêng theo chuột đã được gỡ cùng vòng quay carousel: khung đầu nay là một
+   bức tĩnh, và transform của .hero-carousel thuộc về entrance trong
+   page-transition.css. Hai chủ sở hữu transform trên cùng một phần tử là cách
+   chắc chắn nhất để một trong hai bị nuốt mất. */
 
 /* Dấu "bản thử nghiệm" — toàn bộ tranh minh họa hiện là bản nháp AI, chưa phải
    art cuối. Dán bằng CSS ::before ở góc trên phải mỗi khung ảnh (và .proto-stamp
@@ -117,8 +144,8 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   pointer-events: none;
 }
 
-/* Chỉ slide active tham gia layout; bốn slide ẩn không còn làm browser đo và
-   vẽ bốn thẻ lớn ở khung đầu. */
+/* Còn đúng một lá nên nó chiếm trọn khung. grid-area 1/1 giữ lại để bố cục
+   không đổi nếu sau này có bức thứ hai xếp chồng lên. */
 .hero-carousel {
   display: grid;
   justify-items: center;
@@ -126,7 +153,7 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 
 .hero-carousel .hero-card {
   grid-area: 1 / 1;
-  width: 48%;
+  width: 100%;
   margin: 0;
   padding: 8px 8px 12px;
   border: 1px solid var(--muted);
@@ -153,6 +180,11 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 .hero-card img {
   width: 100%;
   height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  /* Nền kem trong lúc AVIF còn giải mã: khung Hero nay là một khối lớn bên trái,
+     một ô trắng ở đó đọc ra thành "ảnh hỏng" chứ không phải "ảnh đang tải". */
+  background: var(--paper);
 }
 
 .hero-card-label,
@@ -184,52 +216,20 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   outline-offset: 3px;
 }
 
-.hero-dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-/* Hit area stays 44px for touch while the visible dot stays small. */
-.hero-dots button {
-  width: 44px;
-  height: 26px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-}
-
-.hero-dots button::before {
-  content: "";
-  width: 9px;
-  height: 9px;
-  border: 1px solid var(--brown);
-  border-radius: 50%;
-  transition: background-color .3s ease, transform .3s ease;
-}
-
-.hero-dots button[aria-current="true"]::before {
-  background: var(--brown);
-  transform: scale(1.25);
-}
-
-.hero-dots button:focus-visible {
-  outline: 2px solid var(--muted);
-  outline-offset: 2px;
-}
-
 .hero-actions .hero-daily-button {
   border: 1px solid var(--magenta-ink);
   color: var(--magenta-ink);
 }
 
-/* Bóng chữ mềm để tiêu đề đọc rõ trên nền phong cảnh sáng hơn — theo trang
-   tham chiếu. Giúp cả desktop lẫn mobile khi chữ chạm vùng cảnh. */
-.hero h1 { text-shadow: 0 .3rem 2rem color-mix(in srgb, var(--ink) 55%, transparent); }
+/* Bóng chữ để khẩu hiệu đọc rõ trên nền phong cảnh sáng. Hai lớp: một lớp sát
+   chân chữ tách nét khỏi nền, một lớp toả rộng và rất nhạt làm nền cho cả khối
+   chữ. Cả hai đều nhẹ — mục đích là nâng tương phản, không phải đổ bóng thấy
+   được. Bản trước dùng một lớp .55 và ở cỡ chữ mới nó đọc ra thành vệt xám. */
+.hero h1 {
+  text-shadow:
+    0 1px 2px color-mix(in srgb, var(--ink) 18%, transparent),
+    0 .28rem 1.6rem color-mix(in srgb, var(--ink) 22%, transparent);
+}
 
 /* Bảng kể chuyện của từng vị. Dùng <dialog> để trình duyệt lo sẵn phần khoá
    tiêu điểm, phím Esc và lớp nền mờ — ít mã hơn và đúng hành vi hơn tự dựng. */
@@ -416,7 +416,6 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 /* Các micro-interaction còn lại vẫn tôn trọng giảm chuyển động. */
 @media (prefers-reduced-motion: reduce) {
   .hero-carousel .hero-card { transition: none; transform: rotate(1deg); }
-  .hero-dots button::before { transition: none; }
   .immortals-grid img { transition: none; }
   .hero-card-cue { opacity: 1; }
 }
@@ -458,19 +457,31 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   .hero-bg { object-position: center 30%; }
 }
 
+/* Lớp phủ giấy phải đục nhất ở ĐÚNG chỗ có chữ, không thì tranh phong cảnh và
+   khẩu hiệu tranh nhau cùng một vùng.
+
+   Mặc định là phủ theo trục DỌC: ở một cột (≤1100px) chữ nằm trên, tranh nằm
+   dưới. Hai cột mới đổi sang trục ngang, và từ 27/08/2026 nó chạy 270deg —
+   đục ở PHẢI, trong ở TRÁI — vì cột chữ đã đổi sang phải. Giữ 90deg như cũ thì
+   khẩu hiệu ngồi lên đúng phần cảnh còn rõ nhất, còn khung tranh bên trái thì
+   nằm trên một mảng giấy trắng. */
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(90deg,
-    color-mix(in srgb, var(--paper) 92%, transparent) 0%, color-mix(in srgb, var(--paper) 72%, transparent) 44%, color-mix(in srgb, var(--paper) 38%, transparent) 100%);
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--paper) 88%, transparent) 0%, color-mix(in srgb, var(--paper) 64%, transparent) 60%, color-mix(in srgb, var(--paper) 46%, transparent) 100%);
 }
 
-@media (max-width: 900px) {
+@media (min-width: 1101px) {
+  /* Ba mốc chọn theo bề ngang thật của cột chữ: cột phải trải từ mép phải vào
+     tới khoảng 55% bề ngang hero, nên 92% giấy ở mép và 70% ở mốc 55% cho đúng
+     dải bảo vệ mà bản 90deg từng dành cho cột trái. Từ đó trở đi lớp phủ mở
+     nhanh để tranh phong cảnh hiện quanh khung tranh bên trái. */
   .hero-overlay {
-    background: linear-gradient(180deg,
-      color-mix(in srgb, var(--paper) 88%, transparent) 0%, color-mix(in srgb, var(--paper) 64%, transparent) 60%, color-mix(in srgb, var(--paper) 46%, transparent) 100%);
+    background: linear-gradient(270deg,
+      color-mix(in srgb, var(--paper) 92%, transparent) 0%, color-mix(in srgb, var(--paper) 70%, transparent) 55%, color-mix(in srgb, var(--paper) 34%, transparent) 100%);
   }
 }
 
@@ -522,14 +533,24 @@ h3 { line-height: 1.12; }
 
 /* Fontasia chỉ xuất hiện ở thông điệp thương hiệu lớn; không dùng cho nội dung
    dài vì nét viết tay làm giảm tốc độ đọc ở cỡ nhỏ. */
+/* Khẩu hiệu là thứ duy nhất trang chủ phải nói. Cỡ chữ tăng 20% so với bản
+   trước (62→74 / 7→8.4vw / 96→115) và chuyển sang in đậm.
+
+   Fontasia VH chỉ có một weight 400, nên 700 ở đây là chữ đậm do trình duyệt
+   tổng hợp. Với mặt chữ viết tay ở cỡ ~100px thì cách này giữ được nét gốc; ép
+   thêm -webkit-text-stroke sẽ làm dày cả phần bụng chữ và mất chi tiết đuôi. */
 .home-page .page-hero h1,
 .home-page .hero h1 {
   font-family: var(--script);
   padding-inline-start: .16em;
-  font-size: clamp(62px, 7vw, 96px);
-  font-weight: 400;
+  font-size: clamp(74px, 8.4vw, 115px);
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0;
+  /* Hai vế của khẩu hiệu đã tách bằng <br>. Ở cỡ mới, màn hình hẹp vẫn có thể
+     phải ngắt thêm một lần nữa bên trong một vế; balance chọn điểm ngắt cân
+     giữa các dòng thay vì đẩy đúng một chữ xuống dòng cuối. */
+  text-wrap: balance;
   color: var(--gold-ink);
 }
 
@@ -554,10 +575,23 @@ blockquote {
   letter-spacing: 0.01em;
 }
 
+/* Màn hình hẹp: TRẦN tăng đủ 20% (70 → 84px), nhưng hệ số vw phải giữ nguyên
+   15vw. Đo thật trên Fontasia VH ở khung 358px của máy 390px: 60px là cỡ lớn
+   nhất mà hai vế của khẩu hiệu còn mỗi vế một dòng; 61px là ba dòng, 65px là
+   bốn dòng. 15vw cho 58,5px ở 390px và 48px ở 320px — sát trần vật lý đó.
+
+   Nói thẳng: dưới ~560px bề ngang màn hình mới là thứ quyết định, không phải
+   con số 20%. Trần 84px có tác dụng từ 560px trở lên; ở đó khẩu hiệu nhận đủ
+   20%. Sàn hạ từ 54 xuống 48 để máy 320px cũng giữ được hai dòng — bản trước
+   ép 54px ở đó và câu đã vỡ sẵn. */
 @media (max-width: 900px) {
   .home-page .page-hero h1,
   .home-page .hero h1 {
-    font-size: clamp(54px, 15vw, 70px);
+    font-size: clamp(48px, 15vw, 84px);
+    /* Khoảng thụt .16em bù cho vai trái của Fontasia ở cỡ lớn. Ở màn hình hẹp
+       nó ăn đúng ~10px — vừa đủ để vế dài của khẩu hiệu tràn sang dòng thứ ba.
+       Bỏ đi thì khẩu hiệu cũng thẳng lề với đoạn giới thiệu ngay dưới. */
+    padding-inline-start: 0;
   }
 }
 
@@ -1058,15 +1092,6 @@ blockquote {
 }
 .pack-cta { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
 .pack-cta a:not(.button) { color: var(--gold-ink); font-weight: 600; }
-
-/* --- Slide hộp bài (slide đầu của hero carousel) --- */
-.hero-card--pack { background: var(--paper-raised); }
-.hero-card--pack img {
-  aspect-ratio: 2 / 3;      /* khớp các slide còn lại, ảnh đã cắt sẵn đúng tỷ lệ */
-  object-fit: cover;
-  background: var(--paper);      /* nền kem của ảnh, tránh viền lạ khi tải */
-}
-.hero-card--pack .hero-card-cue { color: var(--gold-ink); }
 
 /* ============================================================
    HÀNH TRÌNH ÁNH SÁNG khi cuộn — mức "tinh tế"
