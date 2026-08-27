@@ -520,3 +520,61 @@ Chromium cục bộ, sau entrance:
 - `/huyen-su/` 390×844: Headline `63.7px`, artwork opacity `1`, mask `.13 → 1`,
   AVIF 1024, overflow ngang `0`.
 - `/la-bai/the-star/`: `.card-detail` giữ opacity `.135`, mask `none`.
+
+## Nhật ký phối hợp · Tranh Hero trang con nguyên khung và màu #FEDB44 ngày 27/08/2026
+
+Branch: `fix/subpage-art-full-fedb44` — tách từ `origin/main` tại merge commit
+`d78a4eb` của PR #52. Chủ dự án tiếp tục là người merge; branch không tự triển
+khai production.
+
+### Phạm vi đã chốt
+
+1. Tranh trong `.page-hero.lacquer-hero` của 7 nhóm route phải đạt opacity cuối
+   `1` trên **toàn khung**, không chỉ ở vùng trống bên phải.
+2. Giữ `mix-blend-mode: multiply` và entrance `hero-art-in` đi thẳng từ
+   `opacity: 0` tới `--hero-art-opacity: 1`.
+3. Bỏ mask cũ đang hạ alpha vùng copy xuống `23%` desktop, `18%` tablet và
+   `13%` mobile.
+4. Bỏ riêng gradient kem `::after` của `.page-hero`; Layer 1 màu phía dưới tranh
+   vẫn còn. `.card-detail` và header bài viết giữ nguyên opacity/gradient riêng.
+5. Headline và Subheadline Hero trang chủ/trang trong dùng đúng `#FEDB44`.
+   Bóng chữ, kích thước +30%, CTA, copy và layout không đổi.
+
+### Thay đổi code và chốt chống giẫm chân
+
+- `public/assets/css/lacquer-art.css`: chỉ `.page-hero.lacquer-hero` override
+  `--hero-art-opacity: 1`, `mask-image: none` và `background: none` cho `::after`.
+  Các override opacity/mask trùng ở breakpoint được gỡ; selector `.page-hero`
+  có specificity cao hơn token route nên một khai báo áp đồng đều mọi viewport.
+- `public/assets/css/main.css` và `public/assets/css/critical.css`: đổi token
+  `--hero-lemon` từ `#F6FF4A` sang `#FEDB44`, tránh nháy màu giữa critical CSS
+  và stylesheet đầy đủ.
+- `tests/lacquer-background.test.mjs`: canh opacity nguyên khung, mask `none`,
+  gradient kem `none`, `multiply`/entrance và độ tách của `#FEDB44` với biên bóng.
+- `tests/hero-carousel.test.mjs`: khóa token màu chính xác `#FEDB44`; các phép
+  canh kích thước +30% và bóng chữ cũ được giữ nguyên.
+
+### Xác minh trên branch
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ sau entrance:
+
+- Cả 7 route `/tarot-la-gi/`, `/la-bai/`, `/trai-bai/`, `/huyen-su/`,
+  `/healing/`, `/tin-tuc/`, `/cua-hang/` ở 1440×900: artwork `opacity: 1`,
+  `mask: none`, `mix-blend-mode: multiply`, `heroWash: none`, animation
+  `hero-art-in`, ảnh AVIF 1536 đã tải, overflow ngang `0`.
+- `/huyen-su/` ở 900×900 và 390×844: cùng `opacity: 1`, `mask: none`,
+  `heroWash: none`, animation còn hoạt động, ảnh AVIF 1024 đã tải, overflow `0`.
+- Headline/Subheadline có mặt trên các viewport đã đo đều là
+  `rgb(254, 219, 68)` = `#FEDB44`; bóng chữ không đổi.
+- `/la-bai/the-star/` đối chứng: `.card-detail` vẫn opacity `.135` và giữ
+  gradient bảo vệ chữ riêng, đúng phạm vi không thay Hero chi tiết.
+- Ảnh QA ngoài repository:
+  `/home/asus/Documents/Codex/huongdong-full-art-desktop-cdp.png` và
+  `/home/asus/Documents/Codex/huongdong-full-art-mobile-cdp.png`.
