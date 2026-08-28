@@ -578,3 +578,117 @@ Chromium cục bộ sau entrance:
 - Ảnh QA ngoài repository:
   `/home/asus/Documents/Codex/huongdong-full-art-desktop-cdp.png` và
   `/home/asus/Documents/Codex/huongdong-full-art-mobile-cdp.png`.
+
+## Nhật ký phối hợp · Typography mẫu HTML và tagline Huyền sử ngày 28/08/2026
+
+Branch: `feat/home-hero-reference-copy` — tách từ `origin/main` tại merge commit
+`31b52b6`. Chủ dự án tiếp tục là người merge; branch không tự triển khai
+production.
+
+### Phạm vi đã chốt sau khi làm rõ yêu cầu
+
+1. **Chỉ sao chép kiểu chữ, không sao chép nội dung** từ file
+   `Huong Dong Tarot.html`. Headline trang chủ vẫn là “Hường Đông kể Tarot / bằng
+   câu chuyện Việt”; Subheadline vẫn là đoạn “Bộ Tarot 78 lá theo hệ RWS…”.
+2. Headline trang chủ dùng font Việt hóa `DFVN TAN Harmoni`, italic, weight 900,
+   uppercase, line-height `.94`, letter-spacing `.035em` và stroke `.25px` —
+   chuyển ngôn ngữ serif nghiêng của mẫu sang hệ font self-host hiện có.
+3. Cỡ rộng tăng từ trần `124.8px` lên `132px`. Tablet có trần `94px`. Điện
+   thoại dùng `clamp(68px, 18.5vw, 94px)`; tại 390px là `72.15px` để câu nguyên
+   bản giữ khoảng bốn dòng thay vì sáu dòng. Đây là ràng buộc responsive riêng,
+   không phải thay nội dung.
+4. Bóng headline bỏ viền tối bốn phía `94%`; còn hai lớp dưới nhẹ `64% / 26%`.
+   Bóng cover lá Hero đổi từ `var(--shadow)` (`0 24px 70px / 14%`) sang
+   `0 14px 34px / 9%`. Subheadline trang chủ về màu `--ink-soft`, serif Georgia,
+   rộng `34ch`, line-height `1.72` và `text-shadow: none`.
+5. `/huyen-su/` nhận thêm tagline đúng câu:
+   “Một bộ bài. Một huyền sử. / Một hành trình soi chiếu nội tâm.”, đặt trước mô
+   tả Lĩnh Nam chích quái hiện có. Tagline **không** nhân sang 34 trang toàn văn.
+6. Headline/Subheadline các `.page-hero` khác, ảnh Mẫu Liễu Hạnh, CTA, proof,
+   entrance và nội dung trang chủ đều giữ nguyên.
+
+### Tệp và kiểm thử chống giẫm chân
+
+- `templates/home.html`: chỉ thêm class định danh cho Subheadline và xuống dòng
+  markup; câu chữ không đổi.
+- `templates/huyen-su.html`: thêm một `page-hero-tagline` cho hub Huyền sử.
+- `public/assets/css/critical.css`, `public/assets/css/main.css`: typography và
+  shadow phải khớp từng con số để tránh nhảy ở LCP.
+- `scripts/build.js`: preload Harmoni cho trang chủ thay Fontasia vì font LCP đã
+  đổi; không tải ưu tiên một font không còn dùng ở khung đầu.
+- `tests/hero-carousel.test.mjs`: khóa copy trang chủ, typography, hai breakpoint,
+  mức shadow, tagline Huyền sử và phạm vi không lan sang trang truyện.
+- `tests/critical-css.test.mjs`: khóa preload Harmoni mới.
+
+### Xác minh trên branch
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ sau entrance:
+
+- Home 1440×900: Headline `132px`, Harmoni italic 900, bốn dòng, Subheadline
+  kết thúc tại y=`840.6px`, cover shadow mới đã áp dụng, overflow ngang `0`.
+- Home 390×844: Headline `72.15px`, bốn dòng, cao `293.25px`; Subheadline và hai
+  CTA vẫn nằm trong khung đầu, overflow ngang `0`.
+- `/huyen-su/` 1280×720: tagline và mô tả cũ đều hiện sau entrance, hero cao
+  `692.8px`, overflow ngang `0`.
+- `/huyen-su/` 390×844: headline, tagline và mô tả đều nằm gọn trong hero cao
+  `507px`, overflow ngang `0`.
+
+## Nhật ký phối hợp · Ảnh sản phẩm mới trong Hero ngày 28/08/2026
+
+Tiếp tục trên branch `feat/home-hero-reference-copy` và pull request nháp #54.
+Chủ dự án vẫn là người merge; nhánh không tự triển khai production.
+
+### Phạm vi đã chốt
+
+1. File nguồn do chủ dự án cung cấp:
+   `/home/asus/Desktop/HuongDong project/images/Web-HuongDong-v3-visuals/public/hero-product.webp`,
+   kích thước `1200×900`, tỉ lệ `4:3`.
+2. Ảnh này **thay khung lá Mẫu Liễu Hạnh trong Hero**, không thay ảnh nền phong
+   cảnh toàn Hero. Headline, Subheadline, CTA, proof và ảnh nền giữ nguyên.
+3. Hero chuyển từ lá có nút mở dialog kể chuyện sang ảnh sản phẩm tĩnh. Eyebrow
+   cũ gắn với lá The Star được thay bằng câu đã có trong dự án:
+   “Ấn phẩm · Bộ bài và hộp cứng”. Các đường dẫn Tứ Bất Tử phía dưới vẫn đủ.
+4. Crop vuông lấy vùng `x=300..1200` của ảnh gốc: chỉ bỏ khoảng nền kem dư bên
+   trái; không kéo méo, không vẽ lại sản phẩm, không thay màu/hoa văn. Bản AI
+   outpaint 16:9 đã được dùng để thẩm định bố cục nhưng **không đưa vào repo** vì
+   có sai lệch chi tiết nhỏ so với sản phẩm gốc.
+5. Xuất AVIF responsive `480 / 720 / 960 / 1200px` và WebP fallback `1200px`.
+   Lần vẽ đầu giữ `loading=eager`, `decoding=async`, `fetchpriority=low` để ảnh
+   sản phẩm không tranh ưu tiên với ảnh nền Hero đang là ứng viên LCP.
+
+### Code và ràng buộc chống giẫm chân
+
+- `templates/home.html`: `.hero-carousel` chỉ còn là neo CSS/transition lịch sử;
+  không còn `data-hero-carousel`, `data-hero-slide` hoặc dialog kể chuyện.
+- `public/assets/js/page/registry.js`: Home không nạp module `hero-carousel.js`
+  cho một ảnh tĩnh.
+- `public/assets/css/critical.css`, `public/assets/css/main.css`: khung sản phẩm
+  rộng tối đa `560px`, tỉ lệ `1:1`, bóng nhẹ `0 14px 34px / 9%`; critical và
+  stylesheet đầy đủ phải khớp để không nhảy layout.
+- `tests/hero-carousel.test.mjs`, `tests/performance-effects.test.mjs`,
+  `tests/story-dialog-audit.test.mjs`, `tests/hero-embla-prototype.test.mjs`:
+  khóa nguồn responsive, tỉ lệ, độ nhẹ, alt text, không có hook/dialog cũ và
+  không nạp JavaScript carousel trên Home.
+
+### QA cục bộ
+
+- Home 1440×900: ảnh sản phẩm hiển thị `558×558px`, chọn AVIF `720w`, không méo,
+  không cắt hộp/lá, overflow ngang `0`.
+- Home 390×844: ảnh sản phẩm hiển thị `341×341px`, chọn AVIF `720w`, nằm ngay
+  sau proof, không cắt hộp/lá, overflow ngang `0`.
+- Dung lượng: AVIF `480w` 19KB, `720w` 40KB, `960w` 59KB, `1200w` 80KB; WebP
+  fallback `1200w` 168KB.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```

@@ -18,7 +18,7 @@
    <main data-page="…">. Trang lạ hoặc thiếu thuộc tính thì chỉ nhận nhóm
    dùng chung — không ném lỗi, không chặn điều hướng. */
 const PAGES = {
-  home: ["hero-carousel", "landing-drag"],
+  home: ["landing-drag"],
   library: ["card-filters"],
   card: ["symbol-tooltips"],
   daily: ["daily-card"],
@@ -29,7 +29,6 @@ const PAGES = {
 const SHARED = ["share", "waitlist"];
 
 const LOADERS = {
-  "hero-carousel": () => import("../ui/hero-carousel.js"),
   "card-filters": () => import("../ui/card-filters.js"),
   "symbol-tooltips": () => import("../ui/symbol-tooltips.js"),
   share: () => import("../ui/share.js"),

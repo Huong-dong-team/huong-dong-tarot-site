@@ -12,16 +12,25 @@
          loading="eager" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
     <div class="hero-overlay" aria-hidden="true"></div>
     <span class="proto-stamp">Đang hoàn thiện</span>
-    <div class="hero-copy"><p class="eyebrow">{{heroImmortal.eyebrow}}</p><h1>Hường Đông kể Tarot<br>bằng câu chuyện Việt</h1><p>Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, mỗi lá mang một tích huyền sử hoặc dã sử Việt. Nghĩa gốc giữ nguyên, chỉ thay hình ảnh để dễ nhớ.</p><div class="hero-actions"><a class="button brass" href="#danh-sach-cho">Học qua email</a><a class="button hero-daily-button" href="/la-bai-hom-nay/">Rút thử một lá <span aria-hidden="true">→</span></a></div><dl class="proof"><div><dt>78</dt><dd>Lá, đủ bộ RWS</dd></div><div><dt>22</dt><dd>Tích Việt cho Ẩn Chính</dd></div><div><dt>{{packPrice.compactLabel}}</dt><dd>Giá dự kiến bản in đầu</dd></div></dl></div>
-    <!-- Khung tranh mở đầu. Từ 27/08/2026 đây là MỘT bức tĩnh, không còn vòng
-         quay: trang chủ đọc như một landing page, nên khung đầu chỉ được nói
-         đúng một câu. Lớp .hero-carousel giữ nguyên tên vì critical CSS, main.css
-         và bố cục cột đều neo vào nó; nó nay là giá đỡ một lá, không phải băng
-         chuyền. Ba vị còn lại của Tứ Bất Tử vẫn đủ ở mục #tu-bat-tu bên dưới. -->
-    <div class="hero-stage">
-      <div class="hero-carousel" data-hero-carousel><button type="button" class="hero-card is-active" data-hero-slide data-story="{{heroImmortal.slug}}"><span class="hero-card-label">{{heroImmortal.cardLabel}}</span><img src="{{heroImmortal.image}}" srcset="{{heroImmortal.srcset}}" sizes="(min-width: 901px) 460px, min(92vw, 620px)" width="1024" height="1536" loading="eager" decoding="async" fetchpriority="low" alt="{{heroImmortal.alt}}"><span class="hero-card-name">{{heroImmortal.name}}</span><span class="hero-card-power">{{heroImmortal.power}}</span><span class="hero-card-cue">Bấm để đọc chuyện</span></button></div>
+    <div class="hero-copy">
+      <p class="eyebrow">Ấn phẩm · Bộ bài và hộp cứng</p>
+      <h1>Hường Đông kể Tarot<br>bằng câu chuyện Việt</h1>
+      <p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, mỗi lá mang một tích huyền sử hoặc dã sử Việt. Nghĩa gốc giữ nguyên, chỉ thay hình ảnh để dễ nhớ.</p>
+      <div class="hero-actions"><a class="button brass" href="#danh-sach-cho">Học qua email</a><a class="button hero-daily-button" href="/la-bai-hom-nay/">Rút thử một lá <span aria-hidden="true">→</span></a></div>
+      <dl class="proof"><div><dt>78</dt><dd>Lá, đủ bộ RWS</dd></div><div><dt>22</dt><dd>Tích Việt cho Ẩn Chính</dd></div><div><dt>{{packPrice.compactLabel}}</dt><dd>Giá dự kiến bản in đầu</dd></div></dl>
     </div>
-    <dialog class="story-dialog" data-story-dialog><article class="story-panel" data-story-for="{{heroImmortal.slug}}" hidden><p class="eyebrow">{{heroImmortal.cardLabel}}</p><h2>{{heroImmortal.name}}</h2><p class="story-power">{{heroImmortal.power}}</p>{{{heroImmortal.storyHtml}}}<p class="story-actions"><a class="button brass" href="{{heroImmortal.href}}">Xem lá đầy đủ</a></p></article><button type="button" class="story-close" data-story-close aria-label="Đóng">×</button></dialog>
+    <!-- Ảnh sản phẩm thay khung lá kể chuyện cũ. Giữ lớp .hero-carousel vì
+         page-transition.css dùng nó làm neo entrance; đây chỉ còn là tên kỹ
+         thuật, không có carousel hay JavaScript. Crop vuông bỏ phần nền kem dư
+         để sản phẩm đủ lớn mà không kéo méo hoặc vẽ lại ảnh gốc. -->
+    <div class="hero-stage">
+      <figure class="hero-carousel hero-product">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
+          <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+        </picture>
+      </figure>
+    </div>
   </section>
   <section class="doors" id="ba-cua" aria-labelledby="ba-cua-nhan">
     <h2 class="doors-label" id="ba-cua-nhan">Bạn đang tìm gì?</h2>

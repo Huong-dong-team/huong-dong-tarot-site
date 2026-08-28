@@ -7,10 +7,10 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("bản thử Embla đứng riêng và không thay carousel production", async () => {
-  const [prototype, site, home, evaluation] = await Promise.all([
+test("bản thử Embla đứng riêng và không chen vào Hero sản phẩm", async () => {
+  const [prototype, registry, home, evaluation] = await Promise.all([
     read("public/assets/js/hero-embla-prototype.js"),
-    read("public/assets/js/ui/hero-carousel.js"),
+    read("public/assets/js/page/registry.js"),
     read("templates/home.html"),
     read("tools/HERO-EMBLA-EVALUATION.md"),
   ]);
@@ -18,9 +18,10 @@ test("bản thử Embla đứng riêng và không thay carousel production", asy
   assert.match(prototype, /export async function mountEmblaHeroPrototype/);
   assert.match(prototype, /cloneNode\(true\)/, "bản thử phải dùng track riêng");
   assert.match(prototype, /destroy\(\)/, "phải khôi phục được carousel gốc");
-  assert.doesNotMatch(site, /hero-embla-prototype|EmblaCarousel/);
+  assert.doesNotMatch(registry, /hero-embla-prototype|EmblaCarousel/);
   assert.doesNotMatch(home, /hero-embla-prototype/);
-  assert.match(site, /export function init\(/, "carousel production phải được giữ nguyên");
+  assert.match(home, /class="hero-carousel hero-product"/);
+  assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.match(evaluation, /Chưa nên thay carousel production/);
 });
 
