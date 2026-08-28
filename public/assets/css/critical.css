@@ -258,8 +258,28 @@ h3 { font-size: 30px; line-height: 1.12; }
 .proof dt { color: var(--muted); font: 600 36px/1 var(--display); }
 .proof dd { margin: 6px 0 0; color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 
-.hero-stage { width: min(100%, 460px); justify-self: center; }
+.hero-stage { width: min(100%, 560px); justify-self: center; }
 .hero-carousel { position: relative; display: grid; justify-items: center; }
+.hero-product {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--muted);
+  border-radius: calc(var(--img-radius) + 4px);
+  background: var(--paper-raised);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent),
+    0 14px 34px rgb(139 99 57 / 9%);
+}
+.hero-product picture { display: block; }
+.hero-product img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+}
 .hero-carousel .hero-card {
   position: relative;
   grid-area: 1 / 1;
@@ -401,19 +421,15 @@ h3 { font-size: 30px; line-height: 1.12; }
 }
 @media (max-width: 430px) {
   .hero { padding-inline: 16px; }
-  /* Giữ chỗ đủ hai dòng cho dòng eyebrow của hero.
-
-     hero-carousel.js ghi lại dòng này mỗi lần đổi lá, mà năm chuỗi không dài
-     bằng nhau: "Ấn phẩm · Bộ bài và hộp cứng" vừa một dòng, còn bốn chuỗi
-     "Tarot …" thì xuống hai dòng dưới ~400px. Cứ 7 giây một lần cả cột chữ bên
-     dưới — h1, đoạn mô tả, hàng nút, dãy số — nhảy 15px. Đo được CLS 0,027 chỉ
-     từ mỗi việc này, và nó tích luỹ suốt thời gian người đọc còn ở trang.
+  /* Giữ chỗ đủ hai dòng cho dòng eyebrow tĩnh của hero. Chuỗi "Ấn phẩm · Bộ
+     bài và hộp cứng" xuống hai dòng dưới ~400px; giữ sẵn chiều cao để font
+     nhận diện tải về không đẩy cả cột chữ xuống một nhịp.
 
      2.4em = 2 dòng × line-height 1.2 khai trong .eyebrow. Buộc theo em để nó đi
      theo font-size; nếu ai đổi line-height của .eyebrow thì phải sửa cả đây.
 
-     Chỉ đặt dưới 430px: từ 414px trở lên mọi chuỗi đều vừa một dòng, giữ chỗ
-     thêm ở đó là chừa một khoảng trống không ai cần. */
+     Chỉ đặt dưới 430px: từ đó trở lên chuỗi vừa một dòng, giữ chỗ thêm là chừa
+     một khoảng trống không ai cần. */
   .hero .eyebrow { min-height: 2.4em; }
 
   .proof { display: grid; grid-template-columns: repeat(3, 1fr); }

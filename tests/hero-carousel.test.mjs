@@ -15,42 +15,33 @@ const TU_BAT_TU = [
   { slug: "the-star", portrait: "mau-lieu-hanh", name: "Mẫu Liễu Hạnh" },
 ];
 
-// Khung Hero từ 27/08/2026 là một bức tĩnh. Lớp và hook vẫn mang tên
-// "carousel" vì critical CSS, main.css và bố cục cột đều neo vào chúng — đổi
-// tên là một đợt sửa riêng, không phải phần của đợt đổi thiết kế này.
+// Lớp .hero-carousel còn là neo chuyển cảnh/bố cục; hook data và JavaScript đã
+// được gỡ khi ảnh sản phẩm tĩnh thay lá kể chuyện.
 const heroStage = (html) =>
-  html.slice(html.indexOf("data-hero-carousel"), html.indexOf("</section>", html.indexOf("data-hero-carousel")));
+  html.slice(html.indexOf('<div class="hero-stage">'), html.indexOf("</section>", html.indexOf('<div class="hero-stage">')));
 
-test("Hero chỉ còn một bức tranh, hiện sẵn trong HTML tĩnh", async () => {
+test("Hero dùng đúng ảnh sản phẩm tĩnh và các nguồn responsive", async () => {
   const html = await home();
-  assert.equal((html.match(/data-hero-slide/g) || []).length, 1,
-    "Hero phải có đúng một bức; vòng quay năm lá đã được gỡ");
-  // Bức phải mang .is-active ngay trong HTML: nếu chỉ JS mới gán, khách vào lúc
-  // script chưa chạy sẽ thấy Hero trống.
-  assert.match(html, /class="hero-card is-active"/);
   const stage = heroStage(html);
-  assert.match(stage, /immortals\/mau-lieu-hanh-800\.avif/, "bức mở đầu là Mẫu Liễu Hạnh");
-  assert.match(stage, /Mẫu\sLiễu\sHạnh/);
-  assert.doesNotMatch(stage, /hop-bai-portrait/, "slide hộp bài đã được gỡ khỏi Hero");
-  assert.doesNotMatch(stage, /empress-au-co|major-03-the-empress/, "Âu Cơ đã được gỡ khỏi hero");
-  for (const { portrait } of TU_BAT_TU.filter((item) => item.portrait !== "mau-lieu-hanh")) {
-    assert.doesNotMatch(stage, new RegExp(`immortals/${portrait}`), `${portrait} không được ở lại Hero`);
-  }
+  assert.match(stage, /class="hero-carousel hero-product"/);
+  assert.match(stage, /hero-product-square-480\.avif 480w[^\"]*hero-product-square-1200\.avif 1200w/);
+  assert.match(stage, /src="\/assets\/img\/hero-product-square-1200\.webp"/);
+  assert.match(stage, /width="1200" height="1200"/, "fallback phải khai đúng tỉ lệ crop vuông");
+  assert.doesNotMatch(stage, /data-hero-slide|data-story|immortals\//,
+    "ảnh sản phẩm không được giữ hook hoặc nội dung kể chuyện của lá cũ");
 });
 
-test("không còn vòng quay, chấm điều hướng hay dòng eyebrow tự ghi lại", async () => {
-  const [html, site, main, critical] = await Promise.all([
+test("ảnh sản phẩm không nạp JavaScript carousel cũ", async () => {
+  const [html, registry, main, critical] = await Promise.all([
     home(),
-    read("public/assets/js/ui/hero-carousel.js"),
+    read("public/assets/js/page/registry.js"),
     read("public/assets/css/main.css"),
     read("public/assets/css/critical.css"),
   ]);
-  // setInterval trong Hero là toàn bộ thứ người dùng gọi là "hiệu ứng cuộn".
-  // Nó kéo theo cả CLS của dòng eyebrow lẫn việc đọc dở thì lá đã đổi.
-  assert.doesNotMatch(site, /setInterval|setTimeout/, "Hero tĩnh không được có timer");
-  assert.doesNotMatch(site, /data-hero-dots|aria-current/, "chấm điều hướng đã được gỡ");
-  assert.doesNotMatch(site, /dataset\.eyebrow/, "dòng eyebrow nay là chữ tĩnh trong template");
-  assert.doesNotMatch(html, /data-hero-dots|data-hero-eyebrow/);
+  assert.doesNotMatch(html, /data-hero-carousel|data-hero-slide|data-hero-dots|data-hero-eyebrow/);
+  assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/,
+    "trang chủ không được tải module tương tác khi Hero chỉ còn ảnh tĩnh");
+  assert.doesNotMatch(registry, /"hero-carousel":\s*\(\)\s*=>\s*import/);
   for (const [ten, css] of [["main.css", main], ["critical.css", critical]]) {
     assert.doesNotMatch(css, /\.hero-dots/, `${ten}: CSS chấm điều hướng phải đi cùng markup`);
   }
@@ -81,11 +72,11 @@ test("tranh Hero không tranh băng thông với ảnh LCP", async () => {
   assert.match(stage, /fetchpriority="low"/);
   assert.match(stage, /decoding="async"/);
   assert.doesNotMatch(stage, /fetchpriority="high"/);
-  assert.match(stage, /srcset="[^"]*mau-lieu-hanh-400\.avif 400w[^"]*mau-lieu-hanh-800\.avif 800w"/);
+  assert.match(stage, /srcset="[^"]*hero-product-square-480\.avif 480w[^"]*hero-product-square-1200\.avif 1200w"/);
   assert.match(stage, /sizes="/, "thiếu sizes thì srcset chọn theo 100vw và luôn lấy bản lớn");
 });
 
-test("hero carousel có nút đi tới Lá bài hôm nay", async () => {
+test("hero có nút đi tới Lá bài hôm nay", async () => {
   const html = await home();
   // Canh ĐƯỜNG ĐI, không canh chữ. Bản trước ghi cứng cả câu h1 lẫn nhãn nút,
   // nên mọi lần sửa chữ tiếp thị đều làm đỏ một test về carousel — chỗ không
@@ -95,16 +86,11 @@ test("hero carousel có nút đi tới Lá bài hôm nay", async () => {
   assert.match(html, /class="button hero-daily-button" href="\/la-bai-hom-nay\/"/);
 });
 
-test("bức trong Hero có bảng kể chuyện kèm nguồn và lối sang trang lá", async () => {
+test("ảnh sản phẩm không giữ dialog kể chuyện sai ngữ cảnh", async () => {
   const html = await home();
-  assert.equal((html.match(/data-story-for=/g) || []).length, 1);
-  assert.match(html, /data-story-for="the-star"/);
-  assert.match(html, /href="\/la-bai\/the-star\/"/);
-  assert.equal((html.match(/class="story-source"/g) || []).length, 1,
-    "truyện phải có dẫn nguồn thư tịch");
-  assert.doesNotMatch(html, /đang được biên tập/, "vẫn còn chữ tạm trong bảng kể chuyện");
-  // Ba vị còn lại không biến mất khỏi trang: mục #tu-bat-tu vẫn dẫn sang trang
-  // lá của từng vị, và toàn văn truyện nằm ở đó.
+  const stage = heroStage(html);
+  assert.doesNotMatch(stage, /<dialog|data-story-for|data-story-close/);
+  // Các truyện không mất khỏi trang: mục #tu-bat-tu vẫn dẫn sang trang lá.
   for (const { slug } of TU_BAT_TU) {
     assert.match(html, new RegExp(`href="/la-bai/${slug}/"`), `thiếu lối sang lá ${slug}`);
   }
@@ -112,7 +98,7 @@ test("bức trong Hero có bảng kể chuyện kèm nguồn và lối sang tran
 
 test("hero chỉ giữ nền tĩnh và không còn cụm mặt trời phụ", async () => {
   const html = await home();
-  const hero = html.slice(html.indexOf('<section class="hero'), html.indexOf("data-hero-carousel"));
+  const hero = html.slice(html.indexOf('<section class="hero'), html.indexOf('<div class="hero-stage">'));
   // Ảnh trống đồng đã được gỡ khỏi hero theo yêu cầu thiết kế.
   assert.doesNotMatch(hero, /class="hero-drum"/, "ảnh trống đồng phải được gỡ khỏi hero");
   assert.doesNotMatch(hero, /data-hero-sun/, "cụm mặt trời phụ phải được gỡ ở đợt hiệu năng");
@@ -144,9 +130,10 @@ test("ảnh dùng ở màn hình đầu đủ nhẹ", async () => {
     const { size } = await stat(path.join(root, "public", file));
     assert.ok(size < limitKb * 1024, `${file} nặng ${Math.round(size / 1024)} KB, vượt ngưỡng ${limitKb} KB`);
   }
-  // Bức trong Hero nay nạp eager ở lần vẽ đầu, nên bản 800w phải thật sự nhẹ.
-  const { size } = await stat(path.join(root, "public/assets/img/immortals/mau-lieu-hanh-800.avif"));
-  assert.ok(size < 100 * 1024, `tranh Hero nặng ${Math.round(size / 1024)} KB`);
+  // Bản 960w thường được chọn ở desktop tiêu chuẩn; giữ dưới 100 KB để ảnh sản
+  // phẩm rõ hơn nhưng không làm chậm màn hình đầu.
+  const { size } = await stat(path.join(root, "public/assets/img/hero-product-square-960.avif"));
+  assert.ok(size < 100 * 1024, `ảnh sản phẩm Hero nặng ${Math.round(size / 1024)} KB`);
 });
 
 test("dòng eyebrow của hero giữ chỗ đủ hai dòng trên màn hình hẹp", async () => {
@@ -154,8 +141,8 @@ test("dòng eyebrow của hero giữ chỗ đủ hai dòng trên màn hình hẹ
     read("public/assets/css/critical.css"),
     read("public/assets/css/main.css"),
   ]);
-  // Dòng này không còn bị JS ghi lại mỗi 7 giây, nhưng chỗ giữ vẫn cần: chuỗi
-  // "Tarot XVII · The Star · Mẫu Liễu Hạnh" xuống hai dòng dưới ~400px, và nó
+  // Dòng này là chữ tĩnh nhưng chỗ giữ vẫn cần: chuỗi
+  // "Ấn phẩm · Bộ bài và hộp cứng" xuống hai dòng dưới ~400px, và nó
   // đổi số dòng đúng lúc font nhận diện swap vào — CLS y hệt, chỉ khác nguyên do.
   assert.match(critical, /\.hero \.eyebrow \{ min-height: 2\.4em; \}/);
   assert.match(main, /\.hero \.eyebrow\{min-height:2\.4em\}/);
@@ -220,7 +207,7 @@ test("Hero trang chủ giữ nguyên nội dung và dùng typography của mẫu
   }
 
   for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
-    const cover = css.match(/\.hero-carousel \.hero-card \{([\s\S]*?)\}/)?.[1] || "";
+    const cover = css.match(/\.hero-product \{([\s\S]*?)\}/)?.[1] || "";
     assert.match(cover, /0 14px 34px rgb\(139 99 57 \/ 9%\)/, `${ten}: bóng cover chưa được giảm`);
     assert.doesNotMatch(cover, /var\(--shadow\)/, `${ten}: cover còn dùng bóng card nặng cũ`);
   }

@@ -35,17 +35,19 @@ test("hero không còn các hiệu ứng nặng của 0.10", async () => {
   }
 });
 
-test("tối ưu hiệu ứng không làm mất nền hero và carousel", async () => {
-  const [home, site, main, critical] = await Promise.all([
+test("tối ưu hiệu ứng không làm mất nền và ảnh sản phẩm hero", async () => {
+  const [home, registry, main, critical] = await Promise.all([
     read("templates/home.html"),
-    readUiModules(),
+    read("public/assets/js/page/registry.js"),
     read("public/assets/css/main.css"),
     read("public/assets/css/critical.css"),
   ]);
   assert.match(home, /class="hero-bg"/);
-  assert.match(home, /data-hero-carousel/);
-  assert.match(site, /export function init\(\) \{\n  const carousel = document\.querySelector\("\[data-hero-carousel\]"\)/);
-  assert.match(main, /\.hero-carousel \.hero-card\.is-active/);
+  assert.match(home, /class="hero-carousel hero-product"/);
+  assert.match(home, /hero-product-square-960\.avif/);
+  assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
+  assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/);
+  assert.match(main, /\.hero-product\s*\{/);
   assert.match(main, /content-visibility:\s*auto/);
   assert.match(critical, /content-visibility:\s*auto/);
   // Fontasia dùng font-display: swap và được preload theo route, nên desktop và

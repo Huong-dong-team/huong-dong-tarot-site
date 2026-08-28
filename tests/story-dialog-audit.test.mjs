@@ -7,24 +7,23 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("bảng kể chuyện dùng một dialog native, không có iframe hay modal lồng", async () => {
-  const [home, site] = await Promise.all([
+test("ảnh sản phẩm tĩnh không để lại dialog kể chuyện hoặc iframe", async () => {
+  const [home, registry] = await Promise.all([
     read("templates/home.html"),
-    read("public/assets/js/ui/hero-carousel.js"),
+    read("public/assets/js/page/registry.js"),
   ]);
-  assert.equal((home.match(/<dialog\b/g) || []).length, 1);
-  assert.equal((home.match(/<\/dialog>/g) || []).length, 1);
+  const hero = home.slice(home.indexOf('<section class="hero">'), home.indexOf("</section>"));
+  assert.doesNotMatch(hero, /<dialog\b|<\/dialog>|data-story-dialog|data-story-close/);
   assert.doesNotMatch(home, /<iframe\b/i);
-  assert.match(home, /<dialog[^>]*data-story-dialog[\s\S]*data-story-close[\s\S]*<\/dialog>/);
-  assert.match(site, /dialog\.showModal\(\)/);
-  assert.match(site, /data-story-close[^\n]*dialog\.close\(\)/);
-  assert.doesNotMatch(site, /createFocusTrap|focus-trap\.mjs/,
-    "không được chồng focus-trap JavaScript lên dialog native");
+  assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/,
+    "không nạp module dialog cũ cho ảnh sản phẩm tĩnh");
 });
 
-test("dialog có nhãn động và không tự tranh quyền xử lý Esc", async () => {
-  const site = await read("public/assets/js/ui/hero-carousel.js");
-  assert.match(site, /dialog\.setAttribute\("aria-label", panel\.querySelector\("h2"\)/);
-  assert.doesNotMatch(site, /keydown|Escape|\.focus\(/,
-    "hãy để dialog native quản lý Esc và đường trả focus");
+test("ảnh sản phẩm có cấu trúc ngữ nghĩa và mô tả thay thế", async () => {
+  const home = await read("templates/home.html");
+  const hero = home.slice(home.indexOf('<section class="hero">'), home.indexOf("</section>"));
+  assert.match(hero, /<figure class="hero-carousel hero-product">[\s\S]*<picture>/);
+  assert.match(hero, /alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng[^\"]+"/);
+  assert.doesNotMatch(hero, /role="button"|tabindex=/,
+    "ảnh không tương tác không được giả làm nút");
 });

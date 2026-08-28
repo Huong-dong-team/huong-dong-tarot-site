@@ -639,3 +639,56 @@ Chromium cục bộ sau entrance:
   `692.8px`, overflow ngang `0`.
 - `/huyen-su/` 390×844: headline, tagline và mô tả đều nằm gọn trong hero cao
   `507px`, overflow ngang `0`.
+
+## Nhật ký phối hợp · Ảnh sản phẩm mới trong Hero ngày 28/08/2026
+
+Tiếp tục trên branch `feat/home-hero-reference-copy` và pull request nháp #54.
+Chủ dự án vẫn là người merge; nhánh không tự triển khai production.
+
+### Phạm vi đã chốt
+
+1. File nguồn do chủ dự án cung cấp:
+   `/home/asus/Desktop/HuongDong project/images/Web-HuongDong-v3-visuals/public/hero-product.webp`,
+   kích thước `1200×900`, tỉ lệ `4:3`.
+2. Ảnh này **thay khung lá Mẫu Liễu Hạnh trong Hero**, không thay ảnh nền phong
+   cảnh toàn Hero. Headline, Subheadline, CTA, proof và ảnh nền giữ nguyên.
+3. Hero chuyển từ lá có nút mở dialog kể chuyện sang ảnh sản phẩm tĩnh. Eyebrow
+   cũ gắn với lá The Star được thay bằng câu đã có trong dự án:
+   “Ấn phẩm · Bộ bài và hộp cứng”. Các đường dẫn Tứ Bất Tử phía dưới vẫn đủ.
+4. Crop vuông lấy vùng `x=300..1200` của ảnh gốc: chỉ bỏ khoảng nền kem dư bên
+   trái; không kéo méo, không vẽ lại sản phẩm, không thay màu/hoa văn. Bản AI
+   outpaint 16:9 đã được dùng để thẩm định bố cục nhưng **không đưa vào repo** vì
+   có sai lệch chi tiết nhỏ so với sản phẩm gốc.
+5. Xuất AVIF responsive `480 / 720 / 960 / 1200px` và WebP fallback `1200px`.
+   Lần vẽ đầu giữ `loading=eager`, `decoding=async`, `fetchpriority=low` để ảnh
+   sản phẩm không tranh ưu tiên với ảnh nền Hero đang là ứng viên LCP.
+
+### Code và ràng buộc chống giẫm chân
+
+- `templates/home.html`: `.hero-carousel` chỉ còn là neo CSS/transition lịch sử;
+  không còn `data-hero-carousel`, `data-hero-slide` hoặc dialog kể chuyện.
+- `public/assets/js/page/registry.js`: Home không nạp module `hero-carousel.js`
+  cho một ảnh tĩnh.
+- `public/assets/css/critical.css`, `public/assets/css/main.css`: khung sản phẩm
+  rộng tối đa `560px`, tỉ lệ `1:1`, bóng nhẹ `0 14px 34px / 9%`; critical và
+  stylesheet đầy đủ phải khớp để không nhảy layout.
+- `tests/hero-carousel.test.mjs`, `tests/performance-effects.test.mjs`,
+  `tests/story-dialog-audit.test.mjs`, `tests/hero-embla-prototype.test.mjs`:
+  khóa nguồn responsive, tỉ lệ, độ nhẹ, alt text, không có hook/dialog cũ và
+  không nạp JavaScript carousel trên Home.
+
+### QA cục bộ
+
+- Home 1440×900: ảnh sản phẩm hiển thị `558×558px`, chọn AVIF `720w`, không méo,
+  không cắt hộp/lá, overflow ngang `0`.
+- Home 390×844: ảnh sản phẩm hiển thị `341×341px`, chọn AVIF `720w`, nằm ngay
+  sau proof, không cắt hộp/lá, overflow ngang `0`.
+- Dung lượng: AVIF `480w` 19KB, `720w` 40KB, `960w` 59KB, `1200w` 80KB; WebP
+  fallback `1200w` 168KB.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
