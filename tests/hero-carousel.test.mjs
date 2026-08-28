@@ -184,21 +184,23 @@ test("Hero trang chủ giữ nguyên nội dung và dùng typography của mẫu
     assert.match(headline, /line-height:\s*\.94/, `${ten}: sai nhịp dòng headline`);
     assert.match(headline, /letter-spacing:\s*\.035em/, `${ten}: sai khoảng chữ headline`);
     assert.match(headline, /text-transform:\s*uppercase/, `${ten}: headline chưa in hoa như mẫu`);
-    assert.match(headline, /-webkit-text-stroke:\s*\.7px rgb\(83 45 18 \/ 88%\)/, `${ten}: thiếu cạnh dập nổi`);
+    assert.match(headline, /-webkit-text-stroke:\s*\.7px rgb\(175 132 0 \/ 88%\)/, `${ten}: cạnh headline chưa dùng vàng tối #AF8400`);
+    assert.match(css, /--hero-headline-gold:\s*#B18906/i, `${ten}: thiếu màu fallback headline #B18906`);
     assert.match(css, /--hero-bronze:\s*#B77A2F/i, `${ten}: thiếu token vàng đồng #B77A2F`);
-    assert.match(headline, /color:\s*var\(--hero-bronze\)/, `${ten}: headline chưa dùng vàng đồng`);
+    assert.match(headline, /color:\s*var\(--hero-headline-gold\)/, `${ten}: headline chưa dùng palette mới`);
     if (ten === "main.css") {
-      assert.match(headline, /background-image:\s*var\(--hero-metal\)/, `${ten}: headline thiếu dải màu kim loại`);
+      assert.match(headline, /background-image:\s*var\(--hero-headline-metal\)/, `${ten}: headline thiếu dải vàng kim riêng`);
+      assert.doesNotMatch(headline, /background-image:\s*var\(--hero-metal\)/,
+        `${ten}: headline còn dùng chung palette của subheadline`);
       assert.match(headline, /background-clip:\s*text/, `${ten}: dải kim loại chưa được cắt theo thân chữ`);
-      assert.match(css, /--hero-bronze-dark:\s*#5E3215/i, `${ten}: thiếu sắc đồng tối #5E3215`);
-      assert.match(css, /--hero-bronze-light:\s*#E4B45E/i, `${ten}: thiếu sắc đồng sáng #E4B45E`);
-      assert.match(css, /--hero-pearl:\s*#FFF3DC/i, `${ten}: thiếu điểm lóe ngọc trai #FFF3DC`);
+      assert.match(css, /--hero-headline-metal:\s*linear-gradient\(112deg,\s*#B18906 0%,\s*#FAF8D0 28%,\s*#C69F24 49%,\s*#F1CA43 72%,\s*#AF8400 100%\)/i,
+        `${ten}: dải headline chưa dùng đúng 5 màu và thứ tự từ ảnh tham chiếu`);
     }
   }
 
   const shadow = main.match(/\.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-  assert.match(shadow, /text-shadow:[\s\S]*0 1px 0 rgb\(255 243 220 \/ 68%\)[\s\S]*0 2\.5px 0 rgb\(92 49 19 \/ 82%\)[\s\S]*0 7px 16px rgb\(79 45 19 \/ 38%\)/,
-    "headline phải có sáng cạnh, cạnh đồng tối và bóng khối");
+  assert.match(shadow, /text-shadow:[\s\S]*0 1px 0 rgb\(250 248 208 \/ 68%\)[\s\S]*0 2\.5px 0 rgb\(175 132 0 \/ 82%\)[\s\S]*0 7px 16px rgb\(177 137 6 \/ 38%\)/,
+    "headline phải dùng chính palette mới cho sáng cạnh, cạnh tối và bóng khối");
   assert.doesNotMatch(shadow, /-1px -1px|94%/, "không được khôi phục viền bóng tối bao kín bốn phía");
 
   for (const [ten, selector, css] of [

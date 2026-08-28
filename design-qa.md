@@ -1,56 +1,54 @@
-# Design QA — Hường Đông Firebase
+# Design QA · Palette vàng kim cho Headline Hero
 
-- Source visual truth: `/workspace/scratch/huong-dong-version18-source.jpg`
-- Implementation screenshot: `/workspace/scratch/huong-dong-firebase-home-final.jpg`
-- Viewport/CSS size: 1348 × 926 px
-- Source pixels: 1348 × 926; implementation pixels: 1348 × 926
-- Density normalization: device scale factor 1; không cần đổi kích thước
-- State: trang chủ, đầu trang, chưa nhập form
+## Bằng chứng so sánh
 
-## Full-view comparison evidence
+- Source visual truth: `docs/qa/hero-headline-gold-palette-reference.jpg`.
+- Implementation screenshot: `docs/qa/hero-headline-gold-palette-implementation.jpg`.
+- Side-by-side comparison: `docs/qa/hero-headline-gold-palette-comparison.jpg`.
+- Trạng thái: trang chủ sau khi font và stylesheet tải xong; không hover, không
+  mở menu, không cuộn.
+- Viewport CSS: `1280 × 720`, device scale factor `1`.
+- Ảnh nguồn: `383 × 174px`; ảnh implementation: `1265 × 712px`; ảnh so sánh:
+  `1280 × 720px`. Không nội suy ảnh nguồn để lấy mã màu; dùng trực tiếp năm mã
+  in dưới bảng mẫu.
+- Console errors: `0`.
 
-Hai ảnh được mở trong cùng một lượt so sánh. Bản Firebase giữ đúng trục thị giác đã duyệt: header ngọc sẫm viền đồng, tiêu đề lớn bên trái, trống đồng nằm chìm ở tâm, Mẫu Liễu Hạnh chiếm khoảng 30% khung nhìn bên phải và form danh sách chờ nằm ngay trong hero. Tỷ lệ hai cột, điểm nhìn chính, độ tương phản và hướng đọc tương đương bản nguồn.
+## Full-view comparison
 
-## Focused region comparison evidence
+Headline hiển thị đủ dải màu theo đúng thứ tự của ảnh: `#B18906`, `#FAF8D0`,
+`#C69F24`, `#F1CA43`, `#AF8400`. Dải sáng kem nằm giữa vàng tối và vàng tươi,
+cho cùng cảm giác ánh kim của thanh mẫu. Viền và ba lớp tạo khối cũng dùng các
+màu trong bảng, nên không còn bóng nâu cũ làm lệch tông.
 
-Vùng hero được kiểm tra riêng vì đây là nơi có logo, typography, trống đồng, tranh Mẫu Liễu Hạnh, form và CTA. Tranh dùng đúng ảnh 1024 × 1536, render khoảng 339 × 501 px, không crop mất sao, nhân vật, phủ thờ hoặc hoa sen. Trống đồng và chim Lạc là ảnh thật ở lớp nền, không được thay bằng hình vẽ CSS/SVG.
+Không cần crop so sánh phụ: nguồn chỉ là một thanh màu `383 × 174px`, còn
+headline chiếm vùng khoảng `692 × 633px` trong ảnh implementation và đủ lớn để
+đọc rõ chuyển sắc trong ảnh side-by-side. Mã màu được xác minh thêm bằng
+computed style của trình duyệt.
 
-## Required fidelity surfaces
+## Các bề mặt fidelity bắt buộc
 
-- Fonts and typography: Cormorant Garamond giữ chất mềm, trang trọng cho display; Be Vietnam Pro giữ độ rõ cho nội dung và form. Phân cấp H1–eyebrow–body rõ, không cắt chữ.
-- Spacing and layout rhythm: hero hai cột cân bằng; form, CTA và ba số kiểm kê có nhịp dọc ổn định; tranh giữ khoảng thở và không va vào header.
-- Colors and visual tokens: ngọc sẫm, đồng, ngà và son được khai báo thành token; độ tương phản chữ/form đạt mức đọc tốt.
-- Image quality and asset fidelity: ảnh Mẫu Liễu Hạnh đủ độ phân giải; trống đồng và chim Lạc dùng đúng asset dự án; không có placeholder.
-- Copy and content: giữ thông điệp “Di sản Việt, soi đường qua 78 lá bài”, lớp RWS và mục tiêu danh sách chờ; không xuất hiện giỏ hàng hoặc thanh toán.
+- Fonts và typography: Ganh italic `400`, cỡ, line-height, letter-spacing và
+  wrap giữ nguyên; chỉ palette đổi.
+- Spacing và layout rhythm: không đổi selector bố cục, padding, margin, grid,
+  kích thước ảnh hoặc breakpoint; không có overflow ngang ở viewport kiểm tra.
+- Colors và tokens: đủ đúng năm mã và đúng thứ tự ảnh; Headline có token riêng,
+  không dùng chung gradient đồng của Subheadline.
+- Image quality và asset fidelity: ảnh tham chiếu chỉ dùng làm nguồn palette,
+  không bị đưa vào giao diện production và không thay thế bằng asset giả. Text
+  vẫn là HTML/CSS để giữ khả năng đọc, responsive và truy cập.
+- Copy và content: Headline, Subheadline và toàn bộ nội dung trang giữ nguyên.
+
+## Findings
+
+Không có P0, P1 hoặc P2. Vệt `#FAF8D0` rất sáng trên vùng trời kem nhưng đây là
+điểm lóe chủ ý của nguồn; stroke `#AF8400` và bóng `#B18906` vẫn giữ biên chữ.
 
 ## Comparison history
 
-### Vòng 1
-
-- [P1] Header màu ngà làm mất tính liên tục của không gian điện thờ ngọc sẫm.
-- [P1] Hero thiếu form email trực tiếp, làm lệch đường chuyển đổi của bản nguồn.
-- [P2] Nền quá phẳng, chưa giữ chiều sâu cảnh quan và ấn trống đồng.
-
-### Fixes made
-
-- Đổi header sang ngọc sẫm, viền và CTA màu đồng.
-- Đưa form email trở lại hero, giữ thêm hai liên kết khám phá.
-- Bổ sung nền cảnh quan thật và tăng độ hiện diện chìm của trống đồng/chim Lạc.
-
-### Post-fix evidence
-
-Ảnh `huong-dong-firebase-home-final.jpg` cho thấy ba khác biệt trên đã được xử lý; không còn P0/P1/P2 có thể hành động.
-
-## Interaction and console checks
-
-- Trang thư viện mở đủ 78 lá.
-- Chọn Ẩn Phụ trả 56 lá; chọn Nhà Dâu tằm trả 14 lá.
-- Ảnh hero tải đúng kích thước tự nhiên 1024 × 1536.
-- Form hero hiển thị và có nhãn truy cập được; không gửi dữ liệu trong QA.
-- Không có lỗi hoặc cảnh báo từ ứng dụng; thông báo của extension trình duyệt được loại khỏi đánh giá.
+- Pass 1: không phát hiện chênh lệch P0/P1/P2; không cần vòng sửa hình ảnh.
 
 ## Follow-up polish
 
-- [P3] Có thể tinh chỉnh thêm tracking chữ ở CTA trên màn hình rất hẹp sau khi kiểm tra bằng thiết bị thật.
+Không có P3 cần xử lý trong phạm vi thay palette.
 
 final result: passed

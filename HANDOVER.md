@@ -742,3 +742,36 @@ npm test              PASS — 29/29 tệp test
 npm run check:types   PASS
 git diff --check      PASS
 ```
+
+## Nhật ký phối hợp · Palette vàng kim riêng cho Headline ngày 28/08/2026
+
+Branch: `feat/hero-headline-gold-palette`. Chủ dự án vẫn là người merge; branch
+không tự triển khai production.
+
+### Phạm vi đã chốt
+
+1. Chỉ đổi palette của **Headline Hero trang chủ** theo đúng ảnh tham chiếu:
+   `#B18906 → #FAF8D0 → #C69F24 → #F1CA43 → #AF8400`.
+2. Headline có token gradient riêng `--hero-headline-metal`; không còn dùng
+   chung `--hero-metal` của Subheadline. Subheadline giữ nguyên màu đồng trước.
+3. Viền, sáng cạnh, cạnh tối và bóng khối của Headline cũng chuyển sang các màu
+   trong bảng mới để không bị bóng nâu cũ làm lệch tông.
+4. Font Ganh, cỡ đã giảm 10%, line-height, letter-spacing, nội dung, ảnh, CTA,
+   proof, các page hero trang trong và preload font đều giữ nguyên.
+
+### Code, kiểm thử và bằng chứng
+
+- `public/assets/css/critical.css`: thêm fallback `--hero-headline-gold` và đổi
+  màu cạnh/bóng khung đầu; không nhúng gradient đầy đủ để giữ ngân sách critical.
+- `public/assets/css/main.css`: thêm gradient năm màu và gắn riêng cho Headline.
+- `tests/hero-carousel.test.mjs`: khóa đủ năm mã, đúng thứ tự, palette riêng và
+  bảo đảm Subheadline tiếp tục dùng gradient cũ.
+- `design-qa.md` và `docs/qa/hero-headline-gold-palette-*.jpg`: lưu ảnh nguồn,
+  ảnh implementation và so sánh side-by-side. Design QA kết luận `passed`.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
