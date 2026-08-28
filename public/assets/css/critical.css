@@ -9,6 +9,7 @@
   --muted: #7A6656;
   --gold: #FFD45A;
   --hero-lemon: #FEDB44;
+  --hero-headline-gold: #B18906;
   --hero-bronze: #B77A2F;
   --amber: #FFA95A;
   --orange: #FF8B5A;
@@ -216,7 +217,7 @@ h3 { font-size: 30px; line-height: 1.12; }
    dụng. */
 .home-page .hero h1 {
   margin-bottom: 24px;
-  color: var(--hero-bronze);
+  color: var(--hero-headline-gold);
   font-family: var(--sans-display);
   font-size: clamp(77.4px, 8.46vw, 118.8px);
   font-style: italic;
@@ -229,11 +230,11 @@ h3 { font-size: 30px; line-height: 1.12; }
   margin-left: -16px;
   border-radius: 4px;
   background: rgb(233 225 208 / 3%);
-  -webkit-text-stroke: .7px rgb(83 45 18 / 88%);
+  -webkit-text-stroke: .7px rgb(175 132 0 / 88%);
   text-shadow:
-    0 1px 0 rgb(255 243 220 / 68%),
-    0 2.5px 0 rgb(92 49 19 / 82%),
-    0 7px 16px rgb(79 45 19 / 38%);
+    0 1px 0 rgb(250 248 208 / 68%),
+    0 2.5px 0 rgb(175 132 0 / 82%),
+    0 7px 16px rgb(177 137 6 / 38%);
 }
 .hero .eyebrow { color: var(--muted); }
 .home-page .hero .hero-subheadline {
