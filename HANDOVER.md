@@ -692,3 +692,53 @@ npm test              PASS — 29/29 tệp test
 npm run check:types   PASS
 git diff --check      PASS
 ```
+
+## Nhật ký phối hợp · Hero Ganh vàng đồng kim loại ngày 28/08/2026
+
+Branch: `feat/hero-bronze-pearl-ganh`. Chủ dự án vẫn là người merge; branch này
+không tự triển khai production.
+
+### Phạm vi đã chốt
+
+1. Chỉ đổi typography của **Headline và Subheadline Hero trang chủ**; toàn bộ
+   nội dung, line-height, CTA, proof, ảnh nền và ảnh sản phẩm giữ nguyên.
+   Cỡ cả hai dòng giảm đúng 10%: Headline rộng còn
+   `clamp(77.4px, 8.46vw, 118.8px)`, mobile còn
+   `clamp(61.2px, 16.65vw, 84.6px)`; Subheadline còn
+   `clamp(15.3px, 1.35vw, 18px)`.
+2. Cả hai dòng dùng lại font self-host `Ganh` weight `400`; Headline dùng đúng
+   biến thể italic. Trang trong tiếp tục dùng Harmoni và vàng chanh như trước.
+3. Hiệu ứng kim loại gồm dải đồng tối `#5E3215`, đồng nền `#B77A2F`, đồng sáng
+   `#E4B45E` và một vệt lóe ngọc trai `#FFF3DC`. Cạnh tối, sáng cạnh và bóng đổ
+   tạo cảm giác dập nổi; Subheadline dùng stroke/bóng nhỏ hơn để còn dễ đọc.
+4. `critical.css` giữ màu đồng dự phòng cùng cạnh/bóng 3D nhưng không nhúng toàn
+   dải gradient, nhằm giữ critical CSS của trang trong dưới ngân sách 20 KB.
+   `main.css` là stylesheet blocking và áp dụng gradient kim loại đầy đủ.
+5. Trang chủ preload `ganh-400.woff2` và `ganh-400-italic.woff2`; route trong vẫn
+   chỉ preload Harmoni. Không thêm font hoặc tài nguyên từ bên ngoài.
+
+### Code và ràng buộc chống giẫm chân
+
+- `public/assets/css/critical.css`: font Ganh, màu fallback và lớp tạo khối khớp
+  khung đầu; không thay rule `.page-hero`.
+- `public/assets/css/main.css`: token kim loại và gradient clip theo thân chữ cho
+  cả Headline/Subheadline trang chủ.
+- `scripts/build.js`: preload font theo loại route.
+- `tests/hero-carousel.test.mjs`: khóa font, màu, gradient, stroke, shadow, cỡ
+  chữ và bảo đảm copy không đổi.
+- `tests/critical-css.test.mjs`: khóa preload Ganh chỉ trên Home và Harmoni chỉ
+  trên trang trong.
+
+### QA cục bộ
+
+- Chromium 1280×720: Ganh đã tải, cả hai dòng nhận đúng gradient kim loại, không
+  tràn ngang; vệt ngọc trai đã thu hẹp để tổng thể vẫn đọc là vàng đồng.
+- Khung mobile thực 390×844: media query `900px/620px` áp dụng, Headline và
+  Subheadline giữ hiệu ứng đồng dập nổi, bố cục không xuất hiện tràn ngang.
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```

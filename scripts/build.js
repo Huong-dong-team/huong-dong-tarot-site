@@ -429,10 +429,14 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
   ];
-  /* Hero trang chủ nay dùng Harmoni theo typography serif nghiêng của mẫu tham
-     chiếu. Preload đúng font LCP; Fontasia vẫn self-host cho chỗ khác nhưng
-     không còn được tải ưu tiên khi nó không xuất hiện trong khung đầu. */
-  const displayFontPreload = '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
+  /* Hero trang chủ dùng cả Ganh thường và nghiêng; route trong vẫn dùng Harmoni
+     cho H1. Chỉ preload họ font xuất hiện ở khung đầu của từng loại trang. */
+  const displayFontPreloads = bodyClass === "home-page"
+    ? [
+      '<link rel="preload" href="/assets/fonts/ganh-400.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/ganh-400-italic.woff2" as="font" type="font/woff2" crossorigin>',
+    ]
+    : ['<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>'];
   return renderString(templates._layout, {
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
@@ -440,7 +444,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     content: withPageArt(content, artId),
     bodyClass,
     pageScripts,
-    fontPreloads: [...bodyFontPreloads, displayFontPreload].join("\n  "),
+    fontPreloads: [...bodyFontPreloads, ...displayFontPreloads].join("\n  "),
     heroPreloads: bodyClass === "home-page"
       // imagesrcset/imagesizes chứ KHÔNG phải href + media. Preload phải đi qua
       // đúng logic chọn ảnh của <img class="hero-bg">, nếu không hai bên chọn

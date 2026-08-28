@@ -168,42 +168,60 @@ test("Hero trang chủ giữ nguyên nội dung và dùng typography của mẫu
     "câu của file mẫu chỉ được thêm ở trang Huyền sử, không thay copy trang chủ");
 
   // Critical và CSS đầy đủ phải cùng typography để không nhảy ngay lúc main.css
-  // về: Harmoni serif nghiêng, in hoa, nét dày và nhịp dòng sít như file mẫu.
+  // về: Ganh cũ, nghiêng, in hoa và nhịp dòng sít như file mẫu.
   for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
     const clamps = [...css.matchAll(/\.home-page \.hero h1[^{]*\{[^}]*font-size:\s*clamp\(([^)]*)\)/g)]
       .map((match) => match[1].split(",").map((part) => parseFloat(part)));
     assert.equal(clamps.length, 2, `${ten}: khẩu hiệu phải có đúng hai cỡ — rộng và hẹp`);
     const [rong, hep] = clamps.sort((a, b) => b[2] - a[2]);
-    assert.deepEqual(rong, [86, 9.4, 132], `${ten}: sai cỡ headline rộng`);
-    assert.deepEqual(hep, [68, 18.5, 94], `${ten}: sai cỡ headline hẹp`);
+    assert.deepEqual(rong, [77.4, 8.46, 118.8], `${ten}: headline rộng chưa giảm đúng 10%`);
+    assert.deepEqual(hep, [61.2, 16.65, 84.6], `${ten}: headline hẹp chưa giảm đúng 10%`);
 
     const headline = css.match(/\.home-page \.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-    assert.match(headline, /font-family:\s*var\(--display\)/, `${ten}: headline chưa dùng Harmoni`);
+    assert.match(headline, /font-family:\s*var\(--sans-display\)/, `${ten}: headline chưa dùng Ganh`);
     assert.match(headline, /font-style:\s*italic/, `${ten}: headline chưa nghiêng như mẫu`);
-    assert.match(headline, /font-weight:\s*900/, `${ten}: headline chưa đủ dày`);
+    assert.match(headline, /font-weight:\s*400/, `${ten}: headline chưa dùng đúng weight Ganh có sẵn`);
     assert.match(headline, /line-height:\s*\.94/, `${ten}: sai nhịp dòng headline`);
     assert.match(headline, /letter-spacing:\s*\.035em/, `${ten}: sai khoảng chữ headline`);
     assert.match(headline, /text-transform:\s*uppercase/, `${ten}: headline chưa in hoa như mẫu`);
-    assert.match(headline, /-webkit-text-stroke:\s*\.25px currentColor/, `${ten}: thiếu nét dày nhẹ`);
-    assert.match(css, /--hero-lemon:\s*#FEDB44/i, `${ten}: thiếu token vàng chanh #FEDB44`);
-    assert.match(headline, /color:\s*var\(--hero-lemon\)/, `${ten}: headline chưa giữ màu thương hiệu`);
+    assert.match(headline, /-webkit-text-stroke:\s*\.7px rgb\(83 45 18 \/ 88%\)/, `${ten}: thiếu cạnh dập nổi`);
+    assert.match(css, /--hero-bronze:\s*#B77A2F/i, `${ten}: thiếu token vàng đồng #B77A2F`);
+    assert.match(headline, /color:\s*var\(--hero-bronze\)/, `${ten}: headline chưa dùng vàng đồng`);
+    if (ten === "main.css") {
+      assert.match(headline, /background-image:\s*var\(--hero-metal\)/, `${ten}: headline thiếu dải màu kim loại`);
+      assert.match(headline, /background-clip:\s*text/, `${ten}: dải kim loại chưa được cắt theo thân chữ`);
+      assert.match(css, /--hero-bronze-dark:\s*#5E3215/i, `${ten}: thiếu sắc đồng tối #5E3215`);
+      assert.match(css, /--hero-bronze-light:\s*#E4B45E/i, `${ten}: thiếu sắc đồng sáng #E4B45E`);
+      assert.match(css, /--hero-pearl:\s*#FFF3DC/i, `${ten}: thiếu điểm lóe ngọc trai #FFF3DC`);
+    }
   }
 
   const shadow = main.match(/\.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-  assert.match(shadow, /text-shadow:[\s\S]*0 1\.5px 0 rgb\(43 27 18 \/ 64%\)[\s\S]*0 5px 16px rgb\(43 27 18 \/ 26%\)/,
-    "headline phải dùng hai lớp bóng nhẹ mới");
+  assert.match(shadow, /text-shadow:[\s\S]*0 1px 0 rgb\(255 243 220 \/ 68%\)[\s\S]*0 2\.5px 0 rgb\(92 49 19 \/ 82%\)[\s\S]*0 7px 16px rgb\(79 45 19 \/ 38%\)/,
+    "headline phải có sáng cạnh, cạnh đồng tối và bóng khối");
   assert.doesNotMatch(shadow, /-1px -1px|94%/, "không được khôi phục viền bóng tối bao kín bốn phía");
 
   for (const [ten, selector, css] of [
-    ["critical.css", /\.hero-subheadline \{([\s\S]*?)\}/, critical],
-    ["main.css", /\.home-page \.hero-subheadline \{([\s\S]*?)\}/, main],
+    ["critical.css", /\.home-page \.hero \.hero-subheadline \{([\s\S]*?)\}/, critical],
+    ["main.css", /\.home-page \.hero \.hero-subheadline \{([\s\S]*?)\}/, main],
   ]) {
     const subheadline = css.match(selector)?.[1] || "";
-    assert.match(subheadline, /font-family:\s*Georgia/, `${ten}: subheadline chưa dùng serif như mẫu`);
+    assert.match(subheadline, /font-family:\s*var\(--sans-display\)/, `${ten}: subheadline chưa dùng Ganh`);
+    assert.match(subheadline, /font-weight:\s*400/, `${ten}: subheadline chưa dùng đúng weight Ganh`);
+    assert.match(subheadline, /font-size:\s*clamp\(15\.3px,\s*1\.35vw,\s*18px\)/,
+      `${ten}: subheadline chưa giảm đúng 10%`);
     assert.match(subheadline, /max-width:\s*34ch/, `${ten}: subheadline chưa bó chiều dài đọc`);
     assert.match(subheadline, /line-height:\s*1\.72/, `${ten}: sai nhịp dòng subheadline`);
-    assert.match(subheadline, /color:\s*var\(--ink-soft\)/, `${ten}: subheadline chưa về màu phụ`);
-    assert.match(subheadline, /text-shadow:\s*none/, `${ten}: subheadline còn bóng phủ`);
+    assert.match(subheadline, /letter-spacing:\s*\.015em/, `${ten}: sai khoảng chữ subheadline`);
+    assert.match(subheadline, /color:\s*var\(--hero-bronze\)/, `${ten}: subheadline chưa dùng vàng đồng`);
+    assert.match(subheadline, /-webkit-text-stroke:\s*\.35px rgb\(83 45 18 \/ 86%\)/,
+      `${ten}: subheadline thiếu cạnh dập nổi`);
+    assert.match(subheadline, /text-shadow:[\s\S]*0 \.75px 0 rgb\(255 243 220 \/ 72%\)[\s\S]*0 1\.75px 0 rgb\(92 49 19 \/ 78%\)[\s\S]*0 4px 10px rgb\(79 45 19 \/ 34%\)/,
+      `${ten}: subheadline thiếu sáng cạnh và bóng tạo khối`);
+    if (ten === "main.css") {
+      assert.match(subheadline, /background-image:\s*var\(--hero-metal\)/, `${ten}: subheadline thiếu dải màu kim loại`);
+      assert.match(subheadline, /background-clip:\s*text/, `${ten}: dải kim loại subheadline chưa cắt theo chữ`);
+    }
   }
 
   for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
