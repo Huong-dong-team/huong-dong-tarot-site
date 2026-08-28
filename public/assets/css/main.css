@@ -159,9 +159,11 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   border: 1px solid var(--muted);
   border-radius: calc(var(--img-radius) + 4px);
   background: var(--paper-raised);
-  /* Vệt sáng mảnh ở mép trên làm thẻ như được rọi từ trên — kỹ thuật mượn từ
-     trang tham chiếu, chồng lên bóng đổ sẵn có. */
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent), var(--shadow);
+  /* Giữ vệt sáng mảnh ở mép trên nhưng hạ bóng cover để khung không nặng hơn
+     tên thương hiệu. Bóng ngắn và nhạt hơn biến --shadow dùng cho card thường. */
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent),
+    0 14px 34px rgb(139 99 57 / 9%);
   color: inherit;
   font: inherit;
   text-align: center;
@@ -221,16 +223,13 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   color: var(--magenta-ink);
 }
 
-/* Vàng chanh cần một đường bóng nâu kín bốn phía để không chìm vào vùng giấy
-   vàng của tranh. Đây vẫn là text-shadow, không phải stroke: nét Fontasia giữ
-   nguyên độ thanh, còn biên tối tạo ranh giới đọc được trên cả mảng sáng/tối. */
+/* Typography serif dày không cần đường viền tối bao kín bốn phía. Hai lớp bóng
+   dưới đây giữ điểm tựa trên nền sáng nhưng nhẹ hơn rõ rệt; độ dày chữ do weight
+   và stroke rất mảnh ở khối typography phía dưới đảm nhiệm. */
 .hero h1 {
   text-shadow:
-    -1px -1px 0 rgb(43 27 18 / 94%),
-    1px -1px 0 rgb(43 27 18 / 94%),
-    -1px 1px 0 rgb(43 27 18 / 94%),
-    1px 1px 0 rgb(43 27 18 / 94%),
-    0 .32rem 1.4rem rgb(43 27 18 / 58%);
+    0 1.5px 0 rgb(43 27 18 / 64%),
+    0 5px 16px rgb(43 27 18 / 26%);
 }
 
 /* Bảng kể chuyện của từng vị. Dùng <dialog> để trình duyệt lo sẵn phần khoá
@@ -533,28 +532,24 @@ h1 { line-height: 1.02; }
 h2 { line-height: 1.06; }
 h3 { line-height: 1.12; }
 
-/* Fontasia chỉ xuất hiện ở thông điệp thương hiệu lớn; không dùng cho nội dung
-   dài vì nét viết tay làm giảm tốc độ đọc ở cỡ nhỏ. */
-/* Kích thước cuối lấy production trước PR #51 làm mốc và nhân đúng 1,3:
-   62→80,6 / 7→9,1vw / 96→124,8. Không cộng tiếp 30% lên mức thử +20% của
-   PR #51, vì như vậy thành +56% so với thứ chủ dự án đang nhìn trên production.
-
-   Fontasia VH chỉ có một weight 400, nên 700 ở đây là chữ đậm do trình duyệt
-   tổng hợp. Với mặt chữ viết tay ở cỡ ~100px thì cách này giữ được nét gốc; ép
-   thêm -webkit-text-stroke sẽ làm dày cả phần bụng chữ và mất chi tiết đuôi. */
-.home-page .page-hero h1,
+/* Chỉ sao chép NGÔN NGỮ CHỮ của file tham chiếu, không sao chép câu: display
+   serif nghiêng, in hoa, nét dày và nhịp dòng sít. Harmoni là font Việt hóa gần
+   nhất đã có trong dự án; weight 900 cùng stroke .25px làm thân nét dày nhẹ. */
 .home-page .hero h1 {
-  font-family: var(--script);
-  padding-inline-start: .16em;
-  font-size: clamp(80.6px, 9.1vw, 124.8px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: 0;
-  /* Hai vế của khẩu hiệu đã tách bằng <br>. Ở cỡ mới, màn hình hẹp vẫn có thể
-     phải ngắt thêm một lần nữa bên trong một vế; balance chọn điểm ngắt cân
-     giữa các dòng thay vì đẩy đúng một chữ xuống dòng cuối. */
+  font-family: var(--display);
+  font-size: clamp(86px, 9.4vw, 132px);
+  font-style: italic;
+  font-weight: 900;
+  line-height: .94;
+  letter-spacing: .035em;
+  text-transform: uppercase;
   text-wrap: balance;
   color: var(--hero-lemon);
+  padding: 10px 22px 12px 16px;
+  margin-left: -16px;
+  border-radius: 4px;
+  background: rgb(233 225 208 / 3%);
+  -webkit-text-stroke: .25px currentColor;
 }
 
 /* Headline trang trong dùng cỡ H1 production 50 / 7vw / 90 nhân đúng 1,3.
@@ -571,7 +566,6 @@ h3 { line-height: 1.12; }
     0 .32rem 1.4rem rgb(43 27 18 / 58%);
 }
 
-.home-page .hero-copy > p:not(.eyebrow),
 .page-hero > p:not(.eyebrow) {
   color: var(--hero-lemon);
   text-shadow:
@@ -580,6 +574,19 @@ h3 { line-height: 1.12; }
     -1px 1px 0 rgb(43 27 18 / 92%),
     1px 1px 0 rgb(43 27 18 / 92%),
     0 .2rem .8rem rgb(43 27 18 / 52%);
+}
+
+/* Subheadline trang chủ bám đúng nhịp hai dòng của file tham chiếu: màu phụ,
+   chiều rộng 34ch và không dùng viền bóng tối. Trang trong giữ rule vàng chanh
+   riêng phía trên vì tranh toàn khung của chúng cần mức bảo vệ khác. */
+.home-page .hero-subheadline {
+  max-width: 34ch;
+  color: var(--ink-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.72;
+  text-wrap: pretty;
+  text-shadow: none;
 }
 
 /* Ganh rõ và gọn ở cỡ trung bình, phù hợp tên lá/bài viết nhưng vẫn giữ
@@ -603,14 +610,11 @@ blockquote {
   letter-spacing: 0.01em;
 }
 
-/* Màn hình hẹp cũng nhân đúng 1,3 như chủ dự án chốt: production
-   54 / 15vw / 70 → 70,2 / 19,5vw / 91. Câu sẽ chiếm nhiều dòng hơn trên máy
-   hẹp; đây là hệ quả đã được chấp nhận của yêu cầu “đúng 30% mọi breakpoint”. */
+/* Serif in hoa rộng hơn Fontasia: hạ riêng điện thoại để câu nguyên bản còn
+   khoảng bốn dòng thay vì sáu; tablet vẫn tăng nhẹ nhờ trần 94px. */
 @media (max-width: 900px) {
-  .home-page .page-hero h1,
   .home-page .hero h1 {
-    font-size: clamp(70.2px, 19.5vw, 91px);
-    /* Bỏ khoảng thụt .16em để lấy lại bề ngang và thẳng lề với Subheadline. */
+    font-size: clamp(68px, 18.5vw, 94px);
     padding-inline-start: 0;
   }
 }

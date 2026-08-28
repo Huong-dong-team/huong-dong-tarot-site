@@ -429,9 +429,10 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
   ];
-  const displayFontPreload = bodyClass === "home-page"
-    ? '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>'
-    : '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
+  /* Hero trang chủ nay dùng Harmoni theo typography serif nghiêng của mẫu tham
+     chiếu. Preload đúng font LCP; Fontasia vẫn self-host cho chỗ khác nhưng
+     không còn được tải ưu tiên khi nó không xuất hiện trong khung đầu. */
+  const displayFontPreload = '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>';
   return renderString(templates._layout, {
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,

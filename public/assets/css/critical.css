@@ -210,36 +210,38 @@ h3 { font-size: 30px; line-height: 1.12; }
 }
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 .hero-copy { max-width: 700px; }
-/* Khẩu hiệu: cỡ chữ và weight phải khớp main.css từng con số, nếu không trang
-   nhảy một nhịp đúng lúc main.css về. Xem giải thích ở main.css. */
+/* Sao chép ngôn ngữ typography của mẫu HTML, không sao chép nội dung: serif
+   nghiêng, in hoa, nét dày và nhịp dòng sít. Các số phải khớp main.css để tránh
+   nhảy ở LCP khi stylesheet đầy đủ áp dụng. */
 .home-page .hero h1 {
   margin-bottom: 24px;
   color: var(--hero-lemon);
-  font-family: var(--script);
-  padding-inline-start: .16em;
-  font-size: clamp(80.6px, 9.1vw, 124.8px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: 0;
+  font-family: var(--display);
+  font-size: clamp(86px, 9.4vw, 132px);
+  font-style: italic;
+  font-weight: 900;
+  line-height: .94;
+  letter-spacing: .035em;
+  text-transform: uppercase;
   text-wrap: balance;
+  padding: 10px 22px 12px 16px;
+  margin-left: -16px;
+  border-radius: 4px;
+  background: rgb(233 225 208 / 3%);
+  -webkit-text-stroke: .25px currentColor;
   text-shadow:
-    -1px -1px 0 rgb(43 27 18 / 94%),
-    1px -1px 0 rgb(43 27 18 / 94%),
-    -1px 1px 0 rgb(43 27 18 / 94%),
-    1px 1px 0 rgb(43 27 18 / 94%),
-    0 .32rem 1.4rem rgb(43 27 18 / 58%);
+    0 1.5px 0 rgb(43 27 18 / 64%),
+    0 5px 16px rgb(43 27 18 / 26%);
 }
 .hero .eyebrow { color: var(--muted); }
-.hero-copy > p:not(.eyebrow) {
-  max-width: 650px;
-  color: var(--hero-lemon);
-  font-size: 18px;
-  text-shadow:
-    -1px -1px 0 rgb(43 27 18 / 92%),
-    1px -1px 0 rgb(43 27 18 / 92%),
-    -1px 1px 0 rgb(43 27 18 / 92%),
-    1px 1px 0 rgb(43 27 18 / 92%),
-    0 .2rem .8rem rgb(43 27 18 / 52%);
+.hero-subheadline {
+  max-width: 34ch;
+  color: var(--ink-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.72;
+  text-wrap: pretty;
+  text-shadow: none;
 }
 .hero-actions {
   display: flex;
@@ -271,7 +273,9 @@ h3 { font-size: 30px; line-height: 1.12; }
   border: 1px solid var(--muted);
   border-radius: calc(var(--img-radius) + 4px);
   background: var(--paper-raised);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent), var(--shadow);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent),
+    0 14px 34px rgb(139 99 57 / 9%);
   color: inherit;
   font: inherit;
   text-align: center;
@@ -371,11 +375,11 @@ h3 { font-size: 30px; line-height: 1.12; }
     overscroll-behavior: contain;
   }
   .hero { padding-top: 70px; }
-  /* Fontasia đã được preload và dùng font-display: swap, nên trình duyệt thay
+  /* Harmoni đã được preload và dùng font-display: swap, nên trình duyệt thay
      đúng font nhận diện ngay khi tệp tải xong ở mọi kích thước màn hình. */
-  /* Cả ba mốc là đúng 130% của production cũ. Màn hình hẹp có thể thêm dòng;
-     đó là hệ quả chủ dự án đã chấp nhận khi chốt cùng tỷ lệ ở mọi breakpoint. */
-  .home-page .hero h1 { font-size: clamp(70.2px, 19.5vw, 91px); padding-inline-start: 0; }
+  /* Serif in hoa rộng hơn Fontasia: hạ riêng điện thoại để câu nguyên bản còn
+     khoảng bốn dòng thay vì sáu; tablet vẫn tăng nhẹ nhờ trần 94px. */
+  .home-page .hero h1 { font-size: clamp(68px, 18.5vw, 94px); padding-inline-start: 0; }
   /* Tranh nền GIỮ LẠI trên màn hình hẹp. Trước đây nó bị display:none để không
      thành LCP của khung hero cao 1067px; đổi lại thì điện thoại — tức gần như
      toàn bộ người đọc — không bao giờ thấy tranh mở đầu của bộ bài.

@@ -578,3 +578,64 @@ Chromium cục bộ sau entrance:
 - Ảnh QA ngoài repository:
   `/home/asus/Documents/Codex/huongdong-full-art-desktop-cdp.png` và
   `/home/asus/Documents/Codex/huongdong-full-art-mobile-cdp.png`.
+
+## Nhật ký phối hợp · Typography mẫu HTML và tagline Huyền sử ngày 28/08/2026
+
+Branch: `feat/home-hero-reference-copy` — tách từ `origin/main` tại merge commit
+`31b52b6`. Chủ dự án tiếp tục là người merge; branch không tự triển khai
+production.
+
+### Phạm vi đã chốt sau khi làm rõ yêu cầu
+
+1. **Chỉ sao chép kiểu chữ, không sao chép nội dung** từ file
+   `Huong Dong Tarot.html`. Headline trang chủ vẫn là “Hường Đông kể Tarot / bằng
+   câu chuyện Việt”; Subheadline vẫn là đoạn “Bộ Tarot 78 lá theo hệ RWS…”.
+2. Headline trang chủ dùng font Việt hóa `DFVN TAN Harmoni`, italic, weight 900,
+   uppercase, line-height `.94`, letter-spacing `.035em` và stroke `.25px` —
+   chuyển ngôn ngữ serif nghiêng của mẫu sang hệ font self-host hiện có.
+3. Cỡ rộng tăng từ trần `124.8px` lên `132px`. Tablet có trần `94px`. Điện
+   thoại dùng `clamp(68px, 18.5vw, 94px)`; tại 390px là `72.15px` để câu nguyên
+   bản giữ khoảng bốn dòng thay vì sáu dòng. Đây là ràng buộc responsive riêng,
+   không phải thay nội dung.
+4. Bóng headline bỏ viền tối bốn phía `94%`; còn hai lớp dưới nhẹ `64% / 26%`.
+   Bóng cover lá Hero đổi từ `var(--shadow)` (`0 24px 70px / 14%`) sang
+   `0 14px 34px / 9%`. Subheadline trang chủ về màu `--ink-soft`, serif Georgia,
+   rộng `34ch`, line-height `1.72` và `text-shadow: none`.
+5. `/huyen-su/` nhận thêm tagline đúng câu:
+   “Một bộ bài. Một huyền sử. / Một hành trình soi chiếu nội tâm.”, đặt trước mô
+   tả Lĩnh Nam chích quái hiện có. Tagline **không** nhân sang 34 trang toàn văn.
+6. Headline/Subheadline các `.page-hero` khác, ảnh Mẫu Liễu Hạnh, CTA, proof,
+   entrance và nội dung trang chủ đều giữ nguyên.
+
+### Tệp và kiểm thử chống giẫm chân
+
+- `templates/home.html`: chỉ thêm class định danh cho Subheadline và xuống dòng
+  markup; câu chữ không đổi.
+- `templates/huyen-su.html`: thêm một `page-hero-tagline` cho hub Huyền sử.
+- `public/assets/css/critical.css`, `public/assets/css/main.css`: typography và
+  shadow phải khớp từng con số để tránh nhảy ở LCP.
+- `scripts/build.js`: preload Harmoni cho trang chủ thay Fontasia vì font LCP đã
+  đổi; không tải ưu tiên một font không còn dùng ở khung đầu.
+- `tests/hero-carousel.test.mjs`: khóa copy trang chủ, typography, hai breakpoint,
+  mức shadow, tagline Huyền sử và phạm vi không lan sang trang truyện.
+- `tests/critical-css.test.mjs`: khóa preload Harmoni mới.
+
+### Xác minh trên branch
+
+```text
+npm run build:local   PASS — 86 URL
+npm test              PASS — 29/29 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+Chromium cục bộ sau entrance:
+
+- Home 1440×900: Headline `132px`, Harmoni italic 900, bốn dòng, Subheadline
+  kết thúc tại y=`840.6px`, cover shadow mới đã áp dụng, overflow ngang `0`.
+- Home 390×844: Headline `72.15px`, bốn dòng, cao `293.25px`; Subheadline và hai
+  CTA vẫn nằm trong khung đầu, overflow ngang `0`.
+- `/huyen-su/` 1280×720: tagline và mô tả cũ đều hiện sau entrance, hero cao
+  `692.8px`, overflow ngang `0`.
+- `/huyen-su/` 390×844: headline, tagline và mô tả đều nằm gọn trong hero cao
+  `507px`, overflow ngang `0`.

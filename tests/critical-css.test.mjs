@@ -92,8 +92,8 @@ test("preload đúng font dùng ở màn hình đầu", async () => {
     assert.match(home, pattern);
     assert.match(card, pattern);
   }
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
-  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
   assert.match(card, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
   assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:be-vietnam-pro-(?:400|600)|charm-)/);
