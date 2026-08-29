@@ -2007,3 +2007,84 @@ body::before {
 @media(min-width:1101px){.home-page .hero{grid-template-columns:minmax(0,2fr) minmax(0,3fr)}.home-page .hero-stage{grid-area:1/1;justify-self:start}.home-page .hero-copy{grid-area:1/2}.home-page .hero-overlay{background:radial-gradient(ellipse 76% 74% at 78% 34%,rgb(255 251 235 / 66%) 0%,transparent 72%),linear-gradient(180deg,rgb(255 251 235 / 8%) 0%,rgb(255 251 235 / 20%) 56%,rgb(255 251 235 / 78%) 100%),linear-gradient(90deg,rgb(255 251 235 / 5%) 0%,rgb(255 251 235 / 18%) 38%,rgb(255 251 235 / 76%) 72%,rgb(255 251 235 / 92%) 100%)}}
 @media(max-width:1100px){.home-page .hero{grid-template-columns:1fr;gap:34px;padding-top:48px}.home-page .hero-stage{justify-self:center}.home-page .hero h1{font-size:clamp(52px,14vw,68px)}}
 @media(max-width:620px){.home-page .hero-panel{padding:20px 18px}.home-page .hero-actions{display:grid}.home-page .hero-actions .button{width:100%}}
+
+/* Nghiêng rất nhẹ theo con trỏ/chạm. Module JS chỉ gắn .hd-tilt-ready khi
+   thiết bị cho phép chuyển động; trạng thái mặc định của thẻ vẫn giữ nguyên
+   để nội dung không phụ thuộc vào JavaScript. */
+.tarot-card.hd-tilt-ready,
+.card-art.hd-tilt-ready,
+.hd-card.hd-tilt-ready {
+  transform: perspective(900px) rotateX(var(--hd-tilt-x, 0deg)) rotateY(var(--hd-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 260ms cubic-bezier(.22, 1, .36, 1), border-color .2s ease;
+  will-change: transform;
+}
+.tarot-card.hd-tilt-ready:hover {
+  transform: translateY(-5px) perspective(900px) rotateX(var(--hd-tilt-x, 0deg)) rotateY(var(--hd-tilt-y, 0deg));
+}
+.hd-card.hd-tilt-ready:hover {
+  filter: brightness(1.18);
+  transform: perspective(900px) scale(1.05) rotateX(var(--hd-tilt-x, 0deg)) rotateY(var(--hd-tilt-y, 0deg));
+}
+.tarot-card.hd-tilt-ready.hd-tilt-active,
+.card-art.hd-tilt-ready.hd-tilt-active,
+.hd-card.hd-tilt-ready.hd-tilt-active { transition: border-color .2s ease; }
+
+/* Beam chỉ chạy trên một đoạn viền mảnh của thẻ giá dự kiến; nó không thêm
+   CTA hay trạng thái “đã đặt cọc” vào luồng mua hàng. */
+.price-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--gold) 28%, var(--line));
+  border-radius: 18px;
+  padding: clamp(28px, 4vw, 40px);
+  background: color-mix(in srgb, var(--paper-raised) 82%, transparent);
+  box-shadow: 0 14px 34px rgb(139 99 57 / 7%);
+}
+.price-panel::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 278deg,
+    color-mix(in srgb, var(--gold) 18%, transparent) 300deg,
+    color-mix(in srgb, var(--gold) 72%, transparent) 322deg,
+    transparent 346deg 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .48;
+  pointer-events: none;
+  animation: hd-border-beam 9s linear infinite;
+}
+.price-panel > * { position: relative; z-index: 1; }
+@keyframes hd-border-beam { to { transform: rotate(360deg); } }
+
+/* Chỉ bật trạng thái ẩn sau khi module reveal đã sẵn sàng; tắt chuyển động
+   hoàn toàn khi người dùng yêu cầu giảm chuyển động. */
+.hd-reveal-enabled .hd-reveal-item {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.hd-reveal-enabled .hd-reveal-item.hd-reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tarot-card.hd-tilt-ready,
+  .tarot-card.hd-tilt-ready:hover,
+  .card-art.hd-tilt-ready,
+  .hd-card.hd-tilt-ready,
+  .hd-card.hd-tilt-ready:hover { transform: none !important; transition: none !important; }
+  .price-panel::before { animation: none; opacity: .22; }
+  .hd-reveal-enabled .hd-reveal-item,
+  .hd-reveal-enabled .hd-reveal-item.hd-reveal-visible { opacity: 1; transform: none; }
+}

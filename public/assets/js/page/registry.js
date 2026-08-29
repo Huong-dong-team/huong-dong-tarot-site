@@ -19,10 +19,11 @@
    dùng chung — không ném lỗi, không chặn điều hướng. */
 const PAGES = {
   home: ["landing-drag"],
-  library: ["card-filters"],
-  card: ["symbol-tooltips"],
+  library: ["card-filters", "card-tilt"],
+  card: ["symbol-tooltips", "card-tilt"],
   daily: ["daily-card"],
-  spread: ["spread-deck"],
+  spread: ["spread-deck", "card-tilt"],
+  "huyen-su": ["huyen-su-reveal"],
 };
 
 /* Có mặt ở gần như mọi trang; rẻ và tự thoát ngay nếu không tìm thấy phần tử. */
@@ -30,12 +31,14 @@ const SHARED = ["share", "waitlist"];
 
 const LOADERS = {
   "card-filters": () => import("../ui/card-filters.js"),
+  "card-tilt": () => import("../ui/card-tilt.js"),
   "symbol-tooltips": () => import("../ui/symbol-tooltips.js"),
   share: () => import("../ui/share.js"),
   waitlist: () => import("../ui/waitlist.js"),
   "landing-drag": () => import("../landing-drag/init.js"),
   "daily-card": () => import("../daily-card/page.js"),
   "spread-deck": () => import("../trai-bai.js"),
+  "huyen-su-reveal": () => import("../ui/huyen-su-reveal.js"),
 };
 
 let teardowns = [];

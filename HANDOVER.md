@@ -1,5 +1,40 @@
 # BÀN GIAO VẬN HÀNH
 
+## Nhật ký phối hợp · Tilt lá bài, Border Beam giá dự kiến và reveal Huyền sử ngày 29/08/2026
+
+Branch: `feat/subtle-card-beam-reveal`, tách từ `origin/main` tại commit
+`5180ba7`. Chủ dự án là người review/merge; nhánh này **không tự deploy**.
+
+### Phạm vi và quyết định
+
+- `public/assets/js/ui/card-tilt.js` dùng Pointer Events + `requestAnimationFrame`,
+  giới hạn nghiêng tối đa 4° cho `.tarot-card`, `.card-art` và `.hd-card`.
+  MutationObserver bắt các lá được tạo động khi xáo trải bài và dọn listener khi
+  thẻ bị thay; thao tác chạm vẫn giữ nguyên click/lật bài. `prefers-reduced-motion`
+  tắt tilt và được tháo sạch khi Swup rời trang.
+- `public/assets/css/main.css` giữ transform lật 3D của trải bài, thêm lớp tilt
+  riêng và đường lui giảm chuyển động. Border Beam `hd-border-beam` chỉ bao
+  quanh thẻ giá dự kiến trong `/cua-hang/`; không thêm thanh toán, CTA đặt cọc
+  hay thay copy “không đặt cọc, không thu tiền trước”.
+- `public/assets/js/ui/huyen-su-reveal.js` nạp `motion-mini.mjs`, mở từng
+  section `.v2-prose` khi đi vào viewport, có fallback hiện tĩnh nếu Motion/
+  IntersectionObserver lỗi và dọn animation khi Swup thay DOM. Cả trang mục lục
+  và 34 trang toàn văn đều mang `data-page="huyen-su"`.
+- `public/assets/js/page/registry.js` là điểm nạp duy nhất; `scripts/build.js`
+  thêm `data-price-panel` vào thẻ giá và chuẩn hóa `transition-page` cho trang
+  toàn văn chương. `tests/motion-enhancements.test.mjs` khóa wiring, giới hạn
+  tilt, reduced-motion, giá 690.000đ và các route Huyền sử.
+
+### QA cục bộ
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin và 95 URL
+npm test              PASS — 32/32 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+node --check (3 module) PASS
+```
+
 ## Nhật ký phối hợp · Sổ tay Tarot Việt hóa ngày 29/08/2026
 
 Branch: `feat/huong-dan-tarot-viet-hoa`, tách từ `origin/main` tại commit

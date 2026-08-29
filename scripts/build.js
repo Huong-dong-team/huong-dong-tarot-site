@@ -90,7 +90,7 @@ function lncqChapterHtml(c, prev, next) {
     ? `<p class="lncq-cards"><strong>Truyện này ứng với:</strong> ${c.cards.map((k) => `<a class="v2-link" href="/la-bai/${k.slug}/">${escapeHtml(k.roman)}</a>`).join(" · ")}</p>`
     : `<p class="lncq-cards lncq-nocard">Truyện này chưa gắn với lá Ẩn chính nào.</p>`;
   const nav = `<nav class="card-pagination" aria-label="Điều hướng truyện">${prev ? `<a href="/huyen-su/${prev.slug}/">← ${escapeHtml(prev.title)}</a>` : "<span></span>"}<a href="/huyen-su/">Đủ 34 truyện</a>${next ? `<a href="/huyen-su/${next.slug}/">${escapeHtml(next.title)} →</a>` : "<span></span>"}</nav>`;
-  return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
+  return `<main id="noi-dung-chinh" class="transition-page" data-page="huyen-su"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
 const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "huong-dan-tarot", "huong-dan-dat-cau-hoi", "huong-dan-xao-bai", "huong-dan-doc-la-bai", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
@@ -722,12 +722,15 @@ const newPages = [
   { route: "/cua-hang/", tpl: "cua-hang", title: "Cửa hàng", crumb: "Cửa hàng", description: "Giới thiệu bộ bài Hường Đông Tarot và danh sách chờ. Chưa mở bán, không thu tiền trước." },
 ];
 for (const page of newPages) {
+  const pageTemplate = page.tpl === "cua-hang"
+    ? templates[page.tpl].replace('<section class="v2-prose" id="bo-bai"', '<section class="v2-prose price-panel" id="bo-bai" data-price-panel')
+    : templates[page.tpl];
   await emit(page.route, layout({
     title: page.title,
     description: page.description,
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
-    content: renderString(templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
+    content: renderString(pageTemplate.replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
   }));
 }
 
