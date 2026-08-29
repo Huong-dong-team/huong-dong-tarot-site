@@ -736,9 +736,13 @@ h3 { line-height: 1.12; }
   -webkit-text-stroke: .7px rgb(83 45 18 / 88%);
 }
 
-/* Headline và subheadline page hero dùng Fontasia Regular, giữ nguyên cỡ chữ,
-   vàng chanh và bóng nâu đã chốt để đứng được trên tranh opacity 1 mà không
-   cần phủ giấy đục lên toàn Hero. */
+/* Label page hero dùng màu nhãn riêng; headline và subheadline dùng Fontasia
+   Regular, vàng chanh và bóng nâu đã chốt để đứng được trên tranh opacity 1. */
+.page-hero > .eyebrow {
+  color: var(--hero-label);
+  font-family: var(--hero-ui);
+  font-size: 15.6px;
+}
 .page-hero > h1 {
   color: var(--hero-lemon);
   font-family: var(--script);
@@ -760,6 +764,7 @@ h3 { line-height: 1.12; }
   font-style: normal;
   font-weight: 400;
   letter-spacing: .01em;
+  font-size: 23.4px;
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 92%),
     1px -1px 0 rgb(43 27 18 / 92%),

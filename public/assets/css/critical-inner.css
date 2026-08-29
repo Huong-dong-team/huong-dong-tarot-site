@@ -23,6 +23,11 @@
   color: var(--ink);
 }
 .page-hero > h1, .page-hero > p { max-width: 900px; }
+.page-hero > .eyebrow {
+  color: var(--hero-label);
+  font-family: var(--hero-ui);
+  font-size: 15.6px;
+}
 .page-hero > h1 {
   color: var(--hero-lemon);
   font-family: var(--script);
@@ -43,7 +48,7 @@
   font-style: normal;
   font-weight: 400;
   letter-spacing: .01em;
-  font-size: 18px;
+  font-size: 23.4px;
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 92%),
     1px -1px 0 rgb(43 27 18 / 92%),

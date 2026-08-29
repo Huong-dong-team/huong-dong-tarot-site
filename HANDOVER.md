@@ -40,6 +40,36 @@ review/merge; branch này chưa merge và chưa deploy.
   `qa/subpage-fontasia-390x844.png`; chi tiết quyết định nằm trong
   `design-qa.md`.
 
+## Nhật ký phối hợp · Tăng label và subheadline Hero subpage ngày 29/08/2026
+
+Branch: `feat/subpage-label-subheadline-scale`, tách từ `origin/main` tại
+`1433f94` (merge PR #61 đã deploy production). Chủ dự án là người review/merge;
+branch này chưa merge và chưa deploy.
+
+### Phạm vi và quyết định
+
+- Giữ nguyên headline Fontasia, màu vàng `#FEDB44`, copy, bóng, layout và Hero
+  trang chủ. Chỉ chỉnh các selector page hero trên route trong.
+- Label `.page-hero > .eyebrow` tách khỏi vàng bằng `var(--hero-label)`
+  (`#8B7355`), dùng `var(--hero-ui)` (Inter) và tăng từ `12px` lên `15.6px`
+  (~30%).
+- Subheadline `.page-hero > p:not(.eyebrow)` vẫn Fontasia Regular 400, vàng
+  `var(--hero-lemon)`, tăng từ `18px` lên `23.4px` (~30%) ở desktop/mobile.
+- Critical CSS và main stylesheet đồng bộ; test khóa màu/font/cỡ mới ở cả hai
+  nguồn để tránh lệch cascade hoặc FOUT.
+
+### QA và bằng chứng
+
+- `npm run build:local`: PASS — 78 trang lá, 2 bài tin, 95 URL.
+- `npm test`: PASS — 31/31; `npm run check:types`: PASS; `git diff --check`:
+  PASS.
+- `/huyen-su/` 1440×900: label `15.6px` `rgb(139, 115, 85)`, subheadline
+  `23.4px`, headline `117px`, overflow ngang `0`, Fontasia loaded.
+- `/huyen-su/` 390×844: label `15.6px`, subheadline `23.4px`, Hero cao
+  `528.3px`, overflow ngang `0`, không cắt/tràn; console không có lỗi/cảnh báo.
+- Ảnh QA: `qa/subpage-label-subheadline-1440x900.png` và
+  `qa/subpage-label-subheadline-390x844.png`.
+
 ### Nguồn và nguyên tắc biên tập
 
 - `TEVADA_Tarot_Guidebook_VI_1.docx` chỉ được dùng để kiểm kê framework: nhập
