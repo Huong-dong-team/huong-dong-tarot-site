@@ -40,6 +40,7 @@
  * @property {string} nameEn
  * @property {string} [nameFolk]        tên dân gian; thiếu thì lùi về nameVi
  * @property {string} [suit]            chỉ Ẩn Phụ mới có
+ * @property {string} [rankVi]          cấp bài Ẩn Phụ: Át, Hai… Quốc Vương
  * @property {string} meaningUpright
  * @property {string} meaningReversed
  * @property {string} story
@@ -76,6 +77,7 @@
  *   keywordHtml?: string,
  *   symbolHtml?: string,
  *   minorDetailsHtml?: string,
+ *   reflectionHtml: string,
  * }} EnrichedCard
  */
 

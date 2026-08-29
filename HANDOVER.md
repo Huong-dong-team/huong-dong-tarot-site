@@ -1,5 +1,71 @@
 # BÀN GIAO VẬN HÀNH
 
+## Nhật ký phối hợp · Sổ tay Tarot Việt hóa ngày 29/08/2026
+
+Branch: `feat/huong-dan-tarot-viet-hoa`, tách từ `origin/main` tại commit
+`20636bf`. Chủ dự án là người review/merge; nhánh không tự deploy.
+
+### Nguồn và nguyên tắc biên tập
+
+- `TEVADA_Tarot_Guidebook_VI_1.docx` chỉ được dùng để kiểm kê framework: nhập
+  môn, đặt câu hỏi, xáo bài, trải bài và 78 lá. Không chép lại lời văn, quảng cáo,
+  liên kết hay tuyên bố thương hiệu TEVADA.
+- Giọng Hường Đông được giữ nhất quán: bình tĩnh, gần gũi với trải nghiệm Việt,
+  quan sát trước diễn giải, Tarot là công cụ soi chiếu chứ không phán tương lai.
+- Các hướng dẫn đều phân biệt dữ kiện với diễn giải và trả quyền quyết định về
+  người đọc. Không dùng Tarot thay tư vấn y tế, pháp lý hoặc tài chính.
+- Không ghi đè dữ liệu 78 lá: repo đã có nghĩa RWS, lớp liên tưởng Việt, trường
+  nguồn và nội dung chuyên đề sâu hơn guidebook. Thay vào đó, thư viện và mọi
+  trang chi tiết được nối về phương pháp đọc chung.
+
+### Kiến trúc nội dung
+
+- `/huong-dan-tarot/`: trang trụ cột và bài thực hành mười phút với một lá.
+- `/huong-dan-tarot/dat-cau-hoi/`: bốn tiêu chí, bảng gọt câu hỏi và công thức.
+- `/huong-dan-tarot/xao-bai/`: ba cách xáo, quy trình rút, cách dùng lá ngược.
+- `/huong-dan-tarot/doc-la-bai/`: phương pháp năm lớp, ví dụ Mai An Tiêm và cách
+  nối ba lá.
+- `/tarot-la-gi/`, `/trai-bai/`, `/la-bai/` và 78 trang `/la-bai/*` có đường dẫn
+  học tiếp theo ngữ cảnh. Bốn route hướng dẫn đã vào sitemap và có breadcrumb.
+- Ba route `/trai-bai/co-khong/`, `/trai-bai/ba-la/`, `/trai-bai/tinh-yeu/` vẫn
+  `noindex,follow`: không tự thay quyết định sản phẩm đang chờ duyệt Lớp 3.
+
+### Xác minh
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin, 95 URL
+npm test              PASS — 30/30 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
+### Bổ sung lớp soi chiếu và trải bài chiều sâu
+
+Theo yêu cầu tiếp theo, nội dung được mở rộng bằng một khung đọc biểu tượng và
+tự phản tư, nhưng website không nêu tên nguồn lý thuyết, không dùng thuật ngữ
+để tạo uy quyền học thuật và không tự nhận là phương pháp trị liệu.
+
+- `content/reflection-lenses.mjs` là nguồn nội dung tĩnh: 22 mẫu hình riêng cho
+  Ẩn Chính; 56 Ẩn Phụ được tạo từ bốn địa hạt Tre/Sen/Dâu Tằm/Lúa kết hợp đủ 14
+  chặng Át–Mười và bốn lá Hoàng gia.
+- Mỗi trang lá có bốn phần mới: mẫu hình đang hiện ra, phần dễ bị bỏ quên, câu
+  hỏi đối thoại với hình ảnh và một bước tích hợp vào đời sống.
+- `/trai-bai/` có ba khung mới: Điều đang thể hiện; Bốn tiếng nói bên trong;
+  Bước qua ngưỡng cửa. Phần thực hành yêu cầu xem câu trả lời tưởng tượng như
+  giả thuyết và kiểm lại bằng dữ kiện, giá trị, hậu quả.
+- Ranh giới được in ngay trong nội dung: không kết luận tính cách, không chẩn
+  đoán tâm lý, không xác minh ý định người khác và không thay thế hỗ trợ chuyên
+  môn. Khi người đọc bị choáng ngợp, hướng dẫn yêu cầu dừng bài.
+- Test hồi quy kiểm đủ 78/78 trang, đủ 22 + 4×14 lớp nội dung, và quét toàn bộ
+  HTML xuất bản để bảo đảm tên bị cấm không xuất hiện.
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin, 95 URL
+npm test              PASS — 31/31 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
 ## Biến môi trường phải điền
 
 - `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.id.vn`.
