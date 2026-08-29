@@ -224,6 +224,55 @@ npm run check:types   PASS
 git diff --check      PASS
 ```
 
+## Nhật ký phối hợp · Hero Watercolor Fontasia ngày 29/08/2026
+
+Branch: `feat/hero-watercolor-fontasia-layout`. Đây là PR mới độc lập; PR #56
+giữ nguyên. Chủ dự án là người merge và triển khai production.
+
+### Phạm vi đã chốt
+
+1. Giữ nguyên toàn bộ copy Hero. “THÔNG MINH” chỉ là ví dụ tham chiếu; HTML chỉ
+   bọc đúng cụm “câu chuyện Việt” để nhận stroke coral.
+2. Desktop dùng lưới 40/60: ảnh sản phẩm trong card kính ở trái; headline và
+   panel mô tả/CTA/stats ở phải. Mobile giữ DOM copy trước, ảnh sau.
+3. Headline/subheadline dùng `Fontasia VH` Regular 400, không synthetic
+   bold/italic. Headline có thân `#FAF8D0`, stroke `#C9A96E`; cụm nhấn dùng
+   `#C84040`. Subheadline chỉ dùng nâu ấm `#3D2B1A`, không gradient/stroke/bóng.
+4. Hero labels/UI dùng Inter Regular tự host. CTA chính coral `#C84040`, CTA phụ
+   vàng `#F5C842`. Phần còn lại của website tiếp tục dùng hệ font cũ.
+5. Watercolor background giữ asset hiện có và nhận ba lớp phủ: radial bảo vệ
+   nội dung, gradient dọc đậm về đáy, gradient ngang đậm về phải.
+
+### Code và ràng buộc chống giẫm chân
+
+- `templates/home.html`: thêm `.hero-headline-accent` và `.hero-panel`; không đổi
+  chuỗi nội dung, href hoặc số liệu.
+- `critical.css` và `main.css`: đồng bộ Fontasia, 40/60, frosted fallback,
+  overlay, CTA và responsive. Cascade lock cuối `main.css` là cần thiết vì file
+  vẫn chứa các lớp Hero lịch sử được nối theo thứ tự cũ.
+- `fonts.css` + `inter-400*.woff2`: Inter 400 Vietnamese/Latin được tải từ Google
+  Fonts chính thức bằng `tools/scripts/fetch-fonts.mjs`.
+- `scripts/build.js`: Home preload Fontasia + Inter; route trong loại các font
+  và luật Home không dùng khỏi critical CSS để giữ dưới 20 KB.
+- Tests khóa copy, span coral, Fontasia/Inter, token màu, lưới 40/60, frosted
+  fallback, preload và ngân sách critical.
+
+### QA và công cụ thiết kế
+
+- 1440×900: Hero cao 824px dưới header 76px; cột 537.6/806.4px; không overflow;
+  console sạch.
+- 768×1024 và 390×844: copy trước ảnh, CTA không tràn, ảnh giữ tỷ lệ.
+- Ảnh trước/sau và responsive nằm trong `qa/`; báo cáo ở `design-qa.md`.
+- Figma file đã tạo: `https://www.figma.com/design/UXMAyAaKaNaEo2fi174zcB`, nhưng
+  Starter plan chặn MCP capture. Canva fallback cũng bị monthly AI limit. Không
+  có capture script tạm thời nào còn trong source.
+
+```text
+npm run build:local   PASS — 86 URL
+npm run check:types   PASS
+npm test              PASS — 29/29 tệp test
+```
+
 Chromium cục bộ `/huyen-su/` sau khi animation kết thúc:
 
 - Desktop 1366px: Hero `1351 × 551px`, opacity `0.14`, AVIF 1536, position

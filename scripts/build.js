@@ -120,7 +120,17 @@ async function loadCriticalCss(files) {
 // là dùng chung; critical-inner.css không đi theo trang chủ, tránh gửi các luật
 // card-detail/v2-prose không bao giờ dùng ở route `/`.
 const criticalBaseCss = await loadCriticalCss(["fonts.css", "custom-fonts.css", "critical.css"]);
-const criticalInnerCss = `${criticalBaseCss} ${await loadCriticalCss(["critical-inner.css"])}`;
+// Route trong chỉ cần Be Vietnam Pro và Harmoni ở khung đầu. Gỡ các face dành
+// riêng cho Hero/trích dẫn/card khỏi critical CSS để giữ ngân sách inline 20 KB.
+const criticalInnerBaseCss = criticalBaseCss
+  .replace(/@font-face\s*\{[^}]*font-family:\s*"(?:Inter|Fontasia VH|Ganh|DFVN TAN Mon Cheri)"[^}]*\}/g, "")
+  .replace(/\.home-page \.hero h1(?: \.hero-headline-accent)?\s*\{[^}]*\}/g, "")
+  .replace(/\.home-page \.hero \.hero-subheadline\s*\{[^}]*\}/g, "")
+  .replace(/\.hero-panel\s*\{[^}]*\}/g, "")
+  // `.hero` không phải `.page-hero`; route trong không dựng khối trang chủ này.
+  .replace(/\.hero\s*\{[^}]*\}/g, "")
+  .replace(/\.hero-overlay\s*\{[^}]*\}/g, "");
+const criticalInnerCss = `${criticalInnerBaseCss} ${await loadCriticalCss(["critical-inner.css"])}`;
 const dateLabel = (value) => new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", day: "2-digit", month: "2-digit", year: "numeric" }).format(new Date(value || Date.now()));
 const roman = (number) => ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI"][number] || String(number);
 const arcanaLabel = (card) => card.arcana === "major" ? "Ẩn Chính" : "Ẩn Phụ";
@@ -429,12 +439,14 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
   ];
-  /* Hero trang chủ dùng cả Ganh thường và nghiêng; route trong vẫn dùng Harmoni
-     cho H1. Chỉ preload họ font xuất hiện ở khung đầu của từng loại trang. */
+  /* Hero trang chủ dùng Fontasia cho headline/subheadline và Inter Regular cho
+     nhãn, CTA, số liệu. Route trong vẫn dùng Harmoni cho H1. Chỉ preload họ
+     font xuất hiện ở khung đầu của từng loại trang. */
   const displayFontPreloads = bodyClass === "home-page"
     ? [
-      '<link rel="preload" href="/assets/fonts/ganh-400.woff2" as="font" type="font/woff2" crossorigin>',
-      '<link rel="preload" href="/assets/fonts/ganh-400-italic.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/inter-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>',
     ]
     : ['<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>'];
   return renderString(templates._layout, {

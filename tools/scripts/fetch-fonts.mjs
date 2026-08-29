@@ -19,6 +19,7 @@ const OUT_CSS = "../public/assets/css/fonts.css";
 
 const FAMILIES = [
   "Be+Vietnam+Pro:wght@400;500;600;700",
+  "Inter:wght@400",
 ];
 
 mkdirSync(OUT_FONTS, { recursive: true });
