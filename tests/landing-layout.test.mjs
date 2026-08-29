@@ -12,7 +12,9 @@ test("hai section dài có nhịp biên tập riêng trên màn hình rộng", a
     read("public/assets/css/main.css"),
     read("dist/index.html"),
   ]);
-  const editorialCss = css.slice(css.indexOf("Hai nhịp biên tập phá lưới"));
+  const editorialStart = css.indexOf("Hai nhịp biên tập phá lưới");
+  const editorialEnd = css.indexOf("Cascade lock cho Hero", editorialStart);
+  const editorialCss = css.slice(editorialStart, editorialEnd);
 
   assert.match(home, /<section class="story-section[^>]*id="cau-chuyen"/);
   assert.match(home, /<section class="pack-section[^>]*id="bao-bai"/);

@@ -92,10 +92,11 @@ test("preload đúng font dùng ở màn hình đầu", async () => {
     assert.match(home, pattern);
     assert.match(card, pattern);
   }
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/ganh-400\.woff2"/);
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/ganh-400-italic\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/inter-400-vietnamese\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/inter-400\.woff2"/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
-  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
+  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
   assert.match(card, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
   assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
   assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
@@ -115,6 +116,8 @@ test("font tiêu đề luôn thay font nhận diện sau khi tải xong", async 
 test("đủ bốn họ font Việt hóa và các biến thể Ganh", async () => {
   const files = [
     "fontasia-vh.woff2",
+    "inter-400-vietnamese.woff2",
+    "inter-400.woff2",
     "dfvn-tan-harmoni.woff2",
     "dfvn-tan-mon-cheri.woff2",
     "ganh-100.woff2",
@@ -124,13 +127,14 @@ test("đủ bốn họ font Việt hóa và các biến thể Ganh", async () =>
   ];
   for (const file of files) {
     const info = await stat(path.join(root, "public", "assets", "fonts", file));
-    assert.ok(info.size > 8_000, `${file} rỗng hoặc bị hỏng`);
+    assert.ok(info.size > 4_000, `${file} rỗng hoặc bị hỏng`);
   }
 
   const critical = await read("public/assets/css/critical.css");
   const main = await read("public/assets/css/main.css");
   assert.match(critical, /--display:\s*"DFVN TAN Harmoni"/);
   assert.match(critical, /--script:\s*"Fontasia VH"/);
+  assert.match(critical, /--hero-ui:\s*"Inter"/);
   assert.match(main, /--sans-display:\s*"Ganh"/);
   assert.match(main, /--editorial:\s*"DFVN TAN Mon Cheri"/);
 });

@@ -82,7 +82,8 @@ test("hero có nút đi tới Lá bài hôm nay", async () => {
   // nên mọi lần sửa chữ tiếp thị đều làm đỏ một test về carousel — chỗ không
   // liên quan. Điều phải bảo đảm ở đây là hero luôn có một lối sang trang rút
   // lá trong ngày; viết nhãn thế nào là việc của nội dung.
-  assert.match(html, /<h1>[^<]*(<br>)?[^<]*<\/h1>/, "hero phải có h1");
+  assert.match(html, /<h1>Hường Đông kể Tarot<br>bằng <span class="hero-headline-accent">câu chuyện Việt<\/span><\/h1>/,
+    "hero phải giữ headline và span nhấn coral");
   assert.match(html, /class="button hero-daily-button" href="\/la-bai-hom-nay\/"/);
 });
 
@@ -152,91 +153,40 @@ test("dòng eyebrow của hero giữ chỗ đủ hai dòng trên màn hình hẹ
   assert.equal(Number(lineHeight) * 2, 2.4, `line-height .eyebrow là ${lineHeight}, min-height phải là ${Number(lineHeight) * 2}em`);
 });
 
-test("Hero trang chủ giữ nguyên nội dung và dùng typography của mẫu HTML", async () => {
-  const [html, critical, criticalInner, main] = await Promise.all([
+test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu", async () => {
+  const [html, critical, main] = await Promise.all([
     home(),
     read("public/assets/css/critical.css"),
-    read("public/assets/css/critical-inner.css"),
     read("public/assets/css/main.css"),
   ]);
 
-  assert.match(html, /<h1>Hường Đông kể Tarot<br>bằng câu chuyện Việt<\/h1>/,
-    "headline phải giữ nguyên nội dung của website");
-  assert.match(html, /<p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith,[\s\S]*?chỉ thay hình ảnh để dễ nhớ\.<\/p>/,
-    "subheadline phải giữ nguyên nội dung của website");
-  assert.doesNotMatch(html, /Một bộ bài\. Một huyền sử\./,
-    "câu của file mẫu chỉ được thêm ở trang Huyền sử, không thay copy trang chủ");
-
-  // Critical và CSS đầy đủ phải cùng typography để không nhảy ngay lúc main.css
-  // về: Ganh cũ, nghiêng, in hoa và nhịp dòng sít như file mẫu.
-  for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
-    const clamps = [...css.matchAll(/\.home-page \.hero h1[^{]*\{[^}]*font-size:\s*clamp\(([^)]*)\)/g)]
-      .map((match) => match[1].split(",").map((part) => parseFloat(part)));
-    assert.equal(clamps.length, 2, `${ten}: khẩu hiệu phải có đúng hai cỡ — rộng và hẹp`);
-    const [rong, hep] = clamps.sort((a, b) => b[2] - a[2]);
-    assert.deepEqual(rong, [77.4, 8.46, 118.8], `${ten}: headline rộng chưa giảm đúng 10%`);
-    assert.deepEqual(hep, [61.2, 16.65, 84.6], `${ten}: headline hẹp chưa giảm đúng 10%`);
-
-    const headline = css.match(/\.home-page \.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-    assert.match(headline, /font-family:\s*var\(--sans-display\)/, `${ten}: headline chưa dùng Ganh`);
-    assert.match(headline, /font-style:\s*italic/, `${ten}: headline chưa nghiêng như mẫu`);
-    assert.match(headline, /font-weight:\s*400/, `${ten}: headline chưa dùng đúng weight Ganh có sẵn`);
-    assert.match(headline, /line-height:\s*\.94/, `${ten}: sai nhịp dòng headline`);
-    assert.match(headline, /letter-spacing:\s*\.035em/, `${ten}: sai khoảng chữ headline`);
-    assert.match(headline, /text-transform:\s*uppercase/, `${ten}: headline chưa in hoa như mẫu`);
-    assert.match(headline, /-webkit-text-stroke:\s*\.7px rgb\(83 45 18 \/ 88%\)/, `${ten}: thiếu cạnh dập nổi`);
-    assert.match(css, /--hero-bronze:\s*#B77A2F/i, `${ten}: thiếu token vàng đồng #B77A2F`);
-    assert.match(headline, /color:\s*var\(--hero-bronze\)/, `${ten}: headline chưa dùng vàng đồng`);
-    if (ten === "main.css") {
-      assert.match(headline, /background-image:\s*var\(--hero-metal\)/, `${ten}: headline thiếu dải màu kim loại`);
-      assert.match(headline, /background-clip:\s*text/, `${ten}: dải kim loại chưa được cắt theo thân chữ`);
-      assert.match(css, /--hero-bronze-dark:\s*#5E3215/i, `${ten}: thiếu sắc đồng tối #5E3215`);
-      assert.match(css, /--hero-bronze-light:\s*#E4B45E/i, `${ten}: thiếu sắc đồng sáng #E4B45E`);
-      assert.match(css, /--hero-pearl:\s*#FFF3DC/i, `${ten}: thiếu điểm lóe ngọc trai #FFF3DC`);
-    }
-  }
-
-  const shadow = main.match(/\.hero h1 \{([\s\S]*?)\}/)?.[1] || "";
-  assert.match(shadow, /text-shadow:[\s\S]*0 1px 0 rgb\(255 243 220 \/ 68%\)[\s\S]*0 2\.5px 0 rgb\(92 49 19 \/ 82%\)[\s\S]*0 7px 16px rgb\(79 45 19 \/ 38%\)/,
-    "headline phải có sáng cạnh, cạnh đồng tối và bóng khối");
-  assert.doesNotMatch(shadow, /-1px -1px|94%/, "không được khôi phục viền bóng tối bao kín bốn phía");
-
-  for (const [ten, selector, css] of [
-    ["critical.css", /\.home-page \.hero \.hero-subheadline \{([\s\S]*?)\}/, critical],
-    ["main.css", /\.home-page \.hero \.hero-subheadline \{([\s\S]*?)\}/, main],
-  ]) {
-    const subheadline = css.match(selector)?.[1] || "";
-    assert.match(subheadline, /font-family:\s*var\(--sans-display\)/, `${ten}: subheadline chưa dùng Ganh`);
-    assert.match(subheadline, /font-weight:\s*400/, `${ten}: subheadline chưa dùng đúng weight Ganh`);
-    assert.match(subheadline, /font-size:\s*clamp\(15\.3px,\s*1\.35vw,\s*18px\)/,
-      `${ten}: subheadline chưa giảm đúng 10%`);
-    assert.match(subheadline, /max-width:\s*34ch/, `${ten}: subheadline chưa bó chiều dài đọc`);
-    assert.match(subheadline, /line-height:\s*1\.72/, `${ten}: sai nhịp dòng subheadline`);
-    assert.match(subheadline, /letter-spacing:\s*\.015em/, `${ten}: sai khoảng chữ subheadline`);
-    assert.match(subheadline, /color:\s*var\(--hero-bronze\)/, `${ten}: subheadline chưa dùng vàng đồng`);
-    assert.match(subheadline, /-webkit-text-stroke:\s*\.35px rgb\(83 45 18 \/ 86%\)/,
-      `${ten}: subheadline thiếu cạnh dập nổi`);
-    assert.match(subheadline, /text-shadow:[\s\S]*0 \.75px 0 rgb\(255 243 220 \/ 72%\)[\s\S]*0 1\.75px 0 rgb\(92 49 19 \/ 78%\)[\s\S]*0 4px 10px rgb\(79 45 19 \/ 34%\)/,
-      `${ten}: subheadline thiếu sáng cạnh và bóng tạo khối`);
-    if (ten === "main.css") {
-      assert.match(subheadline, /background-image:\s*var\(--hero-metal\)/, `${ten}: subheadline thiếu dải màu kim loại`);
-      assert.match(subheadline, /background-clip:\s*text/, `${ten}: dải kim loại subheadline chưa cắt theo chữ`);
-    }
-  }
+  assert.match(html, /<h1>Hường Đông kể Tarot<br>bằng <span class="hero-headline-accent">câu chuyện Việt<\/span><\/h1>/,
+    "chỉ cụm câu chuyện Việt được bọc để nhấn coral, copy không đổi");
+  assert.match(html, /<div class="hero-panel">[\s\S]*?<p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith,[\s\S]*?chỉ thay hình ảnh để dễ nhớ\.<\/p>[\s\S]*?<dl class="proof">/,
+    "subheadline, CTA và stats phải nằm chung trong panel kính");
+  assert.doesNotMatch(html, /THÔNG MINH|Một bộ bài\. Một huyền sử\./,
+    "nội dung tham chiếu không được đưa vào Hero trang chủ");
 
   for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
-    const cover = css.match(/\.hero-product \{([\s\S]*?)\}/)?.[1] || "";
-    assert.match(cover, /0 14px 34px rgb\(139 99 57 \/ 9%\)/, `${ten}: bóng cover chưa được giảm`);
-    assert.doesNotMatch(cover, /var\(--shadow\)/, `${ten}: cover còn dùng bóng card nặng cũ`);
-  }
-
-  for (const [ten, css] of [["critical-inner.css", criticalInner], ["main.css", main]]) {
-    assert.match(css, /\.page-hero > h1\s*\{[\s\S]*?font-size:\s*clamp\(65px,\s*9\.1vw,\s*117px\)/,
-      `${ten}: Headline trang trong chưa tăng đúng 30% ở khung rộng`);
-    assert.match(css, /@media\s*\(max-width:\s*620px\)[\s\S]*?\.page-hero > h1\s*\{\s*font-size:\s*63\.7px/,
-      `${ten}: Headline trang trong chưa tăng đúng 30% trên mobile`);
-    assert.match(css, /\.page-hero > p:not\(\.eyebrow\)\s*\{[\s\S]*?color:\s*var\(--hero-lemon\)/,
-      `${ten}: Subheadline trang trong chưa dùng vàng chanh`);
+    assert.match(css, /--hero-champagne:\s*#C9A96E/i, `${ten}: thiếu champagne gold`);
+    assert.match(css, /--hero-coral:\s*#C84040/i, `${ten}: thiếu coral`);
+    assert.match(css, /--hero-yellow:\s*#F5C842/i, `${ten}: thiếu vàng CTA`);
+    assert.match(css, /--hero-pearl:\s*#FAF8D0/i, `${ten}: thiếu ngọc trai`);
+    assert.match(css, /--hero-warm-brown:\s*#3D2B1A/i, `${ten}: thiếu nâu body`);
+    assert.match(css, /--hero-label:\s*#8B7355/i, `${ten}: thiếu nâu label`);
+    assert.match(css, /grid-template-columns:\s*minmax\(0,\s*2fr\)\s*minmax\(0,\s*3fr\)/,
+      `${ten}: Hero desktop chưa khóa tỷ lệ 40\/60`);
+    assert.match(css, /font-family:\s*var\(--script\)/, `${ten}: headline chưa dùng Fontasia`);
+    assert.match(css, /font-size:\s*clamp\(68px,\s*6\.6vw,\s*104px\)/, `${ten}: sai cỡ headline desktop`);
+    assert.match(css, /font-size:\s*clamp\(52px,\s*14vw,\s*68px\)/, `${ten}: sai cỡ headline mobile`);
+    assert.match(css, /-webkit-text-fill-color:\s*var\(--hero-pearl\)/, `${ten}: headline thiếu thân ngọc trai`);
+    assert.match(css, /-webkit-text-stroke:\s*1\.25px var\(--hero-champagne\)/, `${ten}: headline thiếu stroke champagne`);
+    assert.match(css, /hero-headline-accent[^}]*-webkit-text-stroke-color:\s*var\(--hero-coral\)/s,
+      `${ten}: cụm nhấn chưa dùng coral`);
+    assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
+      `${ten}: subheadline phải là Fontasia một màu, không stroke hoặc shadow`);
+    assert.match(css, /\.hero-panel[^}]*background:\s*#FFF8E7/s, `${ten}: thiếu fallback cream khi không có backdrop-filter`);
+    assert.match(css, /backdrop-filter:\s*blur\(18px\) saturate\(115%\)/, `${ten}: thiếu frosted blur`);
   }
 });
 
