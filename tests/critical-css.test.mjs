@@ -122,12 +122,17 @@ test("headline và subheadline của mọi subpage dùng Fontasia cùng màu và
   for (const [name, css] of [["critical-inner.css", inner], ["main.css", main]]) {
     const headline = css.match(/\.page-hero > h1\s*\{([\s\S]*?)\}/)?.[1] || "";
     const subheadline = css.match(/\.page-hero > p:not\(\.eyebrow\)\s*\{([\s\S]*?)\}/)?.[1] || "";
+    const label = css.match(/\.page-hero > \.eyebrow\s*\{([\s\S]*?)\}/)?.[1] || "";
     assert.match(headline, /font-family:\s*var\(--script\)/, `${name}: headline subpage chưa dùng Fontasia`);
     assert.match(headline, /font-weight:\s*400/, `${name}: headline subpage không giữ Regular 400`);
     assert.match(headline, /color:\s*var\(--hero-lemon\)/, `${name}: headline subpage không giữ vàng hiện tại`);
     assert.match(subheadline, /font-family:\s*var\(--script\)/, `${name}: subheadline subpage chưa dùng Fontasia`);
     assert.match(subheadline, /font-weight:\s*400/, `${name}: subheadline subpage không giữ Regular 400`);
     assert.match(subheadline, /color:\s*var\(--hero-lemon\)/, `${name}: subheadline subpage không giữ vàng hiện tại`);
+    assert.match(subheadline, /font-size:\s*23\.4px/, `${name}: subheadline chưa tăng cỡ 30%`);
+    assert.match(label, /font-family:\s*var\(--hero-ui\)/, `${name}: label subpage chưa dùng font UI`);
+    assert.match(label, /color:\s*var\(--hero-label\)/, `${name}: label subpage chưa tách màu nhãn`);
+    assert.match(label, /font-size:\s*15\.6px/, `${name}: label chưa tăng cỡ khoảng 30%`);
   }
 });
 

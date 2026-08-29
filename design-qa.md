@@ -56,6 +56,24 @@ Evidence:
 - `qa/subpage-fontasia-1440x900.png`
 - `qa/subpage-fontasia-390x844.png`
 
+## Subpage label và subheadline · 29/08/2026
+
+- Label page hero dùng Inter/UI, màu nhãn riêng `#8B7355`, cỡ `15.6px` (tăng
+  khoảng 30% từ `12px`); không còn trùng màu vàng với subheadline.
+- Subheadline giữ Fontasia Regular 400 và vàng `#FEDB44`, cỡ `23.4px` (tăng
+  khoảng 30% từ `18px`) trên cả desktop và mobile.
+- `/huyen-su/` tại 1440×900: headline `117px`, label `15.6px`, subheadline
+  `23.4px`, Hero cao `758.3px`, overflow ngang `0`.
+- `/huyen-su/` tại 390×844: headline `63.7px`, label `15.6px`, subheadline
+  `23.4px`, Hero cao `528.3px`, overflow ngang `0`; copy không bị cắt/tràn.
+- `document.fonts.check()` xác nhận Fontasia đã tải; console không có lỗi hoặc
+  cảnh báo ở cả hai viewport.
+
+Evidence:
+
+- `qa/subpage-label-subheadline-1440x900.png`
+- `qa/subpage-label-subheadline-390x844.png`
+
 ## Automated checks
 
 ```text
