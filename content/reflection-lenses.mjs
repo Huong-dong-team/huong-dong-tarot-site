@@ -56,6 +56,15 @@ const RANKS = Object.freeze({
   "Quốc Vương": ["người chịu trách nhiệm cho ảnh hưởng của địa hạt này", "Quyền làm chủ của bạn có tạo thêm năng lực cho người khác hay chỉ củng cố vị trí của mình?"],
 });
 
+// Firestore production hiện chỉ bảo đảm slug chuẩn, không bảo đảm rankVi như
+// seed. Suy ra cấp từ phần đứng trước "-of-" để cùng một nội dung build được từ
+// cả hai nguồn; rankVi vẫn được ưu tiên nếu quản trị đã lưu rõ.
+const RANK_BY_SLUG = Object.freeze({
+  ace: "Át", two: "Hai", three: "Ba", four: "Bốn", five: "Năm",
+  six: "Sáu", seven: "Bảy", eight: "Tám", nine: "Chín", ten: "Mười",
+  page: "Tiểu Đồng", knight: "Kỵ Sĩ", queen: "Hoàng Hậu", king: "Quốc Vương",
+});
+
 export function reflectionLens(card) {
   if (card.arcana === "major") {
     const entry = MAJOR[card.slug];
@@ -64,7 +73,8 @@ export function reflectionLens(card) {
   }
 
   const suit = SUITS[card.suit];
-  const rank = RANKS[card.rankVi];
+  const slugRank = String(card.slug || "").split("-of-")[0];
+  const rank = RANKS[card.rankVi] || RANKS[RANK_BY_SLUG[slugRank]];
   if (!suit || !rank) throw new Error(`Thiếu lớp soi chiếu cho lá ${card.slug}`);
   return {
     pattern: `${suit.pattern}: ${rank[0]}.`,

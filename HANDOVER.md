@@ -66,6 +66,15 @@ npm run check:types   PASS
 git diff --check      PASS
 ```
 
+### Hotfix build production · thiếu `rankVi` trên Firestore
+
+- Lượt Actions `33249421317` dừng an toàn ở bước build, trước test/deploy.
+- Nguyên nhân: seed có `rankVi`, nhưng tài liệu Ẩn Phụ trên Firestore chỉ bảo
+  đảm slug chuẩn; `ace-of-wands` vì thế chưa ánh xạ được về cấp Át.
+- `reflection-lenses.mjs` nay ưu tiên `rankVi` nếu có và lùi về phần đầu slug
+  (`ace`, `two`… `king`) nếu thiếu. Không sửa dữ liệu Firestore.
+- Test mới xóa `rankVi` khỏi cả 56 lá rồi xác nhận mọi lá vẫn sinh nội dung.
+
 ## Biến môi trường phải điền
 
 - `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.id.vn`.
