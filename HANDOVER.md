@@ -35,6 +35,12 @@ git diff --check      PASS
 node --check (3 module) PASS
 ```
 
+### Ghi nhận deploy production
+
+- 29/08/2026: PR #63 đã merge vào `main` tại `2d26558` và workflow [33253396151](https://github.com/hongkhang21998-creator/huong-dong-tarot-site/actions/runs/33253396151) đã hoàn tất thành công.
+- Workflow đã build từ Firestore thật, chạy test và triển khai Firebase Hosting. Kiểm tra sau deploy: `/`, `/la-bai/`, `/trai-bai/`, `/huyen-su/`, `/cua-hang/` đều HTTP 200.
+- Production đã trả đúng asset `card-tilt.js`, `huyen-su-reveal.js`, `motion-mini.mjs` và `main.css` có `hd-border-beam`; chưa có thay đổi nội dung thương mại (vẫn “không đặt cọc, không thu tiền trước”).
+
 ## Nhật ký phối hợp · Sổ tay Tarot Việt hóa ngày 29/08/2026
 
 Branch: `feat/huong-dan-tarot-viet-hoa`, tách từ `origin/main` tại commit
