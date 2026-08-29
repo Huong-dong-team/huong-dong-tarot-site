@@ -25,6 +25,17 @@ test("lớp soi chiếu phủ đủ 78 lá và đủ bốn trường biên tập
   }
 });
 
+test("56 lá Ẩn Phụ vẫn có lớp soi chiếu khi Firestore thiếu rankVi", () => {
+  const minorCardsWithoutRank = cards
+    .filter((card) => card.arcana === "minor")
+    .map(({ rankVi: _rankVi, ...card }) => card);
+  assert.equal(minorCardsWithoutRank.length, 56);
+  for (const card of minorCardsWithoutRank) {
+    const lens = reflectionLens(card);
+    assert.ok(lens.pattern.length > 15, card.slug);
+  }
+});
+
 test("mọi trang lá xuất bản đều có góc soi chiếu và ranh giới an toàn", async () => {
   for (const card of cards) {
     const html = await readFile(path.join(root, "dist/la-bai", card.slug, "index.html"), "utf8");
