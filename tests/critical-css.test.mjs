@@ -52,6 +52,7 @@ test("trang trong nhận đúng critical CSS theo loại nội dung", async () =
   for (const critical of [cardCritical, spreadCritical]) {
     assert.doesNotMatch(critical, /\n/, "critical CSS trang trong phải được gộp dòng");
     assert.ok(critical.includes(".page-hero"), "trang trong thiếu khung page hero");
+    assert.match(critical, /font-family:\s*"Fontasia VH"/, "trang trong thiếu @font-face Fontasia cho page hero");
   }
   assert.ok(cardCritical.includes(".card-detail"), "trang lá thiếu khung card-detail");
   assert.ok(spreadCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
@@ -97,9 +98,9 @@ test("preload đúng font dùng ở màn hình đầu", async () => {
   assert.match(home, /rel="preload" href="\/assets\/fonts\/inter-400\.woff2"/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
+  assert.match(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
   assert.match(card, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
   assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
-  assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:be-vietnam-pro-(?:400|600)|charm-)/);
 });
 
@@ -110,6 +111,23 @@ test("font tiêu đề luôn thay font nhận diện sau khi tải xong", async 
     assert.ok(face, `thiếu @font-face của ${family}`);
     assert.match(face, /font-display:\s*swap/);
     assert.doesNotMatch(face, /font-display:\s*optional/);
+  }
+});
+
+test("headline và subheadline của mọi subpage dùng Fontasia cùng màu vàng hiện tại", async () => {
+  const [inner, main] = await Promise.all([
+    read("public/assets/css/critical-inner.css"),
+    read("public/assets/css/main.css"),
+  ]);
+  for (const [name, css] of [["critical-inner.css", inner], ["main.css", main]]) {
+    const headline = css.match(/\.page-hero > h1\s*\{([\s\S]*?)\}/)?.[1] || "";
+    const subheadline = css.match(/\.page-hero > p:not\(\.eyebrow\)\s*\{([\s\S]*?)\}/)?.[1] || "";
+    assert.match(headline, /font-family:\s*var\(--script\)/, `${name}: headline subpage chưa dùng Fontasia`);
+    assert.match(headline, /font-weight:\s*400/, `${name}: headline subpage không giữ Regular 400`);
+    assert.match(headline, /color:\s*var\(--hero-lemon\)/, `${name}: headline subpage không giữ vàng hiện tại`);
+    assert.match(subheadline, /font-family:\s*var\(--script\)/, `${name}: subheadline subpage chưa dùng Fontasia`);
+    assert.match(subheadline, /font-weight:\s*400/, `${name}: subheadline subpage không giữ Regular 400`);
+    assert.match(subheadline, /color:\s*var\(--hero-lemon\)/, `${name}: subheadline subpage không giữ vàng hiện tại`);
   }
 });
 

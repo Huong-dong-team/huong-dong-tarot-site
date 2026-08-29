@@ -25,6 +25,10 @@
 .page-hero > h1, .page-hero > p { max-width: 900px; }
 .page-hero > h1 {
   color: var(--hero-lemon);
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .005em;
   font-size: clamp(65px, 9.1vw, 117px);
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 94%),
@@ -35,6 +39,10 @@
 }
 .page-hero > p:not(.eyebrow) {
   color: var(--hero-lemon);
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .01em;
   font-size: 18px;
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 92%),

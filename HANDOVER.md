@@ -5,6 +5,41 @@
 Branch: `feat/huong-dan-tarot-viet-hoa`, tách từ `origin/main` tại commit
 `20636bf`. Chủ dự án là người review/merge; nhánh không tự deploy.
 
+## Nhật ký phối hợp · Fontasia vàng cho Hero subpage ngày 29/08/2026
+
+Branch: `feat/subpage-fontasia-yellow`, tách trực tiếp từ `origin/main` tại
+`8c16e6a` (đã gồm PR #58 và các thay đổi trên main). Chủ dự án là người
+review/merge; branch này chưa merge và chưa deploy.
+
+### Phạm vi và quyết định
+
+- Chỉ áp dụng cho các section `.page-hero` trên route trong: headline `h1` và
+  subheadline `p:not(.eyebrow)` dùng `Fontasia VH`, `font-style: normal`,
+  `font-weight: 400`; Hero trang chủ và toàn bộ copy/CTA không đổi.
+- Giữ nguyên màu vàng hiện tại qua `var(--hero-lemon)` (`#FEDB44`), cỡ chữ,
+  line-height, bóng nâu và responsive breakpoint đã chốt; không thêm stroke,
+  italic hoặc synthetic bold.
+- `critical-inner.css` và block tương ứng trong `main.css` được đồng bộ để
+  tránh CLS/FOUT. Route trong preload thêm `fontasia-vh.woff2`; vẫn preload
+  `dfvn-tan-harmoni.woff2` vì card detail dùng Harmoni ở H1.
+- `templates/_layout.html` cập nhật ghi chú preload; không đổi template nội
+  dung. Test critical CSS khóa Fontasia + Regular 400 + vàng ở cả hai stylesheet
+  và xác nhận preload Fontasia trên route lá.
+
+### QA và bằng chứng
+
+- `npm run build:local`: PASS — 78 trang lá, 2 bài tin, 95 URL.
+- `npm test`: PASS — 31/31 tệp test; `npm run check:types`: PASS;
+  `git diff --check`: PASS.
+- `/huyen-su/` 1440×900: Fontasia VH, màu `rgb(254, 219, 68)`, headline
+  `117px`, subheadline `18px`, ảnh `huyen-su-1536.avif`, overflow ngang `0`.
+- `/huyen-su/` 390×844: Fontasia VH, headline `63.7px`, subheadline `18px`,
+  không cắt/tràn, overflow ngang `0`; console desktop/mobile không có lỗi hoặc
+  cảnh báo.
+- Ảnh QA: `qa/subpage-fontasia-1440x900.png` và
+  `qa/subpage-fontasia-390x844.png`; chi tiết quyết định nằm trong
+  `design-qa.md`.
+
 ### Nguồn và nguyên tắc biên tập
 
 - `TEVADA_Tarot_Guidebook_VI_1.docx` chỉ được dùng để kiểm kê framework: nhập
