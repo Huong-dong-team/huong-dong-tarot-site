@@ -121,10 +121,11 @@ async function loadCriticalCss(files) {
 // là dùng chung; critical-inner.css không đi theo trang chủ, tránh gửi các luật
 // card-detail/v2-prose không bao giờ dùng ở route `/`.
 const criticalBaseCss = await loadCriticalCss(["fonts.css", "custom-fonts.css", "critical.css"]);
-// Route trong chỉ cần Be Vietnam Pro và Harmoni ở khung đầu. Gỡ các face dành
-// riêng cho Hero/trích dẫn/card khỏi critical CSS để giữ ngân sách inline 20 KB.
+// Route trong cần Fontasia cho page hero, Harmoni cho H1 card detail và Be
+// Vietnam Pro cho UI. Chỉ gỡ các face dành riêng cho trích dẫn/card khỏi
+// critical CSS để giữ ngân sách inline 20 KB.
 const criticalInnerBaseCss = criticalBaseCss
-  .replace(/@font-face\s*\{[^}]*font-family:\s*"(?:Inter|Fontasia VH|Ganh|DFVN TAN Mon Cheri)"[^}]*\}/g, "")
+  .replace(/@font-face\s*\{[^}]*font-family:\s*"(?:Inter|Ganh|DFVN TAN Mon Cheri)"[^}]*\}/g, "")
   .replace(/\.home-page \.hero h1(?: \.hero-headline-accent)?\s*\{[^}]*\}/g, "")
   .replace(/\.home-page \.hero \.hero-subheadline\s*\{[^}]*\}/g, "")
   .replace(/\.hero-panel\s*\{[^}]*\}/g, "")
@@ -447,16 +448,19 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
     '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
   ];
-  /* Hero trang chủ dùng Fontasia cho headline/subheadline và Inter Regular cho
-     nhãn, CTA, số liệu. Route trong vẫn dùng Harmoni cho H1. Chỉ preload họ
-     font xuất hiện ở khung đầu của từng loại trang. */
+  /* Hero trang chủ và page hero route trong đều dùng Fontasia cho headline /
+     subheadline. Card detail vẫn dùng Harmoni ở H1, nên route trong preload
+     cả hai họ để không tạo FOUT khi chuyển giữa các loại subpage. */
   const displayFontPreloads = bodyClass === "home-page"
     ? [
       '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
       '<link rel="preload" href="/assets/fonts/inter-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
       '<link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>',
     ]
-    : ['<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>'];
+    : [
+      '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>',
+    ];
   return renderString(templates._layout, {
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,

@@ -38,12 +38,30 @@ No P0/P1/P2 visual defect remains:
 - `qa/hero-warm-brown-1440x900.png`
 - `qa/hero-warm-brown-390x844.png`
 
+## Subpage Fontasia · 29/08/2026
+
+- Shared selectors `.page-hero > h1` và `.page-hero > p:not(.eyebrow)` áp dụng
+  cho mọi page hero route trong; không thay đổi copy, CTA hay Hero trang chủ.
+- Headline và subheadline dùng `Fontasia VH` Regular 400, `font-style: normal`,
+  giữ màu vàng hiện tại `#FEDB44` (`rgb(254, 219, 68)`), cỡ chữ và bóng nâu đã
+  chốt trước đó.
+- `/huyen-su/` tại 1440×900: headline `117px`, subheadline `18px`, ảnh route
+  `huyen-su-1536.avif`, overflow ngang `0`.
+- `/huyen-su/` tại 390×844: headline `63.7px`, subheadline `18px`, nội dung
+  không bị cắt hoặc tràn; overflow ngang `0`.
+- Console desktop/mobile không có error, warning hoặc lỗi tải font.
+
+Evidence:
+
+- `qa/subpage-fontasia-1440x900.png`
+- `qa/subpage-fontasia-390x844.png`
+
 ## Automated checks
 
 ```text
-npm run build:local   PASS — 86 URL
+npm run build:local   PASS — 78 trang lá, 2 bài tin, 95 URL
 npm run check:types   PASS
-npm test              PASS — 29/29 test files
+npm test              PASS — 31/31 test files
 ```
 
 ## Design-tool handoff status

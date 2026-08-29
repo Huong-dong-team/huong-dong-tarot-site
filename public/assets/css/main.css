@@ -736,11 +736,15 @@ h3 { line-height: 1.12; }
   -webkit-text-stroke: .7px rgb(83 45 18 / 88%);
 }
 
-/* Headline trang trong dùng cỡ H1 production 50 / 7vw / 90 nhân đúng 1,3.
-   Subheadline không đổi cỡ; cả hai dùng cùng vàng chanh và bóng nâu để đứng
-   được trên tranh opacity 1 mà không cần phủ giấy đục lên toàn Hero. */
+/* Headline và subheadline page hero dùng Fontasia Regular, giữ nguyên cỡ chữ,
+   vàng chanh và bóng nâu đã chốt để đứng được trên tranh opacity 1 mà không
+   cần phủ giấy đục lên toàn Hero. */
 .page-hero > h1 {
   color: var(--hero-lemon);
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .005em;
   font-size: clamp(65px, 9.1vw, 117px);
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 94%),
@@ -752,6 +756,10 @@ h3 { line-height: 1.12; }
 
 .page-hero > p:not(.eyebrow) {
   color: var(--hero-lemon);
+  font-family: var(--script);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: .01em;
   text-shadow:
     -1px -1px 0 rgb(43 27 18 / 92%),
     1px -1px 0 rgb(43 27 18 / 92%),
