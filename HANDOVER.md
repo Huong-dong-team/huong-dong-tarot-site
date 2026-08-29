@@ -39,6 +39,33 @@ npm run check:types   PASS
 git diff --check      PASS
 ```
 
+### Bổ sung lớp soi chiếu và trải bài chiều sâu
+
+Theo yêu cầu tiếp theo, nội dung được mở rộng bằng một khung đọc biểu tượng và
+tự phản tư, nhưng website không nêu tên nguồn lý thuyết, không dùng thuật ngữ
+để tạo uy quyền học thuật và không tự nhận là phương pháp trị liệu.
+
+- `content/reflection-lenses.mjs` là nguồn nội dung tĩnh: 22 mẫu hình riêng cho
+  Ẩn Chính; 56 Ẩn Phụ được tạo từ bốn địa hạt Tre/Sen/Dâu Tằm/Lúa kết hợp đủ 14
+  chặng Át–Mười và bốn lá Hoàng gia.
+- Mỗi trang lá có bốn phần mới: mẫu hình đang hiện ra, phần dễ bị bỏ quên, câu
+  hỏi đối thoại với hình ảnh và một bước tích hợp vào đời sống.
+- `/trai-bai/` có ba khung mới: Điều đang thể hiện; Bốn tiếng nói bên trong;
+  Bước qua ngưỡng cửa. Phần thực hành yêu cầu xem câu trả lời tưởng tượng như
+  giả thuyết và kiểm lại bằng dữ kiện, giá trị, hậu quả.
+- Ranh giới được in ngay trong nội dung: không kết luận tính cách, không chẩn
+  đoán tâm lý, không xác minh ý định người khác và không thay thế hỗ trợ chuyên
+  môn. Khi người đọc bị choáng ngợp, hướng dẫn yêu cầu dừng bài.
+- Test hồi quy kiểm đủ 78/78 trang, đủ 22 + 4×14 lớp nội dung, và quét toàn bộ
+  HTML xuất bản để bảo đảm tên bị cấm không xuất hiện.
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin, 95 URL
+npm test              PASS — 31/31 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
 ## Biến môi trường phải điền
 
 - `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.id.vn`.

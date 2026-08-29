@@ -7,6 +7,7 @@ import { getFirestore } from "firebase-admin/firestore";
 import { renderString, escapeHtml } from "./lib/render.js";
 import { absoluteUrl, analyticsSnippet, breadcrumbSchema, seoHead } from "./lib/seo.js";
 import { fillMinorDetails } from "./lib/minor-details-fallback.js";
+import { reflectionLens } from "../content/reflection-lenses.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
@@ -166,6 +167,11 @@ function detailCard(title, value, className = "v2-card") {
   return text ? `<article class="${className}"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></article>` : "";
 }
 
+function reflectionHtml(card) {
+  const lens = reflectionLens(card);
+  return `<section class="v2-prose reflection-lens" data-reflection-lens><p class="eyebrow">Góc soi chiếu</p><h2>Điều lá bài có thể làm hiện ra</h2><p class="lead">${escapeHtml(lens.pattern)}</p><div class="v2-two"><article class="v2-card"><h3>Phần dễ bị bỏ quên</h3><p>${escapeHtml(lens.unseen)}</p></article><article class="v2-card"><h3>Đối thoại với hình ảnh</h3><p>${escapeHtml(lens.dialogue)}</p></article></div><blockquote>${escapeHtml(lens.integration)}</blockquote><p class="v2-note">Đây là gợi ý tự phản tư, không phải kết luận về tính cách, chẩn đoán tâm lý hay bằng chứng về ý định của người khác.</p></section>`;
+}
+
 // Dựng sẵn bốn khối cho Ẩn Phụ để template không phải lồng điều kiện. Mỗi
 // trường được lọc trước khi sinh thẻ, nhờ vậy dữ liệu thiếu không tạo đoạn rỗng
 // và dữ liệu Firestore luôn đi qua escapeHtml trước khi vào HTML.
@@ -236,6 +242,7 @@ const cards = data.cards.map((card) => ({
   folkStyleLabel: folkStyleLabel[card.folkStyle] || "Mỹ thuật Việt",
   artNote: ART_NOTE[card.imageStatus] ?? "",
   minorDetailsHtml: minorDetailsHtml(card),
+  reflectionHtml: reflectionHtml(card),
   searchText: [card.nameVi, card.nameEn, card.nameFolk, ...(card.keywordsUpright || [])].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
@@ -673,7 +680,7 @@ for (let index = 0; index < cards.length; index += 1) {
   card.symbolHtml = symbols.map((item) => `<article id="${item.domId}" data-symbol-source><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
   const readingGuide = '<section class="v2-prose"><p class="eyebrow">Đọc có trách nhiệm</p><h2>Đưa lá bài trở về câu hỏi của bạn</h2><p>Phân biệt điều hình ảnh gợi ra với điều bạn biết bằng dữ kiện. Hãy dùng câu hỏi phản tư ở trên để mở thêm một góc nhìn, không dùng lá bài để kết luận thay người khác hoặc quyết định hộ mình.</p><p><a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">Xem phương pháp đọc một lá →</a></p></section>';
   const content = renderString(templates["card-detail"], { card, previous, next })
-    .replace("<!--LNCQ-->", `${lncqBlock(card.slug)}${readingGuide}`);
+    .replace("<!--LNCQ-->", `${card.reflectionHtml}${lncqBlock(card.slug)}${readingGuide}`);
   const creativeWork = { "@context": "https://schema.org", "@type": "CreativeWork", name: `${card.nameFolk} – ${card.nameEn}`, description: card.seo.description, image: absoluteUrl(data.site.baseUrl, card.image.url), inLanguage: "vi", isPartOf: data.site.siteName };
   await emit(`/la-bai/${card.slug}/`, layout({
     title: card.seo.title,
