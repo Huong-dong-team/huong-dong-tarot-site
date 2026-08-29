@@ -23,7 +23,7 @@ const heroStage = (html) =>
 test("Hero dùng đúng ảnh sản phẩm tĩnh và các nguồn responsive", async () => {
   const html = await home();
   const stage = heroStage(html);
-  assert.match(stage, /class="hero-carousel hero-product"/);
+  assert.match(stage, /<figure class="hero-carousel">[\s\S]*class="hero-product-float"[\s\S]*class="hero-product"/);
   assert.match(stage, /hero-product-square-480\.avif 480w[^\"]*hero-product-square-1200\.avif 1200w/);
   assert.match(stage, /src="\/assets\/img\/hero-product-square-1200\.webp"/);
   assert.match(stage, /width="1200" height="1200"/, "fallback phải khai đúng tỉ lệ crop vuông");
@@ -31,7 +31,7 @@ test("Hero dùng đúng ảnh sản phẩm tĩnh và các nguồn responsive", a
     "ảnh sản phẩm không được giữ hook hoặc nội dung kể chuyện của lá cũ");
 });
 
-test("ảnh sản phẩm không nạp JavaScript carousel cũ", async () => {
+test("ảnh sản phẩm không nạp carousel cũ; chuyển động mới thuộc lớp relief riêng", async () => {
   const [html, registry, main, critical] = await Promise.all([
     home(),
     read("public/assets/js/page/registry.js"),
@@ -42,12 +42,14 @@ test("ảnh sản phẩm không nạp JavaScript carousel cũ", async () => {
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/,
     "trang chủ không được tải module tương tác khi Hero chỉ còn ảnh tĩnh");
   assert.doesNotMatch(registry, /"hero-carousel":\s*\(\)\s*=>\s*import/);
+  assert.match(registry, /home:\s*\[[^\]]*"relief-hero"/,
+    "Hero phù điêu phải được khởi tạo theo vòng đời Swup");
   for (const [ten, css] of [["main.css", main], ["critical.css", critical]]) {
     assert.doesNotMatch(css, /\.hero-dots/, `${ten}: CSS chấm điều hướng phải đi cùng markup`);
   }
 });
 
-test("nghiêng theo chuột đã được gỡ để entrance làm chủ transform của khung", async () => {
+test("entrance và thị sai sở hữu hai tầng transform khác nhau", async () => {
   const [registry, main, critical] = await Promise.all([
     read("public/assets/js/page/registry.js"),
     read("public/assets/css/main.css"),
@@ -62,6 +64,8 @@ test("nghiêng theo chuột đã được gỡ để entrance làm chủ transfo
     assert.doesNotMatch(css, /\.hero-stage[^{]*\{[^}]*perspective/, `${ten}: còn perspective của hero-tilt`);
   }
   assert.doesNotMatch(main, /\.hero-carousel\s*\{[^}]*transform-style/);
+  assert.match(main, /\.hero-product-float\s*\{[^}]*perspective\(1200px\)/,
+    "thị sai phải nằm trong lớp con, không ghi đè entrance của carousel");
 });
 
 test("tranh Hero không tranh băng thông với ảnh LCP", async () => {
@@ -97,13 +101,14 @@ test("ảnh sản phẩm không giữ dialog kể chuyện sai ngữ cảnh", as
   }
 });
 
-test("hero chỉ giữ nền tĩnh và không còn cụm mặt trời phụ", async () => {
+test("hero giữ nền phù điêu và không thêm cụm biểu tượng phụ", async () => {
   const html = await home();
   const hero = html.slice(html.indexOf('<section class="hero'), html.indexOf('<div class="hero-stage">'));
   // Ảnh trống đồng đã được gỡ khỏi hero theo yêu cầu thiết kế.
   assert.doesNotMatch(hero, /class="hero-drum"/, "ảnh trống đồng phải được gỡ khỏi hero");
   assert.doesNotMatch(hero, /data-hero-sun/, "cụm mặt trời phụ phải được gỡ ở đợt hiệu năng");
   assert.doesNotMatch(hero, /drum-watermark/, "hero không dùng hoa văn chìm");
+  assert.match(hero, /class="hero-relief"/, "Hero phải có lớp ánh sơn mài riêng");
 });
 
 test("mục Tứ Bất Tử tĩnh có đủ số La Mã I–IV", async () => {

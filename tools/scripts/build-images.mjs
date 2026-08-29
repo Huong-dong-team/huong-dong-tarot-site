@@ -30,6 +30,12 @@ const AVIF_LOW = { quality: 35, effort: 5 };
 const WEBP = { quality: 75 };
 
 const JOBS = [
+  // Hero phù điêu sơn mài. Nguồn 1536×1024 là artwork mới đã được duyệt để
+  // chừa phần giấy sáng ở bên phải cho copy; không ghi đè hero cũ để có thể
+  // quay lại khi cần đối chiếu.
+  { src: `${IMG}/hero-relief-source.webp`, out: `${IMG}/hero-relief`, widths: [800, 1200, 1536], formats: ["avif", "webp"],
+    note: "nền hero phù điêu sơn mài" },
+
   // ── Ảnh hero. Nguồn tạm là default-og.webp (1536×1024) cho tới khi có ảnh
   // hero riêng. Vì nguồn rộng 1536 nên KHÔNG sinh bản 1600 — sẽ là phóng to.
   { src: `${IMG}/default-og.webp`, out: `${IMG}/hero`,  widths: [800, 1200, 1536], formats: ["avif", "webp"],

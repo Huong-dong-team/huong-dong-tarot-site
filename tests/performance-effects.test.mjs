@@ -43,11 +43,13 @@ test("tối ưu hiệu ứng không làm mất nền và ảnh sản phẩm hero
     read("public/assets/css/critical.css"),
   ]);
   assert.match(home, /class="hero-bg"/);
-  assert.match(home, /class="hero-carousel hero-product"/);
+  assert.match(home, /<figure class="hero-carousel">[\s\S]*class="hero-product"/);
   assert.match(home, /hero-product-square-960\.avif/);
   assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/);
   assert.match(main, /\.hero-product\s*\{/);
+  assert.match(main, /\.hero-relief\s*\{[\s\S]*pointer-events:\s*none/,
+    "lớp ánh sơn mài phải là trang trí, không chặn thao tác");
   assert.match(main, /content-visibility:\s*auto/);
   assert.match(critical, /content-visibility:\s*auto/);
   // Fontasia dùng font-display: swap và được preload theo route, nên desktop và

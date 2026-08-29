@@ -131,6 +131,15 @@ html.is-changing.is-rendering .transition-page {
   animation: hero-layer-in 560ms var(--page-ease-in) 70ms both;
 }
 
+/* Những màng ánh sáng của phù điêu không được lóe lên trước tranh nền trong
+   lần tải đầu. Chúng chỉ mờ vào, còn transform thị sai do relief-hero.js sở
+   hữu hoàn toàn. */
+:is(html.hd-first-load, html.is-changing.is-rendering)
+  .transition-page[data-page="home"] .hero-relief {
+  --hero-fade-end: 1;
+  animation: hero-layer-in 620ms var(--page-ease-in) 90ms both;
+}
+
 /* Tranh trong khung Hero đi cùng nhịp với tranh nền, chỉ trễ lại một chút.
    Neo vào .hero-carousel chứ không phải .hero-stage: stage giữ layout của cột,
    phần tử con lo phần chuyển động, nên không có gì phải đo lại giữa chừng. */

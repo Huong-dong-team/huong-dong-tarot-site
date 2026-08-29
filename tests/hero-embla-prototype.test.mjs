@@ -20,7 +20,7 @@ test("bản thử Embla đứng riêng và không chen vào Hero sản phẩm", 
   assert.match(prototype, /destroy\(\)/, "phải khôi phục được carousel gốc");
   assert.doesNotMatch(registry, /hero-embla-prototype|EmblaCarousel/);
   assert.doesNotMatch(home, /hero-embla-prototype/);
-  assert.match(home, /class="hero-carousel hero-product"/);
+  assert.match(home, /<figure class="hero-carousel">[\s\S]*class="hero-product"/);
   assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.match(evaluation, /Chưa nên thay carousel production/);
 });

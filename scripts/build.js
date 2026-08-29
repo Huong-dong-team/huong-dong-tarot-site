@@ -482,8 +482,8 @@ function layout({ title, description, path: routePath, image, type, schemas, con
       // href giữ lại làm bản dự phòng cho trình duyệt chưa hiểu imagesrcset;
       // trình duyệt hiểu thì bỏ qua href.
       ? '<link rel="preload" as="image" fetchpriority="high"'
-        + ' imagesrcset="/assets/img/hero-800.avif 800w, /assets/img/hero-1200.avif 1200w, /assets/img/hero-1536.avif 1536w"'
-        + ' imagesizes="100vw" href="/assets/img/hero-1200.avif">'
+        + ' imagesrcset="/assets/img/hero-relief-800.avif 800w, /assets/img/hero-relief-1200.avif 1200w, /assets/img/hero-relief-1536.avif 1536w"'
+        + ' imagesizes="100vw" href="/assets/img/hero-relief-1200.avif">'
       : artId && artId !== "home-content"
         ? '<link rel="preload" as="image" fetchpriority="high"'
           + ` imagesrcset="/assets/img/subpage/${artId}-1024.avif 1024w, /assets/img/subpage/${artId}-1536.avif 1536w"`
