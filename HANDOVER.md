@@ -1,5 +1,44 @@
 # BÀN GIAO VẬN HÀNH
 
+## Nhật ký phối hợp · Sổ tay Tarot Việt hóa ngày 29/08/2026
+
+Branch: `feat/huong-dan-tarot-viet-hoa`, tách từ `origin/main` tại commit
+`20636bf`. Chủ dự án là người review/merge; nhánh không tự deploy.
+
+### Nguồn và nguyên tắc biên tập
+
+- `TEVADA_Tarot_Guidebook_VI_1.docx` chỉ được dùng để kiểm kê framework: nhập
+  môn, đặt câu hỏi, xáo bài, trải bài và 78 lá. Không chép lại lời văn, quảng cáo,
+  liên kết hay tuyên bố thương hiệu TEVADA.
+- Giọng Hường Đông được giữ nhất quán: bình tĩnh, gần gũi với trải nghiệm Việt,
+  quan sát trước diễn giải, Tarot là công cụ soi chiếu chứ không phán tương lai.
+- Các hướng dẫn đều phân biệt dữ kiện với diễn giải và trả quyền quyết định về
+  người đọc. Không dùng Tarot thay tư vấn y tế, pháp lý hoặc tài chính.
+- Không ghi đè dữ liệu 78 lá: repo đã có nghĩa RWS, lớp liên tưởng Việt, trường
+  nguồn và nội dung chuyên đề sâu hơn guidebook. Thay vào đó, thư viện và mọi
+  trang chi tiết được nối về phương pháp đọc chung.
+
+### Kiến trúc nội dung
+
+- `/huong-dan-tarot/`: trang trụ cột và bài thực hành mười phút với một lá.
+- `/huong-dan-tarot/dat-cau-hoi/`: bốn tiêu chí, bảng gọt câu hỏi và công thức.
+- `/huong-dan-tarot/xao-bai/`: ba cách xáo, quy trình rút, cách dùng lá ngược.
+- `/huong-dan-tarot/doc-la-bai/`: phương pháp năm lớp, ví dụ Mai An Tiêm và cách
+  nối ba lá.
+- `/tarot-la-gi/`, `/trai-bai/`, `/la-bai/` và 78 trang `/la-bai/*` có đường dẫn
+  học tiếp theo ngữ cảnh. Bốn route hướng dẫn đã vào sitemap và có breadcrumb.
+- Ba route `/trai-bai/co-khong/`, `/trai-bai/ba-la/`, `/trai-bai/tinh-yeu/` vẫn
+  `noindex,follow`: không tự thay quyết định sản phẩm đang chờ duyệt Lớp 3.
+
+### Xác minh
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin, 95 URL
+npm test              PASS — 30/30 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+```
+
 ## Biến môi trường phải điền
 
 - `SITE_BASE_URL`: tên miền chính, mặc định `https://huongdong.id.vn`.

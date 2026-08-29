@@ -92,7 +92,7 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "huong-dan-tarot", "huong-dan-dat-cau-hoi", "huong-dan-xao-bai", "huong-dan-doc-la-bai", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 // Critical CSS nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
 // trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn.
@@ -297,6 +297,7 @@ const PAGE_ART = [
   { id: "trai-bai",          match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
   { id: "la-bai",            match: (p) => p.startsWith("/la-bai/") },
   { id: "tarot-la-gi",       match: (p) => p === "/tarot-la-gi/" },
+  { id: "tarot-la-gi",       match: (p) => p.startsWith("/huong-dan-tarot/") },
   { id: "huyen-su",          match: (p) => p.startsWith("/huyen-su/") },
   { id: "healing",           match: (p) => p === "/healing/" },
   { id: "chuyen-huong-dong", match: (p) => p.startsWith("/tin-tuc/") },
@@ -641,7 +642,9 @@ await emit("/", layout({
   bodyClass: "home-page",
 }));
 
-const listContent = renderString(templates["card-list"], { cards, cardCount: cards.length });
+const listGuide = '<section class="v2-prose"><p><strong>Đừng bắt đầu bằng việc thuộc hết.</strong> Chọn một lá, nhìn tranh trước khi đọc nghĩa, rồi ghi lại chi tiết khiến bạn dừng mắt. Nếu chưa quen, xem <a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">phương pháp đọc một lá qua năm lớp</a>.</p></section>';
+const listContent = renderString(templates["card-list"], { cards, cardCount: cards.length })
+  .replace('<section class="library-page', `${listGuide}<section class="library-page`);
 await emit("/la-bai/", layout({
   title: "Thư viện 78 lá Tarot Hường Đông",
   description: "Tra cứu đủ 78 lá Tarot: 22 Ẩn Chính, 56 Ẩn Phụ, nghĩa xuôi/ngược và lớp liên tưởng Việt hóa.",
@@ -668,7 +671,9 @@ for (let index = 0; index < cards.length; index += 1) {
     return `<span data-symbol-trigger data-symbol-source="${symbol.domId}" aria-describedby="${symbol.domId}">${escapeHtml(item)}</span>`;
   }).join("");
   card.symbolHtml = symbols.map((item) => `<article id="${item.domId}" data-symbol-source><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
-  const content = renderString(templates["card-detail"], { card, previous, next }).replace("<!--LNCQ-->", lncqBlock(card.slug));
+  const readingGuide = '<section class="v2-prose"><p class="eyebrow">Đọc có trách nhiệm</p><h2>Đưa lá bài trở về câu hỏi của bạn</h2><p>Phân biệt điều hình ảnh gợi ra với điều bạn biết bằng dữ kiện. Hãy dùng câu hỏi phản tư ở trên để mở thêm một góc nhìn, không dùng lá bài để kết luận thay người khác hoặc quyết định hộ mình.</p><p><a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">Xem phương pháp đọc một lá →</a></p></section>';
+  const content = renderString(templates["card-detail"], { card, previous, next })
+    .replace("<!--LNCQ-->", `${lncqBlock(card.slug)}${readingGuide}`);
   const creativeWork = { "@context": "https://schema.org", "@type": "CreativeWork", name: `${card.nameFolk} – ${card.nameEn}`, description: card.seo.description, image: absoluteUrl(data.site.baseUrl, card.image.url), inLanguage: "vi", isPartOf: data.site.siteName };
   await emit(`/la-bai/${card.slug}/`, layout({
     title: card.seo.title,
@@ -713,6 +718,21 @@ for (const page of newPages) {
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
     content: renderString(templates[page.tpl].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
   }));
+}
+
+// Giáo trình nguồn chỉ làm khung kiểm kê chủ đề. Bốn trang dưới đây được viết
+// lại theo nguyên tắc Hường Đông: quan sát trước, diễn giải sau; không phán số
+// phận; luôn đưa người đọc trở về với dữ kiện, quyền lựa chọn và trách nhiệm.
+const guidePages = [
+  { route: "/huong-dan-tarot/", tpl: "huong-dan-tarot", title: "Hướng dẫn Tarot cho người mới", crumb: "Hướng dẫn Tarot", description: "Lộ trình học Tarot bằng câu chuyện Việt: từ câu hỏi, xáo bài đến cách đọc 78 lá và trải bài có trách nhiệm." },
+  { route: "/huong-dan-tarot/dat-cau-hoi/", tpl: "huong-dan-dat-cau-hoi", title: "Cách đặt câu hỏi Tarot", crumb: "Đặt câu hỏi", description: "Cách chuyển câu hỏi đóng và nỗi lo mơ hồ thành câu hỏi Tarot mở, cụ thể và có ích cho hành động." },
+  { route: "/huong-dan-tarot/xao-bai/", tpl: "huong-dan-xao-bai", title: "Cách xáo và rút bài Tarot", crumb: "Xáo và rút bài", description: "Ba cách xáo bài dễ thực hành, cách chọn lá và một nghi thức tối giản không thần bí hóa Tarot." },
+  { route: "/huong-dan-tarot/doc-la-bai/", tpl: "huong-dan-doc-la-bai", title: "Cách đọc một lá Tarot", crumb: "Đọc một lá bài", description: "Phương pháp năm lớp để đọc hình ảnh, vị trí, nghĩa RWS và liên tưởng Việt mà không học vẹt từ khóa." },
+];
+for (const page of guidePages) {
+  const breadcrumbs = [{ name: "Trang chủ", path: "/" }, { name: "Hướng dẫn Tarot", path: "/huong-dan-tarot/" }];
+  if (page.route !== "/huong-dan-tarot/") breadcrumbs.push({ name: page.crumb, path: page.route });
+  await emit(page.route, layout({ title: page.title, description: page.description, path: page.route, schemas: [breadcrumbSchema(data.site, breadcrumbs)], content: templates[page.tpl] }));
 }
 
 // 1.1 — Chốt URL trước khi viết chức năng. 1.2–1.4 Lớp 2 — khung tương tác.
@@ -830,7 +850,7 @@ for (let i = 0; i < lncqChapters.length; i += 1) {
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
 
-const routes = ["/", "/la-bai/", "/la-bai-hom-nay/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
+const routes = ["/", "/tarot-la-gi/", "/huong-dan-tarot/", "/huong-dan-tarot/dat-cau-hoi/", "/huong-dan-tarot/xao-bai/", "/huong-dan-tarot/doc-la-bai/", "/la-bai/", "/la-bai-hom-nay/", "/trai-bai/", "/huyen-su/", "/healing/", "/cua-hang/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${escapeHtml(absoluteUrl(data.site.baseUrl, route))}</loc></url>`).join("")}</urlset>`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap);
 await writeFile(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${absoluteUrl(data.site.baseUrl, "/sitemap.xml")}\n`);
