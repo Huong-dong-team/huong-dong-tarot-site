@@ -218,11 +218,11 @@ h3 { font-size: 30px; line-height: 1.12; }
 }
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 .hero-copy { max-width: none; font-family: var(--hero-ui); }
-/* Fontasia chỉ có Regular: không dùng synthetic bold/italic. Thân ngọc trai và
-   stroke màu tách riêng giữ chữ rõ trên nền watercolor mà vẫn đúng bảng màu. */
+/* Fontasia chỉ có Regular: không dùng synthetic bold/italic. Headline dùng một
+   màu nâu ấm thống nhất để giữ độ đọc rõ trên nền watercolor. */
 .home-page .hero h1 {
   margin: 0 0 22px;
-  color: var(--hero-pearl);
+  color: var(--hero-warm-brown);
   font-family: var(--script);
   font-size: clamp(68px, 6.6vw, 104px);
   font-style: normal;
@@ -230,16 +230,13 @@ h3 { font-size: 30px; line-height: 1.12; }
   line-height: .9;
   letter-spacing: .005em;
   text-wrap: balance;
-  -webkit-text-fill-color: var(--hero-pearl);
-  -webkit-text-stroke: 1.25px var(--hero-champagne);
-  paint-order: stroke fill;
-  text-shadow:
-    0 1px 0 rgb(255 255 255 / 72%),
-    0 3px 0 rgb(119 84 43 / 34%),
-    0 10px 22px rgb(61 43 26 / 18%);
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 10px 22px rgb(61 43 26 / 12%);
 }
 .home-page .hero h1 .hero-headline-accent {
-  -webkit-text-stroke-color: var(--hero-coral);
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
 }
 .hero .eyebrow { color: var(--hero-label); font-family: var(--hero-ui); }
 .hero-panel {
@@ -262,7 +259,7 @@ h3 { font-size: 30px; line-height: 1.12; }
   color: var(--hero-warm-brown);
   font-family: var(--script);
   font-weight: 400;
-  font-size: clamp(16px, 1.25vw, 18px);
+  font-size: clamp(20.8px, 1.625vw, 23.4px);
   line-height: 1.65;
   letter-spacing: .01em;
   text-wrap: pretty;

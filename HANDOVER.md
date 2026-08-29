@@ -224,6 +224,39 @@ npm run check:types   PASS
 git diff --check      PASS
 ```
 
+## Nhật ký phối hợp · Hero Fontasia nâu ấm ngày 29/08/2026
+
+Branch: `feat/hero-warm-brown-typography`, tách từ `origin/main` sau khi PR #57
+đã merge. Chủ dự án là người review/merge; nhánh này không tự deploy.
+
+### Thay đổi đã khóa
+
+1. Giữ nguyên nội dung, Fontasia Regular 400 và cỡ headline hiện tại.
+2. Headline đổi toàn bộ sang nâu ấm `#3D2B1A`; bỏ stroke champagne/coral để
+   cụm “câu chuyện Việt” kế thừa cùng màu.
+3. Subheadline giữ Fontasia và màu `#3D2B1A`, tăng đúng 30% từ
+   `clamp(16px, 1.25vw, 18px)` thành
+   `clamp(20.8px, 1.625vw, 23.4px)`.
+4. Eyebrow, CTA, stats, ảnh sản phẩm, overlay và lưới 40/60 không đổi.
+5. Critical CSS và main stylesheet được đồng bộ; test khóa màu, font, cỡ chữ và
+   trạng thái không stroke.
+
+### QA
+
+- 1440×900: headline `95.04px`, subheadline `23.4px`, Hero cao 824px, không
+  overflow ngang, toàn bộ nội dung nằm trong viewport chính.
+- 390×844: headline `54.6px`, subheadline `20.8px`, CTA xếp dọc, ảnh nằm sau
+  copy, overflow ngang `0`.
+- Console không có lỗi/cảnh báo. Ảnh QA nằm tại
+  `qa/hero-warm-brown-1440x900.png` và `qa/hero-warm-brown-390x844.png`.
+
+```text
+npm run build:local   PASS — 86 URL
+npm run check:types   PASS
+npm test              PASS — 29/29 tệp test
+git diff --check      PASS
+```
+
 ## Nhật ký phối hợp · Hero Watercolor Fontasia ngày 29/08/2026
 
 Branch: `feat/hero-watercolor-fontasia-layout`. Đây là PR mới độc lập; PR #56

@@ -1,33 +1,33 @@
-# Design QA — Hero Watercolor Fontasia
+# Design QA — Hero Fontasia nâu ấm
 
-- Source visual truth: production `https://huongdong.id.vn/`, captured at
-  1440×900 in `qa/hero-before-1440x900.png`.
-- Implementation evidence: local build captured at matching 1440×900 plus
-  responsive captures 768×1024 and 390×844 in `qa/`.
+- Source visual truth: Hero Fontasia đã duyệt trong
+  `qa/hero-after-1440x900.png`, với yêu cầu mới đổi headline/subheadline sang
+  `#3D2B1A` và tăng riêng subheadline 30%.
+- Implementation evidence: local build captured at 1440×900 và 390×844 trong
+  `qa/hero-warm-brown-*.png`.
 - State: Home, top of page, entrance complete, no form submission.
 
 ## Comparison result
 
-Production and local captures were opened together at the same desktop viewport.
-The redesign intentionally replaces the oversized Ganh block with the approved
-Fontasia treatment while preserving every word. The product image remains the
-left visual anchor; headline, description, CTAs and stats occupy the right 60%.
-The three overlay layers retain visible watercolor scenery at left and protect
-text contrast toward the right and lower edge.
+Ảnh Hero Fontasia trước thay đổi và bản local mới được mở để đối chiếu cùng
+viewport desktop. Bản mới chỉ thay typography được yêu cầu: headline và
+subheadline cùng nâu ấm, subheadline tăng đúng 30%; bố cục, copy, ảnh, CTA và
+stats không thay đổi.
 
 No P0/P1/P2 visual defect remains:
 
-- Headline fits two logical lines at desktop, uses pearl fill and champagne
-  stroke; only “câu chuyện Việt” receives coral stroke.
-- Subheadline is one solid warm-brown color without metallic gradient, stroke or
-  shadow. Fontasia and Inter both resolve from self-hosted files.
+- Headline dùng Fontasia `95.04px` ở 1440px, màu tính toán
+  `rgb(61, 43, 26)`, không còn stroke champagne/coral; hai dòng không bị cắt.
+- Subheadline dùng Fontasia, màu `rgb(61, 43, 26)`, tăng từ mức
+  `16–18px` lên `20.8–23.4px` đúng 30%, không stroke hoặc bóng.
 - Desktop Hero measures 824px below the 76px header and fits the 1440×900
   viewport. The computed 537.6/806.4px columns equal 40/60.
-- Tablet and mobile stack copy before the product. No horizontal overflow or
-  cropped product imagery is visible at 768×1024 or 390×844.
+- Mobile 390×844 giữ copy trước ảnh; headline `54.6px`, subheadline `20.8px`,
+  CTA không tràn và overflow ngang bằng `0`.
 - Primary coral CTA contrast is 4.84:1; secondary yellow CTA is 8.48:1; body
   copy on cream is 12.72:1. The requested caption brown remains visually clear.
 - Browser console returned no errors or warnings during the desktop QA run.
+- Hai CTA giữ đúng liên kết `#danh-sach-cho` và `/la-bai-hom-nay/`.
 
 ## Evidence
 
@@ -35,6 +35,8 @@ No P0/P1/P2 visual defect remains:
 - `qa/hero-after-1440x900.png`
 - `qa/hero-after-768x1024.png`
 - `qa/hero-after-390x844.png`
+- `qa/hero-warm-brown-1440x900.png`
+- `qa/hero-warm-brown-390x844.png`
 
 ## Automated checks
 
