@@ -259,7 +259,7 @@ h3 { font-size: 30px; line-height: 1.12; }
   color: var(--hero-warm-brown);
   font-family: var(--script);
   font-weight: 400;
-  font-size: clamp(20.8px, 1.625vw, 23.4px);
+  font-size: clamp(27.04px, 2.1125vw, 30.42px);
   line-height: 1.65;
   letter-spacing: .01em;
   text-wrap: pretty;

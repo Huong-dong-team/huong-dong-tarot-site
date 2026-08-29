@@ -234,19 +234,19 @@ Branch: `feat/hero-warm-brown-typography`, tách từ `origin/main` sau khi PR #
 1. Giữ nguyên nội dung, Fontasia Regular 400 và cỡ headline hiện tại.
 2. Headline đổi toàn bộ sang nâu ấm `#3D2B1A`; bỏ stroke champagne/coral để
    cụm “câu chuyện Việt” kế thừa cùng màu.
-3. Subheadline giữ Fontasia và màu `#3D2B1A`, tăng đúng 30% từ
-   `clamp(16px, 1.25vw, 18px)` thành
-   `clamp(20.8px, 1.625vw, 23.4px)`.
+3. Subheadline giữ Fontasia và màu `#3D2B1A`. Sau phản hồi trên preview PR #58,
+   chỉ dòng này tăng thêm đúng 30% từ `clamp(20.8px, 1.625vw, 23.4px)` thành
+   `clamp(27.04px, 2.1125vw, 30.42px)`; headline không tăng thêm.
 4. Eyebrow, CTA, stats, ảnh sản phẩm, overlay và lưới 40/60 không đổi.
 5. Critical CSS và main stylesheet được đồng bộ; test khóa màu, font, cỡ chữ và
    trạng thái không stroke.
 
 ### QA
 
-- 1440×900: headline `95.04px`, subheadline `23.4px`, Hero cao 824px, không
-  overflow ngang, toàn bộ nội dung nằm trong viewport chính.
-- 390×844: headline `54.6px`, subheadline `20.8px`, CTA xếp dọc, ảnh nằm sau
-  copy, overflow ngang `0`.
+- 1440×900: headline giữ nguyên `95.04px`, subheadline `30.42px`; Hero cao
+  `824px`, panel kết thúc ở `766.84px`, overflow ngang `0`.
+- 390×844: headline giữ nguyên `54.6px`, subheadline `27.04px`; panel kết thúc
+  ở `758.2px`, CTA vẫn nằm trước ảnh và overflow ngang `0`.
 - Console không có lỗi/cảnh báo. Ảnh QA nằm tại
   `qa/hero-warm-brown-1440x900.png` và `qa/hero-warm-brown-390x844.png`.
 

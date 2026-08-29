@@ -2,7 +2,7 @@
 
 - Source visual truth: Hero Fontasia đã duyệt trong
   `qa/hero-after-1440x900.png`, với yêu cầu mới đổi headline/subheadline sang
-  `#3D2B1A` và tăng riêng subheadline 30%.
+  `#3D2B1A` và tăng thêm riêng subheadline 30% so với preview PR #58.
 - Implementation evidence: local build captured at 1440×900 và 390×844 trong
   `qa/hero-warm-brown-*.png`.
 - State: Home, top of page, entrance complete, no form submission.
@@ -11,18 +11,18 @@
 
 Ảnh Hero Fontasia trước thay đổi và bản local mới được mở để đối chiếu cùng
 viewport desktop. Bản mới chỉ thay typography được yêu cầu: headline và
-subheadline cùng nâu ấm, subheadline tăng đúng 30%; bố cục, copy, ảnh, CTA và
+subheadline cùng nâu ấm, subheadline tăng thêm đúng 30%; bố cục, copy, ảnh, CTA và
 stats không thay đổi.
 
 No P0/P1/P2 visual defect remains:
 
 - Headline dùng Fontasia `95.04px` ở 1440px, màu tính toán
   `rgb(61, 43, 26)`, không còn stroke champagne/coral; hai dòng không bị cắt.
-- Subheadline dùng Fontasia, màu `rgb(61, 43, 26)`, tăng từ mức
-  `16–18px` lên `20.8–23.4px` đúng 30%, không stroke hoặc bóng.
+- Subheadline dùng Fontasia, màu `rgb(61, 43, 26)`, tăng từ preview
+  `20.8–23.4px` lên `27.04–30.42px` đúng 30%, không stroke hoặc bóng.
 - Desktop Hero measures 824px below the 76px header and fits the 1440×900
   viewport. The computed 537.6/806.4px columns equal 40/60.
-- Mobile 390×844 giữ copy trước ảnh; headline `54.6px`, subheadline `20.8px`,
+- Mobile 390×844 giữ copy trước ảnh; headline giữ nguyên, subheadline `27.04px`,
   CTA không tràn và overflow ngang bằng `0`.
 - Primary coral CTA contrast is 4.84:1; secondary yellow CTA is 8.48:1; body
   copy on cream is 12.72:1. The requested caption brown remains visually clear.

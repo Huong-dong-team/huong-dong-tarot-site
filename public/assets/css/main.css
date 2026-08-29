@@ -93,7 +93,7 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   color: var(--hero-warm-brown);
   background: none;
   font-family: var(--script);
-  font-size: clamp(20.8px, 1.625vw, 23.4px);
+  font-size: clamp(27.04px, 2.1125vw, 30.42px);
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: .01em;
@@ -1979,7 +1979,7 @@ body::before {
 .home-page .hero h1{margin:0 0 22px;padding:0;color:var(--hero-warm-brown);border-radius:0;background:none;font-family:var(--script);font-size:clamp(68px,6.6vw,104px);font-style:normal;font-weight:400;line-height:.9;letter-spacing:.005em;text-transform:none;text-wrap:balance;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:0 10px 22px rgb(61 43 26 / 12%)}
 .home-page .hero h1 .hero-headline-accent{color:inherit;-webkit-text-fill-color:currentColor}
 .home-page .hero .eyebrow{color:var(--hero-label);font-family:var(--hero-ui)}
-.home-page .hero .hero-subheadline{max-width:48ch;margin-bottom:0;color:var(--hero-warm-brown);background:none;font-family:var(--script);font-size:clamp(20.8px,1.625vw,23.4px);font-style:normal;font-weight:400;line-height:1.65;letter-spacing:.01em;text-transform:none;text-wrap:pretty;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:none}
+.home-page .hero .hero-subheadline{max-width:48ch;margin-bottom:0;color:var(--hero-warm-brown);background:none;font-family:var(--script);font-size:clamp(27.04px,2.1125vw,30.42px);font-style:normal;font-weight:400;line-height:1.65;letter-spacing:.01em;text-transform:none;text-wrap:pretty;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:none}
 .home-page .hero-actions{gap:12px;margin:22px 0 0;color:var(--hero-warm-brown);font-family:var(--hero-ui);font-size:14px}
 .home-page .hero-actions a{border-bottom:0}
 .home-page .hero-actions .button.brass{background:var(--hero-coral);color:#FFFDF5}

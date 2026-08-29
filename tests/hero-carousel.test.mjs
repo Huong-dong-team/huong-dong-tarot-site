@@ -183,8 +183,8 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
       `${ten}: headline phải là Fontasia nâu ấm, không còn stroke kim loại`);
     assert.match(css, /hero-headline-accent[^}]*color:\s*inherit[^}]*-webkit-text-fill-color:\s*currentColor/s,
       `${ten}: cụm câu chuyện Việt phải kế thừa cùng màu nâu ấm`);
-    assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*font-size:\s*clamp\(20\.8px,\s*1\.625vw,\s*23\.4px\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
-      `${ten}: subheadline phải tăng đúng 30%, dùng Fontasia nâu ấm và không stroke/bóng`);
+    assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*font-size:\s*clamp\(27\.04px,\s*2\.1125vw,\s*30\.42px\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
+      `${ten}: subheadline phải tăng thêm đúng 30%, dùng Fontasia nâu ấm và không stroke/bóng`);
     assert.match(css, /\.hero-panel[^}]*background:\s*#FFF8E7/s, `${ten}: thiếu fallback cream khi không có backdrop-filter`);
     assert.match(css, /backdrop-filter:\s*blur\(18px\) saturate\(115%\)/, `${ten}: thiếu frosted blur`);
   }
