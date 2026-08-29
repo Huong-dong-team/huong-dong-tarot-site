@@ -110,7 +110,7 @@ test("trang chủ giữ home-content sau Hero và route ngoài bảng không mư
 
   assert.match(home, /<main id="noi-dung-chinh" class="transition-page" data-page="home" data-page-art="home-content">/);
   assert.match(home, /<picture class="subpage-artwork" aria-hidden="true">[\s\S]*?home-content-1536\.webp/);
-  const heroStart = home.indexOf('<section class="hero">');
+  const heroStart = home.indexOf('<section class="hero"');
   const heroEnd = home.indexOf("</section>", heroStart);
   const frameStart = home.indexOf('<div class="subpage-content-frame">');
   assert.ok(heroStart >= 0 && heroEnd > heroStart && frameStart > heroEnd,

@@ -1,5 +1,66 @@
 # BÀN GIAO VẬN HÀNH
 
+## Nhật ký phối hợp · Hero phù điêu sơn mài 3D ngày 29/08/2026
+
+Branch: `feat/lacquer-relief-hero`, tách từ `origin/main` tại commit `2d26558`.
+Chủ dự án review/merge; branch này **chưa merge, chưa deploy**.
+
+### Phạm vi và quyết định
+
+- Hero trang chủ dùng key visual mới: tranh **chạm nổi sơn mài** 1536×1024,
+  cảnh núi–sông–sen–vân mây khảm đồng; nửa phải chừa giấy kem sáng để chữ đọc
+  rõ. Không thay copy, CTA, proof hoặc ảnh sản phẩm hiện hữu.
+- Ảnh được tạo mới bằng Image Generation (không lấy từ repo/thư viện bên ngoài)
+  với palette `#FFFBEB`, `#FFEF9F`, `#46843E`, dải đồng `#5E3215 → #B77A2F →
+  #E4B45E`, vàng `#FFD45A`, son `#C84040`, điểm sen `#E1407C`. Prompt cấm chữ,
+  logo, người, box/bài và màu neon/xanh tím; file nguồn lưu ở
+  `public/assets/img/hero-relief-source.webp`.
+- Các bản được trang thật nạp là `hero-relief-{800,1200,1536}.avif`, kèm WebP
+  fallback. `templates/home.html` và preload trong `scripts/build.js` dùng cùng
+  `srcset` để không tải đôi LCP. Hero cũ không bị ghi đè.
+- `public/assets/js/ui/relief-hero.js` dùng Pointer Events +
+  `requestAnimationFrame`: chỉ đổi bốn CSS custom property. Lớp tranh nền và
+  `.hero-carousel` giữ transform entrance sẵn có; thị sai nằm ở
+  `.hero-relief` và `.hero-product-float` để hai animation không tranh quyền.
+  Touch giữ `pan-y`, không `preventDefault`, không WebGL và không listener rò
+  qua Swup.
+- `public/assets/css/main.css` thêm ánh chiếu xiên, viền đồng và gold glint rất
+  chậm; glint chỉ chạy khi thiết bị có hover. `prefers-reduced-motion` tắt
+  animation/transform nhưng để nguyên poster tĩnh. `page-transition.css` chỉ
+  fade-in lớp relief, không sở hữu transform của lớp này.
+
+### Tệp và kiểm thử chống giẫm chân
+
+- `templates/home.html`, `scripts/build.js`, `tools/scripts/build-images.mjs`:
+  asset, markup và preload Hero mới.
+- `public/assets/js/page/registry.js`: Home nạp thêm `relief-hero` theo lifecycle
+  chuẩn; `public/assets/js/ui/relief-hero.js` là module mới.
+- `tests/critical-css.test.mjs`, `tests/hero-carousel.test.mjs`,
+  `tests/hero-embla-prototype.test.mjs`, `tests/lacquer-background.test.mjs`,
+  `tests/performance-effects.test.mjs`, `tests/story-dialog-audit.test.mjs`:
+  đã đổi assertion cũ sang asset/markup mới; vẫn khóa việc không nạp carousel
+  cũ, không tạo dialog và không ghi đè transform entrance.
+
+### QA trên branch
+
+```text
+npm run build:local   PASS — 78 trang lá, 2 bài tin và 95 URL
+npm test              PASS — 32/32 tệp test
+npm run check:types   PASS
+git diff --check      PASS
+node --check relief-hero.js  PASS
+```
+
+- Preview desktop: Hero giữ khoảng giấy sáng bên phải cho headline/panel; khi
+  rê chuột, `--relief-x` đổi `0px → -6.70px` và `.hero-product-float` nhận
+  `matrix3d(...)`; console không có warning/error.
+- Preview mobile: `clientWidth = scrollWidth = 375px` (không overflow ngang),
+  hero cao `1047px`, khung sản phẩm rộng `269px`; poster vẫn đọc tốt trước khi
+  tới phần sản phẩm.
+- Lệnh tối ưu ảnh ban đầu đã làm mới vài asset ngoài scope; chúng đã được trả
+  về chính xác bản `HEAD` trước khi QA. Diff cuối chỉ còn Hero relief và test
+  liên quan.
+
 ## Nhật ký phối hợp · Tilt lá bài, Border Beam giá dự kiến và reveal Huyền sử ngày 29/08/2026
 
 Branch: `feat/subtle-card-beam-reveal`, tách từ `origin/main` tại commit

@@ -67,7 +67,7 @@ test("mỗi route preload đúng tranh Hero, home-content sau Hero không preloa
   // DPR 3 — preload bản 800w rồi srcset lại lấy bản 1200w.
   const preloads = [...home.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
   assert.equal(preloads.length, 1, "chỉ được một preload ảnh hero");
-  assert.match(preloads[0], /imagesrcset="[^"]*hero-800\.avif 800w[^"]*hero-1200\.avif 1200w[^"]*hero-1536\.avif 1536w"/);
+  assert.match(preloads[0], /imagesrcset="[^"]*hero-relief-800\.avif 800w[^"]*hero-relief-1200\.avif 1200w[^"]*hero-relief-1536\.avif 1536w"/);
   assert.match(preloads[0], /imagesizes="100vw"/);
   assert.doesNotMatch(preloads[0], /\bmedia=/, "chia theo media không biết được mật độ điểm ảnh của máy");
   // imagesizes phải khớp sizes của chính thẻ <img>, lệch nhau là chọn lệch bản.

@@ -1,16 +1,25 @@
 <main id="noi-dung-chinh" class="transition-page" data-page="home">
-  <section class="hero">
+  <section class="hero" data-relief-hero>
     <!-- Ảnh nền đứng đầu để parser gặp sớm nhất. Trước đây nó nằm trong
          background của CSS nên trình duyệt chỉ biết đến sau khi tải và phân tích
          xong main.css — đó là nguyên nhân chính của LCP 11,9s.
          alt rỗng vì đây là trang trí; nội dung nằm ở <h1> ngay bên dưới. -->
-    <img class="hero-bg" src="/assets/img/hero-1200.avif"
-         srcset="/assets/img/hero-800.avif 800w,
-                 /assets/img/hero-1200.avif 1200w,
-                 /assets/img/hero-1536.avif 1536w"
+    <img class="hero-bg" src="/assets/img/hero-relief-1200.avif"
+         srcset="/assets/img/hero-relief-800.avif 800w,
+                 /assets/img/hero-relief-1200.avif 1200w,
+                 /assets/img/hero-relief-1536.avif 1536w"
          sizes="100vw" width="1536" height="1024"
          loading="eager" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
     <div class="hero-overlay" aria-hidden="true"></div>
+    <!-- Tranh nền đã là một phù điêu sơn mài. Ba lớp này không thay tranh mà
+         bắt ánh quét, hạt sơn và đường viền khảm đồng ở các độ sâu khác nhau.
+         JS chỉ điều khiển biến CSS của riêng chúng, không đụng transform
+         entrance trên .hero-bg/.hero-carousel. -->
+    <div class="hero-relief" aria-hidden="true">
+      <span class="hero-relief-raking-light"></span>
+      <span class="hero-relief-bronze-edge"></span>
+      <span class="hero-relief-glint"></span>
+    </div>
     <span class="proto-stamp">Đang hoàn thiện</span>
     <div class="hero-copy">
       <p class="eyebrow">Ấn phẩm · Bộ bài và hộp cứng</p>
@@ -26,11 +35,15 @@
          thuật, không có carousel hay JavaScript. Crop vuông bỏ phần nền kem dư
          để sản phẩm đủ lớn mà không kéo méo hoặc vẽ lại ảnh gốc. -->
     <div class="hero-stage">
-      <figure class="hero-carousel hero-product">
-        <picture>
-          <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
-          <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
-        </picture>
+      <figure class="hero-carousel">
+        <div class="hero-product-float">
+          <div class="hero-product">
+            <picture>
+              <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
+              <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+            </picture>
+          </div>
+        </div>
       </figure>
     </div>
   </section>

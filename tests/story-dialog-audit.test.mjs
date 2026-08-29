@@ -12,7 +12,7 @@ test("ảnh sản phẩm tĩnh không để lại dialog kể chuyện hoặc if
     read("templates/home.html"),
     read("public/assets/js/page/registry.js"),
   ]);
-  const hero = home.slice(home.indexOf('<section class="hero">'), home.indexOf("</section>"));
+  const hero = home.slice(home.indexOf('<section class="hero"'), home.indexOf("</section>"));
   assert.doesNotMatch(hero, /<dialog\b|<\/dialog>|data-story-dialog|data-story-close/);
   assert.doesNotMatch(home, /<iframe\b/i);
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/,
@@ -21,8 +21,8 @@ test("ảnh sản phẩm tĩnh không để lại dialog kể chuyện hoặc if
 
 test("ảnh sản phẩm có cấu trúc ngữ nghĩa và mô tả thay thế", async () => {
   const home = await read("templates/home.html");
-  const hero = home.slice(home.indexOf('<section class="hero">'), home.indexOf("</section>"));
-  assert.match(hero, /<figure class="hero-carousel hero-product">[\s\S]*<picture>/);
+  const hero = home.slice(home.indexOf('<section class="hero"'), home.indexOf("</section>"));
+  assert.match(hero, /<figure class="hero-carousel">[\s\S]*class="hero-product"[\s\S]*<picture>/);
   assert.match(hero, /alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng[^\"]+"/);
   assert.doesNotMatch(hero, /role="button"|tabindex=/,
     "ảnh không tương tác không được giả làm nút");

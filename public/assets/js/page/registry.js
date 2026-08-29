@@ -18,7 +18,7 @@
    <main data-page="…">. Trang lạ hoặc thiếu thuộc tính thì chỉ nhận nhóm
    dùng chung — không ném lỗi, không chặn điều hướng. */
 const PAGES = {
-  home: ["landing-drag"],
+  home: ["landing-drag", "relief-hero"],
   library: ["card-filters", "card-tilt"],
   card: ["symbol-tooltips", "card-tilt"],
   daily: ["daily-card"],
@@ -36,6 +36,7 @@ const LOADERS = {
   share: () => import("../ui/share.js"),
   waitlist: () => import("../ui/waitlist.js"),
   "landing-drag": () => import("../landing-drag/init.js"),
+  "relief-hero": () => import("../ui/relief-hero.js"),
   "daily-card": () => import("../daily-card/page.js"),
   "spread-deck": () => import("../trai-bai.js"),
   "huyen-su-reveal": () => import("../ui/huyen-su-reveal.js"),
