@@ -53,7 +53,7 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
 .home-page .hero h1 {
   margin: 0 0 22px;
   padding: 0;
-  color: var(--hero-pearl);
+  color: var(--hero-warm-brown);
   border-radius: 0;
   background: none;
   font-family: var(--script);
@@ -64,17 +64,14 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   letter-spacing: .005em;
   text-transform: none;
   text-wrap: balance;
-  -webkit-text-fill-color: var(--hero-pearl);
-  -webkit-text-stroke: 1.25px var(--hero-champagne);
-  paint-order: stroke fill;
-  text-shadow:
-    0 1px 0 rgb(255 255 255 / 72%),
-    0 3px 0 rgb(119 84 43 / 34%),
-    0 10px 22px rgb(61 43 26 / 18%);
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 10px 22px rgb(61 43 26 / 12%);
 }
 
 .home-page .hero h1 .hero-headline-accent {
-  -webkit-text-stroke-color: var(--hero-coral);
+  color: inherit;
+  -webkit-text-fill-color: currentColor;
 }
 
 .home-page .hero .eyebrow {
@@ -96,7 +93,7 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   color: var(--hero-warm-brown);
   background: none;
   font-family: var(--script);
-  font-size: clamp(16px, 1.25vw, 18px);
+  font-size: clamp(27.04px, 2.1125vw, 30.42px);
   font-weight: 400;
   line-height: 1.65;
   letter-spacing: .01em;
@@ -1979,10 +1976,10 @@ body::before {
    lưới carousel cũ ghi đè sau khi critical CSS được thay thế. */
 .home-page .hero{grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:clamp(32px,3.4vw,60px);min-height:calc(100svh - 76px);padding-block:clamp(36px,4.5vw,64px);padding-inline:max(16px,calc((100vw - 1460px)/2))}
 .home-page .hero-copy{max-width:none;font-family:var(--hero-ui)}
-.home-page .hero h1{margin:0 0 22px;padding:0;color:var(--hero-pearl);border-radius:0;background:none;font-family:var(--script);font-size:clamp(68px,6.6vw,104px);font-style:normal;font-weight:400;line-height:.9;letter-spacing:.005em;text-transform:none;text-wrap:balance;-webkit-text-fill-color:var(--hero-pearl);-webkit-text-stroke:1.25px var(--hero-champagne);paint-order:stroke fill;text-shadow:0 1px 0 rgb(255 255 255 / 72%),0 3px 0 rgb(119 84 43 / 34%),0 10px 22px rgb(61 43 26 / 18%)}
-.home-page .hero h1 .hero-headline-accent{-webkit-text-stroke-color:var(--hero-coral)}
+.home-page .hero h1{margin:0 0 22px;padding:0;color:var(--hero-warm-brown);border-radius:0;background:none;font-family:var(--script);font-size:clamp(68px,6.6vw,104px);font-style:normal;font-weight:400;line-height:.9;letter-spacing:.005em;text-transform:none;text-wrap:balance;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:0 10px 22px rgb(61 43 26 / 12%)}
+.home-page .hero h1 .hero-headline-accent{color:inherit;-webkit-text-fill-color:currentColor}
 .home-page .hero .eyebrow{color:var(--hero-label);font-family:var(--hero-ui)}
-.home-page .hero .hero-subheadline{max-width:48ch;margin-bottom:0;color:var(--hero-warm-brown);background:none;font-family:var(--script);font-size:clamp(16px,1.25vw,18px);font-style:normal;font-weight:400;line-height:1.65;letter-spacing:.01em;text-transform:none;text-wrap:pretty;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:none}
+.home-page .hero .hero-subheadline{max-width:48ch;margin-bottom:0;color:var(--hero-warm-brown);background:none;font-family:var(--script);font-size:clamp(27.04px,2.1125vw,30.42px);font-style:normal;font-weight:400;line-height:1.65;letter-spacing:.01em;text-transform:none;text-wrap:pretty;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;text-shadow:none}
 .home-page .hero-actions{gap:12px;margin:22px 0 0;color:var(--hero-warm-brown);font-family:var(--hero-ui);font-size:14px}
 .home-page .hero-actions a{border-bottom:0}
 .home-page .hero-actions .button.brass{background:var(--hero-coral);color:#FFFDF5}

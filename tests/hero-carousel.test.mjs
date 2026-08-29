@@ -161,7 +161,7 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
   ]);
 
   assert.match(html, /<h1>Hường Đông kể Tarot<br>bằng <span class="hero-headline-accent">câu chuyện Việt<\/span><\/h1>/,
-    "chỉ cụm câu chuyện Việt được bọc để nhấn coral, copy không đổi");
+    "headline phải giữ nguyên copy và cấu trúc hiện tại");
   assert.match(html, /<div class="hero-panel">[\s\S]*?<p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith,[\s\S]*?chỉ thay hình ảnh để dễ nhớ\.<\/p>[\s\S]*?<dl class="proof">/,
     "subheadline, CTA và stats phải nằm chung trong panel kính");
   assert.doesNotMatch(html, /THÔNG MINH|Một bộ bài\. Một huyền sử\./,
@@ -179,12 +179,12 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
     assert.match(css, /font-family:\s*var\(--script\)/, `${ten}: headline chưa dùng Fontasia`);
     assert.match(css, /font-size:\s*clamp\(68px,\s*6\.6vw,\s*104px\)/, `${ten}: sai cỡ headline desktop`);
     assert.match(css, /font-size:\s*clamp\(52px,\s*14vw,\s*68px\)/, `${ten}: sai cỡ headline mobile`);
-    assert.match(css, /-webkit-text-fill-color:\s*var\(--hero-pearl\)/, `${ten}: headline thiếu thân ngọc trai`);
-    assert.match(css, /-webkit-text-stroke:\s*1\.25px var\(--hero-champagne\)/, `${ten}: headline thiếu stroke champagne`);
-    assert.match(css, /hero-headline-accent[^}]*-webkit-text-stroke-color:\s*var\(--hero-coral\)/s,
-      `${ten}: cụm nhấn chưa dùng coral`);
-    assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
-      `${ten}: subheadline phải là Fontasia một màu, không stroke hoặc shadow`);
+    assert.match(css, /\.hero h1[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*-webkit-text-fill-color:\s*currentColor[^}]*-webkit-text-stroke:\s*0/s,
+      `${ten}: headline phải là Fontasia nâu ấm, không còn stroke kim loại`);
+    assert.match(css, /hero-headline-accent[^}]*color:\s*inherit[^}]*-webkit-text-fill-color:\s*currentColor/s,
+      `${ten}: cụm câu chuyện Việt phải kế thừa cùng màu nâu ấm`);
+    assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*font-size:\s*clamp\(27\.04px,\s*2\.1125vw,\s*30\.42px\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
+      `${ten}: subheadline phải tăng thêm đúng 30%, dùng Fontasia nâu ấm và không stroke/bóng`);
     assert.match(css, /\.hero-panel[^}]*background:\s*#FFF8E7/s, `${ten}: thiếu fallback cream khi không có backdrop-filter`);
     assert.match(css, /backdrop-filter:\s*blur\(18px\) saturate\(115%\)/, `${ten}: thiếu frosted blur`);
   }
