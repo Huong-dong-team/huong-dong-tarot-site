@@ -91,10 +91,9 @@ test("ảnh sản phẩm không giữ dialog kể chuyện sai ngữ cảnh", as
   const html = await home();
   const stage = heroStage(html);
   assert.doesNotMatch(stage, /<dialog|data-story-for|data-story-close/);
-  // Các truyện không mất khỏi trang: mục #tu-bat-tu vẫn dẫn sang trang lá.
-  for (const { slug } of TU_BAT_TU) {
-    assert.match(html, new RegExp(`href="/la-bai/${slug}/"`), `thiếu lối sang lá ${slug}`);
-  }
+  // Các truyện không mất khỏi trang: mục Tứ Bất Tử rút gọn vào #kham-pha-them
+  // (trang chủ V2) vẫn dẫn sang /huyen-su/#tu-bat-tu, nơi cả bốn vị còn nguyên.
+  assert.match(html, /href="\/huyen-su\/#tu-bat-tu"/, "thiếu lối sang Tứ Bất Tử");
 });
 
 test("hero chỉ giữ nền tĩnh và không còn cụm mặt trời phụ", async () => {
@@ -106,18 +105,14 @@ test("hero chỉ giữ nền tĩnh và không còn cụm mặt trời phụ", as
   assert.doesNotMatch(hero, /drum-watermark/, "hero không dùng hoa văn chìm");
 });
 
-test("mục Tứ Bất Tử tĩnh có đủ số La Mã I–IV", async () => {
+test("mục Tứ Bất Tử rút gọn ở #kham-pha-them vẫn dùng ảnh chân dung thật", async () => {
+  // Trang chủ V2 không còn dựng lưới La Mã I–IV riêng (nội dung đó ở
+  // /huyen-su/#tu-bat-tu) — chỉ còn một thẻ xem trước trong #kham-pha-them,
+  // nhưng thẻ đó vẫn phải dùng đúng ảnh chân dung Tứ Bất Tử, không phải ảnh
+  // giữ chỗ hay tài nguyên lá bài.
   const html = await home();
-  const section = html.slice(html.indexOf('id="tu-bat-tu"'), html.indexOf('id="bon-nha"'));
-  for (const roman of ["I", "II", "III", "IV"]) {
-    assert.match(section, new RegExp(`<span class="immortal-roman">${roman}</span>`));
-  }
-  for (const { portrait } of TU_BAT_TU) {
-    assert.match(section, new RegExp(`immortals/${portrait}[-.][\\w.]+`), `thiếu ảnh ${portrait}`);
-  }
-  // Hình chim Lạc và ghi chú "Ấn cội nguồn" đã được gỡ theo yêu cầu thiết kế.
-  assert.doesNotMatch(section, /lac-figure/, "khối chim Lạc phải được gỡ khỏi mục này");
-  assert.doesNotMatch(section, /Ấn cội nguồn/, "ghi chú 'Ấn cội nguồn' phải được gỡ");
+  const section = html.slice(html.indexOf('id="kham-pha-them"'), html.indexOf("</section>", html.indexOf('id="kham-pha-them"')));
+  assert.match(section, /immortals\/[\w-]+-800\.avif/, "thẻ Tứ Bất Tử phải dùng ảnh trong immortals/");
 });
 
 test("ảnh dùng ở màn hình đầu đủ nhẹ", async () => {

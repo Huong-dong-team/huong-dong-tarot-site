@@ -1644,17 +1644,15 @@ body::before {
 
 /* --- Ba cửa vào -------------------------------------------------------- */
 
-/* Cố ý KHÔNG dùng .section-heading. Sáu section còn lại của trang chủ đều dựng
-   bằng đúng một phân tử — nhãn eyebrow, h2, một đoạn, ảnh 651px, rồi một hàng
-   thẻ đều nhau — lặp sáu lần liền. Mắt nhận ra cái khuôn trước khi kịp đọc chữ,
-   và đó là phần lớn cảm giác "trang này do máy dựng".
-
-   Khối này phá khuôn: một nhãn trần không eyebrow không đoạn dẫn, rồi ba ô
-   KHÁC cỡ nhau. Ba nhóm người đọc không ngang trọng số thì ba ô cũng không
-   được ngang cỡ. */
+/* Cố ý KHÔNG dùng .section-heading: một nhãn trần không eyebrow không đoạn
+   dẫn, rồi ba thẻ ảnh + mô tả ngắn dẫn xuống ba section chi tiết bên dưới
+   (#hoc-78-la, #doi-chieu-rws, #bao-bai) — ba cửa vào chỉ còn là bản xem
+   trước, phần dài giờ nằm ở section riêng nên cả ba thẻ đều cùng một khuôn.
+   .door--hoc từng cao gấp đôi để chứa danh sách ba dòng của riêng nó; danh
+   sách đó đã chuyển xuống #hoc-78-la nên không còn lý do giữ nó khác cỡ. */
 .doors {
   display: grid;
-  grid-template-columns: 1.45fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   align-items: start;
   padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 1180px) / 2));
@@ -1677,11 +1675,33 @@ body::before {
   background: var(--paper-raised);
 }
 
-/* Cửa Học cao bằng hai cửa kia cộng lại: nó là phễu rộng nhất và là thứ duy
-   nhất trên trang cho người đọc một món trước khi xin gì của họ. */
+/* Cửa Học vẫn là phễu rộng nhất — giữ vạch màu riêng để mắt bắt được nó
+   trước — nhưng không còn cao gấp đôi hai cửa kia (xem comment ở .doors). */
 .door--hoc {
-  grid-row: 2 / span 2;
   border-top: 3px solid var(--magenta-ink);
+}
+
+.door-image {
+  aspect-ratio: 4 / 3;
+  margin-bottom: 4px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+.door-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1);
+}
+.door:hover .door-image img,
+.door:focus-within .door-image img {
+  transform: scale(1.08);
+}
+@media (prefers-reduced-motion: reduce) {
+  .door-image img { transition: none; }
 }
 
 .door h3 { margin: 0; }
@@ -1893,12 +1913,21 @@ body::before {
    JavaScript nào. Nội dung sinh từ mảng faqs trong build.js, cùng nguồn với
    JSON-LD FAQPage, nên hai bên không thể lệch nhau. */
 .faq-section {
-  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 900px) / 2));
+  display: grid;
+  grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 80px);
+  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 1180px) / 2));
   background: var(--paper);
 }
-.faq-section > h2 {
-  margin-bottom: 32px;
+.faq-heading { max-width: 46ch; }
+.faq-heading > h2 {
+  margin-bottom: 12px;
   font-size: clamp(34px, 3.6vw, 46px);
+}
+.faq-heading > p:not(.eyebrow) { margin: 0; color: var(--muted); }
+@media (max-width: 900px) {
+  .faq-section { grid-template-columns: 1fr; }
+  .faq-heading { max-width: none; margin-bottom: 8px; }
 }
 .faq-list { border-top: 1px solid var(--line); }
 
@@ -2207,4 +2236,193 @@ body::before {
   .immortals-grid a::after {
     transition: none;
   }
+}
+
+/* ============================================================
+   REMAKE TRANG CHỦ V2 · THEO TÀI LIỆU HTML THAM KHẢO CỦA CHỦ DỰ ÁN
+   Trang chủ dựng lại theo tài liệu tham khảo: ba cửa vào (.doors) rút gọn
+   thành bản xem trước có ảnh, hai section chi tiết MỚI (#hoc-78-la,
+   #doi-chieu-rws) mở ra đúng phần nội dung mà bản cũ nhét chung vào ba cửa,
+   và bốn mục cũ — Tứ Bất Tử, Bốn Nhà, Thư viện nổi bật, Nhật ký dự án — rút
+   gọn chung vào một section #kham-pha-them thay vì bốn section riêng.
+   Nội dung đầy đủ của cả bốn mục đó vẫn còn nguyên trên /huyen-su/, /la-bai/
+   và /tin-tuc/; trang chủ chỉ không lặp lại toàn bộ nữa. #cau-chuyen, #bao-bai
+   và .quote-band giữ nguyên cơ chế bố cục đã có (xem "Hai nhịp biên tập phá
+   lưới" và comment trên .quote-band) — không đụng tới ở đây. ============ */
+
+.learning-story {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(480px, 58vw, 680px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--paper-raised);
+}
+.learning-story .story-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .32;
+}
+/* Gradient tan dần từ đặc tới trong suốt để cột chữ bên trái luôn đủ tương
+   phản, bất kể vùng đó của ảnh nền sáng hay tối. */
+.learning-story::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg,
+    var(--paper-raised) 0%,
+    color-mix(in srgb, var(--paper-raised) 70%, transparent) 46%,
+    transparent 78%);
+}
+.learning-copy {
+  position: relative;
+  width: min(560px, 92%);
+  margin-inline: max(16px, calc((100vw - 1180px) / 2));
+  padding-block: clamp(60px, 9vw, 100px);
+}
+.learning-list {
+  display: grid;
+  gap: 2px;
+  margin: 28px 0 32px;
+  padding: 0;
+  list-style: none;
+}
+.learning-list li {
+  display: grid;
+  gap: 2px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.learning-list span { color: var(--muted); }
+
+.rws-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 90px);
+  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 1180px) / 2));
+  background: var(--paper);
+}
+.rws-copy { max-width: 52ch; }
+.rws-list {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 26px;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+.rws-list li { position: relative; padding-left: 22px; }
+.rws-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .65em;
+  width: 10px;
+  height: 1px;
+  background: var(--gold-ink);
+}
+.rws-visual { position: relative; margin: 0; }
+.rws-visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--img-radius);
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--gold) 45%, transparent),
+    inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 30%, transparent),
+    0 26px 58px color-mix(in srgb, var(--lacquer-ink) 18%, transparent);
+}
+.rws-visual figcaption {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .learning-story { min-height: auto; padding-block: 0; }
+  .learning-story .story-bg { position: static; height: 220px; opacity: .5; }
+  .learning-story::after { display: none; }
+  .learning-copy { width: 100%; margin-inline: 0; padding: 40px 16px 60px; }
+  .rws-showcase { grid-template-columns: 1fr; }
+}
+
+/* --- Đi sâu hơn: rút gọn Tứ Bất Tử, Bốn Nhà, Thư viện, Nhật ký --------- */
+.explore-section {
+  padding: clamp(70px, 9vw, 120px) max(16px, calc((100vw - 1180px) / 2));
+  background: var(--paper-raised);
+}
+.explore-grid {
+  width: var(--shell);
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.explore-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.explore-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 28%, transparent);
+  transition: transform .4s cubic-bezier(.22, 1, .36, 1);
+}
+.explore-card:hover img,
+.explore-card:focus-within img { transform: translateY(-4px) scale(1.03); }
+.explore-card h3 { margin: 0; font-size: 19px; }
+.explore-card p:not(.eyebrow) { margin: 0; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .explore-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .explore-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .explore-card img { transition: none; }
+}
+
+/* --- Danh sách chờ: ô nhập + nút gộp thành một viên thuốc -------------- */
+.waitlist-form {
+  display: grid;
+  gap: 10px;
+}
+.waitlist-form label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.waitlist-form .email-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper-raised) 94%, transparent);
+}
+.waitlist-form input:not([type="hidden"]) {
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+}
+.waitlist-form .button.brass { border-radius: 999px; }
+
+@media (max-width: 620px) {
+  .waitlist-form .email-row { grid-template-columns: 1fr; border-radius: 20px; }
 }

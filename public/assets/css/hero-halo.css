@@ -129,6 +129,29 @@
   .lacquer-halo::after { animation: lacquer-halo-rotate 90s linear infinite; }
 }
 
+/* Khối "sống" ngay cả khi không ai chạm vào: đẩy nhẹ theo trục Z rồi thu lại,
+   không đứng yên như một tấm ảnh dán phẳng. translateZ + scale (KHÔNG có
+   translateX/Y) nên phần "trồi ra" luôn nằm ngay giữa khung ảnh — khung cha
+   (.hero-product/.pack-image-frame) vẫn overflow:hidden để giữ góc bo, nhưng
+   vì object-fit:cover luôn phủ kín khung nên phóng to nhẹ theo Z không để lộ
+   khoảng trống ở mép nào. Đặt trên chính <img>, một phần tử khác hẳn
+   .lacquer-tilt (đang giữ rotateX/rotateY theo con trỏ) và .lacquer-halo
+   (đang giữ breathe/rotate của quầng sáng) — ba tầng chuyển động độc lập,
+   không tầng nào tranh transform của tầng khác. Nhịp 6.4s lệch với 7s của
+   quầng sáng để hai chuyển động không bao giờ trùng pha thành một nhịp máy. */
+@keyframes lacquer-block-float {
+  0%, 100% { transform: translateZ(0) scale(1.008); }
+  50% { transform: translateZ(20px) scale(1.03); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lacquer-tilt img {
+    animation: lacquer-block-float 6.4s ease-in-out infinite;
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+}
+
 @keyframes lacquer-halo-breathe {
   0%, 100% { opacity: .68; transform: scale(.96); }
   50% { opacity: .92; transform: scale(1.03); }
@@ -256,6 +279,9 @@
   }
   .lacquer-tilt::before {
     transition: none;
+  }
+  .lacquer-tilt img {
+    animation: none;
   }
 }
 

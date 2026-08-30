@@ -7,10 +7,12 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("chỉ ba khối đã duyệt trở thành dải kéo", async () => {
+test("chỉ một khối đã duyệt trở thành dải kéo", async () => {
+  // Trang chủ V2 rút bốn mục cũ (Tứ Bất Tử, Bốn Nhà, Thư viện, Nhật ký) chung
+  // vào một section #kham-pha-them — chỉ còn đúng một dải kéo thay vì ba.
   const html = await read("dist/index.html");
   const rails = [...html.matchAll(/data-drag-rail="([^"]+)"/g)].map((match) => match[1]);
-  assert.deepEqual(rails, ["Tứ Bất Tử", "Thư viện nổi bật", "Nhật ký dự án"]);
+  assert.deepEqual(rails, ["Đi sâu hơn"]);
   // Hero có carousel riêng đã quản lý inert/aria-current và một <dialog>; kéo
   // thêm một engine thứ hai lên đó là hai bộ trạng thái tranh nhau cùng một DOM.
   assert.doesNotMatch(html, /data-hero-carousel[^>]*data-drag-rail/);
@@ -18,13 +20,12 @@ test("chỉ ba khối đã duyệt trở thành dải kéo", async () => {
     "không được áp thao tác kéo cho cả trang");
 });
 
-test("dải kéo giữ nguyên nội dung và thứ tự của lưới cũ", async () => {
+test("dải kéo giữ nguyên nội dung của lưới đã rút gọn", async () => {
   const html = await read("dist/index.html");
-  const immortals = html.match(/<ol class="immortals-grid" data-drag-rail="[^"]*">([\s\S]*?)<\/ol>/)?.[1];
-  assert.ok(immortals, "khối Tứ Bất Tử phải còn là một danh sách trong HTML tĩnh");
-  assert.equal([...immortals.matchAll(/<li>/g)].length, 4);
-  const news = html.match(/<div class="news-grid" data-drag-rail="[^"]*">([\s\S]*?)<\/div><\/section>/)?.[1];
-  assert.ok(news && news.includes("<article>"), "bài viết vẫn là <article> đọc được không cần JS");
+  const explore = html.match(/<div class="explore-grid" data-drag-rail="[^"]*">([\s\S]*?)<\/div>\s*<\/section>/)?.[1];
+  assert.ok(explore, "khối khám phá thêm phải còn là danh sách trong HTML tĩnh, đọc được không cần JS");
+  assert.equal([...explore.matchAll(/<article class="explore-card">/g)].length, 4,
+    "phải giữ đủ bốn thẻ: Tứ Bất Tử, Bốn Nhà, Thư viện, Nhật ký");
 });
 
 test("tầng CSS đủ để kéo khi JavaScript không chạy", async () => {
