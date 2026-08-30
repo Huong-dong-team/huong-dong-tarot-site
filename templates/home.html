@@ -26,11 +26,23 @@
          thuật, không có carousel hay JavaScript. Crop vuông bỏ phần nền kem dư
          để sản phẩm đủ lớn mà không kéo méo hoặc vẽ lại ảnh gốc. -->
     <div class="hero-stage">
+      <!-- Quầng hào quang sơn son thếp vàng, xem hero-halo.css. Đứng NGOÀI
+           .hero-product vì overflow:hidden của khung sẽ cắt mất bất cứ thứ gì
+           toả ra nếu đặt bên trong. Thuần trang trí nên aria-hidden. -->
+      <div class="hero-halo" aria-hidden="true"></div>
       <figure class="hero-carousel hero-product">
-        <picture>
-          <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
-          <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
-        </picture>
+        <!-- .hero-product-tilt là lớp DUY NHẤT xoay theo con trỏ (card-tilt.js).
+             Tách khỏi .hero-carousel/.hero-product vì hai lớp đó đang là chủ sở
+             hữu transform của animation entrance (page-transition.css) — một
+             animation fill-mode:both giữ transform cuối của nó ở mức ưu tiên
+             cao hơn một class rule thường, nên đặt tilt lên cùng phần tử sẽ
+             không bao giờ thấy hiệu ứng chạy. Xem hero-halo.css. -->
+        <div class="hero-product-tilt">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
+            <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+          </picture>
+        </div>
       </figure>
     </div>
   </section>

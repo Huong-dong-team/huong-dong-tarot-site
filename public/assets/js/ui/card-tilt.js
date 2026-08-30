@@ -8,7 +8,10 @@ import { onReducedMotionChange, prefersReducedMotion } from "../shared/reduced-m
    bình thường. */
 
 const MAX_TILT = 4;
-const TARGET_SELECTOR = ".tarot-card, .card-art, .hd-card";
+// .hero-product-tilt là lớp bọc riêng cho ảnh sản phẩm hero (hero-halo.css) —
+// KHÔNG phải .hero-product hay .hero-carousel, hai lớp đó đang giữ transform
+// của animation entrance nên không được đụng vào ở đây.
+const TARGET_SELECTOR = ".tarot-card, .card-art, .hd-card, .hero-product-tilt";
 
 function setTilt(element, clientX, clientY) {
   const rect = element.getBoundingClientRect();
