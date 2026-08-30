@@ -1,51 +1,59 @@
-/* Hào quang sơn son thếp vàng + khối sản phẩm hero mang cảm giác chạm khắc.
+/* Hào quang sơn son thếp vàng + khối chạm khắc — dùng cho MỌI ảnh sản phẩm có
+   khối thật trên trang chủ (ảnh sản phẩm hero, khối hộp bài ở #bao-bai), không
+   riêng hero. Vì vậy các lớp dưới đây mang tên chung .lacquer-*, không phải
+   .hero-*: một nơi định nghĩa, nhiều nơi dùng lại, không copy CSS.
 
-   "Sơn son thếp vàng" — lối sơn mài Việt phủ đỏ son rồi dát vàng lên phần chạm
+   "Sơn son thếp vàng" — sơn mài Việt phủ đỏ son rồi dát vàng lên phần chạm
    nổi (hoành phi, tượng thờ, hộp trầu) — là đúng chất liệu bài viết đã dùng để
-   tả sản phẩm ("hoa văn nhũ đồng và vầng mặt trời son" trong alt text của chính
-   ảnh này). Hiệu ứng dưới đây chỉ vẽ lại đúng ý đó bằng CSS, không thêm màu mới:
-   --dau (đỏ son) và --gold/--gold-ink (thếp vàng) đã có sẵn trong critical.css.
+   tả sản phẩm ("hoa văn nhũ đồng và vầng mặt trời son" trong alt text của
+   chính hai ảnh này). Vermilion --dau và gold --gold/--gold-ink là hai màu
+   gốc có sẵn trong critical.css; không thêm màu mới.
 
-   Ba lớp, ba phần tử, ba trách nhiệm — tách vậy KHÔNG phải để chia nhỏ cho vui,
-   mà vì mỗi lớp có một ràng buộc riêng buộc nó phải là phần tử của chính nó:
+   Bốn lớp, bốn trách nhiệm — tách vậy KHÔNG phải để chia nhỏ cho vui, mà vì
+   mỗi lớp có một ràng buộc riêng buộc nó phải là phần tử của chính nó:
 
-     .hero-halo            quầng sáng toả ra NGOÀI khung ảnh. Phải là phần tử
-                            anh em với .hero-product, không phải con của nó —
-                            .hero-product có overflow:hidden nên bất cứ thứ gì
-                            đặt bên trong và tràn ra sẽ bị cắt mất.
-     .hero-product          (::before/::after) viền vát vàng + đường chỉ chạm
-                            khắc, nằm TRONG khung nên overflow:hidden không
-                            phải vấn đề — pseudo-element ăn theo layout đã có,
-                            không cần thêm phần tử HTML nào.
-     .hero-product-tilt     lớp DUY NHẤT xoay theo con trỏ. Phải là một phần tử
-                            RIÊNG, tách khỏi .hero-carousel/.hero-product: hai
-                            lớp đó đang là chủ sở hữu transform của animation
-                            entrance bên page-transition.css, và một animation
-                            fill-mode:both giữ transform cuối của nó ở mức ưu
-                            tiên cao hơn một class rule thường — đặt tilt lên
-                            cùng phần tử thì tilt sẽ không bao giờ thấy chạy.
+     .lacquer-halo    quầng sáng toả ra NGOÀI khung ảnh. Phải là phần tử anh
+                      em với khung ảnh, không phải con của nó — khung ảnh có
+                      overflow:hidden nên bất cứ thứ gì đặt bên trong và tràn
+                      ra sẽ bị cắt mất.
+     .hero-product,
+     .pack-image-frame  (::before/::after) viền vát vàng + đường chỉ chạm
+                      khắc, nằm TRONG khung nên overflow:hidden không phải vấn
+                      đề — pseudo-element ăn theo layout đã có, không cần thêm
+                      phần tử HTML nào.
+     .lacquer-tilt    lớp DUY NHẤT xoay theo con trỏ (card-tilt.js). Phải là
+                      một phần tử RIÊNG, tách khỏi phần tử đang chạy animation
+                      entrance của chính nó (.hero-carousel ở hero) — một
+                      animation fill-mode:both giữ transform cuối của nó ở mức
+                      ưu tiên cao hơn một class rule thường, nên đặt tilt lên
+                      cùng phần tử thì tilt sẽ không bao giờ thấy chạy.
+     .lacquer-stage   phần tử cha chung của .lacquer-halo và .lacquer-tilt,
+                      dùng làm điểm neo cho rule :has() "sáng thêm khi nghiêng"
+                      — một rule DÙNG CHUNG cho mọi khối, không viết lại mỗi
+                      nơi một bản.
 
    Toàn bộ chuyển động chỉ dùng opacity/transform (glow) và box-shadow tĩnh
    không animate (carve) — không có gì đọc layout, không có gì đóng góp CLS. */
 
-.hero-stage {
-  /* Điểm neo cho .hero-halo định vị tuyệt đối. .hero-stage vốn đã
-     position:relative trong main.css; khai lại ở đây để tệp này tự đọc được
-     một mình, không phải lật main.css mới hiểu vì sao inset hoạt động. */
+.hero-stage,
+.pack-image-frame {
+  /* Điểm neo cho .lacquer-halo định vị tuyệt đối, và điểm bắt của :has() bên
+     dưới. .hero-stage vốn đã position:relative trong main.css; khai lại ở đây
+     để tệp này tự đọc được một mình, không phải lật main.css mới hiểu vì sao
+     inset hoạt động. */
   position: relative;
 }
 
-.hero-halo {
+.lacquer-halo {
   position: absolute;
   inset: -20% -16%;
   z-index: 0;
   pointer-events: none;
   border-radius: 50%;
-  contain: strict;
 }
 
-.hero-halo::before,
-.hero-halo::after {
+.lacquer-halo::before,
+.lacquer-halo::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -53,7 +61,7 @@
 }
 
 /* Quầng đỏ son — nền của "mặt trời" phía sau khối sản phẩm. */
-.hero-halo::before {
+.lacquer-halo::before {
   background: radial-gradient(circle at 50% 48%,
     color-mix(in srgb, var(--dau) 52%, transparent) 0%,
     color-mix(in srgb, var(--dau) 24%, transparent) 32%,
@@ -62,63 +70,88 @@
   filter: blur(26px);
 }
 
-/* Tia vàng toả — repeating-conic-gradient dựng 15 tia mà không phải viết tay
-   từng điểm dừng màu. Quay rất chậm (90s/vòng): mắt không bắt được chuyển
-   động, chỉ thấy ánh sáng "sống" chứ không thấy nó quay. */
-.hero-halo::after {
-  background: repeating-conic-gradient(
-    color-mix(in srgb, var(--gold) 30%, transparent) 0deg 3deg,
-    transparent 3deg 24deg
-  );
+/* Tia vàng toả (repeating-conic-gradient dựng 15 tia mà không phải viết tay
+   từng điểm dừng màu) CHỒNG hai vành mảnh (radial-gradient hai nấc màu sát
+   nhau tạo một đường viền tròn) — gợi vành quỹ đạo quanh mặt trời như trong
+   bản phác hoạ tham khảo, vẽ hoàn toàn bằng gradient, không thêm SVG hay ảnh.
+   Quay rất chậm (90s/vòng): mắt không bắt được chuyển động, chỉ thấy ánh sáng
+   "sống" chứ không thấy nó quay. */
+.lacquer-halo::after {
+  background:
+    repeating-conic-gradient(
+      color-mix(in srgb, var(--gold) 30%, transparent) 0deg 3deg,
+      transparent 3deg 24deg
+    ),
+    radial-gradient(circle at 50% 48%,
+      transparent 0 37%,
+      color-mix(in srgb, var(--gold) 34%, transparent) 37% 37.6%,
+      transparent 37.6% 44%,
+      color-mix(in srgb, var(--gold) 22%, transparent) 44% 44.4%,
+      transparent 44.4%);
   filter: blur(2px);
   mix-blend-mode: soft-light;
   opacity: .6;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-halo::before { animation: hero-halo-breathe 7s ease-in-out infinite; }
-  .hero-halo::after { animation: hero-halo-rotate 90s linear infinite; }
+  .lacquer-halo::before { animation: lacquer-halo-breathe 7s ease-in-out infinite; }
+  .lacquer-halo::after { animation: lacquer-halo-rotate 90s linear infinite; }
 }
 
-@keyframes hero-halo-breathe {
+@keyframes lacquer-halo-breathe {
   0%, 100% { opacity: .68; transform: scale(.96); }
   50% { opacity: .92; transform: scale(1.03); }
 }
 
-@keyframes hero-halo-rotate {
+@keyframes lacquer-halo-rotate {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
 /* Khối sản phẩm sáng và "sống" hơn khi đang được nghiêng — ánh sáng bắt lên
    một vật có khối thật thì phải đổi theo góc nhìn, không đứng yên như dán
-   nhãn. :has() không được hỗ trợ thì khối chỉ đơn giản là không sáng thêm khi
-   tương tác — không phải một trạng thái gãy, một tầng hiệu ứng thưa hơn.
+   nhãn. Một rule DÙNG CHUNG cho cả hai khối qua .lacquer-stage/.lacquer-tilt.
+   :has() không được hỗ trợ thì khối chỉ đơn giản là không sáng thêm khi tương
+   tác — không phải một trạng thái gãy, một tầng hiệu ứng thưa hơn.
 
-   Đặt filter/transform lên .hero-halo (phần tử cha) chứ KHÔNG lên ::before/
+   Đặt filter/transform lên .lacquer-halo (phần tử cha) chứ KHÔNG lên ::before/
    ::after: hai pseudo-element đó đã có animation opacity/transform riêng chạy
-   liên tục (hero-halo-breathe, hero-halo-rotate), và animation đang chạy luôn
-   thắng một class rule thường trên cùng thuộc tính — set thẳng opacity/transform
-   lên ::before ở đây sẽ lặng lẽ vô tác dụng suốt lúc animation còn chạy. filter
-   và transform trên chính .hero-halo là một tầng compositing riêng, nhân lên
-   trên kết quả của hai pseudo-element chứ không tranh chấp gì với chúng. */
-.hero-halo {
+   liên tục (lacquer-halo-breathe, lacquer-halo-rotate), và animation đang chạy
+   luôn thắng một class rule thường trên cùng thuộc tính — set thẳng opacity/
+   transform lên ::before ở đây sẽ lặng lẽ vô tác dụng suốt lúc animation còn
+   chạy. filter và transform trên chính .lacquer-halo là một tầng compositing
+   riêng, nhân lên trên kết quả của hai pseudo-element chứ không tranh chấp gì
+   với chúng. */
+.lacquer-halo {
   transition: filter .4s ease, transform .4s ease;
 }
-.hero-stage:has(.hero-product-tilt.hd-tilt-active) .hero-halo {
+.lacquer-stage:has(.lacquer-tilt.hd-tilt-active) .lacquer-halo {
   filter: brightness(1.3) saturate(1.2);
   transform: scale(1.06);
 }
 
 /* --- Khối chạm khắc: viền vát vàng + đường chỉ cẩn ------------------- */
 
-.hero-product {
+.hero-product,
+.pack-image-frame {
   position: relative;
   z-index: 1;
 }
 
+/* .hero-product đã có border-radius/overflow:hidden riêng trong main.css.
+   .pack-image-frame là phần tử mới, ảnh bên trong nó (.pack-figure img) có
+   sẵn border-radius:18px từ main.css — khai lại đúng con số đó ở đây để
+   border-radius:inherit của ::before/::after hai dòng dưới khớp đúng góc bo
+   của ảnh, không thì viền vát chạm khắc sẽ vuông trong khi ảnh lại bo tròn. */
+.pack-image-frame {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
 .hero-product::before,
-.hero-product::after {
+.hero-product::after,
+.pack-image-frame::before,
+.pack-image-frame::after {
   content: "";
   position: absolute;
   z-index: 2;
@@ -129,7 +162,8 @@
 /* Viền vát: sáng ở mép trên-trái, sậm ở mép dưới-phải — mô phỏng ánh sáng bắt
    trên một bề mặt CHẠM NỔI thật (nguồn sáng cố định từ trên-trái, khớp hướng
    quầng hào quang phía sau), không phải một khung phẳng dán ảnh lên trên. */
-.hero-product::before {
+.hero-product::before,
+.pack-image-frame::before {
   inset: 0;
   box-shadow:
     inset 2px 2px 0 color-mix(in srgb, var(--gold) 55%, transparent),
@@ -139,37 +173,49 @@
 
 /* Đường chỉ vàng lùi vào trong — gợi viền cẩn chỉ vàng quanh mặt chạm, tách
    khỏi mép ngoài để đọc ra hai lớp: khung vát ở ngoài, mặt chạm ở trong. */
-.hero-product::after {
+.hero-product::after,
+.pack-image-frame::after {
   inset: 8px;
   border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent);
   box-shadow: inset 0 1px 2px color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
 }
 
-/* --- Nghiêng theo con trỏ: card-tilt.js gắn .hero-product-tilt vào cùng
-       TARGET_SELECTOR với .tarot-card/.card-art/.hd-card, cùng khuôn --------- */
+/* --- Nghiêng theo con trỏ: card-tilt.js gắn .lacquer-tilt vào cùng
+       TARGET_SELECTOR với .tarot-card/.card-art/.hd-card, cùng khuôn ------- */
 
-.hero-product-tilt {
+.lacquer-tilt {
   display: block;
 }
 
-.hero-product-tilt.hd-tilt-ready {
+.lacquer-tilt.hd-tilt-ready {
   transform: perspective(1000px) rotateX(var(--hd-tilt-x, 0deg)) rotateY(var(--hd-tilt-y, 0deg));
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-halo::before,
-  .hero-halo::after {
+  .lacquer-halo::before,
+  .lacquer-halo::after {
     animation: none;
   }
-  .hero-product-tilt.hd-tilt-ready {
+  .lacquer-tilt.hd-tilt-ready {
     transform: none;
   }
 }
 
+/* --- Khối hộp ở #bao-bai: khớp lại chiều cao qua hai lớp bọc mới thêm --- */
+
+/* main.css đã có #bao-bai > .pack-figure img { height:100%; object-fit:cover }
+   cho bố cục hai cột ≥1101px — selector đó không cần đổi vì img vẫn là hậu duệ
+   của .pack-figure, chỉ sâu hơn hai cấp. Còn thiếu đúng một mắt xích: bản thân
+   .pack-image-tilt (bọc trực tiếp quanh img) cũng phải cao 100% thì mới truyền
+   được chiều cao xuống img. .pack-image-frame không cần khai vì grid ≥1101px
+   tự canh "stretch" cho item đầu của nó theo mặc định. */
+@media (min-width: 1101px) {
+  #bao-bai > .pack-figure .pack-image-tilt { height: 100%; }
+}
+
 /* Màn hình hẹp: quầng sáng thu lại theo đúng tỉ lệ để không tràn ra ngoài
-   .hero — .hero-stage ở đây co xuống gần hết chiều rộng màn hình, một quầng
-   16–20% mỗi bên vẫn vừa vì .hero luôn overflow:hidden, nhưng blur 26px trên
-   một quầng nhỏ sẽ nuốt gần hết dải màu; hạ blur cho đỡ mờ nhòe. */
+   khung ảnh — blur 26px trên một quầng đã bị thu nhỏ theo layout hẹp sẽ nuốt
+   gần hết dải màu; hạ blur cho đỡ mờ nhòe. */
 @media (max-width: 480px) {
-  .hero-halo::before { filter: blur(16px); }
+  .lacquer-halo::before { filter: blur(16px); }
 }

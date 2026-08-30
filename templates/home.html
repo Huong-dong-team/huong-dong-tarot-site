@@ -26,18 +26,20 @@
          thuật, không có carousel hay JavaScript. Crop vuông bỏ phần nền kem dư
          để sản phẩm đủ lớn mà không kéo méo hoặc vẽ lại ảnh gốc. -->
     <div class="hero-stage">
-      <!-- Quầng hào quang sơn son thếp vàng, xem hero-halo.css. Đứng NGOÀI
-           .hero-product vì overflow:hidden của khung sẽ cắt mất bất cứ thứ gì
-           toả ra nếu đặt bên trong. Thuần trang trí nên aria-hidden. -->
-      <div class="hero-halo" aria-hidden="true"></div>
+      <!-- Quầng hào quang sơn son thếp vàng, xem hero-halo.css (.lacquer-halo
+           dùng chung với khối hộp ở #bao-bai). Đứng NGOÀI .hero-product vì
+           overflow:hidden của khung sẽ cắt mất bất cứ thứ gì toả ra nếu đặt
+           bên trong. Thuần trang trí nên aria-hidden. -->
+      <div class="lacquer-halo" aria-hidden="true"></div>
       <figure class="hero-carousel hero-product">
-        <!-- .hero-product-tilt là lớp DUY NHẤT xoay theo con trỏ (card-tilt.js).
-             Tách khỏi .hero-carousel/.hero-product vì hai lớp đó đang là chủ sở
-             hữu transform của animation entrance (page-transition.css) — một
-             animation fill-mode:both giữ transform cuối của nó ở mức ưu tiên
-             cao hơn một class rule thường, nên đặt tilt lên cùng phần tử sẽ
-             không bao giờ thấy hiệu ứng chạy. Xem hero-halo.css. -->
-        <div class="hero-product-tilt">
+        <!-- .hero-product-tilt/.lacquer-tilt là lớp DUY NHẤT xoay theo con trỏ
+             (card-tilt.js). Tách khỏi .hero-carousel/.hero-product vì hai lớp
+             đó đang là chủ sở hữu transform của animation entrance
+             (page-transition.css) — một animation fill-mode:both giữ transform
+             cuối của nó ở mức ưu tiên cao hơn một class rule thường, nên đặt
+             tilt lên cùng phần tử sẽ không bao giờ thấy hiệu ứng chạy. Xem
+             hero-halo.css. -->
+        <div class="hero-product-tilt lacquer-tilt">
           <picture>
             <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
             <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
@@ -87,7 +89,18 @@
       <cite>Lạc Long Quân · <a href="/huyen-su/hong-bang-thi/">Truyện Hồng Bàng Thị</a>, <em>Lĩnh Nam chích quái</em></cite>
     </blockquote>
   </section>
-  <section class="pack-section" id="bao-bai"><div class="section-heading"><p class="eyebrow">Ấn phẩm</p><h2>Bộ bài và hộp cứng.</h2><p>78 lá in offset trên giấy 350gsm, cạnh mạ đồng, hộp cứng nắp từ. Mặt lưng lấy trống đồng làm tâm, đối xứng 180° nên không lộ lá xuôi hay ngược.</p></div><figure class="pack-figure"><img src="/assets/img/product-hop-bai.webp" width="1200" height="900" loading="lazy" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son"><figcaption>Bản dựng minh họa · quy cách và hoàn thiện có thể đổi khi chốt nhà in</figcaption></figure><dl class="pack-spec"><div><dt>Số lá</dt><dd>78 — 22 Ẩn Chính + 56 Ẩn Phụ</dd></div><div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div><div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div><div><dt>Hoàn thiện</dt><dd>Cạnh mạ đồng, hộp cứng nắp từ</dd></div><div><dt>Sách kèm</dt><dd>96 trang, ghi rõ nguồn từng câu chuyện</dd></div><div class="pack-spec-price"><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div><div><dt>Số lượng</dt><dd>Giới hạn theo số đăng ký</dd></div></dl><p class="pack-cta"><a class="button brass" href="/cua-hang/">Xem quy cách bộ bài</a> <a href="#danh-sach-cho">Nhận thông báo khi mở bán →</a></p></section>
+  <section class="pack-section" id="bao-bai"><div class="section-heading"><p class="eyebrow">Ấn phẩm</p><h2>Bộ bài và hộp cứng.</h2><p>78 lá in offset trên giấy 350gsm, cạnh mạ đồng, hộp cứng nắp từ. Mặt lưng lấy trống đồng làm tâm, đối xứng 180° nên không lộ lá xuôi hay ngược.</p></div><figure class="pack-figure">
+      <!-- Cùng ngôn ngữ hào quang + chạm khắc với ảnh sản phẩm hero
+           (hero-halo.css), áp cho khối hộp — nghĩa đen nhất của "khối 3D" trên
+           trang: đây là ảnh chụp một vật thể có khối thật, không phải ảnh phẳng. -->
+      <div class="pack-image-frame">
+        <div class="lacquer-halo" aria-hidden="true"></div>
+        <div class="pack-image-tilt lacquer-tilt">
+          <img src="/assets/img/product-hop-bai.webp" width="1200" height="900" loading="lazy" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+        </div>
+      </div>
+      <figcaption>Bản dựng minh họa · quy cách và hoàn thiện có thể đổi khi chốt nhà in</figcaption>
+    </figure><dl class="pack-spec"><div><dt>Số lá</dt><dd>78 — 22 Ẩn Chính + 56 Ẩn Phụ</dd></div><div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div><div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div><div><dt>Hoàn thiện</dt><dd>Cạnh mạ đồng, hộp cứng nắp từ</dd></div><div><dt>Sách kèm</dt><dd>96 trang, ghi rõ nguồn từng câu chuyện</dd></div><div class="pack-spec-price"><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div><div><dt>Số lượng</dt><dd>Giới hạn theo số đăng ký</dd></div></dl><p class="pack-cta"><a class="button brass" href="/cua-hang/">Xem quy cách bộ bài</a> <a href="#danh-sach-cho">Nhận thông báo khi mở bán →</a></p></section>
   <section class="news-section lac-watermark"><div class="section-heading"><p class="eyebrow">Nhật ký dự án</p><h2>Đang làm tới đâu</h2></div><div class="news-grid" data-drag-rail="Nhật ký dự án">{{#each latestPosts}}<article><img src="{{coverImage.url}}" width="1200" height="630" loading="lazy" alt="{{coverImage.alt}}"><div><p class="eyebrow">{{dateLabel}}</p><h3><a href="/tin-tuc/{{slug}}/">{{title}}</a></h3><p>{{excerpt}}</p></div></article>{{/each}}</div></section>
   <section class="faq-section" id="cau-hoi">
     <h2>Câu hỏi thường gặp</h2>
