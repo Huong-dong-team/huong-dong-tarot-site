@@ -52,7 +52,7 @@ export const AXIS_COPY = Object.freeze({
     changing: freezeVariants([
       "Cung Mặt Trời mang nhịp chuyển, vì thế cách tiếp cận linh hoạt có ích hơn một kế hoạch quá cứng.",
       "Ngày đang có chất biến đổi, mời bạn điều chỉnh cách làm mà không bỏ quên mục đích ban đầu.",
-      "Nhịp chuyển của cung Mặt Trời cho phép bạn thử một góc nhìn khác trước khi kết luận.",
+      "Nhịp chuyển của cung Mặt Trời mời bạn thử một góc nhìn khác trước khi kết luận.",
     ]),
   }),
   D: Object.freeze({
@@ -64,7 +64,7 @@ export const AXIS_COPY = Object.freeze({
     moon: freezeVariants([
       "Giờ của Mặt Trăng đưa cảm nhận lên gần bề mặt, nên một khoảng yên có thể nói nhiều hơn phản ứng vội.",
       "Mặt Trăng đang giữ nhịp giờ này, mời bạn nhận ra cảm xúc trước khi biến nó thành quyết định.",
-      "Nhịp của Mặt Trăng phù hợp với việc lắng nghe điều cơ thể và ký ức đang nhắc lại.",
+      "Nhịp của Mặt Trăng hợp với việc lắng nghe điều cơ thể và ký ức nhắc lại.",
     ]),
     mars: freezeVariants([
       "Giờ của Sao Hỏa có nhiều lực đẩy, nhưng sức mạnh hữu ích nhất là sức biết dừng đúng chỗ.",
@@ -84,7 +84,7 @@ export const AXIS_COPY = Object.freeze({
     venus: freezeVariants([
       "Giờ của Sao Kim làm giá trị và sự hòa hợp nổi bật, nên hãy để điều đẹp đi cùng điều thật.",
       "Sao Kim đang giữ nhịp giờ này, nhắc bạn xem mình đang trân trọng điều gì bằng hành động cụ thể.",
-      "Nhịp Sao Kim phù hợp với việc làm mềm cách nói mà không làm nhạt nội dung cần nói.",
+      "Nhịp Sao Kim hợp với việc làm mềm cách nói mà không làm nhạt nội dung.",
     ]),
     saturn: freezeVariants([
       "Giờ của Sao Thổ đặt ranh giới lên trước, giúp bạn phân biệt trách nhiệm với gánh nặng tự nhận thêm.",
@@ -95,13 +95,13 @@ export const AXIS_COPY = Object.freeze({
   E: Object.freeze({
     new: freezeVariants([
       "Trăng non giữ mọi thứ ở dạng hạt giống, nên điều chưa rõ chưa cần bị ép thành câu trả lời.",
-      "Ánh trăng đang khuất, tạo một khoảng yên để ý định mới được hình thành mà chưa phải công bố.",
-      "Nhịp trăng non hợp với việc bắt đầu kín đáo và để kết quả đến sau quá trình chăm sóc.",
+      "Ánh trăng đang khuất, tạo khoảng yên để ý định mới hình thành, chưa cần công bố.",
+      "Nhịp trăng non hợp với việc bắt đầu kín đáo và ấp ủ, kết quả đến sau.",
     ]),
     "waxing-crescent": freezeVariants([
-      "Trăng lưỡi liềm đang lớn, gợi một bước tiến nhỏ đủ để kiểm tra điều bạn vừa khởi động.",
+      "Trăng lưỡi liềm đang lớn, gợi bước tiến nhỏ để kiểm tra điều bạn vừa khởi động.",
       "Ánh trăng đang dày thêm từng chút, phù hợp với việc nuôi một ý định bằng hành động đều đặn.",
-      "Nhịp trăng đang lớn nhắc rằng sức bền hôm nay quan trọng hơn một màn khởi đầu ồn ào.",
+      "Nhịp trăng đang lớn nhắc rằng sức bền hôm nay quan trọng hơn khởi đầu ồn ào.",
     ]),
     "first-half": freezeVariants([
       "Nửa trăng đang lớn tạo một điểm xoay, nơi lựa chọn cần được thử bằng việc làm cụ thể.",
@@ -110,23 +110,23 @@ export const AXIS_COPY = Object.freeze({
     ]),
     "waxing-gibbous": freezeVariants([
       "Trăng gần tròn làm chi tiết còn thiếu lộ rõ, mời bạn chỉnh lại trước khi khép một vòng.",
-      "Ánh trăng đang đầy thêm, nên sự tinh chỉnh có giá trị hơn việc mở một mục tiêu mới.",
-      "Nhịp trăng gần tròn nhắc bạn nhìn lại khoảng cách nhỏ giữa gần xong và thật sự hoàn tất.",
+      "Ánh trăng đang đầy thêm, nên sự tinh chỉnh quý hơn việc mở một mục tiêu mới.",
+      "Nhịp trăng gần tròn nhắc bạn nhìn lại khoảng cách nhỏ giữa gần xong và hoàn tất.",
     ]),
     full: freezeVariants([
       "Trăng tròn đưa cảm xúc và kết quả ra ánh sáng, vì thế điều đã rõ không cần được phóng đại thêm.",
-      "Ánh trăng đang đầy, làm phần cao trào dễ được nhận thấy nhưng cũng dễ bị nhìn quá lớn.",
-      "Nhịp trăng tròn hợp với việc chứng kiến điều đang có trước khi quyết định giữ hay buông.",
+      "Ánh trăng đang đầy, làm phần cao trào dễ thấy nhưng cũng dễ bị nhìn quá lớn.",
+      "Nhịp trăng tròn hợp với việc chứng kiến điều đang có, trước khi giữ hay buông.",
     ]),
     "waning-gibbous": freezeVariants([
-      "Trăng bắt đầu khuyết, mời bạn chia sẻ điều đã hiểu và bỏ bớt phần không còn cần thiết.",
-      "Ánh trăng đang rút dần, phù hợp với việc tiêu hóa trải nghiệm hơn là chạy sang câu chuyện mới.",
-      "Nhịp trăng sau cao trào giúp bạn thấy điều gì đáng giữ lại sau khi cảm xúc lắng xuống.",
+      "Trăng bắt đầu khuyết, mời bạn chia sẻ điều đã hiểu và bỏ bớt phần thừa.",
+      "Ánh trăng rút dần, hợp với việc tiêu hóa trải nghiệm hơn là chạy sang chuyện mới.",
+      "Nhịp trăng sau cao trào giúp bạn thấy điều gì đáng giữ sau khi cảm xúc lắng.",
     ]),
     "last-half": freezeVariants([
       "Nửa trăng đang vơi tạo một điểm nhìn lại, nơi thói quen cũ có thể được đặt xuống nhẹ nhàng.",
       "Ánh trăng đang giảm và gặp một khúc rẽ, thích hợp để sửa điều đã biết là không còn hợp.",
-      "Nhịp nửa trăng đang vơi mời bạn thu hồi năng lượng khỏi phần chỉ còn tồn tại vì quán tính.",
+      "Nhịp nửa trăng đang vơi mời bạn rút năng lượng khỏi phần chỉ còn do quán tính.",
     ]),
     "waning-crescent": freezeVariants([
       "Trăng lưỡi liềm cuối tháng giữ nhịp nghỉ, nhắc bạn để một vòng thật sự khép trước khi mở vòng khác.",
