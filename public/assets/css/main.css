@@ -2088,3 +2088,123 @@ body::before {
   .hd-reveal-enabled .hd-reveal-item,
   .hd-reveal-enabled .hd-reveal-item.hd-reveal-visible { opacity: 1; transform: none; }
 }
+
+/* ============================================================
+   REMAKE TRANG CHỦ · NGÔN NGỮ SƠN MÀI CHẠM KHẮC CHO CẢ TRANG
+   Hào quang + khối chạm khắc (hero-halo.css) vốn chỉ áp cho hai ảnh sản phẩm
+   (hero, #bao-bai). Khối dưới đây mang đúng ngôn ngữ đó — viền vát vàng, bóng
+   nâu, quầng son/vàng — sang các khối còn lại của trang chủ, để cả trang đọc
+   ra thành MỘT hệ chạm khắc thay vì một Hero được trang trí riêng giữa các
+   khối phẳng. Nối vào cuối tệp nên mọi rule ở đây thắng cascade so với bản
+   khai báo cũ hơn của cùng lớp (nếu trùng thuộc tính) mà không phải sửa lại
+   từng chỗ. Màu vẫn lấy từ token có sẵn — không thêm mã hex mới.
+
+   Quote-band CỐ Ý không nằm trong đợt này: comment ngay phía trên rule
+   .quote-band ở trên đã giải thích đây phải là khối RỖNG nhất trang để làm
+   điểm nghỉ mắt — thêm khung chạm khắc vào đó là làm ngược lại chủ đích đã
+   chốt, không phải bỏ sót. */
+
+/* --- Nút brass: ánh kim loại đúc thay vì một khối màu phẳng ------------- */
+.button.brass {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 55%, transparent),
+    inset 0 -2px 0 color-mix(in srgb, var(--gold-ink) 45%, transparent);
+}
+
+/* --- Cửa vào: mỗi ô là một tấm chạm khắc nhỏ, không phải khung phẳng ---- */
+.door {
+  position: relative;
+  isolation: isolate;
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--gold) 45%, transparent),
+    inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 30%, transparent);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.door:hover,
+.door:focus-within {
+  transform: translateY(-6px);
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--gold) 55%, transparent),
+    inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 35%, transparent),
+    0 22px 40px color-mix(in srgb, var(--lacquer-ink) 18%, transparent);
+}
+/* inset ÂM để quầng tràn ra ngoài khung .door — .door có nền đặc
+   (--paper-raised) nên một quầng nằm lọt bên trong sẽ bị chính nền đó che
+   mất; đẩy nó ra ngoài 18px thì phần tràn mới hiện được trên nền .doors. */
+.door::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -18px;
+  opacity: 0;
+  background: radial-gradient(ellipse 80% 65% at 50% 0%,
+    color-mix(in srgb, var(--gold) 32%, transparent), transparent 72%);
+  transition: opacity .3s ease;
+}
+.door:hover::before,
+.door:focus-within::before {
+  opacity: 1;
+}
+
+/* --- Tứ Bất Tử: viền vàng nổi lên quanh cả thẻ khi tương tác ------------ */
+.immortals-grid a {
+  position: relative;
+}
+.immortals-grid a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--img-radius);
+  opacity: 0;
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--gold) 70%, transparent),
+    0 10px 26px color-mix(in srgb, var(--lacquer-ink) 24%, transparent);
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.immortals-grid a:hover::after,
+.immortals-grid a:focus-visible::after {
+  opacity: 1;
+}
+
+/* --- Thư viện nổi bật: cùng viền vát vàng với khối sản phẩm hero -------- */
+.tarot-card {
+  position: relative;
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--gold) 30%, transparent),
+    inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
+  transition: transform .2s ease, border-color .2s ease, box-shadow .3s ease;
+}
+/* card-tilt.js đã bật .hd-tilt-active khi con trỏ đứng trên thẻ — dùng lại
+   đúng lớp đó cho quầng sáng thay vì thêm :hover riêng, để viền vát và độ
+   nghiêng luôn bật/tắt cùng một nhịp, không lệch pha nhau. */
+.tarot-card.hd-tilt-active {
+  box-shadow:
+    inset 1px 1px 0 color-mix(in srgb, var(--gold) 60%, transparent),
+    inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 30%, transparent),
+    0 20px 36px color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
+}
+
+/* --- Quy cách bộ bài: dòng kẻ như khắc chìm trên một tấm bảng đồng ------ */
+.pack-spec div {
+  position: relative;
+}
+.pack-spec div::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in srgb, var(--gold) 50%, transparent) 50%,
+    transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door,
+  .door::before,
+  .tarot-card,
+  .immortals-grid a::after {
+    transition: none;
+  }
+}

@@ -73,9 +73,19 @@ test("hiệu ứng sáng thêm khi nghiêng đặt trên .lacquer-halo, không �
   // tử — set opacity/transform cho ::before ở một rule :has() khác sẽ lặng lẽ
   // vô tác dụng suốt lúc animation còn chạy. Rule :has() phải nhắm vào
   // .lacquer-halo (cha) để tạo một tầng compositing riêng.
+  //
+  // Regex gốc bắt chữ ".lacquer-stage" — một lớp chưa từng được gắn vào phần
+  // tử nào trong home.html, nên test cũ xanh trong khi hiệu ứng chưa từng
+  // chạy được trên production. Đã sửa CSS sang gốc :has() thật
+  // (.hero-stage/.pack-image-frame); nới regex để khớp bất kỳ gốc nào đứng
+  // trước, miễn không phải ::before/::after.
   const css = await read("public/assets/css/hero-halo.css");
-  const hasRule = css.match(/\.lacquer-stage:has\([^)]*hd-tilt-active[^)]*\)\s*\.lacquer-halo\s*\{([^}]*)\}/);
+  const hasRule = css.match(/:has\([^)]*hd-tilt-active[^)]*\)\s*\.lacquer-halo\s*\{([^}]*)\}/);
   assert.ok(hasRule, "thiếu rule :has() dùng chung cho .lacquer-halo");
+  assert.match(css, /\.hero-stage:has\([^)]*hd-tilt-active[^)]*\)\s*\.lacquer-halo/,
+    "rule phải neo vào .hero-stage — phần tử cha THẬT trong home.html");
+  assert.match(css, /\.pack-image-frame:has\([^)]*hd-tilt-active[^)]*\)\s*\.lacquer-halo/,
+    "rule phải neo vào .pack-image-frame — phần tử cha THẬT trong home.html");
   assert.doesNotMatch(css, /:has\([^)]*hd-tilt-active[^)]*\)\s*\.lacquer-halo::(before|after)/,
     ":has() không được nhắm vào ::before/::after — hai pseudo-element đó đã có animation riêng chạy liên tục");
 });

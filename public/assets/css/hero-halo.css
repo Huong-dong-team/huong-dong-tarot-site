@@ -27,10 +27,10 @@
                       animation fill-mode:both giữ transform cuối của nó ở mức
                       ưu tiên cao hơn một class rule thường, nên đặt tilt lên
                       cùng phần tử thì tilt sẽ không bao giờ thấy chạy.
-     .lacquer-stage   phần tử cha chung của .lacquer-halo và .lacquer-tilt,
-                      dùng làm điểm neo cho rule :has() "sáng thêm khi nghiêng"
-                      — một rule DÙNG CHUNG cho mọi khối, không viết lại mỗi
-                      nơi một bản.
+     .hero-stage,
+     .pack-image-frame  cũng là điểm neo cho rule :has() "sáng thêm khi
+                      nghiêng" — một rule DÙNG CHUNG cho mọi khối qua cả hai
+                      lớp cha thật, không viết lại mỗi nơi một bản.
 
    Toàn bộ chuyển động chỉ dùng opacity/transform (glow) và box-shadow tĩnh
    không animate (carve) — không có gì đọc layout, không có gì đóng góp CLS. */
@@ -60,12 +60,15 @@
   border-radius: 50%;
 }
 
-/* Quầng đỏ son — nền của "mặt trời" phía sau khối sản phẩm. */
+/* Quầng đỏ son — nền của "mặt trời" phía sau khối sản phẩm. Thêm một tâm sáng
+   xiết chặt (0%–14%) trước lớp toả rộng cũ: một mặt trời thật có lõi gần như
+   trắng-vàng rồi mới nhạt dần ra son, không phải một vệt đỏ đều màu. */
 .lacquer-halo::before {
   background: radial-gradient(circle at 50% 48%,
-    color-mix(in srgb, var(--dau) 52%, transparent) 0%,
-    color-mix(in srgb, var(--dau) 24%, transparent) 32%,
-    color-mix(in srgb, var(--gold) 16%, transparent) 54%,
+    color-mix(in srgb, var(--gold) 60%, white) 0%,
+    color-mix(in srgb, var(--dau) 52%, transparent) 14%,
+    color-mix(in srgb, var(--dau) 24%, transparent) 36%,
+    color-mix(in srgb, var(--gold) 16%, transparent) 56%,
     transparent 76%);
   filter: blur(26px);
 }
@@ -74,6 +77,8 @@
    từng điểm dừng màu) CHỒNG hai vành mảnh (radial-gradient hai nấc màu sát
    nhau tạo một đường viền tròn) — gợi vành quỹ đạo quanh mặt trời như trong
    bản phác hoạ tham khảo, vẽ hoàn toàn bằng gradient, không thêm SVG hay ảnh.
+   Vành thứ hai (58%–58.6%) rộng hơn và nhạt hơn vành gốc: hai vành đồng tâm
+   đọc ra thành quỹ đạo có độ sâu, không phải một đường viền đơn.
    Quay rất chậm (90s/vòng): mắt không bắt được chuyển động, chỉ thấy ánh sáng
    "sống" chứ không thấy nó quay. */
 .lacquer-halo::after {
@@ -87,9 +92,35 @@
       color-mix(in srgb, var(--gold) 34%, transparent) 37% 37.6%,
       transparent 37.6% 44%,
       color-mix(in srgb, var(--gold) 22%, transparent) 44% 44.4%,
-      transparent 44.4%);
+      transparent 44.4% 58%,
+      color-mix(in srgb, var(--gold) 14%, transparent) 58% 58.6%,
+      transparent 58.6%);
   filter: blur(2px);
   mix-blend-mode: soft-light;
+  opacity: .6;
+}
+
+/* Vệt sáng lướt theo bề mặt chạm khắc khi đang nghiêng — mô phỏng ánh kim loại
+   bắt sáng đổi theo góc nhìn. Đặt ở nguồn sáng cố định trên-trái để khớp
+   hướng bóng đổ của khối chạm khắc (::before/::after của .hero-product bên
+   dưới), không đuổi theo con trỏ: bản thân khối chạm khắc cũng dùng một
+   nguồn sáng cố định, đuổi theo con trỏ ở đúng một lớp trong khi lớp kia đứng
+   yên sẽ đọc ra thành hai vật lý ánh sáng khác nhau trên cùng một khối. */
+.lacquer-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at 26% 20%,
+    color-mix(in srgb, var(--gold) 70%, white) 0%,
+    transparent 48%);
+  mix-blend-mode: soft-light;
+  transition: opacity .4s ease;
+}
+
+.lacquer-tilt.hd-tilt-active::before {
   opacity: .6;
 }
 
@@ -110,7 +141,7 @@
 
 /* Khối sản phẩm sáng và "sống" hơn khi đang được nghiêng — ánh sáng bắt lên
    một vật có khối thật thì phải đổi theo góc nhìn, không đứng yên như dán
-   nhãn. Một rule DÙNG CHUNG cho cả hai khối qua .lacquer-stage/.lacquer-tilt.
+   nhãn. Một rule DÙNG CHUNG cho cả hai khối qua .hero-stage/.pack-image-frame.
    :has() không được hỗ trợ thì khối chỉ đơn giản là không sáng thêm khi tương
    tác — không phải một trạng thái gãy, một tầng hiệu ứng thưa hơn.
 
@@ -121,11 +152,17 @@
    transform lên ::before ở đây sẽ lặng lẽ vô tác dụng suốt lúc animation còn
    chạy. filter và transform trên chính .lacquer-halo là một tầng compositing
    riêng, nhân lên trên kết quả của hai pseudo-element chứ không tranh chấp gì
-   với chúng. */
+   với chúng.
+
+   Chọn cả hai lớp cha thật (.hero-stage, .pack-image-frame) làm gốc :has() —
+   KHÔNG phải .lacquer-stage: lớp đó chưa từng được gắn vào phần tử nào trong
+   home.html, nên bản gốc của rule này không bao giờ khớp và hiệu ứng sáng
+   thêm khi nghiêng chưa từng chạy trên production. */
 .lacquer-halo {
   transition: filter .4s ease, transform .4s ease;
 }
-.lacquer-stage:has(.lacquer-tilt.hd-tilt-active) .lacquer-halo {
+.hero-stage:has(.lacquer-tilt.hd-tilt-active) .lacquer-halo,
+.pack-image-frame:has(.lacquer-tilt.hd-tilt-active) .lacquer-halo {
   filter: brightness(1.3) saturate(1.2);
   transform: scale(1.06);
 }
@@ -161,22 +198,35 @@
 
 /* Viền vát: sáng ở mép trên-trái, sậm ở mép dưới-phải — mô phỏng ánh sáng bắt
    trên một bề mặt CHẠM NỔI thật (nguồn sáng cố định từ trên-trái, khớp hướng
-   quầng hào quang phía sau), không phải một khung phẳng dán ảnh lên trên. */
+   quầng hào quang phía sau), không phải một khung phẳng dán ảnh lên trên.
+   Hai nấc sáng (1.5px rồi 3px) thay vì một, để mép đọc ra thành một đường vát
+   HAI mặt — mặt gần gần như trắng, mặt xa ngả vàng — như thật sự có một lưỡi
+   chạm ăn vào bề mặt, không phải một viền sáng phẳng. */
 .hero-product::before,
 .pack-image-frame::before {
   inset: 0;
   box-shadow:
-    inset 2px 2px 0 color-mix(in srgb, var(--gold) 55%, transparent),
-    inset -2px -2px 0 color-mix(in srgb, var(--lacquer-ink) 45%, transparent),
+    inset 1.5px 1.5px 0 color-mix(in srgb, var(--gold) 85%, white),
+    inset 3px 3px 0 color-mix(in srgb, var(--gold) 60%, transparent),
+    inset -3px -3px 0 color-mix(in srgb, var(--lacquer-ink) 50%, transparent),
     inset 0 0 0 1px color-mix(in srgb, var(--gold-ink) 55%, transparent);
 }
 
 /* Đường chỉ vàng lùi vào trong — gợi viền cẩn chỉ vàng quanh mặt chạm, tách
-   khỏi mép ngoài để đọc ra hai lớp: khung vát ở ngoài, mặt chạm ở trong. */
+   khỏi mép ngoài để đọc ra hai lớp: khung vát ở ngoài, mặt chạm ở trong. Thêm
+   một vệt chéo trên-trái sáng/dưới-phải tối (soft-light nên không che chữ hay
+   ảnh, chỉ nhuộm thêm) — cùng một mặt phẳng chạm khắc bắt sáng khác nhau theo
+   từng vùng, không phải một đường viền đơn sắc đều khắp bốn cạnh. */
 .hero-product::after,
 .pack-image-frame::after {
   inset: 8px;
   border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent);
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--gold) 16%, transparent) 0%,
+    transparent 30%,
+    transparent 68%,
+    color-mix(in srgb, var(--lacquer-ink) 12%, transparent) 100%);
+  mix-blend-mode: soft-light;
   box-shadow: inset 0 1px 2px color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
 }
 
@@ -185,6 +235,11 @@
 
 .lacquer-tilt {
   display: block;
+  position: relative;
+  /* Cho phép ::before (vệt sáng lướt thêm ở trên) và ảnh bên trong cùng dựng
+     trong một không gian 3D thật của riêng khối này, khớp với rotateX/rotateY
+     mà rule .hd-tilt-ready áp lên chính phần tử này. */
+  transform-style: preserve-3d;
 }
 
 .lacquer-tilt.hd-tilt-ready {
@@ -198,6 +253,9 @@
   }
   .lacquer-tilt.hd-tilt-ready {
     transform: none;
+  }
+  .lacquer-tilt::before {
+    transition: none;
   }
 }
 
