@@ -8,7 +8,11 @@ import { onReducedMotionChange, prefersReducedMotion } from "../shared/reduced-m
    bình thường. */
 
 const MAX_TILT = 4;
-const TARGET_SELECTOR = ".tarot-card, .card-art, .hd-card";
+// .lacquer-tilt là lớp bọc dùng chung cho mọi khối "sơn son thếp vàng"
+// (hero-halo.css: ảnh sản phẩm hero, khối hộp ở #bao-bai). KHÔNG phải
+// .hero-product/.hero-carousel hay .pack-image-frame — các lớp đó đang giữ
+// transform của animation entrance/layout nên không được đụng vào ở đây.
+const TARGET_SELECTOR = ".tarot-card, .card-art, .hd-card, .lacquer-tilt";
 
 function setTilt(element, clientX, clientY) {
   const rect = element.getBoundingClientRect();

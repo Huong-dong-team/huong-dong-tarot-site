@@ -18,7 +18,8 @@
    <main data-page="…">. Trang lạ hoặc thiếu thuộc tính thì chỉ nhận nhóm
    dùng chung — không ném lỗi, không chặn điều hướng. */
 const PAGES = {
-  home: ["landing-drag"],
+  // card-tilt: nghiêng theo con trỏ cho .hero-product-tilt, xem hero-halo.css.
+  home: ["landing-drag", "card-tilt"],
   library: ["card-filters", "card-tilt"],
   card: ["symbol-tooltips", "card-tilt"],
   daily: ["daily-card"],

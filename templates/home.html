@@ -21,65 +21,148 @@
         <dl class="proof"><div><dt>78</dt><dd>Lá, đủ bộ RWS</dd></div><div><dt>22</dt><dd>Tích Việt cho Ẩn Chính</dd></div><div><dt>{{packPrice.compactLabel}}</dt><dd>Giá dự kiến bản in đầu</dd></div></dl>
       </div>
     </div>
-    <!-- Ảnh sản phẩm thay khung lá kể chuyện cũ. Giữ lớp .hero-carousel vì
-         page-transition.css dùng nó làm neo entrance; đây chỉ còn là tên kỹ
-         thuật, không có carousel hay JavaScript. Crop vuông bỏ phần nền kem dư
-         để sản phẩm đủ lớn mà không kéo méo hoặc vẽ lại ảnh gốc. -->
+    <!-- Khối sản phẩm nay trôi tự do trong .hero-stage — không còn khung
+         overflow:hidden bó nó lại — để quầng hào quang phía sau và độ nổi khối
+         (xem hero-halo.css: animation lacquer-block-float trên .hero-product)
+         có không gian thật mà "trồi" ra thay vì bị cắt ở mép khung. Bevel chạm
+         khắc vẫn nằm ngay trên .hero-product qua ::before/::after, chỉ là
+         phần tử đó không còn ôm sát kèm border/nền riêng như bản khung thẻ cũ. -->
     <div class="hero-stage">
+      <!-- Quầng hào quang sơn son thếp vàng, xem hero-halo.css (.lacquer-halo
+           dùng chung với khối hộp ở #bao-bai). Đứng NGOÀI .hero-product vì
+           overflow:hidden của khung sẽ cắt mất bất cứ thứ gì toả ra nếu đặt
+           bên trong. Thuần trang trí nên aria-hidden. -->
+      <div class="lacquer-halo" aria-hidden="true"></div>
       <figure class="hero-carousel hero-product">
-        <picture>
-          <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(39vw, 560px), min(92vw, 560px)">
-          <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
-        </picture>
+        <!-- .hero-product-tilt/.lacquer-tilt là lớp DUY NHẤT xoay theo con trỏ
+             (card-tilt.js). Tách khỏi .hero-carousel/.hero-product vì hai lớp
+             đó đang là chủ sở hữu transform của animation entrance
+             (page-transition.css) — một animation fill-mode:both giữ transform
+             cuối của nó ở mức ưu tiên cao hơn một class rule thường, nên đặt
+             tilt lên cùng phần tử sẽ không bao giờ thấy hiệu ứng chạy. Xem
+             hero-halo.css. -->
+        <div class="hero-product-tilt lacquer-tilt">
+          <picture>
+            <source type="image/avif" srcset="/assets/img/hero-product-square-480.avif 480w, /assets/img/hero-product-square-720.avif 720w, /assets/img/hero-product-square-960.avif 960w, /assets/img/hero-product-square-1200.avif 1200w" sizes="(min-width: 1101px) min(44vw, 640px), min(92vw, 560px)">
+            <img src="/assets/img/hero-product-square-1200.webp" width="1200" height="1200" loading="eager" decoding="async" fetchpriority="low" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+          </picture>
+        </div>
       </figure>
     </div>
   </section>
   <section class="doors" id="ba-cua" aria-labelledby="ba-cua-nhan">
     <h2 class="doors-label" id="ba-cua-nhan">Bạn đang tìm gì?</h2>
     <article class="door door--hoc">
+      <div class="door-image"><img src="/assets/img/sec-banner-binh-minh-rong-tien-800.avif" width="1536" height="1024" loading="lazy" alt=""></div>
       <p class="eyebrow">Bắt đầu từ đây</p>
-      <h3>Học 78 lá mà không phải học thuộc</h3>
-      <p>Mỗi lá gắn một tích Việt, nên nhớ được chuyện là nhớ được lá. Hai mươi hai lá Ẩn Chính ứng với hai mươi hai tích.</p>
-      <ul>
-        <li>Một lá, một tích, mỗi tuần một thư</li>
-        <li>Hai mươi hai tuần là thuộc hết Ẩn Chính</li>
-        <li>Miễn phí, ngừng nhận lúc nào cũng được</li>
-      </ul>
-      <p class="door-cta"><a class="button brass" href="#danh-sach-cho">Giữ chỗ trong khoá học</a></p>
-      <p class="door-note">Khoá đang được soạn. Bạn nhận thư đầu tiên ngay khi nó mở.</p>
+      <h3>Học Tarot bằng câu chuyện Việt</h3>
+      <p>Mỗi lá gắn một tích Việt, nên nhớ được chuyện là nhớ được lá.</p>
+      <p class="door-cta"><a href="#hoc-78-la">Tìm hiểu hành trình học <span aria-hidden="true">→</span></a></p>
     </article>
     <article class="door">
+      <div class="door-image"><img src="/assets/img/sec-card-back-cut-800.avif" width="800" height="1200" loading="lazy" alt=""></div>
       <p class="eyebrow">Đã đọc Tarot</p>
-      <h3>Kiến thức RWS của bạn dùng lại được</h3>
-      <p>Cấu trúc nghĩa giữ nguyên của Rider–Waite–Smith. Mỗi lá ghi rõ nó ứng với lá RWS nào và chuyển thể tới mức nào.</p>
-      <p class="door-cta"><a href="/trai-bai/">Mở trải bài <span aria-hidden="true">&#8594;</span></a></p>
+      <h3>Dùng lại kiến thức RWS</h3>
+      <p>Nghĩa gốc được giữ nguyên, chỉ thay hình ảnh để dễ nhớ và gần gũi hơn.</p>
+      <p class="door-cta"><a href="#doi-chieu-rws">Xem cách đối chiếu <span aria-hidden="true">→</span></a></p>
     </article>
     <article class="door">
+      <div class="door-image"><img src="/assets/img/product-hop-bai.webp" width="1200" height="900" loading="lazy" alt=""></div>
       <p class="eyebrow">Muốn cầm bài thật</p>
-      <h3>Bản in đầu, số lượng giới hạn</h3>
-      <dl class="door-spec">
-        <div><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div>
-        <div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div>
-        <div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div>
-      </dl>
-      <p class="door-cta"><a href="/cua-hang/">Xem quy cách <span aria-hidden="true">&#8594;</span></a></p>
+      <h3>Sở hữu bộ bài Hường Đông</h3>
+      <p>Bản in đầu với hộp cứng, giấy dày và sắc mực được chăm chút như một ấn phẩm.</p>
+      <p class="door-cta"><a href="#bao-bai">Xem quy cách bộ bài <span aria-hidden="true">→</span></a></p>
     </article>
   </section>
+  <section class="learning-story" id="hoc-78-la">
+    <img class="story-bg" src="/assets/img/sec-banner-binh-minh-rong-tien-800.avif" width="1536" height="1024" loading="lazy" alt="Bình minh Rồng Tiên — tranh mở đầu bộ Hường Đông">
+    <div class="learning-copy">
+      <p class="eyebrow">Hành trình 22 tuần</p>
+      <h2>Học 78 lá mà không phải học thuộc</h2>
+      <ul class="learning-list">
+        <li><strong>1 lá bài · 1 câu chuyện Việt</strong><span>Dễ nhớ, dễ liên tưởng, dễ ứng dụng.</span></li>
+        <li><strong>1 email mỗi tuần</strong><span>Nội dung ngắn gọn, có hình ảnh và diễn giải.</span></li>
+        <li><strong>22 tuần cho 22 lá Ẩn Chính</strong><span>Một hành trình vững nền tảng, không vội vàng.</span></li>
+      </ul>
+      <p class="door-cta"><a class="button brass" href="#danh-sach-cho">Giữ chỗ trong khoá học</a></p>
+    </div>
+  </section>
+  <section class="rws-showcase" id="doi-chieu-rws">
+    <div class="rws-copy">
+      <p class="eyebrow">Đã đọc Tarot</p>
+      <h2>Kiến thức RWS của bạn dùng lại được</h2>
+      <p>Cấu trúc nghĩa giữ nguyên của Rider–Waite–Smith. Mỗi lá ghi rõ nó ứng với lá RWS nào và chuyển thể tới mức nào.</p>
+      <ul class="rws-list">
+        <li>Cùng cấu trúc 78 lá.</li>
+        <li>Nghĩa cốt lõi được giữ nguyên.</li>
+        <li>Hình ảnh kể lại qua huyền sử Việt.</li>
+      </ul>
+      <p class="door-cta"><a href="/trai-bai/">Mở trải bài <span aria-hidden="true">→</span></a></p>
+    </div>
+    <figure class="rws-visual">
+      <img src="{{featuredCards.0.image.url}}" width="{{featuredCards.0.image.width}}" height="{{featuredCards.0.image.height}}" loading="lazy" alt="{{featuredCards.0.image.alt}}">
+      <figcaption>Cùng một archetype, hai ngôn ngữ hình ảnh.</figcaption>
+    </figure>
+  </section>
   <section class="story-section lac-watermark" id="cau-chuyen"><div class="section-heading has-art"><figure class="heading-art is-photo"><img src="/assets/img/sec-banner-binh-minh-rong-tien-800.avif" width="1536" height="1024" loading="lazy" alt="Bình minh Rồng Tiên — tranh mở đầu bộ Hường Đông"></figure><p class="eyebrow">22 Ẩn chính · Lĩnh Nam chích quái</p><h2>22 lá bài,<br>22 truyện huyền sử.</h2><p>Mỗi lá Ẩn chính rút từ một truyện trong <em>Lĩnh Nam chích quái</em> của Trần Thế Pháp. Đây là sách chép <strong>truyện huyền sử</strong>, không phải sử liệu đã được chứng minh. <strong>21 trong 22 lá</strong> lấy từ <strong>13 truyện</strong> của bộ sách; lá còn lại thuộc lớp tín ngưỡng Việt mở rộng và được ghi rõ là ngoại lệ.</p></div><div class="story-panels"><article><span>13</span><h3>Truyện nguồn</h3><p>Hồng Bàng Thị, Rùa Vàng, Núi Tản Viên, Man Nương… mỗi truyện là một chương trong sách.</p></article><article><span>21/22</span><h3>Lá có nguồn LNCQ</h3><p>Ghi rõ chương nào và mức chuyển thể. Đâu là truyền thuyết, đâu là dã sử, đâu là khảo cổ đều được phân định.</p></article><article><span>1</span><h3>Khoảnh khắc mỗi lá</h3><p>Một truyện có thể cho nhiều lá, vì mỗi lá bắt một khoảnh khắc khác nhau. Không lá nào kể lại cả truyện.</p></article></div><p class="story-more"><a class="button brass" href="/huyen-su/">Đọc toàn văn 34 truyện</a></p></section>
-  <section class="immortals-section lac-watermark" id="tu-bat-tu"><div class="section-heading has-art"><figure class="heading-art"><img src="/assets/img/sec-trong-dong-800.avif" width="900" height="900" loading="lazy" alt="Mặt trống đồng Đông Sơn vẽ lại: ngôi sao mặt trời ở tâm, các vành chim Lạc và người hóa trang lông chim"></figure><p class="eyebrow">Điện thờ biểu tượng Việt · 01 — 04</p><h2>Tứ Bất Tử, vẽ như một bộ tranh in</h2><p>Bốn vị vẽ chung một lối: nền ngọc sẫm, giấy ngà, nét đồng cổ, quầng son. Mỗi vị đứng vào một lá Ẩn Chính và giữ nguyên nghĩa của lá đó.</p></div><ol class="immortals-grid" data-drag-rail="Tứ Bất Tử">{{#each immortals}}<li><a href="{{href}}"><span class="immortal-roman">{{roman}}</span><img src="{{image}}" width="1024" height="1536" loading="lazy" alt="{{alt}}"><span class="immortal-card">{{cardLabel}}</span><span class="immortal-name">{{name}}</span><span class="immortal-power">{{power}}</span></a></li>{{/each}}</ol><p class="immortals-note"><strong>Ấn bản Tứ Bất Tử.</strong> Bốn lá đứng cạnh nhau thành một chỉnh thể; Âu Cơ là chuẩn mỹ thuật tham chiếu, không thuộc nhóm Tứ Bất Tử. Tên gọi “Tứ Bất Tử” được chép trong <em>Hội chân biên</em> (Thanh Hòa Tử, 1847); một số bản kể sớm hơn xếp Từ Đạo Hạnh hoặc Nguyễn Minh Không vào vị trí thứ tư.</p></section>
-  <section class="houses-section" id="bon-nha"><div class="section-heading has-art"><figure class="heading-art"><img src="/assets/img/sec-illustration-bon-nha-an-phu-cut.webp" width="900" height="600" loading="lazy" alt="Bốn nhà Ẩn Phụ: cây tre, dâu tằm, hoa sen và bông lúa"></figure><p class="eyebrow">Ẩn Phụ</p><h2>Vì sao là tre, dâu tằm, sen và lúa?</h2><p>Bốn thứ cây nuôi người Việt, đứng vào chỗ của gậy, kiếm, cốc và tiền trong bộ RWS. Tre thành Gậy, dâu tằm thành Kiếm, sen thành Cốc, lúa thành Tiền. Năm mươi sáu lá Ẩn Phụ chia đều, mỗi nhà mười bốn lá.</p></div><ol class="houses-grid"><li class="house house--tre"><span class="house-swatch" aria-hidden="true"></span><h3>Nhà Tre</h3><p class="house-rws">Thay cho Gậy · Wands</p><p class="house-note">Việc đang bắt đầu, sức bật, ý muốn làm.</p><a href="/la-bai/?suit=wands">14 lá Nhà Tre <span aria-hidden="true">&#8594;</span></a></li><li class="house house--dau"><span class="house-swatch" aria-hidden="true"></span><h3>Nhà Dâu tằm</h3><p class="house-rws">Thay cho Kiếm · Swords</p><p class="house-note">Suy nghĩ, lời nói, chỗ phải cắt.</p><a href="/la-bai/?suit=swords">14 lá Nhà Dâu tằm <span aria-hidden="true">&#8594;</span></a></li><li class="house house--sen"><span class="house-swatch" aria-hidden="true"></span><h3>Nhà Sen</h3><p class="house-rws">Thay cho Cốc · Cups</p><p class="house-note">Tình cảm, quan hệ, điều mình cảm thấy.</p><a href="/la-bai/?suit=cups">14 lá Nhà Sen <span aria-hidden="true">&#8594;</span></a></li><li class="house house--lua"><span class="house-swatch" aria-hidden="true"></span><h3>Nhà Lúa</h3><p class="house-rws">Thay cho Tiền · Pentacles</p><p class="house-note">Công việc, thân thể, của cải.</p><a href="/la-bai/?suit=pentacles">14 lá Nhà Lúa <span aria-hidden="true">&#8594;</span></a></li></ol></section>
-  <section class="featured drum-watermark"><div class="section-heading light has-art"><figure class="heading-art"><img src="/assets/img/sec-card-back-cut-800.avif" width="800" height="1200" loading="lazy" alt="Mặt lưng bài Hường Đông, trống đồng làm tâm"></figure><p class="eyebrow">Thư viện nổi bật</p><h2>Giữ nguyên nghĩa RWS, chỉ đổi hình ảnh</h2></div><div class="card-grid" data-drag-rail="Thư viện nổi bật">{{#each featuredCards}}<a class="tarot-card" href="/la-bai/{{slug}}/" data-suit="{{suit}}"><img src="{{image.url}}" width="{{image.width}}" height="{{image.height}}" loading="lazy" alt="{{image.alt}}"><span>{{arcanaLabel}} · {{displayNumber}}</span><h3>{{nameFolk}}</h3><p>{{nameEn}}</p></a>{{/each}}</div><p class="center"><a class="button brass" href="/la-bai/">Mở đủ 78 lá</a></p></section>
+  <section class="pack-section" id="bao-bai"><div class="section-heading"><p class="eyebrow">Ấn phẩm</p><h2>Bộ bài và hộp cứng.</h2><p>78 lá in offset trên giấy 350gsm, cạnh mạ đồng, hộp cứng nắp từ. Mặt lưng lấy trống đồng làm tâm, đối xứng 180° nên không lộ lá xuôi hay ngược.</p></div><figure class="pack-figure">
+      <!-- Cùng ngôn ngữ hào quang + chạm khắc với ảnh sản phẩm hero
+           (hero-halo.css), áp cho khối hộp — nghĩa đen nhất của "khối 3D" trên
+           trang: đây là ảnh chụp một vật thể có khối thật, không phải ảnh phẳng. -->
+      <div class="pack-image-frame">
+        <div class="lacquer-halo" aria-hidden="true"></div>
+        <div class="pack-image-tilt lacquer-tilt">
+          <img src="/assets/img/product-hop-bai.webp" width="1200" height="900" loading="lazy" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
+        </div>
+      </div>
+      <figcaption>Bản dựng minh họa · quy cách và hoàn thiện có thể đổi khi chốt nhà in</figcaption>
+    </figure><dl class="pack-spec"><div><dt>Số lá</dt><dd>78 — 22 Ẩn Chính + 56 Ẩn Phụ</dd></div><div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div><div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div><div><dt>Hoàn thiện</dt><dd>Cạnh mạ đồng, hộp cứng nắp từ</dd></div><div><dt>Sách kèm</dt><dd>96 trang, ghi rõ nguồn từng câu chuyện</dd></div><div class="pack-spec-price"><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div><div><dt>Số lượng</dt><dd>Giới hạn theo số đăng ký</dd></div></dl><p class="pack-cta"><a class="button brass" href="/cua-hang/">Xem quy cách bộ bài</a> <a href="#danh-sach-cho">Nhận thông báo khi mở bán →</a></p></section>
+  <section class="explore-section" id="kham-pha-them">
+    <div class="section-heading"><p class="eyebrow">Đi sâu hơn</p><h2>Còn nhiều điều để khám phá</h2></div>
+    <div class="explore-grid" data-drag-rail="Đi sâu hơn">
+      <article class="explore-card">
+        <img src="{{immortals.3.image}}" width="1024" height="1536" loading="lazy" alt="{{immortals.3.alt}}">
+        <p class="eyebrow">Điện thờ biểu tượng Việt</p>
+        <h3>Tứ Bất Tử</h3>
+        <p>Bốn vị đứng vào bốn lá Ẩn Chính, vẽ chung một lối nền ngọc sẫm, quầng son.</p>
+        <p class="door-cta"><a href="/huyen-su/#tu-bat-tu">Xem cả bốn vị <span aria-hidden="true">→</span></a></p>
+      </article>
+      <article class="explore-card">
+        <img src="/assets/img/sec-illustration-bon-nha-an-phu-cut.webp" width="900" height="600" loading="lazy" alt="">
+        <p class="eyebrow">Ẩn Phụ</p>
+        <h3>Bốn Nhà</h3>
+        <p>Tre, dâu tằm, sen và lúa đứng vào chỗ của gậy, kiếm, cốc và tiền trong bộ RWS.</p>
+        <p class="door-cta"><a href="/la-bai/">Xem 56 lá Ẩn Phụ <span aria-hidden="true">→</span></a></p>
+      </article>
+      <article class="explore-card">
+        <img src="{{featuredCards.1.image.url}}" width="{{featuredCards.1.image.width}}" height="{{featuredCards.1.image.height}}" loading="lazy" alt="{{featuredCards.1.image.alt}}">
+        <p class="eyebrow">Thư viện nổi bật</p>
+        <h3>Đủ 78 lá</h3>
+        <p>Giữ nguyên nghĩa RWS, chỉ đổi hình ảnh — tra cứu từng lá kèm chú giải.</p>
+        <p class="door-cta"><a href="/la-bai/">Mở thư viện <span aria-hidden="true">→</span></a></p>
+      </article>
+      <article class="explore-card">
+        <img src="{{latestPosts.0.coverImage.url}}" width="1200" height="630" loading="lazy" alt="{{latestPosts.0.coverImage.alt}}">
+        <p class="eyebrow">Nhật ký dự án</p>
+        <h3>Đang làm tới đâu</h3>
+        <p>{{latestPosts.0.title}}</p>
+        <p class="door-cta"><a href="/tin-tuc/">Đọc nhật ký <span aria-hidden="true">→</span></a></p>
+      </article>
+    </div>
+  </section>
   <section class="quote-band">
     <blockquote>
       <p>Lên núi, xuống bể, hữu sự báo cho nhau biết, đừng quên.</p>
       <cite>Lạc Long Quân · <a href="/huyen-su/hong-bang-thi/">Truyện Hồng Bàng Thị</a>, <em>Lĩnh Nam chích quái</em></cite>
     </blockquote>
   </section>
-  <section class="pack-section" id="bao-bai"><div class="section-heading"><p class="eyebrow">Ấn phẩm</p><h2>Bộ bài và hộp cứng.</h2><p>78 lá in offset trên giấy 350gsm, cạnh mạ đồng, hộp cứng nắp từ. Mặt lưng lấy trống đồng làm tâm, đối xứng 180° nên không lộ lá xuôi hay ngược.</p></div><figure class="pack-figure"><img src="/assets/img/product-hop-bai.webp" width="1200" height="900" loading="lazy" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son"><figcaption>Bản dựng minh họa · quy cách và hoàn thiện có thể đổi khi chốt nhà in</figcaption></figure><dl class="pack-spec"><div><dt>Số lá</dt><dd>78 — 22 Ẩn Chính + 56 Ẩn Phụ</dd></div><div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div><div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div><div><dt>Hoàn thiện</dt><dd>Cạnh mạ đồng, hộp cứng nắp từ</dd></div><div><dt>Sách kèm</dt><dd>96 trang, ghi rõ nguồn từng câu chuyện</dd></div><div class="pack-spec-price"><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div><div><dt>Số lượng</dt><dd>Giới hạn theo số đăng ký</dd></div></dl><p class="pack-cta"><a class="button brass" href="/cua-hang/">Xem quy cách bộ bài</a> <a href="#danh-sach-cho">Nhận thông báo khi mở bán →</a></p></section>
-  <section class="news-section lac-watermark"><div class="section-heading"><p class="eyebrow">Nhật ký dự án</p><h2>Đang làm tới đâu</h2></div><div class="news-grid" data-drag-rail="Nhật ký dự án">{{#each latestPosts}}<article><img src="{{coverImage.url}}" width="1200" height="630" loading="lazy" alt="{{coverImage.alt}}"><div><p class="eyebrow">{{dateLabel}}</p><h3><a href="/tin-tuc/{{slug}}/">{{title}}</a></h3><p>{{excerpt}}</p></div></article>{{/each}}</div></section>
   <section class="faq-section" id="cau-hoi">
-    <h2>Câu hỏi thường gặp</h2>
+    <div class="faq-heading">
+      <p class="eyebrow">Giải đáp trước khi bắt đầu</p>
+      <h2>Câu hỏi thường gặp</h2>
+      <p>Câu trả lời rõ ràng, không thần bí hoá trải nghiệm Tarot.</p>
+    </div>
     <div class="faq-list">{{#each faqs}}<details><summary>{{q}}</summary><p>{{a}}</p></details>{{/each}}</div>
   </section>
-  <section class="waitlist drum-watermark" id="danh-sach-cho"><div><p class="eyebrow">Miễn phí · 22 tuần</p><h2>Mỗi tuần một lá,<br>gửi vào hộp thư của bạn</h2><p>Một lá, một tích Việt, mỗi tuần một thư. Hai mươi hai tuần là thuộc hết Ẩn Chính.</p><p>Khoá học đang được soạn. Để lại email thì bạn nhận thư đầu tiên ngay khi nó mở, và biết trước ngày bộ bài lên kệ. Không thanh toán, không đặt cọc.</p></div><form class="waitlist-form" data-waitlist><label>Email của bạn<input name="email" type="email" autocomplete="email" maxlength="254" required placeholder="ten@vidu.vn"></label><input type="hidden" name="source" value="home"><button class="button brass" type="submit">Giữ chỗ trong khoá học</button><p class="form-status" role="status"></p></form></section>
+  <section class="waitlist drum-watermark" id="danh-sach-cho"><div><p class="eyebrow">Miễn phí · 22 tuần</p><h2>Mỗi tuần một lá,<br>gửi vào hộp thư của bạn</h2><p>Một lá, một tích Việt, mỗi tuần một thư. Hai mươi hai tuần là thuộc hết Ẩn Chính.</p><p>Khoá học đang được soạn. Để lại email thì bạn nhận thư đầu tiên ngay khi nó mở, và biết trước ngày bộ bài lên kệ. Không thanh toán, không đặt cọc.</p></div><form class="waitlist-form" data-waitlist><label for="waitlist-home-email">Email của bạn</label><div class="email-row"><input id="waitlist-home-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="ten@vidu.vn"><input type="hidden" name="source" value="home"><button class="button brass" type="submit">Giữ chỗ</button></div><p class="form-status" role="status"></p></form></section>
 </main>
