@@ -23,7 +23,7 @@ test("ảnh sản phẩm có cấu trúc ngữ nghĩa và mô tả thay thế", 
   const home = await read("templates/home.html");
   const hero = home.slice(home.indexOf('<section class="hero">'), home.indexOf("</section>"));
   assert.match(hero, /<figure class="hero-carousel hero-product">[\s\S]*<picture>/);
-  assert.match(hero, /alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng[^\"]+"/);
+  assert.match(hero, /alt="Ba lá bài Hường Đông xoè hình quạt[^\"]+"/);
   assert.doesNotMatch(hero, /role="button"|tabindex=/,
     "ảnh không tương tác không được giả làm nút");
 });

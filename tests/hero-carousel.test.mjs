@@ -24,9 +24,9 @@ test("Hero dùng đúng ảnh sản phẩm tĩnh và các nguồn responsive", a
   const html = await home();
   const stage = heroStage(html);
   assert.match(stage, /class="hero-carousel hero-product"/);
-  assert.match(stage, /hero-product-square-480\.avif 480w[^\"]*hero-product-square-1200\.avif 1200w/);
-  assert.match(stage, /src="\/assets\/img\/hero-product-square-1200\.webp"/);
-  assert.match(stage, /width="1200" height="1200"/, "fallback phải khai đúng tỉ lệ crop vuông");
+  assert.match(stage, /ref-hero-cards-480\.avif 480w[^\"]*ref-hero-cards-1440\.avif 1440w/);
+  assert.match(stage, /src="\/assets\/img\/ref-hero-cards-1440\.webp"/);
+  assert.match(stage, /width="1440" height="989"/, "fallback phải khai đúng tỉ lệ ảnh minh hoạ mới");
   assert.doesNotMatch(stage, /data-hero-slide|data-story|immortals\//,
     "ảnh sản phẩm không được giữ hook hoặc nội dung kể chuyện của lá cũ");
 });
@@ -72,7 +72,7 @@ test("tranh Hero không tranh băng thông với ảnh LCP", async () => {
   assert.match(stage, /fetchpriority="low"/);
   assert.match(stage, /decoding="async"/);
   assert.doesNotMatch(stage, /fetchpriority="high"/);
-  assert.match(stage, /srcset="[^"]*hero-product-square-480\.avif 480w[^"]*hero-product-square-1200\.avif 1200w"/);
+  assert.match(stage, /srcset="[^"]*ref-hero-cards-480\.avif 480w[^"]*ref-hero-cards-1440\.avif 1440w"/);
   assert.match(stage, /sizes="/, "thiếu sizes thì srcset chọn theo 100vw và luôn lấy bản lớn");
 });
 
@@ -128,7 +128,7 @@ test("ảnh dùng ở màn hình đầu đủ nhẹ", async () => {
   }
   // Bản 960w thường được chọn ở desktop tiêu chuẩn; giữ dưới 100 KB để ảnh sản
   // phẩm rõ hơn nhưng không làm chậm màn hình đầu.
-  const { size } = await stat(path.join(root, "public/assets/img/hero-product-square-960.avif"));
+  const { size } = await stat(path.join(root, "public/assets/img/ref-hero-cards-960.avif"));
   assert.ok(size < 100 * 1024, `ảnh sản phẩm Hero nặng ${Math.round(size / 1024)} KB`);
 });
 

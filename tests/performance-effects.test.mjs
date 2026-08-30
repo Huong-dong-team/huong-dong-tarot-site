@@ -44,7 +44,7 @@ test("tối ưu hiệu ứng không làm mất nền và ảnh sản phẩm hero
   ]);
   assert.match(home, /class="hero-bg"/);
   assert.match(home, /class="hero-carousel hero-product"/);
-  assert.match(home, /hero-product-square-960\.avif/);
+  assert.match(home, /ref-hero-cards-960\.avif/);
   assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/);
   assert.match(main, /\.hero-product\s*\{/);
