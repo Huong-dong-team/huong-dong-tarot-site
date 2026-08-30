@@ -47,21 +47,41 @@ test("ảnh sản phẩm không nạp JavaScript carousel cũ", async () => {
   }
 });
 
-test("nghiêng theo chuột đã được gỡ để entrance làm chủ transform của khung", async () => {
-  const [registry, main, critical] = await Promise.all([
+test("mỗi tầng của Hero chỉ có MỘT chủ sở hữu transform", async () => {
+  const [registry, main, critical, motion] = await Promise.all([
     read("public/assets/js/page/registry.js"),
     read("public/assets/css/main.css"),
     read("public/assets/css/critical.css"),
+    read("public/assets/css/page-transition.css"),
   ]);
-  // page-transition.css nay chạy hero-art-in trên .hero-carousel. Nếu hero-tilt
-  // còn sống, nó ghi transform inline lên đúng phần tử đó và một trong hai bên
-  // sẽ bị nuốt — kiểu hỏng chỉ lộ ra trên máy có chuột.
+  // Bản hero-tilt.js cũ ghi transform inline lên ĐÚNG phần tử mà entrance đang
+  // chạy animation, nên một trong hai bên bị nuốt — kiểu hỏng chỉ lộ ra trên
+  // máy có chuột. Module đó đã bị gỡ hẳn và không được quay lại.
   assert.doesNotMatch(registry, /hero-tilt/);
   await assert.rejects(stat(path.join(root, "public/assets/js/ui/hero-tilt.js")));
+
+  // Ràng buộc THẬT (thay cho phép cấm "perspective trên .hero-stage" của bản
+  // cũ, vốn quá rộng): .hero-carousel là chủ sở hữu transform của animation
+  // entrance hero-art-in. Một animation fill-mode:both giữ transform cuối ở
+  // mức ưu tiên cao hơn class rule thường, nên CSS tĩnh không được đặt thêm
+  // transform/perspective lên chính phần tử đó. Hero V3 dựng ba tầng riêng —
+  // .hero-stage (parallax con trỏ), .hero-carousel (entrance), .lacquer-tilt
+  // (card-tilt) — nên .hero-stage CÓ perspective là đúng thiết kế.
+  assert.match(motion, /\.hero-carousel\s*\{[\s\S]*?hero-art-in/,
+    "entrance vẫn phải neo vào .hero-carousel");
   for (const [ten, css] of [["main.css", main], ["critical.css", critical]]) {
-    assert.doesNotMatch(css, /\.hero-stage[^{]*\{[^}]*perspective/, `${ten}: còn perspective của hero-tilt`);
+    assert.doesNotMatch(css, /\.hero-carousel\s*\{[^}]*\btransform\s*:/,
+      `${ten}: .hero-carousel đang chạy animation entrance, không được thêm transform tĩnh`);
+    assert.doesNotMatch(css, /\.hero-carousel\s*\{[^}]*transform-style/, `${ten}`);
   }
-  assert.doesNotMatch(main, /\.hero-carousel\s*\{[^}]*transform-style/);
+
+  // Parallax Hero phải là module riêng có vòng đời, không phải listener gắn
+  // thẳng vào document lúc script chạy.
+  assert.match(registry, /"hero-parallax":\s*\(\)\s*=>\s*import\("\.\.\/ui\/hero-parallax\.js"\)/);
+  const parallax = await read("public/assets/js/ui/hero-parallax.js");
+  assert.match(parallax, /export function init\(\)/);
+  assert.match(parallax, /removeEventListener/, "phải gỡ được listener khi rời trang");
+  assert.match(parallax, /prefersReducedMotion/, "phải tôn trọng yêu cầu giảm chuyển động");
 });
 
 test("tranh Hero không tranh băng thông với ảnh LCP", async () => {
@@ -158,7 +178,7 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
   assert.match(html, /<h1>Hường Đông kể Tarot<br>bằng <span class="hero-headline-accent">câu chuyện Việt<\/span><\/h1>/,
     "headline phải giữ nguyên copy và cấu trúc hiện tại");
   assert.match(html, /<div class="hero-panel">[\s\S]*?<p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith,[\s\S]*?chỉ thay hình ảnh để dễ nhớ\.<\/p>[\s\S]*?<dl class="proof">/,
-    "subheadline, CTA và stats phải nằm chung trong panel kính");
+    "subheadline, CTA và stats phải nằm chung một cụm");
   assert.doesNotMatch(html, /THÔNG MINH|Một bộ bài\. Một huyền sử\./,
     "nội dung tham chiếu không được đưa vào Hero trang chủ");
 
@@ -169,8 +189,8 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
     assert.match(css, /--hero-pearl:\s*#FAF8D0/i, `${ten}: thiếu ngọc trai`);
     assert.match(css, /--hero-warm-brown:\s*#3D2B1A/i, `${ten}: thiếu nâu body`);
     assert.match(css, /--hero-label:\s*#8B7355/i, `${ten}: thiếu nâu label`);
-    assert.match(css, /grid-template-columns:\s*minmax\(0,\s*2fr\)\s*minmax\(0,\s*3fr\)/,
-      `${ten}: Hero desktop chưa khóa tỷ lệ 40\/60`);
+    assert.match(css, /grid-template-columns:\s*minmax\(0,\s*1fr\)\s*minmax\(0,\s*1\.15fr\)/,
+      `${ten}: Hero desktop chưa khóa tỷ lệ cột chữ/cột tranh`);
     assert.match(css, /font-family:\s*var\(--script\)/, `${ten}: headline chưa dùng Fontasia`);
     assert.match(css, /font-size:\s*clamp\(68px,\s*6\.6vw,\s*104px\)/, `${ten}: sai cỡ headline desktop`);
     assert.match(css, /font-size:\s*clamp\(52px,\s*14vw,\s*68px\)/, `${ten}: sai cỡ headline mobile`);
@@ -180,8 +200,25 @@ test("Hero trang chủ giữ nguyên copy và dùng Fontasia đúng bảng màu"
       `${ten}: cụm câu chuyện Việt phải kế thừa cùng màu nâu ấm`);
     assert.match(css, /\.hero-subheadline[^}]*color:\s*var\(--hero-warm-brown\)[^}]*font-family:\s*var\(--script\)[^}]*font-size:\s*clamp\(27\.04px,\s*2\.1125vw,\s*30\.42px\)[^}]*-webkit-text-stroke:\s*0[^}]*text-shadow:\s*none/s,
       `${ten}: subheadline phải tăng thêm đúng 30%, dùng Fontasia nâu ấm và không stroke/bóng`);
-    assert.match(css, /\.hero-panel[^}]*background:\s*#FFF8E7/s, `${ten}: thiếu fallback cream khi không có backdrop-filter`);
-    assert.match(css, /backdrop-filter:\s*blur\(18px\) saturate\(115%\)/, `${ten}: thiếu frosted blur`);
+    // Hero V3 (theo bản tham khảo của chủ dự án) GỠ hẳn panel kính và khung
+    // thẻ quanh ảnh: chữ và tranh nằm thẳng trên nền giấy. Khóa chiều ngược
+    // lại — nếu ai đó vô tình đưa viền/nền/blur trở lại thì test đỏ.
+    assert.match(css, /\.hero-panel\s*\{[^}]*background:\s*none/s,
+      `${ten}: .hero-panel phải trong suốt, không quay lại panel kính`);
+    assert.doesNotMatch(css, /\.hero-panel\s*\{[^}]*backdrop-filter/s,
+      `${ten}: .hero-panel không được có blur`);
+    assert.doesNotMatch(css, /\.hero-product\s*\{[^}]*backdrop-filter/s,
+      `${ten}: .hero-product không được có blur`);
+    assert.match(css, /\.hero-product\s*\{[^}]*box-shadow:\s*none/s,
+      `${ten}: khối tranh phải trôi trên nền giấy, không đóng khung có bóng`);
+  }
+
+  // Cột chữ bên TRÁI, cột tranh bên PHẢI — bản trước đảo ngược so với tài liệu.
+  for (const [ten, css] of [["critical.css", critical], ["main.css", main]]) {
+    assert.match(css, /\.hero-copy\s*\{\s*grid-area:\s*1\s*\/\s*1|\.hero-copy\{grid-area:1\/1\}/,
+      `${ten}: cột chữ phải nằm ở cột 1`);
+    assert.match(css, /\.hero-stage\s*\{\s*grid-area:\s*1\s*\/\s*2|\.hero-stage\{grid-area:1\/2/,
+      `${ten}: cột tranh phải nằm ở cột 2`);
   }
 });
 

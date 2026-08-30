@@ -195,6 +195,10 @@ h3 { font-size: 30px; line-height: 1.12; }
   background: var(--paper);
   color: var(--ink);
 }
+/* Tranh phong cảnh chỉ còn là một lớp sương rất nhạt. Bản tham khảo của chủ dự
+   án đặt Hero trên nền giấy kem gần như trơn, núi non chỉ thấp thoáng ở hai
+   mép — toàn bộ trọng lượng thị giác dồn cho khối ba lá bài bên phải. Ảnh nền
+   đậm như bản cũ kéo mắt đi và làm chữ phải chống lại nền để đọc được. */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -203,6 +207,7 @@ h3 { font-size: 30px; line-height: 1.12; }
   height: 100%;
   object-fit: cover;
   object-position: center;
+  opacity: .34;
 }
 /* Đục nhất ở đúng vùng chữ. Mặc định theo trục dọc (một cột: chữ trên, tranh
    dưới); hai cột thì đổi sang 270deg vì cột chữ nằm bên phải. Xem main.css. */
@@ -212,9 +217,8 @@ h3 { font-size: 30px; line-height: 1.12; }
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 92% 72% at 82% 32%, rgb(255 251 235 / 58%) 0%, transparent 72%),
-    linear-gradient(180deg, rgb(255 251 235 / 28%) 0%, rgb(255 251 235 / 56%) 64%, rgb(255 251 235 / 88%) 100%),
-    linear-gradient(90deg, rgb(255 251 235 / 12%) 0%, rgb(255 251 235 / 34%) 52%, rgb(255 251 235 / 82%) 100%);
+    linear-gradient(90deg, rgb(255 251 235 / 92%) 0%, rgb(255 251 235 / 74%) 34%, rgb(255 251 235 / 30%) 62%, transparent 88%),
+    linear-gradient(180deg, transparent 0%, rgb(255 251 235 / 42%) 78%, rgb(255 251 235 / 78%) 100%);
 }
 .hero-copy, .hero-stage { position: relative; z-index: 1; }
 .hero-copy { max-width: none; font-family: var(--hero-ui); }
@@ -239,19 +243,16 @@ h3 { font-size: 30px; line-height: 1.12; }
   -webkit-text-fill-color: currentColor;
 }
 .hero .eyebrow { color: var(--hero-label); font-family: var(--hero-ui); }
+/* Panel kính đã được GỠ. Bản tham khảo đặt subheadline, hai nút và hàng số
+   thẳng trên nền giấy — không khung, không viền, không bóng, không blur. Giữ
+   .hero-panel làm lớp bọc trần (chỉ còn khoảng cách dọc) thay vì xoá khỏi
+   markup: nó vẫn là mốc gom ba khối đó thành một cụm cho lưới và cho entrance. */
 .hero-panel {
-  padding: clamp(20px, 2.3vw, 30px);
-  border: 1px solid rgb(201 169 110 / 58%);
-  border-radius: clamp(18px, 2vw, 26px);
-  background: #FFF8E7;
-  box-shadow: 0 18px 44px rgb(61 43 26 / 10%);
-}
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .hero-panel, .hero-product {
-    background: rgb(255 251 235 / 58%);
-    -webkit-backdrop-filter: blur(18px) saturate(115%);
-    backdrop-filter: blur(18px) saturate(115%);
-  }
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 .home-page .hero .hero-subheadline {
   max-width: 48ch;
@@ -284,19 +285,23 @@ h3 { font-size: 30px; line-height: 1.12; }
 .proof dt { color: var(--hero-warm-brown); font: 400 34px/1 var(--hero-ui); }
 .proof dd { margin: 6px 0 0; color: var(--hero-label); font-size: 11px; line-height: 1.35; letter-spacing: .07em; text-transform: uppercase; }
 
-.hero-stage { width: min(100%, 560px); justify-self: center; }
+/* perspective ở cấp stage là điều kiện để rotateX/rotateY của lớp tilt bên
+   trong đọc ra thành chiều sâu thật chứ không phải một phép méo phẳng. */
+.hero-stage { width: min(100%, 720px); justify-self: center; perspective: 1400px; }
 .hero-carousel { position: relative; display: grid; justify-items: center; }
+/* Khung thẻ đã được GỠ: bản tham khảo để khối ba lá bài trôi thẳng trên nền
+   giấy, không viền không nền không bóng. Mọi thuộc tính dưới đây là cố ý đặt
+   về "không", KHÔNG phải quên khai — main.css và các tệp khác vẫn còn selector
+   .hero-product nên phải chủ động trung hoà, không thể chỉ xoá rule. */
 .hero-product {
   width: 100%;
   margin: 0;
-  overflow: hidden;
-  padding: 12px;
-  border: 1px solid rgb(201 169 110 / 58%);
-  border-radius: calc(var(--img-radius) + 4px);
-  background: #FFF8E7;
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--paper-raised) 70%, transparent),
-    0 16px 38px rgb(61 43 26 / 9%);
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
 }
 .hero-product picture { display: block; }
 .hero-product img {
@@ -304,7 +309,7 @@ h3 { font-size: 30px; line-height: 1.12; }
   width: 100%;
   height: auto;
   aspect-ratio: 3 / 2;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 .proto-stamp {
@@ -337,23 +342,21 @@ h3 { font-size: 30px; line-height: 1.12; }
   contain-intrinsic-size: auto 900px;
 }
 .drum-watermark, .lac-watermark { position: relative; isolation: isolate; overflow: hidden; }
-/* Hai cột: TRANH bên trái, chữ bên phải. Đảo bằng grid-column, không đảo thứ
-   tự DOM — ở một cột thứ tự đọc phải là khẩu hiệu trước, tranh sau.
-   Breakpoint 1101px phải khớp main.css từng con số; lệch nhau là trang nhảy
-   một nhịp đúng lúc main.css về. */
+/* Hai cột: CHỮ bên trái, tranh bên phải — theo đúng bản tham khảo của chủ dự
+   án (bản trước đảo ngược: tranh trái/chữ phải). Vẫn đặt bằng grid-area chứ
+   không đảo thứ tự DOM: ở một cột thứ tự đọc phải là khẩu hiệu trước, tranh
+   sau. Breakpoint 1101px phải khớp main.css từng con số; lệch nhau là trang
+   nhảy một nhịp đúng lúc main.css về. */
 @media (min-width: 1101px) {
-  .hero { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
   .hero-overlay {
     background:
-      radial-gradient(ellipse 76% 74% at 78% 34%, rgb(255 251 235 / 66%) 0%, transparent 72%),
-      linear-gradient(180deg, rgb(255 251 235 / 8%) 0%, rgb(255 251 235 / 20%) 56%, rgb(255 251 235 / 78%) 100%),
-      linear-gradient(90deg, rgb(255 251 235 / 5%) 0%, rgb(255 251 235 / 18%) 38%, rgb(255 251 235 / 76%) 72%, rgb(255 251 235 / 92%) 100%);
+      linear-gradient(90deg, rgb(255 251 235 / 88%) 0%, rgb(255 251 235 / 62%) 30%, rgb(255 251 235 / 16%) 58%, transparent 84%);
   }
   /* Cả hàng lẫn cột: auto-placement không lùi được về cột 1 sau khi đã đặt
-     .hero-copy vào cột 2, và stage sẽ rơi xuống hàng thứ hai. */
-  .hero-stage { grid-area: 1 / 1; justify-self: start; }
-  /* Cột đã bó chiều rộng; max-width 700px ở đây sẽ ngắt khẩu hiệu giữa cụm. */
-  .hero-copy { grid-area: 1 / 2; max-width: none; }
+     một phần tử vào cột 2, nên phải chỉ định cả hai bên. */
+  .hero-copy { grid-area: 1 / 1; max-width: none; }
+  .hero-stage { grid-area: 1 / 2; justify-self: end; width: min(100%, 760px); }
 }
 @media (max-width: 1100px) {
   .hero { grid-template-columns: 1fr; gap: 34px; }
