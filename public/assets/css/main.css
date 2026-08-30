@@ -325,7 +325,7 @@ h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 2;
   object-fit: cover;
   object-position: center;
 }
@@ -1816,13 +1816,37 @@ body::before {
    vàng bơ, và MỌI chữ đều là rgb(43,27,18). Mắt không có chỗ nào để nghỉ, nên
    trang đọc ra thành phẳng dù từng khối đều ổn. Khối này là chỗ tối duy nhất.
 
-   Cố ý không thẻ, không lưới, không nhãn, không ảnh — chỉ một câu. Nó không
-   bán gì và không dẫn đi đâu ngoài về nguồn của chính câu đó. Giữ nó là khối
-   RỖNG nhất trang thì nó mới làm được việc của mình. */
+   Vẫn không thẻ, không lưới, không nhãn — chỉ một câu. Nó không bán gì và
+   không dẫn đi đâu ngoài về nguồn của chính câu đó.
+
+   Cập nhật theo tài liệu tham khảo của chủ dự án: ràng buộc "không ảnh" ban
+   đầu đổi thành một phông cảnh rất mờ (::before, opacity thấp) thay vì bỏ
+   hẳn — bức tranh hồ nước ánh vàng lúc hoàng hôn cùng bộ với các khối minh
+   hoạ khác trên trang. Đặt trên ::before (không phải background trực tiếp
+   của .quote-band) để hạ opacity riêng mà không làm nhạt luôn màu nâu nền;
+   blockquote/cite giữ z-index cao hơn nên khối vẫn đọc là RỖNG — chữ vẫn là
+   thứ duy nhất có trọng lượng thị giác, tranh chỉ là hơi thở phía sau. */
 .quote-band {
+  position: relative;
+  isolation: isolate;
   padding: clamp(90px, 12vw, 150px) max(16px, calc((100vw - 900px) / 2));
   background: var(--brown);
   color: var(--on-brown);
+}
+.quote-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/assets/img/ref-quote-bg-1536.webp");
+  background-position: center;
+  background-size: cover;
+  opacity: .22;
+  pointer-events: none;
+}
+.quote-band > * {
+  position: relative;
+  z-index: 1;
 }
 
 /* Đè luật blockquote chung: bản gốc có nền giấy sáng và vạch đỏ bên trái, đặt
