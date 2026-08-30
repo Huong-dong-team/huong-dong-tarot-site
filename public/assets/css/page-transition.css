@@ -119,9 +119,11 @@ html.is-changing.is-rendering .transition-page {
 
 /* --- Trang chủ: tranh nền → lớp phủ → tranh sơn mài → copy ----------- */
 
+/* .34 chứ không phải 1: tranh nền Hero V3 chỉ là lớp sương. Phải đặt ở đây vì
+   fill-mode:both thắng mọi class rule; khớp .hero-bg trong critical/main. */
 :is(html.hd-first-load, html.is-changing.is-rendering)
   .transition-page[data-page="home"] .hero-bg {
-  --hero-art-opacity: 1;
+  --hero-art-opacity: .34;
   animation: hero-art-in 900ms var(--page-ease-in) both;
 }
 
@@ -211,10 +213,11 @@ html.is-changing.is-rendering .transition-page {
     transform: none !important;
   }
 
-  .hero-bg,
   .lacquer-hero > :not(.subpage-hero-artwork) {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
+  /* Tách khỏi nhóm trên: .hero-bg dừng ở .34. */
+  .hero-bg { animation: none !important; opacity: .34 !important; transform: none !important; }
 }
