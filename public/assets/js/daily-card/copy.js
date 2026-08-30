@@ -175,12 +175,12 @@ export const AXIS_COPY = Object.freeze({
   }),
   H: Object.freeze({
     early: freezeVariants([
-      "Câu chuyện còn mới chớm, nên hãy cho nó thêm dữ kiện trước khi gọi tên kết quả cuối.",
+      "Câu chuyện còn mới chớm, nên cho nó thêm dữ kiện trước khi gọi tên kết quả.",
       "Việc này vẫn ở đoạn đầu, phù hợp với quan sát và thử nhẹ hơn là tự buộc mình phải biết hết.",
       "Nhịp ẩn cho thấy cánh cửa mới mở, vì vậy bước đầu tiên cần rõ hơn bước cuối cùng.",
     ]),
     middle: freezeVariants([
-      "Câu chuyện đang giữa dòng, nơi điều chỉnh cách đi thường hữu ích hơn quay lại vạch xuất phát.",
+      "Câu chuyện đang giữa dòng, điều chỉnh cách đi hữu ích hơn quay lại vạch xuất phát.",
       "Việc này đã qua đoạn đầu nhưng chưa tới chỗ kết, nên phần đang diễn ra cần được nhìn đúng như nó có.",
       "Nhịp ẩn đặt bạn ở quãng giữa, mời bạn sửa tay lái mà không phủ nhận chặng đường đã đi.",
     ]),
