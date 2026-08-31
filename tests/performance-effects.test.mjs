@@ -36,31 +36,23 @@ test("hero không còn các hiệu ứng nặng của 0.10", async () => {
 });
 
 test("tối ưu hiệu ứng không làm mất nền và ảnh sản phẩm hero", async () => {
-  const [home, registry, main, critical] = await Promise.all([
+  const [home, registry, css, module] = await Promise.all([
     read("templates/home.html"),
     read("public/assets/js/page/registry.js"),
-    read("public/assets/css/main.css"),
-    read("public/assets/css/critical.css"),
+    read("public/assets/css/home-standalone.css"),
+    read("public/assets/js/ui/home-standalone.js"),
   ]);
-  assert.match(home, /class="hero-bg"/);
-  assert.match(home, /class="hero-carousel hero-product"/);
+  assert.match(home, /class="hero-stage"/);
   assert.match(home, /ref-hero-cards-960\.avif/);
   assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/);
-  assert.match(main, /\.hero-product\s*\{/);
-  assert.match(main, /content-visibility:\s*auto/);
-  assert.match(critical, /content-visibility:\s*auto/);
-  // Fontasia dùng font-display: swap và được preload theo route, nên desktop và
-  // mobile đều thay đúng font nhận diện sau khi tệp tải xong mà không cần ép
-  // về Georgia ở breakpoint hẹp.
-  const finalTypography = main.slice(main.indexOf("0.13 —"));
-  // Token đã được gom về :root duy nhất ở đầu main.css; phần 0.13 chỉ giữ luật
-  // sử dụng font. Canh hai nơi riêng để không ép kiến trúc quay lại nhiều root.
-  assert.match(main, /--script:\s*"Fontasia VH"/);
-  assert.match(finalTypography, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
-  assert.match(critical, /--script:\s*"Fontasia VH"/);
-  assert.match(critical, /@media\s*\(max-width:\s*900px\)[\s\S]*\.home-page \.hero h1\s*\{[^}]*font-size:/);
-  assert.doesNotMatch(critical, /\.home-page \.hero h1\s*\{[^}]*font-family:\s*Georgia/);
+  assert.match(registry, /home:\s*\["home-standalone", "card-tilt", "hero-parallax"\]/);
+  assert.match(css, /font-family:\s*"DFVN TAN Harmoni"/);
+  assert.match(css, /@media \(max-width: 900px\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(module, /IntersectionObserver/);
+  assert.match(module, /requestAnimationFrame/);
+  assert.doesNotMatch(module, /setInterval|WebGL|three\.js/i);
 });
 
 test("bộ lọc 78 lá giữ hidden và chỉ tăng cường chuyển động khi motionGate cho phép", async () => {

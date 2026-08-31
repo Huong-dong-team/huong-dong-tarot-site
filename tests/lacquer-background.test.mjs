@@ -101,22 +101,21 @@ test("bảy nhóm route nhận đúng tranh trong Hero và không lặp Layer 2 
   assert.match(spread, /<section class="page-hero[^"]*lacquer-hero">[\s\S]*trai-bai-1536\.webp/);
 });
 
-test("trang chủ giữ home-content sau Hero và route ngoài bảng không mượn tranh", async () => {
+test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không mượn tranh", async () => {
   const [home, history, about] = await Promise.all([
     read("dist/index.html"),
     read("dist/huyen-su/index.html"),
     read("dist/gioi-thieu/index.html"),
   ]);
 
-  assert.match(home, /<main id="noi-dung-chinh" class="transition-page" data-page="home" data-page-art="home-content">/);
-  assert.match(home, /<picture class="subpage-artwork" aria-hidden="true">[\s\S]*?home-content-1536\.webp/);
-  const heroStart = home.indexOf('<section class="hero">');
+  assert.match(home, /<main id="noi-dung-chinh" class="transition-page" data-page="home">/);
+  assert.match(home, /ref-hero-cards-1440\.webp/);
+  const homeMain = home.match(/<main id="noi-dung-chinh"[\s\S]*?<\/main>/)?.[0] || "";
+  assert.doesNotMatch(homeMain, /data-page-art="home-content"|home-content-|subpage-content-frame/);
+  const heroStart = home.indexOf('<section id="top" class="hero">');
   const heroEnd = home.indexOf("</section>", heroStart);
-  const frameStart = home.indexOf('<div class="subpage-content-frame">');
-  assert.ok(heroStart >= 0 && heroEnd > heroStart && frameStart > heroEnd,
-    "khung tranh trang chủ phải bắt đầu sau khi hero đã đóng");
-  assert.doesNotMatch(home.slice(heroStart, heroEnd), /subpage-artwork|home-content/,
-    "hero không được chứa Layer 1–2");
+  assert.ok(heroStart >= 0 && heroEnd > heroStart);
+  assert.match(home.slice(heroStart, heroEnd), /class="hero-stage"[\s\S]*ref-hero-cards/);
 
   assert.doesNotMatch(history, /page-hero-cover|huyen-su-cover/,
     "bìa Huyền sử cũ không được chồng lên tranh Hero route");
@@ -124,9 +123,8 @@ test("trang chủ giữ home-content sau Hero và route ngoài bảng không mư
   assert.doesNotMatch(aboutMain, /data-page-art=|subpage-artwork/,
     "route ngoài bảng không được mượn tranh home-content");
 
-  const homeCritical = home.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
-  assert.match(homeCritical, /\.subpage-artwork/,
-    "critical CSS trang chủ phải neo picture tuyệt đối để không gây dịch bố cục");
+  assert.match(home, /home-standalone\.css\?v=[0-9a-f]{8}/,
+    "CSS bàn giao phải được đóng dấu cache và tải trên trang chủ");
 });
 
 test("Hero đầu trang đạt opacity 1 nguyên khung, không mask hay gradient kem", async () => {
