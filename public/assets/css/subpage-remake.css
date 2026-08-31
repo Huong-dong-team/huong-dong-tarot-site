@@ -121,7 +121,7 @@ body:not(.home-page) {
   margin-bottom: 20px;
   color: #4b3020;
   font-family: var(--display);
-  font-size: clamp(34px, 4.5vw, 62px);
+  font-size: clamp(36px, 4.9vw, 68px);
   font-weight: 400;
   line-height: .98;
   text-wrap: balance;
@@ -297,6 +297,24 @@ body:not(.home-page) {
   object-position: center 24%;
 }
 
+/* Lệch bo + tấm nền lùi phía sau, cùng ngôn ngữ .path-card trang chủ. Dùng
+   box-shadow (không phải ::before) vì .v2-card đã có overflow:hidden để
+   crop ảnh chân dung — một pseudo-element lệch ra ngoài sẽ bị chính nó cắt
+   mất; box-shadow của một phần tử thì không bị overflow của chính nó cắt. */
+[data-page-art] .portrait-card {
+  border-radius: 20px 20px 4px 4px;
+  box-shadow:
+    8px 8px 0 #efe1c6,
+    0 12px 28px rgb(67 39 20 / 7%);
+}
+
+[data-page-art] .portrait-card:hover,
+[data-page-art] .portrait-card:focus-within {
+  box-shadow:
+    8px 8px 0 #efe1c6,
+    var(--subpage-shadow);
+}
+
 /* --- Thư viện và tin tức -------------------------------------------- */
 
 [data-page-art="la-bai"] .library-page,
@@ -328,6 +346,13 @@ body:not(.home-page) {
   border-color: var(--subpage-line);
   border-radius: 2px;
   background: var(--subpage-paper-raised);
+}
+
+/* Thắng cascade so với rule chung ở trên (cùng chọn .tarot-card, nhưng
+   scope theo data-page-art nên đặc trưng cao hơn) — khung lệch bo riêng
+   cho thư viện, xem thêm box-shadow tấm nền lùi trong main.css. */
+[data-page-art="la-bai"] .tarot-card {
+  border-radius: 18px 18px 4px 4px;
 }
 
 [data-page-art="chuyen-huong-dong"] .news-grid article > img {
@@ -555,7 +580,7 @@ body:not(.home-page) {
   }
 
   [data-page-art] .v2-prose h2 {
-    font-size: clamp(32px, 11vw, 46px);
+    font-size: clamp(34px, 11vw, 50px);
   }
 
   .section-card-fan {
