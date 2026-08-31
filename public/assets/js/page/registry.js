@@ -29,7 +29,7 @@ const PAGES = {
 };
 
 /* Có mặt ở gần như mọi trang; rẻ và tự thoát ngay nếu không tìm thấy phần tử. */
-const SHARED = ["share", "waitlist"];
+const SHARED = ["share", "waitlist", "subpage-motion"];
 
 const LOADERS = {
   "card-filters": () => import("../ui/card-filters.js"),
@@ -43,6 +43,7 @@ const LOADERS = {
   "daily-card": () => import("../daily-card/page.js"),
   "spread-deck": () => import("../trai-bai.js"),
   "huyen-su-reveal": () => import("../ui/huyen-su-reveal.js"),
+  "subpage-motion": () => import("../ui/subpage-motion.js"),
 };
 
 let teardowns = [];

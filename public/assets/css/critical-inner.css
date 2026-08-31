@@ -29,32 +29,27 @@
   font-size: 15.6px;
 }
 .page-hero > h1 {
-  color: var(--hero-lemon);
+  color: #e8c783;
   font-family: var(--script);
   font-style: normal;
   font-weight: 400;
   letter-spacing: .005em;
   font-size: clamp(65px, 9.1vw, 117px);
-  text-shadow:
-    -1px -1px 0 rgb(43 27 18 / 94%),
-    1px -1px 0 rgb(43 27 18 / 94%),
-    -1px 1px 0 rgb(43 27 18 / 94%),
-    1px 1px 0 rgb(43 27 18 / 94%),
-    0 .32rem 1.4rem rgb(43 27 18 / 58%);
+  -webkit-text-fill-color: #e8c783;
+  -webkit-text-stroke: 1.5px rgb(255 250 240 / 94%);
+  paint-order: stroke fill;
+  text-shadow: 0 2px 0 rgb(90 49 20 / 92%), 0 .32rem 1.4rem rgb(18 10 6 / 72%);
 }
 .page-hero > p:not(.eyebrow) {
-  color: var(--hero-lemon);
-  font-family: var(--script);
+  color: #f2dfb7;
+  font-family: var(--display);
   font-style: normal;
   font-weight: 400;
   letter-spacing: .01em;
   font-size: 23.4px;
-  text-shadow:
-    -1px -1px 0 rgb(43 27 18 / 92%),
-    1px -1px 0 rgb(43 27 18 / 92%),
-    -1px 1px 0 rgb(43 27 18 / 92%),
-    1px 1px 0 rgb(43 27 18 / 92%),
-    0 .2rem .8rem rgb(43 27 18 / 52%);
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 .2rem .8rem rgb(18 10 6 / 78%);
 }
 .card-detail {
   display: grid;
