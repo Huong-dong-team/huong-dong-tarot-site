@@ -1,168 +1,162 @@
 <main id="noi-dung-chinh" class="transition-page" data-page="home">
-  <section class="hero">
-    <!-- Ảnh nền đứng đầu để parser gặp sớm nhất. Trước đây nó nằm trong
-         background của CSS nên trình duyệt chỉ biết đến sau khi tải và phân tích
-         xong main.css — đó là nguyên nhân chính của LCP 11,9s.
-         alt rỗng vì đây là trang trí; nội dung nằm ở <h1> ngay bên dưới. -->
-    <img class="hero-bg" src="/assets/img/hero-1200.avif"
-         srcset="/assets/img/hero-800.avif 800w,
-                 /assets/img/hero-1200.avif 1200w,
-                 /assets/img/hero-1536.avif 1536w"
-         sizes="100vw" width="1536" height="1024"
-         loading="eager" fetchpriority="high" decoding="async" alt="" aria-hidden="true">
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <span class="proto-stamp">Đang hoàn thiện</span>
-    <div class="hero-copy">
+  <section id="top" class="hero">
+    <div class="hero-copy entrance-copy">
       <p class="eyebrow">Ấn phẩm · Bộ bài và hộp cứng</p>
-      <h1>Hường Đông kể Tarot<br>bằng <span class="hero-headline-accent">câu chuyện Việt</span></h1>
-      <div class="hero-panel">
-        <p class="hero-subheadline">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, mỗi lá mang một tích huyền sử hoặc dã sử Việt. Nghĩa gốc giữ nguyên, chỉ thay hình ảnh để dễ nhớ.</p>
-        <div class="hero-actions"><a class="button brass" href="#danh-sach-cho">Học qua email</a><a class="button hero-daily-button" href="/la-bai-hom-nay/">Rút thử một lá <span aria-hidden="true">→</span></a></div>
-        <dl class="proof"><div><dt>78</dt><dd>Lá, đủ bộ RWS</dd></div><div><dt>22</dt><dd>Tích Việt cho Ẩn Chính</dd></div><div><dt>{{packPrice.compactLabel}}</dt><dd>Giá dự kiến bản in đầu</dd></div></dl>
+      <h1>Hường Đông kể Tarot bằng câu chuyện Việt</h1>
+      <p class="hero-lede">Bộ Tarot 78 lá theo hệ Rider–Waite–Smith, mỗi lá mang một tích huyền sử hoặc dã sử Việt. Nghĩa gốc giữ nguyên, chỉ thay hình ảnh để dễ nhớ.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#danh-sach-cho">Học qua email</a>
+        <button class="button button-secondary" type="button" data-draw-card>Rút thử một lá</button>
+      </div>
+      <dl class="proof-row" aria-label="Thông tin chính">
+        <div><dt>78</dt><dd>Lá, đủ bộ RWS</dd></div>
+        <div><dt>22</dt><dd>Tích Việt cho Ẩn Chính</dd></div>
+        <div><dt>{{packPrice.compactLabel}}</dt><dd>Giá dự kiến bản in đầu</dd></div>
+      </dl>
+    </div>
+    <div class="hero-visual entrance-visual" aria-hidden="true">
+      <div class="hero-stage">
+        <picture>
+          <source type="image/avif" srcset="/assets/img/ref-hero-cards-480.avif 480w, /assets/img/ref-hero-cards-960.avif 960w, /assets/img/ref-hero-cards-1440.avif 1440w" sizes="(min-width: 901px) 72vw, 100vw">
+          <img src="/assets/img/ref-hero-cards-1440.webp" width="1440" height="989" loading="eager" decoding="async" fetchpriority="high" alt="">
+        </picture>
       </div>
     </div>
-    <!-- Khối sản phẩm nay trôi tự do trong .hero-stage — không còn khung
-         overflow:hidden bó nó lại — để quầng hào quang phía sau và độ nổi khối
-         (xem hero-halo.css: animation lacquer-block-float trên .hero-product)
-         có không gian thật mà "trồi" ra thay vì bị cắt ở mép khung. Bevel chạm
-         khắc vẫn nằm ngay trên .hero-product qua ::before/::after, chỉ là
-         phần tử đó không còn ôm sát kèm border/nền riêng như bản khung thẻ cũ. -->
-    <div class="hero-stage">
-      <!-- Quầng hào quang sơn son thếp vàng, xem hero-halo.css (.lacquer-halo
-           dùng chung với khối hộp ở #bao-bai). Đứng NGOÀI .hero-product vì
-           overflow:hidden của khung sẽ cắt mất bất cứ thứ gì toả ra nếu đặt
-           bên trong. Thuần trang trí nên aria-hidden. -->
-      <div class="lacquer-halo" aria-hidden="true"></div>
-      <figure class="hero-carousel hero-product">
-        <!-- .hero-product-tilt/.lacquer-tilt là lớp DUY NHẤT xoay theo con trỏ
-             (card-tilt.js). Tách khỏi .hero-carousel/.hero-product vì hai lớp
-             đó đang là chủ sở hữu transform của animation entrance
-             (page-transition.css) — một animation fill-mode:both giữ transform
-             cuối của nó ở mức ưu tiên cao hơn một class rule thường, nên đặt
-             tilt lên cùng phần tử sẽ không bao giờ thấy hiệu ứng chạy. Xem
-             hero-halo.css. -->
-        <div class="hero-product-tilt lacquer-tilt">
-          <picture>
-            <source type="image/avif" srcset="/assets/img/ref-hero-cards-480.avif 480w, /assets/img/ref-hero-cards-960.avif 960w, /assets/img/ref-hero-cards-1440.avif 1440w" sizes="(min-width: 1101px) min(44vw, 640px), min(92vw, 560px)">
-            <img src="/assets/img/ref-hero-cards-1440.webp" width="1440" height="989" loading="eager" decoding="async" fetchpriority="low" alt="Ba lá bài Hường Đông xoè hình quạt trước vầng mặt trời, hộp bài đặt phía trước, trên nền núi non sương sớm">
-          </picture>
-        </div>
-      </figure>
+    <p class="status-note">Đang hoàn thiện</p>
+  </section>
+
+  <section class="pathways section-pad" aria-labelledby="pathways-title">
+    <div class="section-heading centered" data-reveal>
+      <p class="eyebrow">Bắt đầu từ đây</p>
+      <h2 id="pathways-title">Bạn đang tìm gì?</h2>
+    </div>
+    <div class="path-grid">
+      <article class="path-card" data-reveal style="--delay:0ms">
+        <div class="path-image lacquer-tilt" data-tilt-strength="5"><img src="/assets/img/ref-hoc-tarot-900.avif" width="900" height="579" loading="lazy" alt=""></div>
+        <p class="path-label">Bắt đầu từ đây</p>
+        <h3>Học Tarot bằng câu chuyện Việt</h3>
+        <p>Mỗi lá gắn một tích Việt, nên nhớ được chuyện là nhớ được lá.</p>
+        <a class="text-link" href="#hoc-78-la">Tìm hiểu hành trình học</a>
+      </article>
+      <article class="path-card" data-reveal style="--delay:90ms">
+        <div class="path-image lacquer-tilt" data-tilt-strength="5"><img src="/assets/img/ref-doi-chieu-rws-900.avif" width="900" height="570" loading="lazy" alt=""></div>
+        <p class="path-label">Đã đọc Tarot</p>
+        <h3>Dùng lại kiến thức RWS</h3>
+        <p>Nghĩa gốc được giữ nguyên, chỉ thay hình ảnh để dễ nhớ và gần gũi hơn.</p>
+        <a class="text-link" href="#rws">Xem cách đối chiếu</a>
+      </article>
+      <article class="path-card" data-reveal style="--delay:180ms">
+        <div class="path-image lacquer-tilt" data-tilt-strength="5"><img src="/assets/img/hero-product-square-720.avif" width="720" height="720" loading="lazy" alt=""></div>
+        <p class="path-label">Muốn cầm bài thật</p>
+        <h3>Sở hữu bộ bài Hường Đông</h3>
+        <p>Bản in đầu với hộp cứng, giấy dày và sắc mực được chăm chút như một ấn phẩm.</p>
+        <a class="text-link" href="#bo-bai">Xem quy cách bộ bài</a>
+      </article>
     </div>
   </section>
-  <section class="doors" id="ba-cua" aria-labelledby="ba-cua-nhan">
-    <h2 class="doors-label" id="ba-cua-nhan">Bạn đang tìm gì?</h2>
-    <article class="door door--hoc">
-      <div class="door-image"><img src="/assets/img/ref-hoc-tarot-900.avif" width="900" height="579" loading="lazy" alt=""></div>
-      <p class="eyebrow">Bắt đầu từ đây</p>
-      <h3>Học Tarot bằng câu chuyện Việt</h3>
-      <p>Mỗi lá gắn một tích Việt, nên nhớ được chuyện là nhớ được lá.</p>
-      <p class="door-cta"><a href="#hoc-78-la">Tìm hiểu hành trình học <span aria-hidden="true">→</span></a></p>
-    </article>
-    <article class="door">
-      <div class="door-image"><img src="/assets/img/ref-doi-chieu-rws-900.avif" width="900" height="570" loading="lazy" alt=""></div>
-      <p class="eyebrow">Đã đọc Tarot</p>
-      <h3>Dùng lại kiến thức RWS</h3>
-      <p>Nghĩa gốc được giữ nguyên, chỉ thay hình ảnh để dễ nhớ và gần gũi hơn.</p>
-      <p class="door-cta"><a href="#doi-chieu-rws">Xem cách đối chiếu <span aria-hidden="true">→</span></a></p>
-    </article>
-    <article class="door">
-      <div class="door-image"><img src="/assets/img/ref-bo-bai-illus-720.avif" width="720" height="720" loading="lazy" alt=""></div>
-      <p class="eyebrow">Muốn cầm bài thật</p>
-      <h3>Sở hữu bộ bài Hường Đông</h3>
-      <p>Bản in đầu với hộp cứng, giấy dày và sắc mực được chăm chút như một ấn phẩm.</p>
-      <p class="door-cta"><a href="#bao-bai">Xem quy cách bộ bài <span aria-hidden="true">→</span></a></p>
-    </article>
-  </section>
-  <section class="learning-story" id="hoc-78-la">
-    <img class="story-bg" src="/assets/img/ref-hoc-tarot-900.avif" width="900" height="579" loading="lazy" alt="Tay cầm lá bài Hường Đông cạnh phong thư niêm phong và bút lông, trên bàn giấy cũ">
-    <div class="learning-copy">
+
+  <section id="hoc-78-la" class="learning-story image-story" data-reveal>
+    <img class="story-background" src="/assets/img/ref-hoc-tarot-900.avif" width="900" height="579" loading="lazy" alt="Bàn học với lá bài Hường Đông, thư niêm phong và bút mực" data-depth data-depth-strength="24">
+    <div class="story-copy">
       <p class="eyebrow">Hành trình 22 tuần</p>
       <h2>Học 78 lá mà không phải học thuộc</h2>
-      <ul class="learning-list">
+      <ul class="story-list">
         <li><strong>1 lá bài · 1 câu chuyện Việt</strong><span>Dễ nhớ, dễ liên tưởng, dễ ứng dụng.</span></li>
         <li><strong>1 email mỗi tuần</strong><span>Nội dung ngắn gọn, có hình ảnh và diễn giải.</span></li>
         <li><strong>22 tuần cho 22 lá Ẩn Chính</strong><span>Một hành trình vững nền tảng, không vội vàng.</span></li>
       </ul>
-      <p class="door-cta"><a class="button brass" href="#danh-sach-cho">Giữ chỗ trong khoá học</a></p>
+      <a class="button button-primary" href="#danh-sach-cho">Giữ chỗ trong khoá học</a>
     </div>
   </section>
-  <section class="rws-showcase" id="doi-chieu-rws">
-    <div class="rws-copy">
+
+  <section id="rws" class="rws-section section-pad split-section">
+    <div class="split-copy" data-reveal>
       <p class="eyebrow">Đã đọc Tarot</p>
       <h2>Kiến thức RWS của bạn dùng lại được</h2>
       <p>Cấu trúc nghĩa giữ nguyên của Rider–Waite–Smith. Mỗi lá ghi rõ nó ứng với lá RWS nào và chuyển thể tới mức nào.</p>
-      <ul class="rws-list">
+      <ul class="quiet-list">
         <li>Cùng cấu trúc 78 lá.</li>
         <li>Nghĩa cốt lõi được giữ nguyên.</li>
         <li>Hình ảnh kể lại qua huyền sử Việt.</li>
       </ul>
-      <p class="door-cta"><a href="/trai-bai/">Mở trải bài <span aria-hidden="true">→</span></a></p>
+      <a class="text-link" href="/trai-bai/">Mở trải bài</a>
     </div>
-    <figure class="rws-visual">
-      <img src="/assets/img/ref-doi-chieu-rws-900.avif" width="900" height="570" loading="lazy" alt="Đối chiếu lá The Sun theo hệ Rider–Waite–Smith với lá tương ứng của Hường Đông, nối bằng một đường chỉ vàng">
+    <figure class="split-visual lacquer-tilt" data-reveal data-tilt-strength="4">
+      <img src="/assets/img/ref-doi-chieu-rws-900.avif" width="900" height="570" loading="lazy" alt="Đối chiếu một lá Tarot cổ điển với lá Hường Đông">
       <figcaption>Cùng một archetype, hai ngôn ngữ hình ảnh.</figcaption>
     </figure>
   </section>
-  <section class="story-section lac-watermark" id="cau-chuyen"><div class="section-heading has-art"><figure class="heading-art is-photo"><img src="/assets/img/ref-legend-bg-800.avif" width="800" height="533" loading="lazy" alt="Sông núi buổi bình minh với sen nở hai bên bờ — khung cảnh mở đầu truyện huyền sử"></figure><p class="eyebrow">22 Ẩn chính · Lĩnh Nam chích quái</p><h2>22 lá bài,<br>22 truyện huyền sử.</h2><p>Mỗi lá Ẩn chính rút từ một truyện trong <em>Lĩnh Nam chích quái</em> của Trần Thế Pháp. Đây là sách chép <strong>truyện huyền sử</strong>, không phải sử liệu đã được chứng minh. <strong>21 trong 22 lá</strong> lấy từ <strong>13 truyện</strong> của bộ sách; lá còn lại thuộc lớp tín ngưỡng Việt mở rộng và được ghi rõ là ngoại lệ.</p></div><div class="story-panels"><article><span>13</span><h3>Truyện nguồn</h3><p>Hồng Bàng Thị, Rùa Vàng, Núi Tản Viên, Man Nương… mỗi truyện là một chương trong sách.</p></article><article><span>21/22</span><h3>Lá có nguồn LNCQ</h3><p>Ghi rõ chương nào và mức chuyển thể. Đâu là truyền thuyết, đâu là dã sử, đâu là khảo cổ đều được phân định.</p></article><article><span>1</span><h3>Khoảnh khắc mỗi lá</h3><p>Một truyện có thể cho nhiều lá, vì mỗi lá bắt một khoảnh khắc khác nhau. Không lá nào kể lại cả truyện.</p></article></div><p class="story-more"><a class="button brass" href="/huyen-su/">Đọc toàn văn 34 truyện</a></p></section>
-  <section class="pack-section" id="bao-bai"><div class="section-heading"><p class="eyebrow">Ấn phẩm</p><h2>Bộ bài và hộp cứng.</h2><p>78 lá in offset trên giấy 350gsm, cạnh mạ đồng, hộp cứng nắp từ. Mặt lưng lấy trống đồng làm tâm, đối xứng 180° nên không lộ lá xuôi hay ngược.</p></div><figure class="pack-figure">
-      <!-- Cùng ngôn ngữ hào quang + chạm khắc với ảnh sản phẩm hero
-           (hero-halo.css), áp cho khối hộp — nghĩa đen nhất của "khối 3D" trên
-           trang: đây là ảnh chụp một vật thể có khối thật, không phải ảnh phẳng. -->
-      <div class="pack-image-frame">
-        <div class="lacquer-halo" aria-hidden="true"></div>
-        <div class="pack-image-tilt lacquer-tilt">
-          <img src="/assets/img/ref-bo-bai-illus-720.avif" width="720" height="720" loading="lazy" alt="Một lá bài Hường Đông dựng cạnh hộp bài cứng màu ngọc sẫm, hoa văn nhũ đồng và vầng mặt trời son">
-        </div>
-      </div>
-      <figcaption>Bản dựng minh họa · quy cách và hoàn thiện có thể đổi khi chốt nhà in</figcaption>
-    </figure><dl class="pack-spec"><div><dt>Số lá</dt><dd>78 — 22 Ẩn Chính + 56 Ẩn Phụ</dd></div><div><dt>Khổ lá</dt><dd>70 &#215; 120 mm</dd></div><div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div><div><dt>Hoàn thiện</dt><dd>Cạnh mạ đồng, hộp cứng nắp từ</dd></div><div><dt>Sách kèm</dt><dd>96 trang, ghi rõ nguồn từng câu chuyện</dd></div><div class="pack-spec-price"><dt>Giá dự kiến</dt><dd>{{packPrice.label}}</dd></div><div><dt>Số lượng</dt><dd>Giới hạn theo số đăng ký</dd></div></dl><p class="pack-cta"><a class="button brass" href="/cua-hang/">Xem quy cách bộ bài</a> <a href="#danh-sach-cho">Nhận thông báo khi mở bán →</a></p></section>
-  <section class="explore-section" id="kham-pha-them">
-    <div class="section-heading"><p class="eyebrow">Đi sâu hơn</p><h2>Còn nhiều điều để khám phá</h2></div>
-    <div class="explore-grid" data-drag-rail="Đi sâu hơn">
-      <article class="explore-card">
-        <img src="{{immortals.3.image}}" width="1024" height="1536" loading="lazy" alt="{{immortals.3.alt}}">
-        <p class="eyebrow">Điện thờ biểu tượng Việt</p>
-        <h3>Tứ Bất Tử</h3>
-        <p>Bốn vị đứng vào bốn lá Ẩn Chính, vẽ chung một lối nền ngọc sẫm, quầng son.</p>
-        <p class="door-cta"><a href="/huyen-su/#tu-bat-tu">Xem cả bốn vị <span aria-hidden="true">→</span></a></p>
-      </article>
-      <article class="explore-card">
-        <img src="/assets/img/sec-illustration-bon-nha-an-phu-cut.webp" width="900" height="600" loading="lazy" alt="">
-        <p class="eyebrow">Ẩn Phụ</p>
-        <h3>Bốn Nhà</h3>
-        <p>Tre, dâu tằm, sen và lúa đứng vào chỗ của gậy, kiếm, cốc và tiền trong bộ RWS.</p>
-        <p class="door-cta"><a href="/la-bai/">Xem 56 lá Ẩn Phụ <span aria-hidden="true">→</span></a></p>
-      </article>
-      <article class="explore-card">
-        <img src="{{featuredCards.1.image.url}}" width="{{featuredCards.1.image.width}}" height="{{featuredCards.1.image.height}}" loading="lazy" alt="{{featuredCards.1.image.alt}}">
-        <p class="eyebrow">Thư viện nổi bật</p>
-        <h3>Đủ 78 lá</h3>
-        <p>Giữ nguyên nghĩa RWS, chỉ đổi hình ảnh — tra cứu từng lá kèm chú giải.</p>
-        <p class="door-cta"><a href="/la-bai/">Mở thư viện <span aria-hidden="true">→</span></a></p>
-      </article>
-      <article class="explore-card">
-        <img src="{{latestPosts.0.coverImage.url}}" width="1200" height="630" loading="lazy" alt="{{latestPosts.0.coverImage.alt}}">
-        <p class="eyebrow">Nhật ký dự án</p>
-        <h3>Đang làm tới đâu</h3>
-        <p>{{latestPosts.0.title}}</p>
-        <p class="door-cta"><a href="/tin-tuc/">Đọc nhật ký <span aria-hidden="true">→</span></a></p>
-      </article>
+
+  <section id="bo-bai" class="product-section section-pad">
+    <div class="product-gallery lacquer-tilt" data-reveal data-tilt-strength="4">
+      <img src="/assets/img/hero-product-square-720.avif" width="720" height="720" loading="lazy" alt="Bộ bài và hộp Hường Đông màu xanh ngọc">
+    </div>
+    <div class="product-copy" data-reveal>
+      <p class="eyebrow">Muốn cầm bài thật</p>
+      <h2>Bản in đầu, số lượng giới hạn</h2>
+      <p class="price">{{packPrice.label}}</p>
+      <dl class="spec-list">
+        <div><dt>Khổ lá</dt><dd>70 × 120 mm</dd></div>
+        <div><dt>Giấy</dt><dd>350 gsm, in offset</dd></div>
+        <div><dt>Hoàn thiện</dt><dd>Cán mờ, viền vàng ánh kim</dd></div>
+        <div><dt>Đóng gói</dt><dd>Hộp cứng cao cấp</dd></div>
+      </dl>
+      <a class="button button-primary" href="#danh-sach-cho">Đăng ký chờ nhận tin</a>
     </div>
   </section>
-  <section class="quote-band">
-    <blockquote>
-      <p>Lên núi, xuống bể, hữu sự báo cho nhau biết, đừng quên.</p>
-      <cite>Lạc Long Quân · <a href="/huyen-su/hong-bang-thi/">Truyện Hồng Bàng Thị</a>, <em>Lĩnh Nam chích quái</em></cite>
-    </blockquote>
+
+  <section id="huyen-su" class="legend-section" data-reveal data-depth data-depth-strength="18">
+    <div class="legend-copy">
+      <p class="eyebrow">22 Ẩn Chính · Lĩnh Nam chích quái</p>
+      <h2>22 lá bài, 22 truyện huyền sử.</h2>
+      <p>Mỗi lá Ẩn Chính rút từ một truyện trong Lĩnh Nam chích quái. Đây là sách chép truyện huyền sử, không phải sử liệu đã được chứng minh.</p>
+    </div>
+    <dl class="legend-milestones">
+      <div><dt>13</dt><dd><strong>Truyện nguồn</strong>Hồng Bàng Thị, Rùa Vàng, Núi Tản Viên, Man Nương…</dd></div>
+      <div><dt>21/22</dt><dd><strong>Lá có nguồn LNCQ</strong>Ghi rõ chương nào và mức chuyển thể.</dd></div>
+      <div><dt>1</dt><dd><strong>Khoảnh khắc mỗi lá</strong>Mỗi lá bắt một khoảnh khắc khác nhau.</dd></div>
+    </dl>
   </section>
-  <section class="faq-section" id="cau-hoi">
-    <div class="faq-heading">
+
+  <section id="cau-chuyen" class="quote-section" data-reveal data-depth data-depth-strength="14">
+    <blockquote>“Lên núi, xuống bể, hữu sự báo cho nhau biết, đừng quên.”</blockquote>
+    <p>Lạc Long Quân · Truyện Hồng Bàng Thị, Lĩnh Nam chích quái</p>
+  </section>
+
+  <section id="faq" class="faq-section section-pad">
+    <div class="faq-heading" data-reveal>
       <p class="eyebrow">Giải đáp trước khi bắt đầu</p>
       <h2>Câu hỏi thường gặp</h2>
       <p>Câu trả lời rõ ràng, không thần bí hoá trải nghiệm Tarot.</p>
     </div>
-    <div class="faq-list">{{#each faqs}}<details><summary>{{q}}</summary><p>{{a}}</p></details>{{/each}}</div>
+    <div class="faq-list" data-reveal>{{#each faqs}}<details><summary>{{q}}</summary><p>{{a}}</p></details>{{/each}}</div>
   </section>
-  <section class="waitlist drum-watermark" id="danh-sach-cho"><div><p class="eyebrow">Miễn phí · 22 tuần</p><h2>Mỗi tuần một lá,<br>gửi vào hộp thư của bạn</h2><p>Một lá, một tích Việt, mỗi tuần một thư. Hai mươi hai tuần là thuộc hết Ẩn Chính.</p><p>Khoá học đang được soạn. Để lại email thì bạn nhận thư đầu tiên ngay khi nó mở, và biết trước ngày bộ bài lên kệ. Không thanh toán, không đặt cọc.</p></div><form class="waitlist-form" data-waitlist><label for="waitlist-home-email">Email của bạn</label><div class="email-row"><input id="waitlist-home-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="ten@vidu.vn"><input type="hidden" name="source" value="home"><button class="button brass" type="submit">Giữ chỗ</button></div><p class="form-status" role="status"></p></form></section>
+
+  <section id="danh-sach-cho" class="waitlist-section" data-reveal>
+    <div>
+      <p class="eyebrow">Một lá, một tích, mỗi tuần một thư</p>
+      <h2>Nhận thư đầu tiên khi hành trình mở.</h2>
+      <p>Miễn phí, ngừng nhận bất cứ lúc nào.</p>
+    </div>
+    <form class="email-form" data-waitlist novalidate>
+      <label for="waitlist-home-email">Email của bạn</label>
+      <div class="email-row">
+        <input id="waitlist-home-email" name="email" type="email" autocomplete="email" maxlength="254" required placeholder="ban@example.com" aria-describedby="home-form-message">
+        <input type="hidden" name="source" value="home">
+        <button class="button button-primary" type="submit">Giữ chỗ</button>
+      </div>
+      <p id="home-form-message" class="form-status form-message" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <div class="card-dialog" data-card-dialog hidden role="dialog" aria-modal="true" aria-labelledby="drawn-title">
+    <button class="dialog-backdrop" type="button" aria-label="Đóng lá bài" data-dialog-close></button>
+    <div class="dialog-panel">
+      <img src="/assets/img/hero-product-square-720.avif" width="720" height="720" loading="lazy" alt="Một lá bài từ bộ Hường Đông">
+      <p class="eyebrow">Lá bài hôm nay</p>
+      <h2 id="drawn-title" data-drawn-title>Thái Dương · The Sun</h2>
+      <p>Hãy xem đây như một lời mời để chậm lại và tự hỏi điều gì đang cần được nhìn rõ.</p>
+      <button class="button button-primary" type="button" data-dialog-close>Khép lá bài</button>
+    </div>
+  </div>
 </main>

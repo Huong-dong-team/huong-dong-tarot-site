@@ -6,15 +6,15 @@
   <meta name="theme-color" content="#FFFBEB">
   <!-- Đánh dấu lần tải đầu trước khi trình duyệt vẽ Hero, tránh trạng thái cuối
        lóe lên rồi mới quay về frame đầu của entrance. -->
-  <script>document.documentElement.classList.add("hd-first-load")</script>
+  <script>document.documentElement.classList.add("hd-first-load");if(location.pathname==="/"||location.pathname==="/index.html")document.documentElement.classList.add("home-motion-enabled")</script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Ảnh hero chỉ preload trên trang chủ; build.js để trống khối này ở route khác. -->
   {{{heroPreloads}}}
-  <!-- Fontasia dùng cho Hero trang chủ và page hero route trong; Harmoni vẫn
-       được preload cho H1 của card detail. Be Vietnam Pro giữ UI tiếng Việt. -->
+  <!-- build.js chọn đúng font màn hình đầu theo route: Harmoni cho trang chủ,
+       Fontasia/Harmoni cho các loại trang trong; Be Vietnam Pro giữ UI. -->
   {{{fontPreloads}}}
   <style data-critical>{{{criticalCss}}}</style>
   <!-- Hai stylesheet quyết định bố cục và Layer 1–2 phải tải theo đường chuẩn.
@@ -33,6 +33,10 @@
        nó quyết định trạng thái đầu của các mục nội dung; về trễ thì mục đã vẽ
        xong sẽ bị kéo ngược về opacity 0 rồi mới sáng lại. -->
   <link rel="stylesheet" href="/assets/css/scroll-fade.css">
+  <!-- Bản bàn giao trang chủ được đặt sau các lớp cũ để khớp đúng mẫu;
+       selector có scope data-page nên không thay đổi bảy nhóm sub-page. -->
+  <link rel="stylesheet" href="/assets/css/home-standalone.css">
+  <noscript><style>.entrance-copy,.entrance-visual{opacity:1!important;transform:none!important}</style></noscript>
   <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
   {{{head}}}

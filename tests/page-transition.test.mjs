@@ -228,27 +228,21 @@ test("tranh phong cảnh hiện trên cả màn hình hẹp", async () => {
   );
 });
 
-test("tranh phong cảnh nạp ưu tiên và entrance đúng từ opacity 0", async () => {
+test("tranh Hero trang chủ nạp ưu tiên và entrance đúng từ opacity 0", async () => {
   const [home, css] = await Promise.all([
     read("templates/home.html"),
-    read("public/assets/css/page-transition.css"),
+    read("public/assets/css/home-standalone.css"),
   ]);
   // loading="lazy" trên một ảnh nằm ngay đầu trang khiến nó hiện sau mọi thứ
   // khác — đúng cảm giác "tranh hiện lên rồi mới thấy" người dùng đã báo.
   // Giới hạn trong đúng thẻ <img> đó: home.html còn nhiều ảnh khác cố ý dùng
   // loading="lazy", quét cả tệp sẽ bắt nhầm chúng.
-  const heroImg = home.match(/<img class="hero-bg"[^>]*>/)?.[0] || "";
+  const heroImg = home.match(/<img src="\/assets\/img\/ref-hero-cards-1440\.webp"[^>]*>/)?.[0] || "";
   assert.match(heroImg, /loading="eager"/);
   assert.match(heroImg, /fetchpriority="high"/);
   assert.doesNotMatch(heroImg, /loading="lazy"/);
-  const reveal = css.match(/@keyframes hero-art-in \{([\s\S]*?)\n\}/)?.[1];
-  assert.ok(reveal, "thiếu @keyframes hero-art-in");
-  // Đặc tả v2 yêu cầu tranh mở từ trong suốt và tiến thẳng tới opacity cuối,
-  // không có mốc giữa sáng quá rồi tối lại.
-  const start = Number(reveal.match(/from \{ opacity: ([\d.]+)/)?.[1]);
-  assert.equal(start, 0);
-  assert.match(reveal, /to \{ opacity: var\(--hero-art-opacity, 1\); transform: none; \}/);
-  assert.doesNotMatch(reveal, /\d+%\s*\{/);
+  assert.match(css, /html\.home-motion-enabled main\[data-page="home"\] \.entrance-visual\s*\{\s*opacity:\s*0/);
+  assert.match(css, /html\.home-motion-enabled\.is-ready main\[data-page="home"\][\s\S]*\.entrance-visual[\s\S]*opacity:\s*1/);
 });
 
 test("Hero chạy cùng choreography ở lần tải đầu và khi Swup thay trang", async () => {
@@ -264,7 +258,7 @@ test("Hero chạy cùng choreography ở lần tải đầu và khi Swup thay tr
   // trong lần tải đầu, nên hiệu ứng sẽ bị cắt đúng lúc đáng lẽ phải chạy.
   assert.doesNotMatch(css, /swup-enabled[^\n]*hero-bg|hero-bg[^\n]*swup-enabled/);
   assert.match(bootstrap, /classList\.add\("hd-first-load"\)/);
-  assert.match(layout, /<script>document\.documentElement\.classList\.add\("hd-first-load"\)<\/script>/,
+  assert.match(layout, /<script>document\.documentElement\.classList\.add\("hd-first-load"\);[\s\S]*home-motion-enabled[\s\S]*<\/script>/,
     "class frame đầu phải có trước lần vẽ Hero đầu tiên");
   assert.match(bootstrap, /content:replace[\s\S]{0,160}classList\.remove\("hd-first-load"\)[\s\S]{0,80}once: true/);
 });

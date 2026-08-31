@@ -291,7 +291,7 @@ const layoutSettings = {
 
 /* Tranh sơn mài gắn theo route. Đặc tả v2 ngày 27/08/2026 thay thế hai điều
    của bản v1: tranh của bảy nhóm trang trong nằm ở Hero và có entrance.
-   Trang chủ vẫn chỉ nhận home-content ở phần nội dung SAU Hero.
+   Trang chủ bàn giao tự quản lý toàn bộ tranh trong templates/home.html.
 
    Đặt ở đây thay vì rải vào 14 template vì hai lý do. Một: bàn giao đã nói
    dùng data-page-art chứ đừng dò URL trong JS, và build là chỗ duy nhất biết
@@ -301,7 +301,6 @@ const layoutSettings = {
    Không tự gắn tranh cho route ngoài bảng: /gioi-thieu/, /quyen-rieng-tu/ và
    /404.html giữ nguyên Layer 0 thay vì mượn sai tranh home-content. */
 const PAGE_ART = [
-  { id: "home-content",      match: (p) => p === "/" },
   { id: "trai-bai",          match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
   { id: "la-bai",            match: (p) => p.startsWith("/la-bai/") },
   { id: "tarot-la-gi",       match: (p) => p === "/tarot-la-gi/" },
@@ -378,22 +377,8 @@ function withPageArt(content, artId) {
 
   const head = openMain[0].replace(/>$/, ` data-page-art="${artId}">`);
   let body = trimmed.slice(openMain[0].length, closeAt);
-  // Trang chủ còn một script nhỏ sau </main>; giữ nguyên đúng vị trí thay vì
-  // coi template phải kết thúc tuyệt đối bằng thẻ đóng main.
+  // Giữ nguyên phần đuôi template sau </main>, nếu có.
   const tail = trimmed.slice(closeAt + closeMain.length);
-
-  if (artId === "home-content") {
-    let hero = "";
-    if (/^\s*<section[^>]*class="[^"]*\bhero\b/.test(body)) {
-      const end = body.indexOf("</section>");
-      if (end !== -1) {
-        hero = body.slice(0, end + "</section>".length);
-        body = body.slice(end + "</section>".length);
-      }
-    }
-    const art = pageArtworkPicture(artId, "content");
-    return `${head}${hero}<div class="subpage-content-frame">${art}${body}</div>${closeMain}${tail}`;
-  }
 
   const heroArt = pageArtworkPicture(artId, "hero");
   const leadingHero = body.match(/^\s*<(section|article)\b[^>]*class="[^"]*\b(page-hero|card-detail)\b[^"]*"[^>]*>/);
@@ -444,18 +429,20 @@ function withPageArt(content, artId) {
  */
 function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
   const artId = pageArtId(routePath);
-  const bodyFontPreloads = [
-    '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
-    '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
-  ];
-  /* Hero trang chủ và page hero route trong đều dùng Fontasia cho headline /
-     subheadline. Card detail vẫn dùng Harmoni ở H1, nên route trong preload
-     cả hai họ để không tạo FOUT khi chuyển giữa các loại subpage. */
+  const bodyFontPreloads = bodyClass === "home-page"
+    ? [
+      '<link rel="preload" href="/assets/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/be-vietnam-pro-600-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
+    ]
+    : [
+      '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/be-vietnam-pro-700.woff2" as="font" type="font/woff2" crossorigin>',
+    ];
+  /* Trang chủ bàn giao dùng Harmoni cho headline. Page hero route trong vẫn
+     dùng Fontasia; card detail dùng Harmoni, nên route trong preload cả hai. */
   const displayFontPreloads = bodyClass === "home-page"
     ? [
-      '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
-      '<link rel="preload" href="/assets/fonts/inter-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
-      '<link rel="preload" href="/assets/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>',
+      '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>',
     ]
     : [
       '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
@@ -471,7 +458,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
     fontPreloads: [...bodyFontPreloads, ...displayFontPreloads].join("\n  "),
     heroPreloads: bodyClass === "home-page"
       // imagesrcset/imagesizes chứ KHÔNG phải href + media. Preload phải đi qua
-      // đúng logic chọn ảnh của <img class="hero-bg">, nếu không hai bên chọn
+      // đúng logic chọn ảnh của Hero bàn giao, nếu không hai bên chọn
       // hai bản khác nhau và trình duyệt tải cả hai.
       //
       // Chia theo media không cứu được, vì bản nào được chọn còn phụ thuộc mật
@@ -482,9 +469,9 @@ function layout({ title, description, path: routePath, image, type, schemas, con
       // href giữ lại làm bản dự phòng cho trình duyệt chưa hiểu imagesrcset;
       // trình duyệt hiểu thì bỏ qua href.
       ? '<link rel="preload" as="image" fetchpriority="high"'
-        + ' imagesrcset="/assets/img/hero-800.avif 800w, /assets/img/hero-1200.avif 1200w, /assets/img/hero-1536.avif 1536w"'
-        + ' imagesizes="100vw" href="/assets/img/hero-1200.avif">'
-      : artId && artId !== "home-content"
+        + ' imagesrcset="/assets/img/ref-hero-cards-480.avif 480w, /assets/img/ref-hero-cards-960.avif 960w, /assets/img/ref-hero-cards-1440.avif 1440w"'
+        + ' imagesizes="(min-width: 901px) 72vw, 100vw" href="/assets/img/ref-hero-cards-1440.avif">'
+      : artId
         ? '<link rel="preload" as="image" fetchpriority="high"'
           + ` imagesrcset="/assets/img/subpage/${artId}-1024.avif 1024w, /assets/img/subpage/${artId}-1536.avif 1536w"`
           + ` imagesizes="100vw" href="/assets/img/subpage/${artId}-1536.avif">`

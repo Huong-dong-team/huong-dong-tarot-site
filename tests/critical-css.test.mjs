@@ -58,7 +58,7 @@ test("trang trong nhận đúng critical CSS theo loại nội dung", async () =
   assert.ok(spreadCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
 });
 
-test("mỗi route preload đúng tranh Hero, home-content sau Hero không preload", async () => {
+test("mỗi route preload đúng tranh Hero", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
   // Đúng MỘT preload, và nó phải đi qua cùng logic chọn ảnh với <img>. Preload
@@ -67,41 +67,33 @@ test("mỗi route preload đúng tranh Hero, home-content sau Hero không preloa
   // DPR 3 — preload bản 800w rồi srcset lại lấy bản 1200w.
   const preloads = [...home.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
   assert.equal(preloads.length, 1, "chỉ được một preload ảnh hero");
-  assert.match(preloads[0], /imagesrcset="[^"]*hero-800\.avif 800w[^"]*hero-1200\.avif 1200w[^"]*hero-1536\.avif 1536w"/);
-  assert.match(preloads[0], /imagesizes="100vw"/);
+  assert.match(preloads[0], /imagesrcset="[^"]*ref-hero-cards-480\.avif 480w[^"]*ref-hero-cards-960\.avif 960w[^"]*ref-hero-cards-1440\.avif 1440w"/);
+  assert.match(preloads[0], /imagesizes="\(min-width: 901px\) 72vw, 100vw"/);
   assert.doesNotMatch(preloads[0], /\bmedia=/, "chia theo media không biết được mật độ điểm ảnh của máy");
   // imagesizes phải khớp sizes của chính thẻ <img>, lệch nhau là chọn lệch bản.
-  const heroImg = home.match(/<img class="hero-bg"[\s\S]*?>/)?.[0] || "";
-  assert.match(heroImg, /sizes="100vw"/);
+  const heroSource = home.match(/<source type="image\/avif" srcset="[^"]*ref-hero-cards[^"]*" sizes="[^"]*">/)?.[0] || "";
+  assert.match(heroSource, /sizes="\(min-width: 901px\) 72vw, 100vw"/);
   const cardPreloads = [...card.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
   assert.equal(cardPreloads.length, 1, "route lá chỉ preload một tranh Hero route");
   assert.match(cardPreloads[0], /subpage\/la-bai-1024\.avif 1024w/);
   assert.match(cardPreloads[0], /subpage\/la-bai-1536\.avif 1536w/);
   assert.doesNotMatch(card, /rel="preload" as="image"[^>]+\/hero-/);
-  assert.doesNotMatch(home, /rel="preload" as="image"[^>]+home-content-/,
-    "home-content nằm sau Hero nên không được tranh băng thông với LCP");
+  assert.doesNotMatch(home, /home-content-/, "trang chủ bàn giao không còn khung tranh route cũ");
 });
 
 test("preload đúng font dùng ở màn hình đầu", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
-  for (const font of [
-    "be-vietnam-pro-700-vietnamese.woff2",
-    "be-vietnam-pro-700.woff2",
-  ]) {
-    const pattern = new RegExp(`rel="preload" href="/assets/fonts/${font.replace(".", "\\.")}"`);
-    assert.match(home, pattern);
-    assert.match(card, pattern);
-  }
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/inter-400-vietnamese\.woff2"/);
-  assert.match(home, /rel="preload" href="\/assets\/fonts\/inter-400\.woff2"/);
-  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-400-vietnamese\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-600-vietnamese\.woff2"/);
+  assert.match(home, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
+  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:fontasia-vh|inter-400)/);
   assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
   assert.match(card, /rel="preload" href="\/assets\/fonts\/fontasia-vh\.woff2"/);
   assert.match(card, /rel="preload" href="\/assets\/fonts\/dfvn-tan-harmoni\.woff2"/);
   assert.doesNotMatch(card, /rel="preload" href="\/assets\/fonts\/ganh-400(?:-italic)?\.woff2"/);
-  assert.doesNotMatch(home, /rel="preload" href="\/assets\/fonts\/(?:be-vietnam-pro-(?:400|600)|charm-)/);
+  assert.match(card, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-700-vietnamese\.woff2"/);
+  assert.match(card, /rel="preload" href="\/assets\/fonts\/be-vietnam-pro-700\.woff2"/);
 });
 
 test("font tiêu đề luôn thay font nhận diện sau khi tải xong", async () => {
