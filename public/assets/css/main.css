@@ -2235,18 +2235,26 @@ body::before {
 }
 
 /* --- Thư viện nổi bật: cùng viền vát vàng với khối sản phẩm hero -------- */
+/* Lệch bo + tấm nền lùi phía sau, cùng ngôn ngữ .path-card trang chủ. Panel
+   đi bằng box-shadow (offset thật, không blur) thay vì ::before vì ::before
+   của .tarot-card đã dùng làm dấu "Bản thử nghiệm" ở góc ảnh (xem khối phía
+   trên) — không được đụng vào. */
 .tarot-card {
   position: relative;
+  border-radius: 18px 18px 4px 4px;
   box-shadow:
+    10px 10px 0 var(--paper-band),
     inset 1px 1px 0 color-mix(in srgb, var(--gold) 30%, transparent),
     inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
   transition: transform .2s ease, border-color .2s ease, box-shadow .3s ease;
 }
+.tarot-card img { border-radius: 14px 14px 3px 3px; }
 /* card-tilt.js đã bật .hd-tilt-active khi con trỏ đứng trên thẻ — dùng lại
    đúng lớp đó cho quầng sáng thay vì thêm :hover riêng, để viền vát và độ
    nghiêng luôn bật/tắt cùng một nhịp, không lệch pha nhau. */
 .tarot-card.hd-tilt-active {
   box-shadow:
+    10px 10px 0 var(--paper-band),
     inset 1px 1px 0 color-mix(in srgb, var(--gold) 60%, transparent),
     inset -1px -1px 0 color-mix(in srgb, var(--lacquer-ink) 30%, transparent),
     0 20px 36px color-mix(in srgb, var(--lacquer-ink) 20%, transparent);
