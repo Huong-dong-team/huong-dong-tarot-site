@@ -64,7 +64,9 @@ test("Border Beam bám thẻ giá dự kiến, không biến thành đặt cọc
     read("dist/cua-hang/index.html"),
   ]);
   assert.match(build, /data-price-panel/);
-  assert.match(shop, /class="v2-prose price-panel"[^>]*data-price-panel/);
+  assert.match(shop, /class="v2-prose pricing-gallery price-panel"[^>]*data-price-panel/);
+  assert.match(shop, /390\.000đ/);
   assert.match(shop, /690\.000đ/);
+  assert.match(shop, /990\.000đ/);
   assert.match(shop, /không thanh toán, không đặt cọc, không thu tiền trước/);
 });

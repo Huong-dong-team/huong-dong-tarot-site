@@ -59,6 +59,46 @@ const PACK_PRICE = Object.freeze({
   label: "690.000đ",
   compactLabel: "690k",
 });
+const PACK_TIERS = Object.freeze([
+  Object.freeze({
+    id: "standard",
+    name: "Standard",
+    vnd: 390000,
+    label: "390.000đ",
+    image: "/assets/img/shop/standard-pack-v1.png",
+    alt: "Bộ Standard gồm 78 lá Tarot Hường Đông và hộp giấy",
+    featured: false,
+    features: Object.freeze(["78 lá bài", "Hộp giấy mỹ thuật", "Thẻ hướng dẫn nhanh"]),
+  }),
+  Object.freeze({
+    id: "premium",
+    name: "Premium",
+    vnd: PACK_PRICE.vnd,
+    label: PACK_PRICE.label,
+    image: "/assets/img/shop/premium-pack-v1.png",
+    alt: "Bộ Premium gồm bài, hộp giấy và sách Reader Guide",
+    featured: true,
+    features: Object.freeze(["Toàn bộ gói Standard", "Sách hướng dẫn dành cho reader", "Bookmark Hường Đông"]),
+  }),
+  Object.freeze({
+    id: "signature",
+    name: "Signature",
+    vnd: 990000,
+    label: "990.000đ",
+    image: "/assets/img/shop/signature-pack-v1.png",
+    alt: "Bộ Signature gồm bài, hộp gỗ sơn mài, sách, túi gấm và chứng nhận đánh số",
+    featured: false,
+    features: Object.freeze(["Toàn bộ gói Premium", "Hộp gỗ sơn mài khóa đồng", "Túi gấm thêu tay", "Thẻ chứng nhận đánh số"]),
+  }),
+]);
+
+function priceTiersHtml() {
+  return PACK_TIERS.map((tier) => {
+    const features = tier.features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("");
+    const ribbon = tier.featured ? '<p class="price-tier-ribbon">Được đề xuất</p>' : "";
+    return `<article id="${tier.id}" class="price-tier${tier.featured ? " is-featured" : ""}" data-tier="${tier.id}">${ribbon}<div class="price-tier-copy"><h3>${escapeHtml(tier.name)} <span aria-hidden="true">·</span> <strong>${escapeHtml(tier.label)}</strong></h3><ul class="price-tier-features">${features}</ul></div><figure class="price-tier-visual"><img src="${tier.image}" width="1024" height="768" loading="lazy" decoding="async" alt="${escapeHtml(tier.alt)}"></figure><a class="button price-tier-cta" href="/#danh-sach-cho">Vào danh sách chờ</a></article>`;
+  }).join("");
+}
 const lncq22 = JSON.parse(await readFile(path.join(root, "data", "lncq-22.json"), "utf8"));
 // Khối Lĩnh Nam chích quái cho lá Ẩn chính. Dẫn nguồn theo CHƯƠNG (bản này không có số trang).
 function lncqBlock(slug) {
@@ -589,7 +629,7 @@ const faqs = [
   },
   {
     q: "Bao giờ mở bán và giá bao nhiêu?",
-    a: `Bộ bài chưa mở bán. Giá dự kiến của bản in đầu là ${PACK_PRICE.label}, số lượng giới hạn theo số người đăng ký. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.`,
+    a: `Bộ bài chưa mở bán. Ba phiên bản dự kiến từ ${PACK_TIERS[0].label} đến ${PACK_TIERS[2].label}; bản Premium ${PACK_PRICE.label} là lựa chọn được đề xuất. Trang không thu tiền trước, không đặt cọc và không giữ chỗ có phí.`,
   },
   {
     q: "Người mới nên bắt đầu từ đâu?",
@@ -598,9 +638,8 @@ const faqs = [
 ];
 
 /* Bộ bài là hàng chưa mở bán, nên availability phải là PreOrder chứ không phải
-   InStock. Giá ở đây là giá DỰ KIẾN của bản in đầu: đổi giá trong FAQ hay trang
-   Cửa hàng thì phải đổi cả con số này, nếu không dữ liệu có cấu trúc sẽ nói một
-   đằng còn trang nói một nẻo. */
+   InStock. Ba Offer dùng cùng nguồn PACK_TIERS với giao diện Cửa hàng để giá
+   hiển thị, FAQ và dữ liệu có cấu trúc không thể lệch nhau. */
 const packSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
@@ -609,13 +648,14 @@ const packSchema = {
   image: absoluteUrl(data.site.baseUrl, "/assets/img/product-hop-bai.webp"),
   brand: { "@type": "Brand", name: data.site.siteName },
   inLanguage: "vi",
-  offers: {
+  offers: PACK_TIERS.map((tier) => ({
     "@type": "Offer",
-    price: String(PACK_PRICE.vnd),
+    name: `${tier.name} — Hường Đông Tarot`,
+    price: String(tier.vnd),
     priceCurrency: "VND",
     availability: "https://schema.org/PreOrder",
-    url: absoluteUrl(data.site.baseUrl, "/cua-hang/"),
-  },
+    url: absoluteUrl(data.site.baseUrl, `/cua-hang/#${tier.id}`),
+  })),
 };
 
 const faqSchema = {
@@ -710,14 +750,14 @@ const newPages = [
 ];
 for (const page of newPages) {
   const pageTemplate = page.tpl === "cua-hang"
-    ? templates[page.tpl].replace('<section class="v2-prose" id="bo-bai"', '<section class="v2-prose price-panel" id="bo-bai" data-price-panel')
+    ? templates[page.tpl].replace('<section class="v2-prose pricing-gallery" id="bo-bai"', '<section class="v2-prose pricing-gallery price-panel" id="bo-bai" data-price-panel')
     : templates[page.tpl];
   await emit(page.route, layout({
     title: page.title,
     description: page.description,
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
-    content: renderString(pageTemplate.replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE }),
+    content: renderString(pageTemplate.replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() }),
   }));
 }
 

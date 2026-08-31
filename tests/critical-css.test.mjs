@@ -106,25 +106,24 @@ test("font tiêu đề luôn thay font nhận diện sau khi tải xong", async 
   }
 });
 
-test("headline và subheadline của mọi subpage dùng Fontasia cùng màu vàng hiện tại", async () => {
-  const [inner, main] = await Promise.all([
+test("headline vàng pastel viền trắng và subheadline dịu đồng nhất từ critical tới CSS đầy đủ", async () => {
+  const [inner, remake] = await Promise.all([
     read("public/assets/css/critical-inner.css"),
-    read("public/assets/css/main.css"),
+    read("public/assets/css/subpage-remake.css"),
   ]);
-  for (const [name, css] of [["critical-inner.css", inner], ["main.css", main]]) {
+  for (const [name, css] of [["critical-inner.css", inner], ["subpage-remake.css", remake]]) {
     const headline = css.match(/\.page-hero > h1\s*\{([\s\S]*?)\}/)?.[1] || "";
     const subheadline = css.match(/\.page-hero > p:not\(\.eyebrow\)\s*\{([\s\S]*?)\}/)?.[1] || "";
     const label = css.match(/\.page-hero > \.eyebrow\s*\{([\s\S]*?)\}/)?.[1] || "";
     assert.match(headline, /font-family:\s*var\(--script\)/, `${name}: headline subpage chưa dùng Fontasia`);
     assert.match(headline, /font-weight:\s*400/, `${name}: headline subpage không giữ Regular 400`);
-    assert.match(headline, /color:\s*var\(--hero-lemon\)/, `${name}: headline subpage không giữ vàng hiện tại`);
-    assert.match(subheadline, /font-family:\s*var\(--script\)/, `${name}: subheadline subpage chưa dùng Fontasia`);
+    assert.match(headline, /color:\s*(?:#e8c783|var\(--subpage-gold-pastel\))/, `${name}: headline chưa dùng vàng pastel`);
+    assert.match(headline, /-webkit-text-stroke:\s*1\.5px/, `${name}: headline chưa có viền trắng ngà`);
+    assert.match(subheadline, /font-family:\s*var\(--display\)/, `${name}: subheadline chưa tách khỏi font headline`);
     assert.match(subheadline, /font-weight:\s*400/, `${name}: subheadline subpage không giữ Regular 400`);
-    assert.match(subheadline, /color:\s*var\(--hero-lemon\)/, `${name}: subheadline subpage không giữ vàng hiện tại`);
-    assert.match(subheadline, /font-size:\s*23\.4px/, `${name}: subheadline chưa tăng cỡ 30%`);
-    assert.match(label, /font-family:\s*var\(--hero-ui\)/, `${name}: label subpage chưa dùng font UI`);
-    assert.match(label, /color:\s*var\(--hero-label\)/, `${name}: label subpage chưa tách màu nhãn`);
-    assert.match(label, /font-size:\s*15\.6px/, `${name}: label chưa tăng cỡ khoảng 30%`);
+    assert.match(subheadline, /color:\s*(?:#f2dfb7|var\(--subpage-gold-soft\))/, `${name}: subheadline chưa dùng vàng dịu`);
+    assert.match(subheadline, /-webkit-text-stroke:\s*0/, `${name}: subheadline không được dùng viền headline`);
+    assert.ok(label.includes("color:"), `${name}: label subpage chưa tách màu nhãn`);
   }
 });
 

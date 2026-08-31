@@ -1,0 +1,597 @@
+/* ============================================================
+   HƯỜNG ĐÔNG · HỆ 7 TRANG TRONG · 31/08/2026
+
+   Một ngôn ngữ chung cho bảy nhóm route. Tranh sơn mài vẫn do build.js
+   gắn theo data-page-art; tệp này chỉ dựng typography, nhịp nội dung,
+   gallery minh hoạ và ba gói sản phẩm trên nền tranh ấy.
+   ============================================================ */
+
+:root {
+  --subpage-paper: #fbf6e8;
+  --subpage-paper-raised: #fffdf6;
+  --subpage-ink: #2f2118;
+  --subpage-muted: #715e4d;
+  --subpage-gold-pastel: #e8c783;
+  --subpage-gold-soft: #f2dfb7;
+  --subpage-ivory: #fffaf0;
+  --subpage-brass: #b88a42;
+  --subpage-cinnabar: #8f2f2d;
+  --subpage-jade: #173d35;
+  --subpage-line: rgb(121 84 43 / 28%);
+  --subpage-shadow: 0 22px 50px rgb(67 39 20 / 12%);
+  --subpage-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+body:not(.home-page) {
+  background: var(--subpage-paper);
+}
+
+/* --- Hero dùng chung ------------------------------------------------ */
+
+[data-page-art] .page-hero.lacquer-hero {
+  min-height: clamp(390px, 32vw, 470px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(58px, 6.5vw, 92px);
+  color: var(--subpage-ivory);
+  background: #1f1812;
+}
+
+[data-page-art] .page-hero.lacquer-hero > :is(h1, p) {
+  width: min(700px, 58%);
+  max-width: 700px;
+}
+
+[data-page-art] .page-hero > .eyebrow {
+  margin: 0 0 12px;
+  color: var(--subpage-gold-soft);
+  font-family: var(--body);
+  font-size: clamp(12px, 1.05vw, 15px);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 9px rgb(21 12 7 / 72%);
+}
+
+[data-page-art] .page-hero > h1 {
+  margin: 0 0 20px;
+  color: var(--subpage-gold-pastel);
+  font-family: var(--script);
+  font-size: clamp(68px, 7.5vw, 112px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: .88;
+  letter-spacing: .005em;
+  text-wrap: balance;
+  -webkit-text-fill-color: var(--subpage-gold-pastel);
+  -webkit-text-stroke: 1.5px rgb(255 250 240 / 94%);
+  paint-order: stroke fill;
+  text-shadow:
+    0 2px 0 rgb(90 49 20 / 92%),
+    0 8px 20px rgb(18 10 6 / 72%);
+}
+
+[data-page-art] .page-hero > p:not(.eyebrow) {
+  max-width: 38ch;
+  margin: 0;
+  color: var(--subpage-gold-soft);
+  font-family: var(--display);
+  font-size: clamp(19px, 1.8vw, 28px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.42;
+  letter-spacing: .012em;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 3px 12px rgb(18 10 6 / 78%);
+}
+
+[data-page-art] .page-hero > .page-hero-tagline {
+  margin-bottom: 12px;
+  font-size: clamp(24px, 2.5vw, 38px);
+}
+
+/* --- Nền và nhịp nội dung ------------------------------------------- */
+
+[data-page-art] .subpage-content-frame {
+  background: var(--subpage-paper);
+  color: var(--subpage-ink);
+}
+
+[data-page-art] .subpage-content-frame::before {
+  opacity: .22;
+}
+
+[data-page-art] .v2-prose {
+  width: min(1180px, calc(100% - 40px));
+  max-width: 1180px;
+  padding: clamp(58px, 7vw, 92px) 0;
+  border-color: var(--subpage-line);
+}
+
+[data-page-art] .v2-prose > :is(p, ul, ol, table):not(.v2-wide),
+[data-page-art] .v2-prose > :is(h2, h3, .eyebrow, .v2-note, .v2-warn),
+[data-page-art] .v2-prose > .prose-measure {
+  max-width: 820px;
+}
+
+[data-page-art] .v2-prose h2,
+[data-page-art] .news-section .section-heading h2 {
+  margin-bottom: 20px;
+  color: #4b3020;
+  font-family: var(--display);
+  font-size: clamp(34px, 4.5vw, 62px);
+  font-weight: 400;
+  line-height: .98;
+  text-wrap: balance;
+}
+
+[data-page-art] .v2-prose h3 {
+  color: #573c2b;
+  font-family: var(--display);
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+[data-page-art] .v2-prose .eyebrow {
+  color: #8a6428;
+  font-weight: 700;
+}
+
+[data-page-art] .v2-prose p,
+[data-page-art] .v2-prose li {
+  color: var(--subpage-muted);
+  font-size: clamp(1rem, 1.18vw, 1.08rem);
+  line-height: 1.82;
+}
+
+[data-page-art] .v2-link {
+  color: #7e5419;
+  text-underline-offset: 4px;
+}
+
+[data-page-art] .v2-grid,
+[data-page-art] .v2-two {
+  gap: clamp(16px, 2.2vw, 28px);
+  margin-block: 34px;
+}
+
+[data-page-art] .v2-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  padding: clamp(22px, 2.5vw, 34px);
+  border: 1px solid var(--subpage-line);
+  border-radius: 2px;
+  background: var(--subpage-paper-raised);
+  box-shadow: 0 12px 28px rgb(67 39 20 / 7%);
+  transition: transform 420ms var(--subpage-ease), box-shadow 420ms var(--subpage-ease), border-color 420ms ease;
+}
+
+[data-page-art] .v2-card:hover,
+[data-page-art] .v2-card:focus-within {
+  border-color: rgb(142 91 31 / 50%);
+  box-shadow: var(--subpage-shadow);
+  transform: translateY(-5px);
+}
+
+[data-page-art] .v2-num {
+  color: #956b2e;
+  font-weight: 700;
+}
+
+[data-page-art] .v2-table {
+  overflow: hidden;
+  border: 1px solid var(--subpage-line);
+  background: rgb(255 253 246 / 76%);
+  box-shadow: 0 12px 30px rgb(67 39 20 / 6%);
+}
+
+[data-page-art] .v2-table th,
+[data-page-art] .v2-table td {
+  border-color: var(--subpage-line);
+  padding: 14px 16px;
+}
+
+[data-page-art] .v2-table th {
+  background: #f4ead4;
+  color: #5d4636;
+}
+
+[data-page-art] .v2-note,
+[data-page-art] .v2-warn {
+  border-radius: 0;
+  background: #f5ecd9;
+}
+
+/* --- Minh hoạ tiểu mục ---------------------------------------------- */
+
+.section-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, .86fr);
+  gap: clamp(36px, 6vw, 82px);
+  align-items: center;
+}
+
+.section-feature > .section-copy {
+  min-width: 0;
+}
+
+.section-visual,
+.section-card-fan {
+  position: relative;
+  margin: 0;
+  isolation: isolate;
+  transform: perspective(1100px) rotateX(var(--subpage-tilt-x, 0deg)) rotateY(var(--subpage-tilt-y, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--subpage-ease);
+}
+
+.section-visual::before,
+.section-card-fan::before {
+  content: "";
+  position: absolute;
+  inset: 12px -12px -12px 12px;
+  z-index: -1;
+  border: 1px solid rgb(184 138 66 / 45%);
+  background: #efe1c6;
+}
+
+.section-visual img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgb(184 138 66 / 58%);
+  box-shadow: var(--subpage-shadow);
+}
+
+.section-visual-card {
+  width: min(380px, 100%);
+  justify-self: center;
+}
+
+.section-visual-card img {
+  aspect-ratio: 2 / 3;
+  object-position: center;
+}
+
+.section-visual figcaption {
+  padding: 14px 0 0;
+  color: #7a654f;
+  font-size: 13px;
+}
+
+.section-card-fan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  min-height: 350px;
+  padding: 24px 18px;
+  background: #ede0c8;
+}
+
+.section-card-fan img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid rgb(184 138 66 / 62%);
+  box-shadow: 0 18px 32px rgb(38 22 13 / 22%);
+  transition: transform 520ms var(--subpage-ease);
+}
+
+.section-card-fan img:nth-child(1) { transform: translate(12px, 12px) rotate(-7deg); }
+.section-card-fan img:nth-child(2) { z-index: 2; transform: translateY(-14px); }
+.section-card-fan img:nth-child(3) { transform: translate(-12px, 12px) rotate(7deg); }
+.section-card-fan:hover img:nth-child(1) { transform: translate(0, 4px) rotate(-10deg); }
+.section-card-fan:hover img:nth-child(2) { transform: translateY(-24px); }
+.section-card-fan:hover img:nth-child(3) { transform: translate(0, 4px) rotate(10deg); }
+
+.portrait-card > img {
+  width: calc(100% + clamp(44px, 5vw, 68px));
+  max-width: none;
+  height: 220px;
+  margin: calc(clamp(22px, 2.5vw, 34px) * -1) calc(clamp(22px, 2.5vw, 34px) * -1) 24px;
+  object-fit: cover;
+  object-position: center 24%;
+}
+
+/* --- Thư viện và tin tức -------------------------------------------- */
+
+[data-page-art="la-bai"] .library-page,
+[data-page-art="chuyen-huong-dong"] .news-section {
+  padding-block: clamp(62px, 7vw, 96px);
+}
+
+[data-page-art="la-bai"] .filters {
+  border-color: var(--subpage-line);
+  border-radius: 0;
+  background: #f7eedc;
+  box-shadow: 0 14px 34px rgb(67 39 20 / 8%);
+}
+
+[data-page-art="la-bai"] .filters input,
+[data-page-art="la-bai"] .filters select,
+[data-page-art="la-bai"] .filters button {
+  border-color: var(--subpage-line);
+  background: var(--subpage-paper-raised);
+}
+
+[data-page-art="la-bai"] .filters button[aria-pressed="true"] {
+  background: var(--subpage-cinnabar);
+  color: var(--subpage-ivory);
+}
+
+[data-page-art="la-bai"] .tarot-card,
+[data-page-art="chuyen-huong-dong"] .news-grid article {
+  border-color: var(--subpage-line);
+  border-radius: 2px;
+  background: var(--subpage-paper-raised);
+}
+
+[data-page-art="chuyen-huong-dong"] .news-grid article > img {
+  filter: saturate(.88) contrast(1.04);
+}
+
+/* --- Cửa hàng -------------------------------------------------------- */
+
+.shop-notice {
+  padding-block: 34px !important;
+}
+
+.shop-notice .v2-warn {
+  max-width: none !important;
+  margin: 0;
+}
+
+.pricing-gallery {
+  width: min(1280px, calc(100% - 40px));
+  max-width: 1280px;
+  padding-block: clamp(28px, 3vw, 44px) !important;
+}
+
+.pricing-gallery-header {
+  max-width: 780px;
+  margin-bottom: 38px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 28px);
+}
+
+.price-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--subpage-line);
+  background: var(--subpage-paper-raised);
+  box-shadow: 0 14px 34px rgb(67 39 20 / 8%);
+  transition: transform 440ms var(--subpage-ease), box-shadow 440ms var(--subpage-ease);
+}
+
+.price-tier[id] {
+  scroll-margin-top: 110px;
+}
+
+.price-tier:hover,
+.price-tier:focus-within {
+  transform: translateY(-7px);
+  box-shadow: var(--subpage-shadow);
+}
+
+.price-tier.is-featured {
+  border-color: #9b3e36;
+  box-shadow: 0 20px 54px rgb(95 41 29 / 15%);
+}
+
+.price-tier-ribbon {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 18px;
+  margin: 0;
+  padding: 9px 13px;
+  background: var(--subpage-cinnabar);
+  color: var(--subpage-ivory) !important;
+  font-size: 11px !important;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.price-tier-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 190px;
+  padding: 28px 28px 18px;
+}
+
+.price-tier h3 {
+  margin: 0 0 18px !important;
+  color: #7f2f2b !important;
+  font-size: clamp(26px, 2.2vw, 35px) !important;
+  white-space: nowrap;
+}
+
+.price-tier h3 strong {
+  font-weight: 400;
+}
+
+.price-tier-features {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.price-tier-features li {
+  margin-bottom: 7px;
+  color: #5e4d3e !important;
+  font-size: .96rem !important;
+  line-height: 1.6 !important;
+}
+
+.price-tier-visual {
+  overflow: hidden;
+  margin: 0;
+  background: #f7efe1;
+}
+
+.price-tier-visual img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 720ms var(--subpage-ease);
+}
+
+.price-tier:hover .price-tier-visual img {
+  transform: scale(1.035) translateY(-3px);
+}
+
+.price-tier .button {
+  width: calc(100% - 56px);
+  margin: 18px 28px 26px;
+  border-color: #8e312d;
+  border-radius: 999px;
+  background: transparent;
+  color: #7f2f2b;
+}
+
+.price-tier.is-featured .button {
+  background: var(--subpage-cinnabar);
+  color: var(--subpage-ivory);
+}
+
+.shop-benefits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 34px;
+  border-block: 1px solid var(--subpage-line);
+}
+
+.shop-benefits p {
+  margin: 0;
+  padding: 18px 24px;
+  text-align: center;
+}
+
+.shop-benefits p + p {
+  border-left: 1px solid var(--subpage-line);
+}
+
+/* --- Responsive ------------------------------------------------------ */
+
+@media (max-width: 980px) {
+  [data-page-art] .page-hero.lacquer-hero > :is(h1, p) {
+    width: min(760px, 78%);
+    max-width: min(760px, 78%);
+  }
+
+  .section-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .section-feature > .section-visual,
+  .section-feature > .section-card-fan {
+    width: min(700px, 100%);
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-tier {
+    display: grid;
+    grid-template-columns: minmax(260px, .8fr) minmax(0, 1fr);
+  }
+
+  .price-tier-visual {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .price-tier-copy {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 0;
+  }
+
+  .price-tier-cta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  [data-page-art] .page-hero.lacquer-hero {
+    min-height: 430px;
+    justify-content: flex-end;
+    padding-block: 70px 54px;
+  }
+
+  [data-page-art] .page-hero.lacquer-hero > :is(h1, p) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  [data-page-art] .page-hero > h1 {
+    font-size: clamp(55px, 17vw, 78px);
+    -webkit-text-stroke-width: 1px;
+  }
+
+  [data-page-art] .page-hero > p:not(.eyebrow) {
+    font-size: 19px;
+  }
+
+  [data-page-art] .v2-prose,
+  .pricing-gallery {
+    width: min(100% - 32px, 1180px);
+    padding-block: 52px;
+  }
+
+  [data-page-art] .v2-prose h2 {
+    font-size: clamp(32px, 11vw, 46px);
+  }
+
+  .section-card-fan {
+    min-height: 260px;
+  }
+
+  .price-tier {
+    display: flex;
+  }
+
+  .price-tier h3 {
+    white-space: normal;
+  }
+
+  .price-tier.is-featured .price-tier-copy {
+    padding-top: 64px;
+  }
+
+  .shop-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .shop-benefits p + p {
+    border-top: 1px solid var(--subpage-line);
+    border-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-visual,
+  .section-card-fan,
+  .section-card-fan img,
+  .v2-card,
+  .price-tier,
+  .price-tier-visual img {
+    transition: none !important;
+    transform: none !important;
+  }
+}
