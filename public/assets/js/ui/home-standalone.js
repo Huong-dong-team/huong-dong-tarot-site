@@ -1,14 +1,6 @@
 import { prefersReducedMotion } from "../shared/reduced-motion.js";
 
-const DRAWN_CARDS = [
-  "Thái Dương · The Sun",
-  "Nữ Hoàng · The Empress",
-  "Chiến Xa · The Chariot",
-  "Thế Giới · The World",
-  "Ngôi Sao · The Star",
-];
-
-/* Motion và hộp “Rút thử một lá” của riêng trang chủ bàn giao.
+/* Motion của riêng trang chủ bàn giao.
    Module có teardown đầy đủ để không giữ listener khi Swup thay nội dung. */
 export function init() {
   const main = document.querySelector('main[data-page="home"]');
@@ -18,11 +10,6 @@ export function init() {
   const reduced = prefersReducedMotion();
   const revealElements = [...main.querySelectorAll("[data-reveal]")];
   const depthElements = [...main.querySelectorAll("[data-depth]")];
-  const dialog = main.querySelector("[data-card-dialog]");
-  const drawnTitle = dialog?.querySelector("[data-drawn-title]");
-  const drawButtons = [...main.querySelectorAll("[data-draw-card]")];
-  const closeButtons = [...main.querySelectorAll("[data-dialog-close]")];
-  let lastFocused = null;
   let revealObserver = null;
   let depthFrame = 0;
 
@@ -71,43 +58,13 @@ export function init() {
     queueDepth();
   }
 
-  const closeDialog = () => {
-    if (!dialog || dialog.hidden) return;
-    dialog.hidden = true;
-    document.body.style.removeProperty("overflow");
-    lastFocused?.focus?.();
-  };
-
-  const openDialog = (event) => {
-    if (!dialog) return;
-    lastFocused = event.currentTarget;
-    if (drawnTitle) {
-      drawnTitle.textContent = DRAWN_CARDS[Math.floor(Math.random() * DRAWN_CARDS.length)];
-    }
-    dialog.hidden = false;
-    document.body.style.overflow = "hidden";
-    dialog.querySelector(".dialog-panel button")?.focus();
-  };
-
-  const onKeydown = (event) => {
-    if (event.key === "Escape") closeDialog();
-  };
-
-  drawButtons.forEach((button) => button.addEventListener("click", openDialog));
-  closeButtons.forEach((button) => button.addEventListener("click", closeDialog));
-  document.addEventListener("keydown", onKeydown);
-
   return () => {
     cancelAnimationFrame(entranceFrame);
     if (depthFrame) cancelAnimationFrame(depthFrame);
     revealObserver?.disconnect();
     window.removeEventListener("scroll", queueDepth);
     window.removeEventListener("resize", queueDepth);
-    drawButtons.forEach((button) => button.removeEventListener("click", openDialog));
-    closeButtons.forEach((button) => button.removeEventListener("click", closeDialog));
-    document.removeEventListener("keydown", onKeydown);
     depthElements.forEach((element) => element.style.removeProperty("--depth-offset"));
-    document.body.style.removeProperty("overflow");
     root.classList.remove("is-home", "home-motion-enabled", "home-reveal-enabled", "is-ready");
   };
 }
