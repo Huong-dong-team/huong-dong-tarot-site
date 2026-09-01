@@ -67,12 +67,12 @@ test("mỗi route preload đúng tranh Hero", async () => {
   // DPR 3 — preload bản 800w rồi srcset lại lấy bản 1200w.
   const preloads = [...home.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
   assert.equal(preloads.length, 1, "chỉ được một preload ảnh hero");
-  assert.match(preloads[0], /imagesrcset="[^"]*ref-hero-cards-480\.avif 480w[^"]*ref-hero-cards-960\.avif 960w[^"]*ref-hero-cards-1440\.avif 1440w"/);
-  assert.match(preloads[0], /imagesizes="\(min-width: 901px\) 72vw, 100vw"/);
+  assert.match(preloads[0], /imagesrcset="[^"]*home-kirigami-480\.webp 480w[^"]*home-kirigami-960\.webp 960w[^"]*home-kirigami-1536\.webp 1536w"/);
+  assert.match(preloads[0], /imagesizes="100vw"/);
   assert.doesNotMatch(preloads[0], /\bmedia=/, "chia theo media không biết được mật độ điểm ảnh của máy");
   // imagesizes phải khớp sizes của chính thẻ <img>, lệch nhau là chọn lệch bản.
-  const heroSource = home.match(/<source type="image\/avif" srcset="[^"]*ref-hero-cards[^"]*" sizes="[^"]*">/)?.[0] || "";
-  assert.match(heroSource, /sizes="\(min-width: 901px\) 72vw, 100vw"/);
+  const heroSource = home.match(/<source type="image\/webp" srcset="[^"]*home-kirigami[^"]*" sizes="[^"]*">/)?.[0] || "";
+  assert.match(heroSource, /sizes="100vw"/);
   const cardPreloads = [...card.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
   assert.equal(cardPreloads.length, 1, "route lá chỉ preload một tranh Hero route");
   assert.match(cardPreloads[0], /subpage\/la-bai-1024\.avif 1024w/);

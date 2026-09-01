@@ -1,57 +1,54 @@
-# Design QA · Remake 7 sub-page
+# Design QA · Trang chủ Kirigami không header
 
 final result: passed
 
 ## Nguồn và bằng chứng
 
-- Source visual truth: `/home/asus/.codex/generated_images/01a05070-9cc0-72b1-9cc8-84796d6938de/exec-d226edc4-3ea6-45a3-8f32-05204e9f6ff9.png` — 1486 × 1058 px.
-- Local implementation: `http://localhost:4173/cua-hang/`.
-- Full comparison: `docs/design-qa-assets/shop-reference-vs-local.jpg` — source bên trái, local hero + pricing bên phải.
-- Focused desktop pricing: `docs/design-qa-assets/shop-pricing-desktop.jpg` — 1521 × 828 px.
-- Focused mobile pricing: `docs/design-qa-assets/shop-pricing-mobile.jpg` — 375 × 804 px.
-- Additional section evidence: `docs/design-qa-assets/tarot-section-feature.jpg`, `docs/design-qa-assets/history-portrait-grid.jpg` — 1521 × 828 px mỗi ảnh.
-- Viewports: desktop 1536 × 1024 CSS px, mobile 390 × 844 CSS px; `devicePixelRatio = 1` trong browser kiểm thử.
-- State: dữ liệu seed local, chưa mở bán, menu đóng trừ lần kiểm thử tương tác.
-
-Ảnh so sánh 3000 × 1058 px, chuẩn hóa về hai cột cùng chiều cao 1058 px. Bên implementation ghép hai capture cùng viewport để đối chiếu riêng Hero và ba thẻ giá vì trang thật giữ thêm CTA/chú thích chức năng dưới mỗi thẻ. Capture browser loại phần scrollbar/chrome nên vùng ảnh hữu dụng là 1521 × 828 px trên desktop và 375 × 804 px trên mobile; mật độ vẫn là 1×.
+- Source visual truth: `/home/asus/.codex/generated_images/01a05070-9cc0-72b1-9cc8-84796d6938de/exec-02d46f0d-6b04-468d-a231-654daccfd6c4.png` — 1586 × 992 px.
+- Local implementation: `http://localhost:4173/`.
+- Ảnh desktop: `qa/home-kirigami-desktop-final.png` — 1521 × 828 px vùng browser hữu dụng.
+- Ảnh mobile: `qa/home-kirigami-mobile-final.png` — viewport yêu cầu 390 × 844 CSS px.
+- So sánh đặt cạnh nhau: `qa/home-kirigami-comparison.png` — reference bên trái, implementation bên phải.
+- State: trang chủ ở đầu trang; modal rút bài đóng; dữ liệu seed local; chưa deploy.
 
 ## Findings
 
 Không còn finding P0/P1/P2.
 
-- Typography: headline dùng Fontasia vàng pastel, viền trắng ngà 1.5px; subheadline tách sang Harmoni vàng dịu. Hệ phân cấp khớp visual target và không trùng màu nền.
-- Spacing/layout: desktop giữ grid ba cột; mobile về một cột, không tràn ngang ở cả bảy route. Hero cùng ngôn ngữ và cùng chiều cao 430px trên mobile.
-- Colors/tokens: nền giấy, đỏ son, xanh sơn mài, vàng pastel và đường viền nâu được gom thành token dùng chung.
-- Image quality: giữ đúng tranh sơn mài route hiện có; ba asset shop là ảnh raster 1024 × 768, đúng tỷ lệ 4:3, không watermark/placeholder/CSS art.
-- Copy/content: ba mức giá, thành phần gói và trạng thái chưa mở bán nhất quán giữa UI, FAQ và JSON-LD.
-- Accessibility/behavior: bảy route đều có một `h1`, một `main`, không thiếu `alt`, không có button/link rỗng; menu mobile mở/đóng; tap target menu 45px; reduced-motion có đường lui; console không có warning/error.
+- Composition: giữ khung tranh Kirigami, ba lá Tarot, hộp bài, mây, sen và đôi hạc; vùng chữ trái được làm thoáng để đọc rõ.
+- Header: thanh header/menu ngang đã bỏ hoàn toàn ở trang chủ; chỉ còn logo Hường Đông tại góc trái theo yêu cầu.
+- Navigation: bảy mục được chuyển thành bảy thẻ giấy cùng tông nền, xếp dọc ở mép phải desktop và thành hàng cuộn ngang trên tablet/mobile.
+- Typography: headline tiếp tục dùng hệ display hiện hữu, màu mực nâu; copy và CTA giữ nguyên nội dung đã duyệt.
+- Motion: giữ entrance/fade; nền tranh có chiều sâu/parallax nhẹ; thẻ điều hướng vào theo nhịp và tôn trọng `prefers-reduced-motion`.
+- Accessibility: một `h1`; bảy liên kết điều hướng có nhãn rõ; tap target tối thiểu 44px; focus ring rõ; header cũ và menu toggle đều `display:none` trên home.
+- Behavior: CTA “Rút thử một lá” mở dialog và Escape đóng; console không có warning/error; không tràn ngang ở desktop hoặc mobile.
 
 ## Comparison history
 
 ### Iteration 1
 
-- P2: khoảng trống/cảnh báo nằm giữa Hero và pricing làm thay đổi mạnh bố cục above-the-fold so với mockup; tên gói và giá nằm dưới ảnh thay vì trên ảnh.
-- Fix: rút Hero desktop về tối đa 470px; đưa pricing ngay sau Hero; chuyển cảnh báo xuống cuối pricing; đảo thứ tự thẻ thành tên/giá → tính năng → ảnh → CTA.
-- Evidence sau sửa: `docs/design-qa-assets/shop-reference-vs-local.jpg` và `docs/design-qa-assets/shop-pricing-desktop.jpg`.
+- P2: tranh sinh lần đầu có sen và trang trí che vùng copy bên trái; logo hòa vào la bàn nên tương phản yếu.
+- Fix: tái tạo master art-only với copy-safe zone bên trái; đặt logo trên plaque giấy rất nhẹ, giữ đúng góc trái.
 
 ### Iteration 2
 
-- P2: ribbon “Được đề xuất” đè lên tiêu đề Premium ở viewport 390px.
-- Fix: tăng `padding-top` riêng cho `.price-tier.is-featured .price-tier-copy` trên mobile.
-- Evidence sau sửa: kiểm tra hình học DOM xác nhận không giao nhau; `docs/design-qa-assets/shop-pricing-mobile.jpg`.
+- P2: navigation ngang cũ làm sai brief mới và cạnh tranh với hero.
+- Fix: ẩn `#main-nav` và `.menu-toggle` chỉ trong scope home; thêm hệ thẻ giấy bảy mục trong hero.
 
-## Focused comparison
+### Iteration 3
 
-Focused pass cần thiết vì chữ gói/giá, ribbon Premium, crop ba ảnh sản phẩm và CTA quá nhỏ trong full comparison. Pricing desktop và mobile đã được mở riêng; không thấy crop sai, ảnh vỡ, text overlap hoặc overflow.
+- P2: thẻ điều hướng desktop cần rõ trạng thái tương tác, mobile cần đủ vùng chạm.
+- Fix: thêm hover/focus, focus ring 3px, min-height 46px desktop và 44px mobile; chuyển sang horizontal scroll dưới 900px.
 
 ## Primary interactions tested
 
-- Điều hướng và menu mobile “Mục lục”.
-- CTA “Vào danh sách chờ”.
-- Filter/grid trang 78 lá vẫn render đủ và không tràn.
-- Chuyển route qua Swup vẫn nạp module chung và không phát sinh console error.
+- Logo góc trái hoạt động như liên kết về trang chủ.
+- Bảy thẻ điều hướng có đúng route hiện hữu.
+- CTA “Học qua email” đi tới danh sách chờ.
+- CTA “Rút thử một lá” mở modal; Escape đóng modal.
+- Entrance/fade và reduced-motion cùng có đường chạy riêng.
 
 ## Follow-up polish (P3)
 
-- Mockup dùng một tranh hero khác sáng và nhiều vàng hơn. Bản local cố ý giữ tranh sơn mài route hiện tại theo yêu cầu, nên khác biệt crop/độ sáng này được chấp nhận.
-- CTA dưới từng gói không có trong ảnh mock tĩnh nhưng được giữ để hoàn tất hành trình danh sách chờ; không thực hiện thanh toán hay đặt cọc.
+- Reference gốc có header 76px và cho thấy một phần section kế tiếp. Bản implementation chủ động dùng toàn viewport cho hero vì header đã được bỏ theo brief mới.
+- Mobile ưu tiên thứ tự đọc: logo → copy → CTA/thống kê → thẻ điều hướng → tranh. Tranh không chen vào đoạn chữ để giữ khả năng đọc.

@@ -109,13 +109,13 @@ test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không
   ]);
 
   assert.match(home, /<main id="noi-dung-chinh" class="transition-page" data-page="home">/);
-  assert.match(home, /ref-hero-cards-1440\.webp/);
+  assert.match(home, /home-kirigami-1536\.webp/);
   const homeMain = home.match(/<main id="noi-dung-chinh"[\s\S]*?<\/main>/)?.[0] || "";
   assert.doesNotMatch(homeMain, /data-page-art="home-content"|home-content-|subpage-content-frame/);
   const heroStart = home.indexOf('<section id="top" class="hero">');
   const heroEnd = home.indexOf("</section>", heroStart);
   assert.ok(heroStart >= 0 && heroEnd > heroStart);
-  assert.match(home.slice(heroStart, heroEnd), /class="hero-stage"[\s\S]*ref-hero-cards/);
+  assert.match(home.slice(heroStart, heroEnd), /class="hero-stage"[\s\S]*home-kirigami/);
 
   assert.doesNotMatch(history, /page-hero-cover|huyen-su-cover/,
     "bìa Huyền sử cũ không được chồng lên tranh Hero route");

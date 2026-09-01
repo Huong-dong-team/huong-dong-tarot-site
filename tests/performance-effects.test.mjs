@@ -43,7 +43,7 @@ test("tối ưu hiệu ứng không làm mất nền và ảnh sản phẩm hero
     read("public/assets/js/ui/home-standalone.js"),
   ]);
   assert.match(home, /class="hero-stage"/);
-  assert.match(home, /ref-hero-cards-960\.avif/);
+  assert.match(home, /home-kirigami-960\.webp/);
   assert.doesNotMatch(home, /data-hero-carousel|data-hero-slide/);
   assert.doesNotMatch(registry, /home:\s*\[[^\]]*hero-carousel/);
   assert.match(registry, /home:\s*\["home-standalone", "card-tilt", "hero-parallax"\]/);

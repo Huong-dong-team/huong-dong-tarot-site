@@ -11,7 +11,7 @@ test("Hero bàn giao dùng đúng tranh responsive và không còn carousel", as
   const home = await read("dist/index.html");
   const hero = home.slice(home.indexOf('<section id="top"'), home.indexOf("</section>"));
   assert.match(hero, /class="hero-stage"/);
-  assert.match(hero, /ref-hero-cards-480\.avif 480w[^"]*ref-hero-cards-1440\.avif 1440w/);
+  assert.match(hero, /home-kirigami-480\.webp 480w[^"]*home-kirigami-1536\.webp 1536w/);
   assert.match(hero, /loading="eager"[\s\S]*fetchpriority="high"/);
   assert.doesNotMatch(hero, /data-hero-carousel|data-hero-slide|hero-dots/);
 });
@@ -37,10 +37,12 @@ test("Hero giữ đúng nội dung và CTA của file mẫu", async () => {
   assert.match(home, /data-draw-card>Rút thử một lá<\/button>/);
   assert.match(home, /href="#danh-sach-cho">Học qua email<\/a>/);
   assert.match(home, /78<\/dt><dd>Lá, đủ bộ RWS/);
+  assert.match(home, /<nav class="hero-chapter-nav" aria-label="Khám phá Hường Đông">/);
+  assert.equal((home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a href=/g) || []).length, 7);
 });
 
 test("ảnh Hero đã nén nằm trong ngân sách", async () => {
-  for (const [file, limit] of [["ref-hero-cards-480.avif", 70], ["ref-hero-cards-960.avif", 110], ["ref-hero-cards-1440.avif", 180]]) {
+  for (const [file, limit] of [["home-kirigami-480.webp", 40], ["home-kirigami-960.webp", 120], ["home-kirigami-1536.webp", 260]]) {
     const { size } = await stat(path.join(root, "public/assets/img", file));
     assert.ok(size < limit * 1024, `${file} vượt ${limit} KB`);
   }
