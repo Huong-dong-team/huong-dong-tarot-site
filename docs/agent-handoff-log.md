@@ -1,5 +1,29 @@
 # Nhật ký bàn giao tác vụ
 
+## 01/09/2026 · `feat/tarot-museum-gallery`
+
+Phạm vi đã thay đổi:
+
+- Chuyển `/la-bai/` thành “Bảo tàng 78 lá” với đại sảnh, phòng Ẩn Chính, phòng Ẩn Phụ và bốn nhà bài.
+- Gộp nội dung Huyền sử vào cùng trang dưới `#phong-huyen-su`; giữ nguyên nội dung và tranh nguồn.
+- Thêm tường gallery, nhãn giám tuyển, tìm kiếm/bộ lọc và dialog ngắm cận cảnh có Trước/Sau + bàn phím.
+- Cập nhật navigation toàn site: “Bảo tàng 78 lá” thay cho mục 78 lá cũ; liên kết Huyền sử trỏ vào phòng mới.
+- Thêm CSS/module riêng, test hồi quy và tài liệu `docs/museum-gallery-design-system.md`.
+- Bổ sung bằng chứng QA tại `qa/museum-gallery-*-final.png` và `qa/museum-gallery-comparison.png`.
+
+Không thay đổi:
+
+- Không xóa `/huyen-su/` hoặc 34 trang truyện con; các route này tiếp tục build để bảo toàn SEO/backlink.
+- Không sửa dữ liệu 78 lá, nội dung truyện, ảnh bài, giá cửa hàng, workflow GitHub hoặc cấu hình Firebase.
+- Không merge `main` và không deploy production.
+
+Điểm tránh giẫm chân:
+
+- CSS mới khóa bằng `main[data-page="library"]`; không bỏ scope này hoặc chuyển token Museum thành global.
+- `museum-gallery.js` lấy dữ liệu từ DOM; nếu đổi markup plaque/frame phải cập nhật module và `tests/museum-gallery.test.mjs` cùng lúc.
+- Huyền sử được trích ở build-time từ `templates/history.html`; không nhân đôi nội dung bằng tay trong `card-list.html`.
+- Sticky filter dùng `top:88px` để tránh header; nếu đổi chiều cao header phải cập nhật offset và QA.
+
 ## 01/09/2026 · `feat/kirigami-home-floating-nav`
 
 Phạm vi đã thay đổi:

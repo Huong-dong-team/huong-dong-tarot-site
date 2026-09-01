@@ -21,7 +21,7 @@ const PAGES = {
   // card-tilt: nghiêng theo con trỏ cho .hero-product-tilt, xem hero-halo.css.
   // hero-parallax: cả khối Hero trôi theo con trỏ, xem ui/hero-parallax.js.
   home: ["home-standalone", "card-tilt", "hero-parallax"],
-  library: ["card-filters", "card-tilt"],
+  library: ["card-filters", "card-tilt", "museum-gallery"],
   card: ["symbol-tooltips", "card-tilt"],
   daily: ["daily-card"],
   spread: ["spread-deck", "card-tilt"],
@@ -33,6 +33,7 @@ const SHARED = ["share", "waitlist", "subpage-motion"];
 
 const LOADERS = {
   "card-filters": () => import("../ui/card-filters.js"),
+  "museum-gallery": () => import("../ui/museum-gallery.js"),
   "card-tilt": () => import("../ui/card-tilt.js"),
   "hero-parallax": () => import("../ui/hero-parallax.js"),
   "home-standalone": () => import("../ui/home-standalone.js"),

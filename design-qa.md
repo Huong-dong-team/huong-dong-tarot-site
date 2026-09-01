@@ -1,54 +1,58 @@
-# Design QA · Trang chủ Kirigami không header
+# Design QA · Bảo tàng 78 lá Hường Đông
 
 final result: passed
 
 ## Nguồn và bằng chứng
 
-- Source visual truth: `/home/asus/.codex/generated_images/01a05070-9cc0-72b1-9cc8-84796d6938de/exec-02d46f0d-6b04-468d-a231-654daccfd6c4.png` — 1586 × 992 px.
-- Local implementation: `http://localhost:4173/`.
-- Ảnh desktop: `qa/home-kirigami-desktop-final.png` — 1521 × 828 px vùng browser hữu dụng.
-- Ảnh mobile: `qa/home-kirigami-mobile-final.png` — viewport yêu cầu 390 × 844 CSS px.
-- So sánh đặt cạnh nhau: `qa/home-kirigami-comparison.png` — reference bên trái, implementation bên phải.
-- State: trang chủ ở đầu trang; modal rút bài đóng; dữ liệu seed local; chưa deploy.
+- Source visual truth: `/home/asus/.codex/generated_images/01a05070-9cc0-72b1-9cc8-84796d6938de/exec-c40230dd-7a6d-4359-b8d7-612560de6fde.png` — bảng hệ thống bảy trang sơn mài.
+- Nghiên cứu GitHub: OpenVGAL cho mô hình phòng trưng bày/nhãn hiện vật; Neiki Gallery cho lọc, lightbox và bàn phím.
+- Local implementation: `http://localhost:8080/la-bai/`.
+- Ảnh desktop: `qa/museum-gallery-desktop-final.png`, `qa/museum-gallery-grid-final.png`, `qa/museum-gallery-dialog-final.png`.
+- Ảnh mobile: `qa/museum-gallery-mobile-final.png` — viewport 390 × 844 CSS px.
+- So sánh cùng một khung: `qa/museum-gallery-comparison.png`.
+- State: dữ liệu seed local; 78 hiện vật; Huyền sử đã nhập vào cùng route; chưa deploy.
 
 ## Findings
 
 Không còn finding P0/P1/P2.
 
-- Composition: giữ khung tranh Kirigami, ba lá Tarot, hộp bài, mây, sen và đôi hạc; vùng chữ trái được làm thoáng để đọc rõ.
-- Header: thanh header/menu ngang đã bỏ hoàn toàn ở trang chủ; chỉ còn logo Hường Đông tại góc trái theo yêu cầu.
-- Navigation: bảy mục được chuyển thành bảy thẻ giấy cùng tông nền, xếp dọc ở mép phải desktop và thành hàng cuộn ngang trên tablet/mobile.
-- Typography: headline tiếp tục dùng hệ display hiện hữu, màu mực nâu; copy và CTA giữ nguyên nội dung đã duyệt.
-- Motion: giữ entrance/fade; nền tranh có chiều sâu/parallax nhẹ; thẻ điều hướng vào theo nhịp và tôn trọng `prefers-reduced-motion`.
-- Accessibility: một `h1`; bảy liên kết điều hướng có nhãn rõ; tap target tối thiểu 44px; focus ring rõ; header cũ và menu toggle đều `display:none` trên home.
-- Behavior: CTA “Rút thử một lá” mở dialog và Escape đóng; console không có warning/error; không tràn ngang ở desktop hoặc mobile.
+- Composition: giữ nền sơn mài đen–ngọc, mực vàng và nhịp giấy ngà của mockup; gallery chuyển thành tường bảo tàng bốn cột với khung vàng già và nhãn giám tuyển.
+- Content: đủ 78 lá, chia phòng Ẩn Chính/Ẩn Phụ và bốn nhà; phòng Huyền sử chứa nguyên các cụm nội dung hiện hữu.
+- Typography: headline/subheadline vàng pastel trên nền tối; nhãn hiện vật dùng mực nâu/đỏ son, không bị trùng màu nền.
+- Behavior: tìm kiếm, lọc 22/56 lá, lọc nhà, lightbox, Trước/Sau, phím mũi tên và phục hồi focus đều hoạt động.
+- Responsive: desktop 4→3→2→1 cột; mobile dùng lưới 2 × 2 cho bốn cửa phòng, không còn thanh cuộn ngang; không tràn viewport.
+- Accessibility: một `h1`; dialog native có backdrop, nút đóng và focus ring; CTA/phòng có vùng chạm ≥44px; reduced-motion vô hiệu hóa chuyển động trang trí.
+- Performance: dùng ảnh hiện hữu, lazy loading và `content-visibility:auto`; không thêm WebGL/Three.js cho 78 hiện vật.
+- Compatibility: route `/huyen-su/` và 34 trang truyện con vẫn được build để bảo toàn liên kết/SEO.
+- Console: không có lỗi hoặc cảnh báo mới liên quan module Museum Art.
 
 ## Comparison history
 
 ### Iteration 1
 
-- P2: tranh sinh lần đầu có sen và trang trí che vùng copy bên trái; logo hòa vào la bàn nên tương phản yếu.
-- Fix: tái tạo master art-only với copy-safe zone bên trái; đặt logo trên plaque giấy rất nhẹ, giữ đúng góc trái.
+- P2: rail bộ lọc sticky chạm vào header 76px.
+- Fix: đổi offset từ 12px thành 88px; xác nhận filter top 88px và header bottom 76px.
 
 ### Iteration 2
 
-- P2: navigation ngang cũ làm sai brief mới và cạnh tranh với hero.
-- Fix: ẩn `#main-nav` và `.menu-toggle` chỉ trong scope home; thêm hệ thẻ giấy bảy mục trong hero.
+- P2: dialog desktop có thể mở ở vị trí nội dung bị cắt do ảnh và copy cùng căn giữa trong grid cao cố định.
+- Fix: căn grid về đầu, giới hạn ảnh theo `100dvh`, giữ dialog scrollTop = 0 khi mở.
 
 ### Iteration 3
 
-- P2: thẻ điều hướng desktop cần rõ trạng thái tương tác, mobile cần đủ vùng chạm.
-- Fix: thêm hover/focus, focus ring 3px, min-height 46px desktop và 44px mobile; chuyển sang horizontal scroll dưới 900px.
+- P2: bốn cửa phòng trên mobile dùng rail ngang và lộ scrollbar.
+- Fix: chuyển sang lưới 2 × 2; mỗi nút rộng 166.5px, cao 46px tại viewport 390px.
 
 ## Primary interactions tested
 
-- Logo góc trái hoạt động như liên kết về trang chủ.
-- Bảy thẻ điều hướng có đúng route hiện hữu.
-- CTA “Học qua email” đi tới danh sách chờ.
-- CTA “Rút thử một lá” mở modal; Escape đóng modal.
-- Entrance/fade và reduced-motion cùng có đường chạy riêng.
+- “Ẩn Chính” cập nhật đúng 22 hiện vật.
+- Tìm “Mẫu Liễu Hạnh” trả đúng một hiện vật.
+- “Ngắm cận cảnh” mở dialog Mai An Tiêm.
+- ArrowRight chuyển sang Kinh Dương Vương.
+- Đóng dialog trả focus về nút “Ngắm cận cảnh”.
+- Sáu anchor của phòng Huyền sử cùng tồn tại trong `/la-bai/`.
 
 ## Follow-up polish (P3)
 
-- Reference gốc có header 76px và cho thấy một phần section kế tiếp. Bản implementation chủ động dùng toàn viewport cho hero vì header đã được bỏ theo brief mới.
-- Mobile ưu tiên thứ tự đọc: logo → copy → CTA/thống kê → thẻ điều hướng → tranh. Tranh không chen vào đoạn chữ để giữ khả năng đọc.
+- Hero tối hơn các panel thông tin trong mockup để tạo cảm giác bước vào đại sảnh; độ tương phản chữ vẫn đạt mục tiêu thị giác và đồng nhất với bảy sub-page sơn mài.
+- Một số ảnh bài vẫn mang ribbon “ĐANG HOÀN THIỆN” vì đó là trạng thái nguồn hiện tại; PR này cố ý không sửa hoặc thay tranh.
