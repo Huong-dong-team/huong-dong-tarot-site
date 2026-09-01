@@ -39,7 +39,8 @@ test("Hero giữ đúng nội dung và hai CTA điều hướng thẳng vào n�
   assert.doesNotMatch(home, /data-draw-card|data-card-dialog/);
   assert.match(home, /78<\/dt><dd>Lá, đủ bộ RWS/);
   assert.match(home, /<nav class="hero-chapter-nav" aria-label="Khám phá Hường Đông">/);
-  assert.equal((home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a href=/g) || []).length, 7);
+  assert.equal((home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a href=/g) || []).length, 6);
+  assert.doesNotMatch(home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0] || "", /Huyền sử/, "CTA Huyền sử phải được gỡ khỏi dải điều hướng Hero — nội dung đã gộp vào Bảo tàng 78 lá");
 });
 
 test("ảnh Hero đã nén nằm trong ngân sách", async () => {

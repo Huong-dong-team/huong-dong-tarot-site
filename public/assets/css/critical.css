@@ -136,6 +136,14 @@ button { cursor: pointer; }
   background: transparent;
   color: var(--ink);
 }
+.menu-toggle-bars {
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  vertical-align: middle;
+  box-shadow: 0 -5px currentColor, 0 5px currentColor;
+}
 
 h1, h2, h3, h4, p { margin-top: 0; }
 h1, h2, h3, h4 {
