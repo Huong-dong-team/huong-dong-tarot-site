@@ -58,6 +58,7 @@ function mount(root, deck) {
   var soundBtn = root.querySelector("[data-sound]");
   var revBtn   = root.querySelector("[data-reversed]");
   var spreadEl = root.querySelector("[data-spread]");
+  var spreadTabs = root.querySelectorAll("[data-spread-tab]");
   var readEl   = root.querySelector("[data-reading]");
 
   var fixedSize = parseInt(root.getAttribute("data-spread-size"), 10) || 0;
@@ -170,6 +171,19 @@ function mount(root, deck) {
 
   drawBtn.addEventListener("click", deal);
   if (spreadEl) spreadEl.addEventListener("change", deal);
+  /* Dải tab chỉ là mặt tiền: bấm tab thì đổi giá trị <select> ẩn rồi bắn sự
+     kiện "change" — để spreadSize()/deal() không cần biết dải tab tồn tại. */
+  spreadTabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      if (tab.getAttribute("aria-pressed") === "true") return;
+      spreadTabs.forEach(function (t) { t.setAttribute("aria-pressed", "false"); });
+      tab.setAttribute("aria-pressed", "true");
+      if (spreadEl) {
+        spreadEl.value = tab.getAttribute("data-spread-tab");
+        spreadEl.dispatchEvent(new Event("change"));
+      }
+    });
+  });
   soundBtn.addEventListener("click", function () {
     soundOn = !soundOn;
     soundBtn.textContent = soundOn ? "🔊 Âm thanh: bật" : "🔇 Âm thanh: tắt";

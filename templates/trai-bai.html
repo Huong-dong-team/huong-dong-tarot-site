@@ -18,7 +18,8 @@
 <div class="hd-deck-wrap" id="hd-deck">
   <div class="hd-controls">
     <button type="button" data-draw>Xáo và rút</button>
-    <select data-spread aria-label="Kiểu trải"><option value="1">Một lá</option><option value="3" selected>Ba lá</option><option value="4">Bốn nhà</option><option value="10">Cây thập tự Celtic</option></select>
+    <div class="hd-spread-tabs" data-spread-tabs role="group" aria-label="Kiểu trải"><button type="button" data-spread-tab="1">Một lá</button><button type="button" data-spread-tab="3" aria-pressed="true">Ba lá</button><button type="button" data-spread-tab="4">Bốn nhà</button><button type="button" data-spread-tab="10">Celtic</button></div>
+    <select data-spread aria-label="Kiểu trải" class="hd-spread-select-hidden" aria-hidden="true" tabindex="-1"><option value="1">Một lá</option><option value="3" selected>Ba lá</option><option value="4">Bốn nhà</option><option value="10">Cây thập tự Celtic</option></select>
     <button type="button" data-reversed aria-pressed="true">Đọc ngược: bật</button>
     <button type="button" data-sound aria-pressed="true">🔊 Âm thanh: bật</button>
   </div>
