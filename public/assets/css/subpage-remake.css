@@ -336,9 +336,34 @@ body:not(.home-page) {
   background: var(--subpage-paper-raised);
 }
 
+/* Ba nút lọc nhóm bài đổi thành một dải tab liền cạnh — cùng tinh thần
+   .hero-chapter-nav trang chủ (nền giấy, bo tối thiểu, không rời rạc từng
+   nút) — chỉ đổi khung ngoài của <fieldset>, card-filters.js không đổi. */
+[data-page-art="la-bai"] .filters fieldset {
+  display: flex;
+  border: 1px solid var(--subpage-line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+[data-page-art="la-bai"] .filters button {
+  border: 0;
+  border-right: 1px solid var(--subpage-line);
+  border-radius: 0;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+[data-page-art="la-bai"] .filters button:last-child { border-right: 0; }
+
+[data-page-art="la-bai"] .filters button:hover { background: var(--subpage-gold-soft); }
+
 [data-page-art="la-bai"] .filters button[aria-pressed="true"] {
   background: var(--subpage-cinnabar);
   color: var(--subpage-ivory);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page-art="la-bai"] .filters button { transition: none; }
 }
 
 [data-page-art="la-bai"] .tarot-card,

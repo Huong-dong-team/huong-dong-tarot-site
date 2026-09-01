@@ -1127,6 +1127,45 @@ blockquote {
 .hd-controls button[data-draw]:hover { background: var(--amber); }
 .hd-controls button:hover { border-color: var(--brown); }
 
+/* Dải tab chọn kiểu trải — cùng ngôn ngữ .hero-chapter-nav trang chủ (nền
+   giấy, bo một cạnh, dịch nhẹ khi hover) nhưng bo cạnh TRÊN vì đây là hàng
+   ngang, không neo vào mép màn hình như trang chủ. <select data-spread> gốc
+   vẫn còn trong DOM, chỉ ẩn khỏi mắt và khỏi cây accessibility — nó vẫn là
+   nguồn sự thật duy nhất cho spreadSize(), dải tab chỉ đứng trước để bấm. */
+.hd-spread-tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.hd-spread-tabs button {
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 6px 6px 0 0;
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms cubic-bezier(.22,1,.36,1);
+}
+.hd-spread-tabs button:hover { background: var(--paper-band); transform: translateY(-2px); }
+.hd-spread-tabs button[aria-pressed="true"] {
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 600;
+  border-color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hd-spread-tabs button { transition: none; }
+  .hd-spread-tabs button:hover { transform: none; }
+}
+/* .hd-controls select đặc trưng hơn (class+thẻ) nên phải lặp lại "select" ở
+   đây để thắng cascade — nếu không padding/border của nó sẽ đè lên phần ẩn. */
+.hd-controls select.hd-spread-select-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .hd-deck { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; padding: 10px 0 6px; }
 
 /* Kỹ thuật lật giữ nguyên từ Mystic-Draw. */
@@ -1151,33 +1190,80 @@ blockquote {
   display: block;
   width: 100%; height: 100%;
   position: relative;
-  transition: transform 0.8s;   /* nhịp lật */
-  transform-style: preserve-3d; /* giữ không gian 3D */
+  transform-style: preserve-3d; /* giữ không gian 3D cho hai cánh mặt sau */
 }
-.hd-card.flipped .hd-card-inner { transform: rotateY(180deg); }
 
-.hd-card-back,
 .hd-card-front {
   position: absolute;
+  z-index: 1;                   /* nằm dưới hai cánh khi đóng */
   inset: 0;
   border-radius: 10px;
   overflow: hidden;
-  backface-visibility: hidden;  /* giấu mặt sau khi quay */
-  -webkit-backface-visibility: hidden;
   border: 1px solid var(--line);
+  background: var(--paper-raised);
 }
-/* Mặt lưng tạm: trống đồng làm tâm, đối xứng để không lộ xuôi/ngược.
-   Sẽ thay bằng art thật ở đợt big update hình ảnh. */
-.hd-card-back {
-  background:
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 30%, transparent) 0 22%, transparent 23%),
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 18%, transparent) 0 40%, transparent 41%),
-    repeating-conic-gradient(from 0deg at 50% 50%, var(--paper-band) 0deg 15deg, var(--gold) 15deg 30deg),
-    var(--paper-raised);
-}
-.hd-card-front { transform: rotateY(180deg); background: var(--paper-raised); }
-.hd-card-front.reversed { transform: rotateY(180deg) rotate(180deg); }
+.hd-card-front.reversed { transform: rotate(180deg); }
 .hd-card-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Mặt lưng kiểu "cửa giấy": tách hai cánh, mỗi cánh bản lề ở mép ngoài, mở ra
+   khi .flipped thay vì lật cả khối như trước. Hoạ tiết trống đồng vẫn tạm —
+   background-size 200%/background-position trái-phải để hai cánh khép lại
+   khớp thành đúng hoạ tiết tâm-đối-xứng cũ. Bỏ repeating-conic-gradient của
+   bản cũ: một quạt xoay từ 0deg không đối xứng trái-phải, nên cắt đôi ra thì
+   hai cánh trông lệch nhau; chỉ giữ hai vòng tròn đồng tâm (tự đối xứng khi
+   cắt đôi). Sẽ thay bằng art thật ở đợt big update hình ảnh. */
+.hd-card-back {
+  position: absolute;
+  z-index: 2;                   /* đè lên mặt trước khi hai cánh còn đóng */
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.hd-card-back::before,
+.hd-card-back::after {
+  content: "";
+  position: absolute;
+  /* top/bottom + MỘT cạnh left-hoặc-right + width — không dùng inset:0 vì
+     left VÀ right cùng lúc với width sẽ ép trình duyệt bỏ qua right, khiến
+     cả hai cánh chồng lên đúng nửa trái (bản trước đã dính lỗi này). */
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  border: 1px solid var(--line);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 45%, transparent) 0 8%, transparent 9%),
+    radial-gradient(circle at 50% 50%, transparent 20%, color-mix(in srgb, var(--gold) 30%, transparent) 21% 23%, transparent 24%),
+    radial-gradient(circle at 50% 50%, transparent 38%, color-mix(in srgb, var(--gold) 22%, transparent) 39% 41%, transparent 42%),
+    var(--paper-raised);
+  background-size: 200% 100%;
+  /* translateZ(1px) chứ không chỉ z-index: trong ngữ cảnh preserve-3d, hai
+     phần tử đồng phẳng (z=0) được trình duyệt sắp theo độ sâu 3D thật chứ
+     không theo z-index — thiếu translateZ thì mặt trước lại lộ ra ở nửa bên
+     phải khi thẻ còn đóng. */
+  transform: translateZ(1px);
+  transition: transform 0.8s;
+}
+.hd-card-back::before {
+  left: 0;
+  border-right: 0;
+  border-radius: 10px 0 0 10px;
+  background-position: 0% 0%;
+  transform-origin: left center;
+}
+.hd-card-back::after {
+  right: 0;
+  border-left: 0;
+  border-radius: 0 10px 10px 0;
+  background-position: 100% 0%;
+  transform-origin: right center;
+}
+.hd-card.flipped .hd-card-back::before { transform: translateZ(1px) rotateY(-138deg); }
+.hd-card.flipped .hd-card-back::after { transform: translateZ(1px) rotateY(138deg); }
+@media (prefers-reduced-motion: reduce) {
+  .hd-card-back::before,
+  .hd-card-back::after { transition: none; }
+}
 
 .hd-hint { text-align: center; color: var(--muted); font-size: 0.9rem; margin: 14px 0 0; }
 
