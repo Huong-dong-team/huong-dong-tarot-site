@@ -508,9 +508,9 @@ function layout({ title, description, path: routePath, image, type, schemas, con
       //
       // href giữ lại làm bản dự phòng cho trình duyệt chưa hiểu imagesrcset;
       // trình duyệt hiểu thì bỏ qua href.
-      ? '<link rel="preload" as="image" fetchpriority="high"'
-        + ' imagesrcset="/assets/img/ref-hero-cards-480.avif 480w, /assets/img/ref-hero-cards-960.avif 960w, /assets/img/ref-hero-cards-1440.avif 1440w"'
-        + ' imagesizes="(min-width: 901px) 72vw, 100vw" href="/assets/img/ref-hero-cards-1440.avif">'
+      ? '<link rel="preload" as="image" type="image/webp" fetchpriority="high"'
+        + ' imagesrcset="/assets/img/home-kirigami-480.webp 480w, /assets/img/home-kirigami-960.webp 960w, /assets/img/home-kirigami-1536.webp 1536w"'
+        + ' imagesizes="100vw" href="/assets/img/home-kirigami-1536.webp">'
       : artId
         ? '<link rel="preload" as="image" fetchpriority="high"'
           + ` imagesrcset="/assets/img/subpage/${artId}-1024.avif 1024w, /assets/img/subpage/${artId}-1536.avif 1536w"`

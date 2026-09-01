@@ -24,4 +24,6 @@ test("bố cục có đủ desktop, tablet, mobile và không làm tràn ngang",
   assert.match(css, /@media \(max-width: 900px\)/);
   assert.match(css, /@media \(max-width: 620px\)/);
   assert.match(css, /overflow-x:\s*hidden/);
+  assert.match(css, /body:has\(main\[data-page="home"\]\) :is\(#main-nav, \.menu-toggle\)[\s\S]*display:\s*none !important/);
+  assert.match(css, /\.hero-chapter-nav[\s\S]*position:\s*absolute/);
 });

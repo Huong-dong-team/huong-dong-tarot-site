@@ -237,7 +237,7 @@ test("tranh Hero trang chủ nạp ưu tiên và entrance đúng từ opacity 0"
   // khác — đúng cảm giác "tranh hiện lên rồi mới thấy" người dùng đã báo.
   // Giới hạn trong đúng thẻ <img> đó: home.html còn nhiều ảnh khác cố ý dùng
   // loading="lazy", quét cả tệp sẽ bắt nhầm chúng.
-  const heroImg = home.match(/<img src="\/assets\/img\/ref-hero-cards-1440\.webp"[^>]*>/)?.[0] || "";
+  const heroImg = home.match(/<img src="\/assets\/img\/home-kirigami-1536\.webp"[^>]*>/)?.[0] || "";
   assert.match(heroImg, /loading="eager"/);
   assert.match(heroImg, /fetchpriority="high"/);
   assert.doesNotMatch(heroImg, /loading="lazy"/);

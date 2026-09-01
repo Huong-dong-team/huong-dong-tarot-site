@@ -1,5 +1,27 @@
 # Nhật ký bàn giao tác vụ
 
+## 01/09/2026 · `feat/kirigami-home-floating-nav`
+
+Phạm vi đã thay đổi:
+
+- Remake riêng Hero trang chủ theo visual Kirigami đã duyệt; thêm bộ ảnh responsive `home-kirigami-480/960/1536.webp`.
+- Bỏ thanh header/menu ngang trên trang chủ nhưng giữ logo Hường Đông ở góc trái.
+- Chuyển bảy đường dẫn chính thành thẻ giấy cùng màu nền ở mép phải Hero; tablet/mobile dùng hàng cuộn ngang.
+- Giữ nguyên nội dung copy, CTA, thống kê, entrance/fade và hiệu ứng chiều sâu; bổ sung reduced-motion cho thẻ mới.
+- Cập nhật preload/build và test theo asset Hero mới.
+- Bổ sung bằng chứng QA tại `qa/home-kirigami-*.png` và báo cáo `design-qa.md`.
+
+Không thay đổi:
+
+- Không sửa bảy sub-page, dữ liệu bài/truyện, giá cửa hàng hoặc tranh sơn mài của các route bên trong.
+- Không merge `main`, không deploy Firebase/Sites và không thay đổi workflow GitHub.
+
+Điểm tránh giẫm chân:
+
+- CSS bỏ header được khóa bằng `body:has(main[data-page="home"])`; không chuyển selector này thành global.
+- Navigation cũ vẫn tồn tại trong layout để bảy sub-page tiếp tục dùng; trang chủ chỉ ẩn nó bằng CSS.
+- Không ghi đè ba asset `home-kirigami-*.webp` nếu chưa cập nhật đồng thời preload trong `scripts/build.js` và các test Hero.
+
 ## 31/08/2026 · `feat/remake-seven-subpages`
 
 Phạm vi đã thay đổi:
