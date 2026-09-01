@@ -1,0 +1,546 @@
+/* ============================================================
+   BẢO TÀNG 78 LÁ · 01/09/2026
+
+   Mở rộng hệ trang trong hiện hữu: giấy ngà làm nhãn giám tuyển, xanh ngọc
+   làm tường trưng bày, đỏ son cho trạng thái chọn và vàng kim cho khung tranh.
+   Tất cả selector khóa vào data-page="library" để không ảnh hưởng route khác.
+   ============================================================ */
+
+main[data-page="library"] {
+  --museum-wall: #102b27;
+  --museum-wall-deep: #0b201d;
+  --museum-frame: #b99149;
+  --museum-frame-light: #e3c888;
+  --museum-label: #f7eedc;
+  --museum-label-ink: #382518;
+  --museum-line: rgb(227 200 136 / 38%);
+  background: var(--subpage-paper);
+}
+
+main[data-page="library"] .museum-hero {
+  min-height: clamp(540px, 48vw, 700px);
+  justify-content: flex-end;
+  padding-bottom: clamp(58px, 7vw, 94px);
+}
+
+main[data-page="library"] .museum-hero > :is(h1, p) {
+  width: min(790px, 62%);
+  max-width: 790px;
+}
+
+main[data-page="library"] .museum-hero > h1 {
+  font-size: clamp(72px, 7.8vw, 122px);
+}
+
+main[data-page="library"] .museum-room-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: min(920px, 76%);
+  margin-top: 28px;
+}
+
+main[data-page="library"] .museum-room-nav a {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  padding: 10px 16px;
+  border: 1px solid rgb(242 223 183 / 56%);
+  background: rgb(16 43 39 / 84%);
+  color: var(--subpage-gold-soft);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 220ms ease, color 220ms ease, transform 220ms var(--subpage-ease);
+}
+
+main[data-page="library"] .museum-room-nav a:hover,
+main[data-page="library"] .museum-room-nav a:focus-visible {
+  background: var(--museum-label);
+  color: var(--subpage-cinnabar);
+  transform: translateY(-3px);
+}
+
+main[data-page="library"] .museum-room-nav a:focus-visible,
+main[data-page="library"] :is(.museum-frame, .museum-plaque button, .museum-dialog button, .museum-dialog a):focus-visible {
+  outline: 3px solid var(--subpage-gold-pastel);
+  outline-offset: 3px;
+}
+
+main[data-page="library"] .museum-foreword {
+  display: grid;
+  grid-template-columns: minmax(0, .75fr) minmax(320px, 1.25fr);
+  gap: clamp(28px, 6vw, 90px);
+  align-items: end;
+  width: min(1280px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(72px, 8vw, 116px) 0;
+  border-bottom: 1px solid var(--subpage-line);
+}
+
+main[data-page="library"] .museum-foreword > :not(.museum-counts) {
+  grid-column: 1;
+}
+
+main[data-page="library"] .museum-foreword .eyebrow {
+  margin-bottom: 4px;
+  color: var(--subpage-brass);
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-foreword h2,
+main[data-page="library"] .museum-gallery-heading h2,
+main[data-page="library"] .museum-history-header h2 {
+  margin: 0 0 16px;
+  color: var(--subpage-ink);
+  font-family: var(--display);
+  font-size: clamp(42px, 5.5vw, 78px);
+  font-weight: 400;
+  line-height: .98;
+}
+
+main[data-page="library"] .museum-foreword > p:last-of-type {
+  margin: 0;
+  color: var(--subpage-muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+main[data-page="library"] .museum-counts {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  border-top: 1px solid var(--subpage-line);
+  border-bottom: 1px solid var(--subpage-line);
+}
+
+main[data-page="library"] .museum-counts div {
+  padding: 24px 18px;
+}
+
+main[data-page="library"] .museum-counts div + div {
+  border-left: 1px solid var(--subpage-line);
+}
+
+main[data-page="library"] .museum-counts dt {
+  color: var(--subpage-cinnabar);
+  font-family: var(--display);
+  font-size: clamp(36px, 4vw, 58px);
+  line-height: 1;
+}
+
+main[data-page="library"] .museum-counts dd {
+  margin: 8px 0 0;
+  color: var(--subpage-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-gallery-section {
+  padding: clamp(72px, 8vw, 120px) 0;
+  background: var(--museum-wall);
+  color: var(--subpage-ivory);
+  scroll-margin-top: 88px;
+}
+
+main[data-page="library"] .museum-gallery-heading {
+  width: min(1280px, calc(100% - 40px));
+  margin: 0 auto 40px;
+}
+
+main[data-page="library"] .museum-gallery-heading .eyebrow {
+  margin-bottom: 8px;
+  color: var(--museum-frame-light);
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-gallery-heading h2 {
+  color: var(--subpage-gold-soft);
+}
+
+main[data-page="library"] .museum-gallery-heading > p:last-child {
+  max-width: 720px;
+  color: rgb(255 250 240 / 74%);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+main[data-page="library"] .museum-filters {
+  position: sticky;
+  z-index: 12;
+  top: 88px;
+  width: min(1280px, calc(100% - 40px));
+  margin-bottom: clamp(38px, 5vw, 64px);
+  border-color: var(--museum-line);
+  background: var(--museum-wall-deep);
+  box-shadow: 0 16px 42px rgb(0 0 0 / 22%);
+}
+
+main[data-page="library"] .museum-filters label,
+main[data-page="library"] .museum-filters p {
+  color: var(--subpage-gold-soft);
+}
+
+main[data-page="library"] .museum-filters :is(input, select, button) {
+  border-color: var(--museum-line);
+  background: #173d35;
+  color: var(--subpage-ivory);
+}
+
+main[data-page="library"] .museum-filters button[aria-pressed="true"] {
+  background: var(--subpage-cinnabar);
+  color: var(--subpage-ivory);
+}
+
+main[data-page="library"] .museum-wall {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(28px, 3.2vw, 52px) clamp(18px, 2.4vw, 34px);
+  width: min(1280px, calc(100% - 40px));
+  margin-bottom: 0;
+}
+
+main[data-page="library"] .museum-exhibit {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  content-visibility: auto;
+  contain-intrinsic-size: 320px 710px;
+  transition: transform 360ms var(--subpage-ease);
+}
+
+main[data-page="library"] .museum-exhibit:hover,
+main[data-page="library"] .museum-exhibit:focus-within {
+  border-color: transparent;
+  transform: translateY(-7px);
+}
+
+main[data-page="library"] .museum-frame {
+  position: relative;
+  display: block;
+  padding: clamp(8px, 1vw, 13px);
+  border: 1px solid var(--museum-frame-light);
+  background: #1a1814;
+  box-shadow:
+    0 0 0 5px #6f5229,
+    0 0 0 7px var(--museum-frame),
+    0 20px 42px rgb(0 0 0 / 32%);
+}
+
+main[data-page="library"] .museum-frame img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border: 1px solid rgb(227 200 136 / 42%);
+  border-radius: 0;
+  object-fit: cover;
+  filter: saturate(.92) contrast(1.04);
+  transition: filter 300ms ease, transform 480ms var(--subpage-ease);
+}
+
+main[data-page="library"] .museum-exhibit:hover .museum-frame img,
+main[data-page="library"] .museum-exhibit:focus-within .museum-frame img {
+  filter: saturate(1.06) contrast(1.06);
+  transform: scale(1.012);
+}
+
+main[data-page="library"] .museum-index {
+  position: absolute;
+  z-index: 2;
+  top: 16px;
+  left: 16px;
+  min-width: 34px;
+  padding: 6px 8px;
+  border: 1px solid rgb(227 200 136 / 52%);
+  background: rgb(11 32 29 / 88%);
+  color: var(--museum-frame-light);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-align: center;
+}
+
+main[data-page="library"] .museum-plaque {
+  width: calc(100% - 22px);
+  min-height: 188px;
+  margin: 20px auto 0;
+  padding: 18px 20px 17px;
+  border: 1px solid #cdb98f;
+  background: var(--museum-label);
+  color: var(--museum-label-ink);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 18%);
+}
+
+main[data-page="library"] .museum-plaque :is(p, h2) {
+  margin-top: 0;
+}
+
+main[data-page="library"] .museum-accession {
+  margin-bottom: 7px;
+  color: #8f6330;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-plaque h2 {
+  margin-bottom: 3px;
+  color: var(--museum-label-ink);
+  font-family: var(--display);
+  font-size: clamp(23px, 2vw, 31px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+main[data-page="library"] .museum-original {
+  margin-bottom: 10px;
+  color: var(--subpage-cinnabar);
+  font-family: var(--display);
+  font-size: 15px;
+}
+
+main[data-page="library"] .museum-source {
+  min-height: 2.8em;
+  margin-bottom: 13px;
+  color: #715e4d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+main[data-page="library"] .museum-plaque button {
+  min-height: 44px;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid #a47b3f;
+  background: transparent;
+  color: var(--subpage-cinnabar);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+main[data-page="library"] .museum-gallery-section .empty-state {
+  color: var(--subpage-gold-soft);
+}
+
+main[data-page="library"] .museum-history-wing {
+  padding: clamp(76px, 9vw, 130px) 0;
+  background: var(--subpage-paper);
+  scroll-margin-top: 84px;
+}
+
+main[data-page="library"] .museum-history-header {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto 32px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--subpage-line);
+}
+
+main[data-page="library"] .museum-history-header .eyebrow {
+  margin-bottom: 8px;
+  color: var(--subpage-brass);
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-history-header > p:last-child {
+  max-width: 760px;
+  color: var(--subpage-muted);
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+main[data-page="library"] .museum-history-wing > .v2-prose {
+  padding-inline: clamp(0px, 2vw, 28px);
+}
+
+main[data-page="library"] .museum-dialog {
+  width: min(1120px, calc(100% - 32px));
+  max-height: min(880px, calc(100dvh - 32px));
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--museum-frame);
+  border-radius: 0;
+  background: var(--museum-wall-deep);
+  color: var(--subpage-ivory);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 55%);
+}
+
+main[data-page="library"] .museum-dialog::backdrop {
+  background: rgb(6 17 15 / 88%);
+}
+
+main[data-page="library"] .museum-dialog-close {
+  position: sticky;
+  z-index: 3;
+  top: 14px;
+  float: right;
+  min-width: 64px;
+  min-height: 44px;
+  margin: 14px 14px -58px 0;
+  border: 1px solid var(--museum-line);
+  background: var(--museum-label);
+  color: var(--museum-label-ink);
+  cursor: pointer;
+}
+
+main[data-page="library"] .museum-dialog-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, .9fr) minmax(380px, 1.1fr);
+  min-height: min(700px, calc(100dvh - 34px));
+  align-items: start;
+}
+
+main[data-page="library"] .museum-dialog-art {
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: clamp(28px, 5vw, 68px);
+  background: var(--museum-wall);
+}
+
+main[data-page="library"] .museum-dialog-art img {
+  width: min(100%, 430px);
+  max-height: min(580px, calc(100dvh - 150px));
+  border: 10px solid #1a1814;
+  outline: 2px solid var(--museum-frame);
+  object-fit: contain;
+  box-shadow: 0 24px 58px rgb(0 0 0 / 38%);
+}
+
+main[data-page="library"] .museum-dialog-copy {
+  align-self: start;
+  padding: clamp(56px, 7vw, 88px) clamp(28px, 5vw, 68px);
+}
+
+main[data-page="library"] .museum-dialog-copy .eyebrow {
+  color: var(--museum-frame-light);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+main[data-page="library"] .museum-dialog-copy h2 {
+  margin: 0 0 5px;
+  color: var(--subpage-gold-soft);
+  font-family: var(--display);
+  font-size: clamp(44px, 5.2vw, 74px);
+  font-weight: 400;
+  line-height: .98;
+}
+
+main[data-page="library"] .museum-dialog-original {
+  margin: 0 0 24px;
+  color: var(--museum-frame-light);
+  font-family: var(--display);
+  font-size: 22px;
+}
+
+main[data-page="library"] .museum-dialog-copy > p:not(.eyebrow, .museum-dialog-original, .museum-dialog-source) {
+  color: rgb(255 250 240 / 78%);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+main[data-page="library"] .museum-dialog-source {
+  padding-top: 18px;
+  border-top: 1px solid var(--museum-line);
+  color: var(--subpage-gold-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+main[data-page="library"] .museum-dialog-actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+main[data-page="library"] .museum-dialog-actions :is(button, a) {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border: 1px solid var(--museum-line);
+  background: transparent;
+  color: var(--subpage-gold-soft);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main[data-page="library"] .museum-dialog-actions a {
+  background: var(--subpage-cinnabar);
+  color: var(--subpage-ivory);
+}
+
+main[data-page="library"] .museum-dialog-actions button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1060px) {
+  main[data-page="library"] .museum-wall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  main[data-page="library"] .museum-foreword { grid-template-columns: 1fr; }
+  main[data-page="library"] .museum-counts { grid-column: 1; grid-row: auto; }
+}
+
+@media (max-width: 900px) {
+  main[data-page="library"] .museum-hero > :is(h1, p),
+  main[data-page="library"] .museum-room-nav { width: min(720px, 88%); }
+  main[data-page="library"] .museum-filters { position: relative; top: auto; }
+  main[data-page="library"] .museum-dialog-layout { grid-template-columns: 1fr; }
+  main[data-page="library"] .museum-dialog-art { padding: 32px; }
+  main[data-page="library"] .museum-dialog-art img { width: min(100%, 360px); max-height: 62vh; }
+  main[data-page="library"] .museum-dialog-copy { padding-top: 34px; }
+}
+
+@media (max-width: 720px) {
+  main[data-page="library"] .museum-hero > :is(h1, p),
+  main[data-page="library"] .museum-room-nav { width: 100%; }
+  main[data-page="library"] .museum-room-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  main[data-page="library"] .museum-room-nav a { justify-content: center; text-align: center; }
+  main[data-page="library"] .museum-counts { grid-template-columns: repeat(2, 1fr); }
+  main[data-page="library"] .museum-counts div:nth-child(3) { border-left: 0; border-top: 1px solid var(--subpage-line); }
+  main[data-page="library"] .museum-counts div:nth-child(4) { border-top: 1px solid var(--subpage-line); }
+  main[data-page="library"] .museum-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 460px) {
+  main[data-page="library"] .museum-hero > h1 { font-size: 59px; }
+  main[data-page="library"] .museum-foreword,
+  main[data-page="library"] .museum-gallery-heading,
+  main[data-page="library"] .museum-filters,
+  main[data-page="library"] .museum-wall,
+  main[data-page="library"] .museum-history-header { width: min(100% - 28px, 1280px); }
+  main[data-page="library"] .museum-wall { grid-template-columns: 1fr; gap: 54px; }
+  main[data-page="library"] .museum-exhibit { width: min(100%, 330px); margin-inline: auto; }
+  main[data-page="library"] .museum-plaque { min-height: 0; }
+  main[data-page="library"] .museum-dialog { width: calc(100% - 18px); max-height: calc(100dvh - 18px); }
+  main[data-page="library"] .museum-dialog-copy { padding-inline: 22px; }
+  main[data-page="library"] .museum-dialog-actions { grid-template-columns: 1fr 1fr; }
+  main[data-page="library"] .museum-dialog-actions a { grid-column: 1 / -1; grid-row: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main[data-page="library"] :is(.museum-room-nav a, .museum-exhibit, .museum-frame img) {
+    transform: none !important;
+    transition: none !important;
+  }
+}

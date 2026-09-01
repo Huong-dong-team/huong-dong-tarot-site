@@ -7,12 +7,13 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("registry nạp đúng ba nâng cấp chuyển động theo vòng đời Swup", async () => {
+test("registry nạp đúng các nâng cấp chuyển động và bảo tàng theo vòng đời Swup", async () => {
   const registry = await read("public/assets/js/page/registry.js");
-  assert.match(registry, /library: \["card-filters", "card-tilt"\]/);
+  assert.match(registry, /library: \["card-filters", "card-tilt", "museum-gallery"\]/);
   assert.match(registry, /card: \["symbol-tooltips", "card-tilt"\]/);
   assert.match(registry, /"huyen-su": \["huyen-su-reveal"\]/);
   assert.match(registry, /"card-tilt": \(\) => import\("\.\.\/ui\/card-tilt\.js"\)/);
+  assert.match(registry, /"museum-gallery": \(\) => import\("\.\.\/ui\/museum-gallery\.js"\)/);
   assert.match(registry, /"huyen-su-reveal": \(\) => import\("\.\.\/ui\/huyen-su-reveal\.js"\)/);
 });
 

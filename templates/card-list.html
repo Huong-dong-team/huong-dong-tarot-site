@@ -1,1 +1,98 @@
-<main id="noi-dung-chinh" class="transition-page" data-page="library"><section class="page-hero drum-watermark"><p class="eyebrow">Thư viện Hường Đông</p><h1>Đủ 78 lá.<br>Không thiếu một hành trình.</h1><p>Tra cứu nghĩa RWS và lớp liên tưởng Việt hóa. Lọc theo Ẩn Chính, Ẩn Phụ hoặc bốn nhà.</p></section><section class="library-page lac-watermark"><form class="filters" data-card-filters><label>Tìm theo tên hoặc từ khóa<input type="search" name="q" placeholder="Ví dụ: Mẫu Liễu Hạnh, hy vọng, dâu tằm"></label><fieldset><legend>Nhóm bài</legend><button type="button" data-filter="all" aria-pressed="true">Tất cả <span>78</span></button><button type="button" data-filter="major">Ẩn Chính <span>22</span></button><button type="button" data-filter="minor">Ẩn Phụ <span>56</span></button></fieldset><label>Nhà Ẩn Phụ<select name="suit"><option value="">Tất cả bốn nhà</option><option value="wands">Tre</option><option value="swords">Dâu tằm</option><option value="cups">Sen</option><option value="pentacles">Lúa</option></select></label><p><strong data-result-count>{{cardCount}}</strong> lá đang hiển thị</p></form><div class="card-grid library-grid" data-card-grid>{{#each cards}}<a class="tarot-card" href="/la-bai/{{slug}}/" data-arcana="{{arcana}}" data-suit="{{suitValue}}" data-search="{{searchText}}"><img src="{{thumbnail.url}}" width="400" height="600" loading="lazy" alt="{{thumbnail.alt}}"><span>{{arcanaLabel}} · {{displayNumber}}</span><h2>{{nameFolk}}</h2><p>{{nameEn}}</p></a>{{/each}}</div><p class="empty-state" data-empty hidden>Không tìm thấy lá phù hợp. Hãy thử từ khóa ngắn hơn.</p></section></main>
+<main id="noi-dung-chinh" class="transition-page" data-page="library">
+  <section class="page-hero museum-hero">
+    <p class="eyebrow">Bảo tàng Hường Đông · Bộ sưu tập thường trực</p>
+    <h1>78 lá bài.<br>78 hiện vật sống.</h1>
+    <p class="page-hero-tagline">Đi qua Tarot như đi qua một bảo tàng Việt: ngắm tranh trước, đọc nhãn sau, rồi mở từng lớp huyền sử.</p>
+    <nav class="museum-room-nav" aria-label="Các phòng trong bảo tàng">
+      <a href="#bo-suu-tap">Đại sảnh 78 lá</a>
+      <a href="?arcana=major#bo-suu-tap">Phòng Ẩn Chính</a>
+      <a href="?arcana=minor#bo-suu-tap">Phòng Ẩn Phụ</a>
+      <a href="#phong-huyen-su">Phòng Huyền sử</a>
+    </nav>
+  </section>
+
+  <section class="museum-foreword" aria-labelledby="museum-foreword-title">
+    <p class="eyebrow">Lời dẫn giám tuyển</p>
+    <h2 id="museum-foreword-title">Một bộ bài, nhiều lối vào.</h2>
+    <p>Không cần xem theo thứ tự. Mỗi lá là một tác phẩm độc lập, có hệ nghĩa Rider–Waite–Smith, một hình tượng Việt và hồ sơ nguồn để bạn tự đối chiếu. <a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">Xem phương pháp đọc tranh qua năm lớp</a>.</p>
+    <dl class="museum-counts">
+      <div><dt>78</dt><dd>Tác phẩm</dd></div>
+      <div><dt>22</dt><dd>Ẩn Chính</dd></div>
+      <div><dt>56</dt><dd>Ẩn Phụ</dd></div>
+      <div><dt>34</dt><dd>Truyện nguồn</dd></div>
+    </dl>
+  </section>
+
+  <section class="museum-gallery-section" id="bo-suu-tap" aria-labelledby="museum-gallery-title">
+    <header class="museum-gallery-heading">
+      <p class="eyebrow">Đại sảnh</p>
+      <h2 id="museum-gallery-title">Bộ sưu tập 78 lá</h2>
+      <p>Chọn một phòng, tìm theo tên hoặc mở từng tác phẩm ở chế độ ngắm cận cảnh.</p>
+    </header>
+
+    <form class="filters museum-filters" data-card-filters>
+      <label>Tìm theo tên hoặc từ khóa
+        <input type="search" name="q" placeholder="Ví dụ: Mẫu Liễu Hạnh, hy vọng, dâu tằm">
+      </label>
+      <fieldset>
+        <legend>Phòng trưng bày</legend>
+        <button type="button" data-filter="all" aria-pressed="true">Tất cả <span>78</span></button>
+        <button type="button" data-filter="major">Ẩn Chính <span>22</span></button>
+        <button type="button" data-filter="minor">Ẩn Phụ <span>56</span></button>
+      </fieldset>
+      <label>Nhà Ẩn Phụ
+        <select name="suit">
+          <option value="">Tất cả bốn nhà</option>
+          <option value="wands">Tre</option>
+          <option value="swords">Dâu tằm</option>
+          <option value="cups">Sen</option>
+          <option value="pentacles">Lúa</option>
+        </select>
+      </label>
+      <p><strong data-result-count>{{cardCount}}</strong> tác phẩm</p>
+    </form>
+
+    <div class="card-grid library-grid museum-wall" data-card-grid>
+      {{#each cards}}
+      <article class="tarot-card museum-exhibit" data-arcana="{{arcana}}" data-suit="{{suitValue}}" data-search="{{searchText}}" data-museum-slug="{{slug}}">
+        <a class="museum-frame" href="/la-bai/{{slug}}/" aria-label="Mở hồ sơ đầy đủ của {{nameFolk}}">
+          <span class="museum-index" aria-hidden="true">{{museumIndex}}</span>
+          <img src="{{thumbnail.url}}" width="400" height="600" loading="lazy" decoding="async" alt="{{thumbnail.alt}}">
+        </a>
+        <div class="museum-plaque">
+          <p class="museum-accession">{{museumAccession}}</p>
+          <h2>{{nameFolk}}</h2>
+          <p class="museum-original">{{nameEn}}</p>
+          <p class="museum-source">{{museumSource}}</p>
+          <p class="museum-summary" hidden>{{museumSummary}}</p>
+          <button type="button" data-museum-preview>Ngắm cận cảnh</button>
+        </div>
+      </article>
+      {{/each}}
+    </div>
+    <p class="empty-state" data-empty hidden>Không tìm thấy tác phẩm phù hợp. Hãy thử từ khóa ngắn hơn.</p>
+  </section>
+
+  {{{museumHistoryHtml}}}
+
+  <dialog class="museum-dialog" data-museum-dialog aria-labelledby="museum-dialog-title">
+    <button class="museum-dialog-close" type="button" data-museum-close aria-label="Đóng chế độ ngắm cận cảnh">Đóng</button>
+    <div class="museum-dialog-layout">
+      <figure class="museum-dialog-art">
+        <img data-museum-dialog-image src="/assets/img/default-og.webp" width="768" height="1152" alt="">
+      </figure>
+      <div class="museum-dialog-copy">
+        <p class="eyebrow" data-museum-dialog-accession>Hiện vật</p>
+        <h2 id="museum-dialog-title" data-museum-dialog-title></h2>
+        <p class="museum-dialog-original" data-museum-dialog-original></p>
+        <p data-museum-dialog-summary></p>
+        <p class="museum-dialog-source"><strong>Nguồn trưng bày:</strong> <span data-museum-dialog-source></span></p>
+        <div class="museum-dialog-actions">
+          <button type="button" data-museum-prev>Trước</button>
+          <a href="/la-bai/" data-museum-dialog-link>Mở hồ sơ tác phẩm</a>
+          <button type="button" data-museum-next>Sau</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+</main>

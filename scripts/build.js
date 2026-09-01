@@ -202,6 +202,17 @@ const ADAPTATION_LEVEL_LABEL = Object.freeze({
 });
 
 const cleanText = (value) => String(value ?? "").trim();
+const plainTextFromHtml = (value) => String(value ?? "")
+  .replace(/<[^>]+>/g, " ")
+  .replace(/\s+/g, " ")
+  .trim();
+
+const truncateWords = (value, maxLength = 360) => {
+  if (value.length <= maxLength) return value;
+  const clipped = value.slice(0, maxLength + 1);
+  const boundary = clipped.lastIndexOf(" ");
+  return `${clipped.slice(0, boundary > 0 ? boundary : maxLength).trim()}…`;
+};
 
 function detailCard(title, value, className = "v2-card") {
   const text = cleanText(value);
@@ -274,7 +285,7 @@ function minorDetailsHtml(card) {
 }
 
 /** @type {import("./lib/types.js").EnrichedCard[]} */
-const cards = data.cards.map((card) => ({
+const cards = data.cards.map((card, index) => ({
   ...card,
   nameFolk: card.nameFolk || card.nameVi,
   suitValue: card.suit || "",
@@ -285,6 +296,10 @@ const cards = data.cards.map((card) => ({
   minorDetailsHtml: minorDetailsHtml(card),
   reflectionHtml: reflectionHtml(card),
   searchText: [card.nameVi, card.nameEn, card.nameFolk, ...(card.keywordsUpright || [])].join(" ").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(),
+  museumIndex: String(index + 1).padStart(2, "0"),
+  museumAccession: `${arcanaLabel(card)} · ${card.arcana === "major" ? roman(card.number) : card.nameVi.split(" ")[0]}`,
+  museumSource: (card.sources || []).map((source) => source.title).filter(Boolean).slice(0, 2).join(" · ") || "Hồ sơ Hường Đông",
+  museumSummary: truncateWords(plainTextFromHtml(card.story)),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
 
@@ -680,12 +695,20 @@ await emit("/", layout({
   bodyClass: "home-page",
 }));
 
-const listGuide = '<section class="v2-prose"><p><strong>Đừng bắt đầu bằng việc thuộc hết.</strong> Chọn một lá, nhìn tranh trước khi đọc nghĩa, rồi ghi lại chi tiết khiến bạn dừng mắt. Nếu chưa quen, xem <a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">phương pháp đọc một lá qua năm lớp</a>.</p></section>';
-const listContent = renderString(templates["card-list"], { cards, cardCount: cards.length })
-  .replace('<section class="library-page', `${listGuide}<section class="library-page`);
+const renderedHistoryPage = renderString(
+  templates["huyen-su"].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
+  { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() },
+);
+const historySectionsStart = renderedHistoryPage.indexOf('<section class="v2-prose" id="nguyen-tac">');
+const historySectionsEnd = renderedHistoryPage.lastIndexOf("</main>");
+if (historySectionsStart === -1 || historySectionsEnd === -1) {
+  throw new Error("Không tách được nội dung Huyền sử để đưa vào Bảo tàng 78 lá.");
+}
+const museumHistoryHtml = `<section class="museum-history-wing" id="phong-huyen-su" aria-labelledby="museum-history-title"><header class="museum-history-header"><p class="eyebrow">Phòng chuyên đề</p><h2 id="museum-history-title">Huyền sử trong 78 lá bài</h2><p>Tranh, hệ nghĩa RWS và truyện nguồn được đặt cạnh nhau như hồ sơ giám tuyển — để người xem biết điều gì thuộc văn bản, điều gì là chuyển thể.</p></header>${renderedHistoryPage.slice(historySectionsStart, historySectionsEnd)}</section>`;
+const listContent = renderString(templates["card-list"], { cards, cardCount: cards.length, museumHistoryHtml });
 await emit("/la-bai/", layout({
-  title: "Thư viện 78 lá Tarot Hường Đông",
-  description: "Tra cứu đủ 78 lá Tarot: 22 Ẩn Chính, 56 Ẩn Phụ, nghĩa xuôi/ngược và lớp liên tưởng Việt hóa.",
+  title: "Bảo tàng 78 lá Tarot Hường Đông",
+  description: "Khám phá 78 lá Tarot Hường Đông như một bảo tàng nghệ thuật: tranh, nghĩa RWS, huyền sử Việt và 34 truyện nguồn trong cùng một hành trình.",
   path: "/la-bai/",
   schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "78 lá bài", path: "/la-bai/" }])],
   content: listContent,
