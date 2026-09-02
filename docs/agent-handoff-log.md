@@ -1,6 +1,6 @@
 # Nhật ký bàn giao tác vụ
 
-## 02/09/2026 · `content/editorial-foundation-beginner`
+## 02/09/2026 · PR #78 · `content/editorial-foundation-beginner`
 
 Phạm vi đã thay đổi:
 
