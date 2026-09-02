@@ -1,5 +1,37 @@
 # Nhật ký bàn giao tác vụ
 
+## 02/09/2026 · `feat/kirigami-all-subpages-v2`
+
+Phạm vi đã thay đổi:
+
+- Mở rộng bảy nhóm sub-page theo cùng hệ Kirigami đã duyệt, kế thừa Bảo tàng
+  78 lá và phòng Huyền sử từ PR #75.
+- Giữ nguyên tám tranh sơn mài route; thêm ảnh khung giấy RGBA thật ở tiền cảnh
+  và hiện vật ảnh thật riêng cho từng route ở lớp giữa.
+- Thêm nhãn giấy, bề mặt cắt góc và nhịp depth xuyên suốt Hero, nội dung,
+  Museum, bài viết và ba gói cửa hàng.
+- Thêm entrance 980–1040ms, stagger 70ms, idle 2–3px, hover gập 1.2° và
+  pointer parallax tối đa 12px/8px; reduced-motion tắt toàn bộ chuyển động mới.
+- Mở rộng test hồi quy, tài liệu design system và bằng chứng QA desktop/mobile.
+
+Không thay đổi:
+
+- Không sửa dữ liệu 78 lá, 34 truyện nguồn, giá ba gói, nội dung bài viết hoặc
+  workflow GitHub/Firebase.
+- Không xóa route `/huyen-su/`; route cũ vẫn tồn tại cho SEO/backlink dù nội
+  dung Huyền sử đã được gộp vào `/la-bai/#phong-huyen-su`.
+- Không merge `main` và không deploy production.
+
+Điểm tránh giẫm chân:
+
+- Scene được sinh tập trung từ `KIRIGAMI_HERO_SCENES` trong `scripts/build.js`;
+  nếu đổi asset phải cập nhật test Kirigami cùng lúc.
+- CSS Kirigami nằm riêng ở `subpage-kirigami.css` và tải sau Museum; không đưa
+  các selector này vào `home-standalone.css` vì trang chủ có sân khấu riêng.
+- `kirigami-frame-v2.png` là asset nguồn RGBA tạo bằng ImageGen rồi khử chroma;
+  trang tải bản WebP tối ưu. Không thay bằng SVG/CSS art hoặc ghi đè khi chưa
+  cập nhật tài liệu nguồn.
+
 ## 01/09/2026 · `feat/tarot-museum-gallery`
 
 Phạm vi đã thay đổi:

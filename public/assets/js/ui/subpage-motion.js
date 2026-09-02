@@ -1,5 +1,6 @@
 const MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const TILT_SELECTOR = ".section-visual, .section-card-fan, .price-tier";
+const KIRIGAMI_HERO_SELECTOR = ".page-hero.lacquer-hero:has(.kirigami-stage)";
 
 /**
  * Chuyển động chiều sâu rất nhẹ cho hệ 7 trang trong.
@@ -11,6 +12,27 @@ export function init() {
   if (!page || window.matchMedia(MOTION_QUERY).matches) return () => {};
 
   const controllers = [];
+
+  const hero = page.querySelector(KIRIGAMI_HERO_SELECTOR);
+  if (hero) {
+    const controller = new AbortController();
+    controllers.push(controller);
+
+    hero.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch") return;
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - .5;
+      const y = (event.clientY - rect.top) / rect.height - .5;
+      hero.style.setProperty("--kirigami-shift-x", `${(x * 12).toFixed(2)}px`);
+      hero.style.setProperty("--kirigami-shift-y", `${(y * 8).toFixed(2)}px`);
+    }, { signal: controller.signal, passive: true });
+
+    hero.addEventListener("pointerleave", () => {
+      hero.style.removeProperty("--kirigami-shift-x");
+      hero.style.removeProperty("--kirigami-shift-y");
+    }, { signal: controller.signal, passive: true });
+  }
+
   for (const element of page.querySelectorAll(TILT_SELECTOR)) {
     const controller = new AbortController();
     controllers.push(controller);

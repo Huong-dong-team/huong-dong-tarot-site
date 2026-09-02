@@ -396,6 +396,61 @@ function pageArtworkPicture(artId, placement) {
     + "</picture>";
 }
 
+/*
+ * Hiện vật tiền cảnh cho sân khấu Kirigami. Mỗi route dùng ảnh thật đã có
+ * trong thư viện Hường Đông; lớp khung giấy dùng chung chỉ bổ sung chiều sâu,
+ * không thay hoặc vẽ đè lên tranh sơn mài gốc.
+ */
+const KIRIGAMI_HERO_SCENES = {
+  "tarot-la-gi": [
+    ["/assets/img/sec-card-back-cut-400.avif", "piece-card-back"],
+    ["/assets/img/ref-bo-bai-illus-400.avif", "piece-paper-round"],
+  ],
+  "la-bai": [
+    ["/assets/img/cards/major-03-the-empress-400.avif", "piece-card piece-card-left"],
+    ["/assets/img/cards/major-19-the-sun-400.avif", "piece-card piece-card-centre"],
+    ["/assets/img/cards/major-07-the-chariot-400.avif", "piece-card piece-card-right"],
+  ],
+  "trai-bai": [
+    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-left"],
+    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-centre"],
+    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-right"],
+  ],
+  healing: [
+    ["/assets/img/cards/major-17-the-star-400.avif", "piece-healing-card"],
+    ["/assets/img/sec-illustration-bon-nha-an-phu-cut.webp", "piece-healing-lotus"],
+  ],
+  "huyen-su": [
+    ["/assets/img/ref-legend-bg-800.webp", "piece-history-landscape"],
+    ["/assets/img/cards/major-07-the-chariot-400.avif", "piece-history-card"],
+  ],
+  "chuyen-huong-dong": [
+    ["/assets/img/ref-hoc-tarot-900.avif", "piece-story-paper"],
+    ["/assets/img/cards/major-03-the-empress-400.avif", "piece-story-card"],
+  ],
+  "cua-hang": [
+    ["/assets/img/shop/standard-pack-v1-640.webp", "piece-pack piece-pack-left"],
+    ["/assets/img/shop/premium-pack-v1-640.webp", "piece-pack piece-pack-centre"],
+    ["/assets/img/shop/signature-pack-v1-640.webp", "piece-pack piece-pack-right"],
+  ],
+};
+
+function kirigamiHeroDecor(artId) {
+  const pieces = KIRIGAMI_HERO_SCENES[artId] || [];
+  if (!pieces.length) return "";
+
+  const pieceHtml = pieces.map(([src, className], index) => (
+    `<span class="kirigami-piece ${className}" style="--kirigami-order:${index}">`
+      + `<img src="${src}" loading="eager" decoding="async" alt="">`
+    + "</span>"
+  )).join("");
+
+  return `<div class="kirigami-hero-depth" data-kirigami-scene="${artId}" aria-hidden="true">`
+    + `<div class="kirigami-stage">${pieceHtml}</div>`
+    + `<img class="kirigami-frame" src="/assets/img/subpage/kirigami-frame-v2.webp" width="1536" height="1024" loading="eager" decoding="async" alt="">`
+    + "</div>";
+}
+
 function addClass(openTag, className) {
   if (/\bclass="[^"]*"/.test(openTag)) {
     return openTag.replace(/\bclass="([^"]*)"/, (_whole, classes) => {
@@ -446,7 +501,7 @@ function withPageArt(content, artId) {
       const leadEnd = end + closeTag.length;
       const decoratedOpen = addClass(openTag, "lacquer-hero");
       const hero = body.slice(0, start)
-        + decoratedOpen + heroArt
+        + decoratedOpen + heroArt + kirigamiHeroDecor(artId)
         + body.slice(start + openTag.length, leadEnd);
       body = body.slice(leadEnd);
       return `${head}${hero}<div class="subpage-content-frame">${body}</div>${closeMain}${tail}`;

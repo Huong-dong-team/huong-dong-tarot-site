@@ -1,58 +1,63 @@
-# Design QA · Bảo tàng 78 lá Hường Đông
+# Design QA · Hệ Kirigami bảy sub-page Hường Đông
 
 final result: passed
 
 ## Nguồn và bằng chứng
 
-- Source visual truth: `/home/asus/.codex/generated_images/01a05070-9cc0-72b1-9cc8-84796d6938de/exec-c40230dd-7a6d-4359-b8d7-612560de6fde.png` — bảng hệ thống bảy trang sơn mài.
-- Nghiên cứu GitHub: OpenVGAL cho mô hình phòng trưng bày/nhãn hiện vật; Neiki Gallery cho lọc, lightbox và bàn phím.
-- Local implementation: `http://localhost:8080/la-bai/`.
-- Ảnh desktop: `qa/museum-gallery-desktop-final.png`, `qa/museum-gallery-grid-final.png`, `qa/museum-gallery-dialog-final.png`.
-- Ảnh mobile: `qa/museum-gallery-mobile-final.png` — viewport 390 × 844 CSS px.
-- So sánh cùng một khung: `qa/museum-gallery-comparison.png`.
-- State: dữ liệu seed local; 78 hiện vật; Huyền sử đã nhập vào cùng route; chưa deploy.
+- Source visual truth: `/home/asus/Desktop/peak images/Codex Image Sep 1, 2026, 12_46_15 PM.png` — bảng hệ thống 7 sub-page Kirigami, 1536 × 1024 px.
+- Local implementation: `http://localhost:4173/` với các route `/tarot-la-gi/`, `/la-bai/`, `/trai-bai/`, `/healing/`, `/huyen-su/`, `/tin-tuc/`, `/cua-hang/`.
+- Desktop evidence: `qa/kirigami-*-desktop-final.png`; Browser viewport đặt 1536 × 1024 CSS px, vùng nội dung chụp được 1521 × 828 px, device density 1.
+- Mobile evidence: `qa/kirigami-tarot-la-gi-mobile-final.png`, `qa/kirigami-la-bai-mobile-final.png`, `qa/kirigami-cua-hang-mobile-final.png`; Browser viewport đặt 390 × 844 CSS px, vùng nội dung chụp được 375 × 804 px, device density 1.
+- Same-input comparison: `qa/kirigami-system-comparison.png`, 3072 × 1024 px. Nửa trái là source board; nửa phải là implementation board dựng từ bảy ảnh desktop cuối, chuẩn hóa về cùng canvas 1536 × 1024.
+- State: seed data local, animation đã về trạng thái nghỉ, chưa deploy.
+
+Source là system board chứ không phải một frame route 1:1, nên QA đối chiếu ngôn ngữ chung, phân cấp, palette, hình tượng và nhịp Hero; không tuyên bố pixel-perfect cho vị trí copy riêng của từng thumbnail.
 
 ## Findings
 
 Không còn finding P0/P1/P2.
 
-- Composition: giữ nền sơn mài đen–ngọc, mực vàng và nhịp giấy ngà của mockup; gallery chuyển thành tường bảo tàng bốn cột với khung vàng già và nhãn giám tuyển.
-- Content: đủ 78 lá, chia phòng Ẩn Chính/Ẩn Phụ và bốn nhà; phòng Huyền sử chứa nguyên các cụm nội dung hiện hữu.
-- Typography: headline/subheadline vàng pastel trên nền tối; nhãn hiện vật dùng mực nâu/đỏ son, không bị trùng màu nền.
-- Behavior: tìm kiếm, lọc 22/56 lá, lọc nhà, lightbox, Trước/Sau, phím mũi tên và phục hồi focus đều hoạt động.
-- Responsive: desktop 4→3→2→1 cột; mobile dùng lưới 2 × 2 cho bốn cửa phòng, không còn thanh cuộn ngang; không tràn viewport.
-- Accessibility: một `h1`; dialog native có backdrop, nút đóng và focus ring; CTA/phòng có vùng chạm ≥44px; reduced-motion vô hiệu hóa chuyển động trang trí.
-- Performance: dùng ảnh hiện hữu, lazy loading và `content-visibility:auto`; không thêm WebGL/Three.js cho 78 hiện vật.
-- Compatibility: route `/huyen-su/` và 34 trang truyện con vẫn được build để bảo toàn liên kết/SEO.
-- Console: không có lỗi hoặc cảnh báo mới liên quan module Museum Art.
+- **Fonts and typography:** Fontasia giữ headline thư pháp; nhãn dùng Be Vietnam Pro chữ hoa; headline vàng pastel và subheadline vàng dịu vẫn có phân cấp rõ. Không có cắt chữ hoặc hai `h1` trên bảy route.
+- **Spacing and layout rhythm:** Hero desktop cao 540–660px, chia vùng copy trái và sân khấu phải; khung mây/sóng tạo tiền cảnh liên tục. Museum mobile cao 720px để đủ chỗ cho headline, subheadline và bốn cửa phòng. Bề mặt nội dung cắt góc 18px thay cho thẻ tròn generic.
+- **Colors and tokens:** `#F2E8D4`, `#1E3B34`, `#8F2F2D`, `#E8C783` bám bảng nguồn; tranh sơn mài đen–vàng hiện hữu vẫn là lớp nền và không bị đổi màu.
+- **Image quality and asset fidelity:** Khung giấy là raster RGBA thật tạo bằng ImageGen, không có green halo nhìn thấy; trình duyệt tải WebP 176KB. Hiện vật route dùng ảnh thật/ảnh Hường Đông có sẵn; shop dùng ba ảnh 640px tối ưu. Không có SVG tự vẽ, emoji, placeholder hoặc CSS illustration thay cho hình ảnh.
+- **Copy and content:** Giữ nguyên headline, subheadline, 78 lá, Huyền sử, nội dung bài viết và giá ba gói. Nhãn mục trở thành nhãn giấy nhưng nội dung không bị sửa.
+- **States and interactions:** Menu mobile mở đúng `aria-expanded=true`; bộ lọc Museum chọn Ẩn Chính hiển thị đúng 22 hiện vật; hover/pointer chỉ thay transform trang trí, không chặn link/CTA.
+- **Responsiveness:** Kiểm tra đủ bảy route tại mobile; một `h1`, đúng scene route, `overflow-x: clip`. Ba route đại diện có ảnh chụp cuối và không có chồng chữ sau iteration 2.
+- **Accessibility:** Lớp trang trí `aria-hidden`, ảnh trang trí `alt=""`, nội dung DOM giữ thứ tự đọc; reduced-motion tắt entrance, idle, tilt và parallax; menu/filter giữ semantic button và focus hiện hữu.
+- **Console:** Không có error/warning trên cả bảy route desktop và ba route mobile đại diện.
+
+## Focused region comparison
+
+Không cần crop chi tiết riêng: source board chỉ đặc tả Hero và component label ở cấp hệ thống. Bảy ảnh desktop riêng đã được mở để kiểm tra headline, nhãn giấy, crop hiện vật và khung tiền cảnh ở kích thước đọc được; ba ảnh mobile riêng kiểm tra wrapping và vùng chạm.
 
 ## Comparison history
 
 ### Iteration 1
 
-- P2: rail bộ lọc sticky chạm vào header 76px.
-- Fix: đổi offset từ 12px thành 88px; xác nhận filter top 88px và header bottom 76px.
+- **P2 · Museum mobile bị dày và giao nhau:** source giữ nhịp rõ giữa copy, nhãn phòng và hiện vật; bản đầu để subheadline, bốn cửa phòng và ba lá chồng cùng vùng giữa.
+- **Fix:** tăng riêng Hero Museum lên 720px, đổi cửa phòng thành lưới 2 × 2, hạ và làm dịu sân khấu lá bài.
+- **Post-fix evidence:** `qa/kirigami-la-bai-mobile-final.png`; copy kết thúc trước dải nhãn, bốn cửa đọc được và hiện vật nằm sau ở mức opacity 0.52.
 
 ### Iteration 2
 
-- P2: dialog desktop có thể mở ở vị trí nội dung bị cắt do ảnh và copy cùng căn giữa trong grid cao cố định.
-- Fix: căn grid về đầu, giới hạn ảnh theo `100dvh`, giữ dialog scrollTop = 0 khi mở.
+- **P2 · Khung giấy mobile lên quá cao:** Tarot và Cửa hàng có tiền cảnh chạm subheadline.
+- **Fix:** giảm khung tiền cảnh từ 56% xuống 48% chiều cao Hero; sân khấu giảm còn 42%, neo vào đáy và giữ khoảng trống cho copy.
+- **Post-fix evidence:** `qa/kirigami-tarot-la-gi-mobile-final.png`, `qa/kirigami-cua-hang-mobile-final.png`.
 
 ### Iteration 3
 
-- P2: bốn cửa phòng trên mobile dùng rail ngang và lộ scrollbar.
-- Fix: chuyển sang lưới 2 × 2; mỗi nút rộng 166.5px, cao 46px tại viewport 390px.
+- **P2 · Filter/drop-shadow trang trí có thể tạo overflow ngang 7px trên một số route mobile.**
+- **Fix:** giới hạn paint của sân khấu, lùi stage 12px và khóa `overflow-x: clip` chỉ trên `body` có `main[data-page-art]`.
+- **Post-fix evidence:** Browser báo `overflowX: clip` ở ba route đại diện; không có phần tử tương tác bị cắt hoặc console error.
 
 ## Primary interactions tested
 
-- “Ẩn Chính” cập nhật đúng 22 hiện vật.
-- Tìm “Mẫu Liễu Hạnh” trả đúng một hiện vật.
-- “Ngắm cận cảnh” mở dialog Mai An Tiêm.
-- ArrowRight chuyển sang Kinh Dương Vương.
-- Đóng dialog trả focus về nút “Ngắm cận cảnh”.
-- Sáu anchor của phòng Huyền sử cùng tồn tại trong `/la-bai/`.
+- Mở menu mobile: `aria-expanded` đổi thành `true`.
+- Chọn `button[data-filter="major"]`: nút Ẩn Chính có `aria-pressed=true`, bộ đếm và số card hiện đều là 22.
+- Điều hướng trực tiếp đủ bảy route ở desktop và mobile; scene Kirigami đổi đúng theo `data-page-art`.
+- Kiểm tra console error/warning sau animation trên đủ bảy route desktop.
 
-## Follow-up polish (P3)
+## Follow-up polish
 
-- Hero tối hơn các panel thông tin trong mockup để tạo cảm giác bước vào đại sảnh; độ tương phản chữ vẫn đạt mục tiêu thị giác và đồng nhất với bảy sub-page sơn mài.
-- Một số ảnh bài vẫn mang ribbon “ĐANG HOÀN THIỆN” vì đó là trạng thái nguồn hiện tại; PR này cố ý không sửa hoặc thay tranh.
+- P3: Source board dùng hạc và kiến trúc riêng ở một vài màn hình; implementation ưu tiên hiện vật Hường Đông có sẵn để giữ tính xác thực và tải nhẹ. Có thể tạo thêm cutout hạc/đền ở vòng sau nếu cần tăng mức khớp minh họa.

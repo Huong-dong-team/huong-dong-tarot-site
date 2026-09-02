@@ -27,8 +27,9 @@ test("bảy trang trong dùng chung hero sơn mài và có subheadline", async (
 });
 
 test("hệ sub-page giữ token, minh họa thật và reduced motion", async () => {
-  const [css, registry, tarot, history] = await Promise.all([
+  const [css, kirigamiCss, registry, tarot, history] = await Promise.all([
     read("public/assets/css/subpage-remake.css"),
+    read("public/assets/css/subpage-kirigami.css"),
     read("public/assets/js/page/registry.js"),
     read("dist/tarot-la-gi/index.html"),
     read("dist/huyen-su/index.html"),
@@ -38,10 +39,38 @@ test("hệ sub-page giữ token, minh họa thật và reduced motion", async ()
     assert.ok(css.includes(token), `thiếu token ${token}`);
   }
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(kirigamiCss, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(kirigamiCss, /kirigami-piece-enter 980ms/);
+  assert.match(kirigamiCss, /var\(--kirigami-order, 0\) \* 70ms/);
   assert.match(registry, /"subpage-motion"/);
   assert.match(tarot, /class="section-card-fan"/);
   assert.match(history, /class="v2-card portrait-card"/);
   assert.doesNotMatch(`${tarot}\n${history}`, /data:image\/svg\+xml|<svg/i, "minh họa không được thay bằng SVG/CSS art giả");
+});
+
+test("bảy Hero có sân khấu Kirigami thật và khung ảnh alpha dùng chung", async () => {
+  const pages = [
+    ["tarot-la-gi", "tarot-la-gi"],
+    ["la-bai", "la-bai"],
+    ["trai-bai", "trai-bai"],
+    ["healing", "healing"],
+    ["huyen-su", "huyen-su"],
+    ["tin-tuc", "chuyen-huong-dong"],
+    ["cua-hang", "cua-hang"],
+  ];
+
+  for (const [route, scene] of pages) {
+    const html = await read(`dist/${route}/index.html`);
+    assert.match(html, new RegExp(`data-kirigami-scene="${scene}"`), `${route}: thiếu hiện vật Kirigami`);
+    assert.match(html, /class="kirigami-frame"[^>]+kirigami-frame-v2\.webp/);
+    assert.doesNotMatch(html, /<svg|data:image\/svg\+xml/i);
+  }
+
+  const frame = path.join(root, "public/assets/img/subpage/kirigami-frame-v2.png");
+  const [bytes, info] = await Promise.all([readFile(frame), stat(frame)]);
+  assert.ok(info.size > 100_000, "khung Kirigami bị rỗng hoặc chỉ là placeholder");
+  assert.deepEqual([...bytes.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10], "khung Kirigami không phải PNG");
+  assert.equal(bytes[25], 6, "khung Kirigami phải là PNG RGBA có alpha");
 });
 
 test("ba ảnh sản phẩm là PNG thật và ba Offer cùng nguồn giá", async () => {
