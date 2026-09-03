@@ -78,8 +78,14 @@ main[data-page="home"] .button-primary {
   }
 }
 
-body:has(main[data-page="home"]) :is(#main-nav, .menu-toggle) {
-  display: none !important;
+/* Chỉ ẩn từ 901px trở lên. Dưới đó trang chủ dùng lại nút ba gạch + panel của
+   main.css — xem khối "Thanh mục lục ba gạch cho mobile" ở cuối tệp. Luật này
+   dùng :is() nên độ ưu tiên tính theo #main-nav; ghi đè bằng selector class ở
+   dưới sẽ thua kể cả khi cùng !important, nên thu hẹp ngay tại đây. */
+@media (min-width: 901px) {
+  body:has(main[data-page="home"]) :is(#main-nav, .menu-toggle) {
+    display: none !important;
+  }
 }
 
 main[data-page="home"] {
@@ -894,5 +900,222 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
      gần đúng con số cũ nên bố cục ở đó không xê dịch. */
   main[data-page="home"] .hero-copy {
     padding-block: clamp(4rem, 17vh, 10.5rem) clamp(2rem, 8vh, 6rem);
+  }
+}
+
+/* --- Màn hình đầu trên điện thoại: tranh làm nền -------------------------
+
+   Trên desktop tranh nằm ở cột phải nên khách gặp ngay. Bản dọc xếp theo thứ
+   tự DOM (chữ → nav chương → tranh) nên tranh rơi xuống tận màn thứ hai, và
+   màn đầu chỉ còn chữ trên nền kem trơn.
+
+   Nay tranh phủ kín Hero làm nền, chữ nổi lên trên qua một màn chắn.
+
+   VÌ SAO KHÔNG CẮT MỘT TỆP ẢNH DỌC RIÊNG: preload Hero ở build.js dùng
+   imagesrcset + imagesizes="100vw" chứ không phải href + media, và
+   tests/critical-css khoá cứng "preload không được có media=" — vì bản nào
+   được chọn còn phụ thuộc mật độ điểm ảnh, không chỉ bề rộng. Thêm một
+   <source media> cho mobile sẽ làm preload lấy bản ngang còn <picture> lấy
+   bản dọc: đúng lỗi tải hai ảnh 106 KB họ đã sửa một lần rồi. Nên cắt bằng
+   object-position trên chính tệp đang có.
+
+   object-position: 76% là khung có ba lá bài và mặt trời đỏ. Lần trước tôi
+   đặt 58% và ra nền kem trơn — 58% rơi vào mảng trời trống bên trái tranh.
+   Tính: ảnh 3:2 phủ khung dọc thì cao khớp, chỉ cắt bề ngang; cửa sổ còn
+   ~31% bề ngang, mà cụm bài nằm quanh 68% bề ngang ảnh. */
+@media (max-width: 900px) {
+  main[data-page="home"] .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+
+  main[data-page="home"] .hero-visual {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
+  main[data-page="home"] .hero-stage { height: 100%; }
+  main[data-page="home"] .hero-stage picture,
+  main[data-page="home"] .hero-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 76% center;
+  }
+
+  /* Màn chắn: đặc ở vùng chữ, tan hẳn ở nửa dưới để lộ bài. Phải khai từng
+     thuộc tính chứ không dùng inset gọn — main.css đã đặt
+     .hero:after{left:36%;bottom:3%;opacity:.08} cho lớp hoa văn chìm, và cái
+     left:36% đó thắng, làm màn chắn chỉ phủ hai phần ba phải màn hình. */
+  main[data-page="home"] .hero::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 1;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--paper) 94%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 90%, transparent) 34%,
+      color-mix(in srgb, var(--paper) 72%, transparent) 52%,
+      color-mix(in srgb, var(--paper) 30%, transparent) 70%,
+      transparent 88%
+    );
+    pointer-events: none;
+  }
+  main[data-page="home"] .hero::before { display: none; }
+
+  main[data-page="home"] .hero-copy {
+    position: relative;
+    z-index: 2;
+    padding: 5.6rem 1.5rem 1.25rem;   /* 5.6rem chừa header absolute cao 90px */
+  }
+  main[data-page="home"] .hero-chapter-nav { position: relative; z-index: 2; order: 3; margin-top: auto; }
+
+  /* Badge rời góc phải trên (nhường nút mục lục) rồi rời luôn góc phải dưới:
+     đo được nó chồng lên dải chương, 750-785 so với 748-812. Nay cho vào dòng
+     chảy, nằm ngay dưới khối chữ, còn dải chương vẫn bị margin-top:auto đẩy
+     xuống đáy. Badge tự có nền giấy và viền vàng nên không cần màn chắn. */
+  main[data-page="home"] .status-note {
+    position: static;
+    z-index: 3;
+    order: 2;
+    align-self: flex-start;
+    margin: 0 1.5rem 0.75rem;
+  }
+
+  /* Eyebrow 12px màu --brown vốn đã sát ngưỡng ngay trên giấy trơn; thêm tranh
+     phía sau là tụt dưới ngưỡng AA 4,5. --ink-soft giữ được sắc nâu. */
+  main[data-page="home"] .hero-copy > .eyebrow { color: var(--ink-soft); }
+
+  /* Ba chỗ nén để chữ không chiếm sạch màn đầu (đo trước khi sửa: khối chữ cao
+     807px trên khung nhìn 812px). Hàng số liệu cũng là chỗ sửa lỗi cột số cứng
+     84px làm "690k" lấp kín cột trong khi "78"/"22" vẫn có khoảng thở. */
+  /* Hàng số liệu rơi đúng vào hộp bài sơn mài màu tối của tranh: đo được nhãn
+     11px chỉ còn tương phản 2,31, dưới xa ngưỡng AA 4,5. Màn chắn dọc của Hero
+     đã tan gần hết ở độ cao này nên phải cho hàng này một tấm nền riêng. */
+  main[data-page="home"] .proof-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-inline: -0.85rem;
+    padding: 1rem 0.85rem 0.9rem;
+    border-top: 0;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
+  }
+  main[data-page="home"] .proof-row div,
+  main[data-page="home"] .proof-row div + div {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+  main[data-page="home"] .proof-row dt { font-size: 1.9rem; line-height: 1.05; }
+  main[data-page="home"] .proof-row dd {
+    margin: 0.2rem 0 0;
+    padding: 0;
+    font-size: 0.68rem;
+    line-height: 1.3;
+    color: var(--ink-soft);   /* --muted quá nhạt cho tấm nền bán trong */
+  }
+
+  main[data-page="home"] .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  main[data-page="home"] .hero-actions .button { width: 100%; padding-inline: 0.75rem; }
+
+  main[data-page="home"] .hero h1 { font-size: clamp(2.9rem, 14vw, 3.6rem); }
+  /* --ink thay vì --ink-soft: đoạn dẫn nằm ở khúc màn chắn đã tan bớt, đo được
+     4,44 — sát dưới ngưỡng AA 4,5. Đậm hẳn thì lên 7 và cũng dễ đọc hơn ngoài
+     nắng, thứ mà bản dọc hay gặp. */
+  main[data-page="home"] .hero-lede { font-size: 1rem; color: var(--ink); }
+}
+
+/* --- Thanh mục lục ba gạch cho mobile ------------------------------------
+
+   Trang chủ vốn ẩn hẳn #main-nav và .menu-toggle (luật display:none !important
+   ở trên) và chỉ điều hướng bằng dải .hero-chapter-nav. Trên điện thoại dải đó
+   nằm dưới đáy Hero, nên trước khi cuộn tới thì trang không có lối đi nào.
+
+   Bật lại đúng bộ nút + panel có sẵn của main.css thay vì dựng cái mới:
+   ui/menu.js đã gắn aria-expanded và data-open, panel ≤900px đã có sẵn kiểu
+   cột. Ở đây chỉ cần cho chúng hiện lại và cho header thành một thanh thật.
+
+   Giữ nguyên luật display:none !important phía trên (tests/landing-layout
+   khoá chuỗi đó), nên phải ghi đè cũng bằng !important. */
+@media (max-width: 900px) {
+  body:has(main[data-page="home"]) .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    pointer-events: auto;   /* bản gốc tắt để chỉ còn logo bấm được */
+  }
+
+  body:has(main[data-page="home"]) .menu-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    /* Nền giấy để ba gạch không chìm khi trôi trên tranh. */
+    min-width: 46px;
+    min-height: 46px;
+    border: 1px solid color-mix(in srgb, var(--brown) 42%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--ink);
+  }
+
+  body:has(main[data-page="home"]) #main-nav { display: none !important; }
+  body:has(main[data-page="home"]) #main-nav[data-open] {
+    display: flex !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: calc(100svh - 100%);
+    overflow-y: auto;
+    padding: 1rem 1.25rem 1.5rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  /* Mọi mục là một đích chạm thật, không phải một dòng chữ 19px. Đo lần đầu:
+     33 link trong panel thì 26 cái cao 38px — toàn bộ là mục con. */
+  body:has(main[data-page="home"]) #main-nav .nav-group-top,
+  body:has(main[data-page="home"]) #main-nav .nav-cta {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
+  body:has(main[data-page="home"]) #main-nav .nav-sub a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* Badge "Đang hoàn thiện" nhường góc phải trên cho nút mục lục. */
+  main[data-page="home"] .status-note {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
   }
 }
