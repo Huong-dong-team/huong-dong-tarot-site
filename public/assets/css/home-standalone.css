@@ -903,53 +903,41 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
   }
 }
 
-/* --- Màn hình đầu trên điện thoại: tranh vào ngay màn đầu -----------------
+/* --- Màn hình đầu trên điện thoại: tranh làm nền -------------------------
 
    Trên desktop tranh nằm ở cột phải nên khách gặp ngay. Bản dọc xếp theo thứ
    tự DOM (chữ → nav chương → tranh) nên tranh rơi xuống tận màn thứ hai, và
    màn đầu chỉ còn chữ trên nền kem trơn.
 
-   Đã thử cho tranh phủ kín Hero làm nền tuyệt đối rồi bỏ: ảnh gốc tỉ lệ 3:2
-   nằm ngang, ép object-fit:cover vào khung dọc 375x812 thì chỉ còn một dải
-   dọc rộng ~30% của ảnh — rơi đúng mảng trời trống, nhìn ra nền kem chứ không
-   ra tranh. Cách dùng đúng tài sản này là để nó nằm ngang.
+   Nay tranh phủ kín Hero làm nền, chữ nổi lên trên qua một màn chắn.
 
-   Nên: Hero thành cột flex cao 100svh, tranh nhận phần không gian còn lại
-   dưới khối chữ (order đưa nó lên trước nav chương, không đổi HTML), và khối
-   chữ được nén lại đủ để chừa cho tranh một dải thật.
+   VÌ SAO KHÔNG CẮT MỘT TỆP ẢNH DỌC RIÊNG: preload Hero ở build.js dùng
+   imagesrcset + imagesizes="100vw" chứ không phải href + media, và
+   tests/critical-css khoá cứng "preload không được có media=" — vì bản nào
+   được chọn còn phụ thuộc mật độ điểm ảnh, không chỉ bề rộng. Thêm một
+   <source media> cho mobile sẽ làm preload lấy bản ngang còn <picture> lấy
+   bản dọc: đúng lỗi tải hai ảnh 106 KB họ đã sửa một lần rồi. Nên cắt bằng
+   object-position trên chính tệp đang có.
 
-   Ba chỗ nén, đo ở 375x812:
-     - hàng số liệu 78/22/690k đang xếp dọc ba dòng cao 219px → một hàng ba
-       cột, còn 84px. Cũng là chỗ sửa lỗi cột số cứng 84px làm "690k" lấp kín
-       cột trong khi "78"/"22" vẫn có khoảng thở;
-     - hai nút xếp chồng 120px → cạnh nhau 50px, vẫn quá ngưỡng chạm 44px;
-     - h1 từ 18vw xuống 14vw: ba dòng còn hai.
-
-   Header trang chủ là position:absolute chồng lên Hero (nav bị ẩn, chỉ còn
-   logo) nên lớp đệm trên phải tự chừa 90px chiều cao thật của nó. */
+   object-position: 76% là khung có ba lá bài và mặt trời đỏ. Lần trước tôi
+   đặt 58% và ra nền kem trơn — 58% rơi vào mảng trời trống bên trái tranh.
+   Tính: ảnh 3:2 phủ khung dọc thì cao khớp, chỉ cắt bề ngang; cửa sổ còn
+   ~31% bề ngang, mà cụm bài nằm quanh 68% bề ngang ảnh. */
 @media (max-width: 900px) {
   main[data-page="home"] .hero {
+    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100svh;
     overflow: hidden;
   }
 
-  main[data-page="home"] .hero-copy {
-    order: 1;
-    flex: none;
-    padding: 5.6rem 1.5rem 1.25rem;
-  }
-
-  /* Tranh nhận toàn bộ chỗ còn lại của màn đầu, chặn sàn để không bị bóp dẹt
-     trên máy thấp. Khung ngang nên cover chỉ cắt nhẹ so với ảnh gốc 3:2. */
   main[data-page="home"] .hero-visual {
-    order: 2;
-    position: relative;
-    flex: 1 1 auto;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     width: 100%;
-    min-height: 210px;
-    height: auto;
+    height: 100%;
   }
   main[data-page="home"] .hero-stage { height: 100%; }
   main[data-page="home"] .hero-stage picture,
@@ -957,29 +945,75 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 42%;
+    object-position: 76% center;
   }
 
-  /* Mép trên của dải tranh tan vào nền kem để không thành một đường cắt ngang. */
-  main[data-page="home"] .hero-visual::before {
+  /* Màn chắn: đặc ở vùng chữ, tan hẳn ở nửa dưới để lộ bài. Phải khai từng
+     thuộc tính chứ không dùng inset gọn — main.css đã đặt
+     .hero:after{left:36%;bottom:3%;opacity:.08} cho lớp hoa văn chìm, và cái
+     left:36% đó thắng, làm màn chắn chỉ phủ hai phần ba phải màn hình. */
+  main[data-page="home"] .hero::after {
     content: "";
+    display: block;
     position: absolute;
-    inset: 0 0 auto;
-    height: 84px;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 100%;
     z-index: 1;
-    background: linear-gradient(180deg, var(--paper) 0%, transparent 100%);
+    opacity: 1;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--paper) 94%, transparent) 0%,
+      color-mix(in srgb, var(--paper) 90%, transparent) 34%,
+      color-mix(in srgb, var(--paper) 72%, transparent) 52%,
+      color-mix(in srgb, var(--paper) 30%, transparent) 70%,
+      transparent 88%
+    );
     pointer-events: none;
   }
+  main[data-page="home"] .hero::before { display: none; }
 
-  main[data-page="home"] .hero-chapter-nav { order: 3; margin-top: 0; }
+  main[data-page="home"] .hero-copy {
+    position: relative;
+    z-index: 2;
+    padding: 5.6rem 1.5rem 1.25rem;   /* 5.6rem chừa header absolute cao 90px */
+  }
+  main[data-page="home"] .hero-chapter-nav { position: relative; z-index: 2; order: 3; margin-top: auto; }
 
-  /* Hàng số liệu: một hàng ba cột thay vì ba dòng xếp dọc. */
+  /* Badge rời góc phải trên (nhường nút mục lục) rồi rời luôn góc phải dưới:
+     đo được nó chồng lên dải chương, 750-785 so với 748-812. Nay cho vào dòng
+     chảy, nằm ngay dưới khối chữ, còn dải chương vẫn bị margin-top:auto đẩy
+     xuống đáy. Badge tự có nền giấy và viền vàng nên không cần màn chắn. */
+  main[data-page="home"] .status-note {
+    position: static;
+    z-index: 3;
+    order: 2;
+    align-self: flex-start;
+    margin: 0 1.5rem 0.75rem;
+  }
+
+  /* Eyebrow 12px màu --brown vốn đã sát ngưỡng ngay trên giấy trơn; thêm tranh
+     phía sau là tụt dưới ngưỡng AA 4,5. --ink-soft giữ được sắc nâu. */
+  main[data-page="home"] .hero-copy > .eyebrow { color: var(--ink-soft); }
+
+  /* Ba chỗ nén để chữ không chiếm sạch màn đầu (đo trước khi sửa: khối chữ cao
+     807px trên khung nhìn 812px). Hàng số liệu cũng là chỗ sửa lỗi cột số cứng
+     84px làm "690k" lấp kín cột trong khi "78"/"22" vẫn có khoảng thở. */
+  /* Hàng số liệu rơi đúng vào hộp bài sơn mài màu tối của tranh: đo được nhãn
+     11px chỉ còn tương phản 2,31, dưới xa ngưỡng AA 4,5. Màn chắn dọc của Hero
+     đã tan gần hết ở độ cao này nên phải cho hàng này một tấm nền riêng. */
   main[data-page="home"] .proof-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.75rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid color-mix(in srgb, var(--brown) 26%, transparent);
+    margin-inline: -0.85rem;
+    padding: 1rem 0.85rem 0.9rem;
+    border-top: 0;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--paper) 86%, transparent);
   }
   main[data-page="home"] .proof-row div,
   main[data-page="home"] .proof-row div + div {
@@ -993,6 +1027,7 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
     padding: 0;
     font-size: 0.68rem;
     line-height: 1.3;
+    color: var(--ink-soft);   /* --muted quá nhạt cho tấm nền bán trong */
   }
 
   main[data-page="home"] .hero-actions {
@@ -1003,73 +1038,10 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
   main[data-page="home"] .hero-actions .button { width: 100%; padding-inline: 0.75rem; }
 
   main[data-page="home"] .hero h1 { font-size: clamp(2.9rem, 14vw, 3.6rem); }
-  main[data-page="home"] .hero-lede { font-size: 1rem; }
-}
-
-/* --- Tranh làm nền cho headline và subheadline --------------------------
-
-   Dải tranh phía dưới cho khách thấy tác phẩm; khối chữ phía trên vẫn là nền
-   kem trơn. Thêm chính tranh đó làm nền sau headline/subheadline để cả màn đầu
-   là một mặt, không phải hai mảnh rời.
-
-   Hai điều đã thử và hỏng, ghi lại để khỏi làm lại:
-   - phủ ::before lên TRỌN Hero: đuôi gradient đục hẳn ở 82% nên nó sơn đè mất
-     dải tranh phía dưới. Nay chỉ phủ 66% trên.
-   - để nguyên ảnh không làm mờ: ảnh 3:2 nằm ngang bị cover cắt còn dải dọc hẹp,
-     rơi đúng vào một nhân vật nên sau chữ hiện ra một khuôn mặt to mờ. Làm mờ
-     18px biến nó thành chất liệu màu, đúng vai một tấm nền.
-
-   Ảnh mờ nằm ở ::before, màn chắn nằm ở ::after — để filter chỉ ăn vào ảnh chứ
-   không bôi nhoè luôn gradient. Dùng bản 480 (24 KB) vì đằng nào cũng mờ. */
-@media (max-width: 900px) {
-  /* Phải khai từng thuộc tính, không dùng inset gọn: main.css đã đặt sẵn
-     .hero:before{right:9%;top:3%;width:min(720px,55vw);opacity:.22} và
-     .hero:after{left:36%;bottom:3%;opacity:.08} cho lớp hoa văn chìm. Cái
-     width:min(720px,55vw) đó = 206px ở khung 375px, và nó thắng left/right,
-     nên nền tranh bị cắt thành một cột dọc giữa màn hình. */
-  main[data-page="home"] .hero::before,
-  main[data-page="home"] .hero::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: auto;
-    bottom: auto;
-    width: 100%;
-    height: 68%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* Lớp tranh: cover để không bao giờ hở mép, độ đậm thấp để thành nền chứ
-     không thành tranh thứ hai tranh chấp với dải tranh phía dưới. */
-  main[data-page="home"] .hero::before {
-    background: url("/assets/img/home-kirigami-480.webp") center 34% / cover no-repeat;
-    opacity: 0.16;  /* ghi đè .22 của lớp hoa văn chìm trong main.css */
-  }
-
-  /* Lớp tan: trong ở trên, về đúng màu giấy ở đáy để nền chìm hẳn trước khi
-     chạm dải tranh, không để lại một đường cắt ngang. */
-  main[data-page="home"] .hero::after {
-    opacity: 1;     /* main.css để .08 cho hoa văn chìm */
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      transparent 46%,
-      color-mix(in srgb, var(--paper) 62%, transparent) 76%,
-      var(--paper) 100%
-    );
-  }
-
-  main[data-page="home"] .hero-copy { position: relative; z-index: 2; }
-
-  /* Eyebrow 12px màu --brown vốn đã sát ngưỡng ngay trên nền giấy trơn; thêm
-     lớp tranh phía sau là tụt xuống 4,19 — dưới ngưỡng AA 4,5 cho chữ thường.
-     --ink-soft đưa lên khoảng 7 mà vẫn giữ được sắc nâu. */
-  main[data-page="home"] .hero-copy > .eyebrow { color: var(--ink-soft); }
-  main[data-page="home"] .hero-visual { z-index: 1; }
-  main[data-page="home"] .hero-chapter-nav { position: relative; z-index: 2; }
+  /* --ink thay vì --ink-soft: đoạn dẫn nằm ở khúc màn chắn đã tan bớt, đo được
+     4,44 — sát dưới ngưỡng AA 4,5. Đậm hẳn thì lên 7 và cũng dễ đọc hơn ngoài
+     nắng, thứ mà bản dọc hay gặp. */
+  main[data-page="home"] .hero-lede { font-size: 1rem; color: var(--ink); }
 }
 
 /* --- Thanh mục lục ba gạch cho mobile ------------------------------------
