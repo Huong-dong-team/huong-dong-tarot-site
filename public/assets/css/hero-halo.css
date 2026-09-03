@@ -300,6 +300,6 @@
 /* Màn hình hẹp: quầng sáng thu lại theo đúng tỉ lệ để không tràn ra ngoài
    khung ảnh — blur 26px trên một quầng đã bị thu nhỏ theo layout hẹp sẽ nuốt
    gần hết dải màu; hạ blur cho đỡ mờ nhòe. */
-@media (max-width: 480px) {
+@media (max-width: 430px) {
   .lacquer-halo::before { filter: blur(16px); }
 }

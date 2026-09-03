@@ -71,9 +71,11 @@ main[data-page="home"] .button-primary {
   color: #fffdf5;
 }
 
-main[data-page="home"] .button-primary:hover {
-  background: var(--red-dark);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  main[data-page="home"] .button-primary:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+  }
 }
 
 body:has(main[data-page="home"]) :is(#main-nav, .menu-toggle) {
@@ -138,9 +140,11 @@ main[data-page="home"] .button-secondary {
   color: var(--ink);
 }
 
-main[data-page="home"] .button-secondary:hover {
-  background: #e5b941;
-  transform: translateY(-2px);
+@media (hover: hover) {
+  main[data-page="home"] .button-secondary:hover {
+    background: #e5b941;
+    transform: translateY(-2px);
+  }
 }
 
 main[data-page="home"] .hero {
@@ -313,12 +317,19 @@ main[data-page="home"] .hero-chapter-nav a {
 main[data-page="home"] .hero-chapter-nav a:nth-child(odd) { transform: rotate(-0.7deg); }
 main[data-page="home"] .hero-chapter-nav a:nth-child(even) { transform: rotate(0.6deg); }
 
-main[data-page="home"] .hero-chapter-nav a:hover,
 main[data-page="home"] .hero-chapter-nav a:focus-visible {
   background: var(--paper-deep);
   color: var(--red-dark);
   box-shadow: 5px 9px 0 rgb(156 109 46 / 14%), 0 14px 30px rgb(61 43 26 / 18%);
   transform: translateX(-10px) rotate(0deg);
+}
+@media (hover: hover) {
+  main[data-page="home"] .hero-chapter-nav a:hover {
+    background: var(--paper-deep);
+    color: var(--red-dark);
+    box-shadow: 5px 9px 0 rgb(156 109 46 / 14%), 0 14px 30px rgb(61 43 26 / 18%);
+    transform: translateX(-10px) rotate(0deg);
+  }
 }
 
 main[data-page="home"] .hero-chapter-nav a:focus-visible {
@@ -435,7 +446,9 @@ main[data-page="home"] .path-image img {
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-main[data-page="home"] .path-card:hover .path-image img { transform: translateZ(32px) scale(1.04); }
+@media (hover: hover) {
+  main[data-page="home"] .path-card:hover .path-image img { transform: translateZ(32px) scale(1.04); }
+}
 
 main[data-page="home"] .path-label {
   margin-bottom: 0.6rem;
@@ -798,7 +811,6 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
        nên vẫn thắng bất kể viewport, giữ luôn giá trị đó cho gọn. */
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 75% 78%, 50% 100%, 25% 78%, 0% 100%);
   }
-  main[data-page="home"] .hero-chapter-nav a:hover,
   main[data-page="home"] .hero-chapter-nav a:focus-visible { transform: translateY(-3px) rotate(0deg); }
   main[data-page="home"] .hero-visual { position: relative; right: auto; width: 100%; height: min(76vw, 680px); }
   main[data-page="home"] .hero-stage,
@@ -863,5 +875,24 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
     transform: none !important;
     animation: none !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Khung nhìn thấp (điện thoại/tablet xoay ngang) -------------------- */
+
+/* Sàn 820px của clamp() ở .hero được đặt cho màn hình dọc. Khi máy xoay ngang
+   nó biến Hero thành gần hai màn hình phải cuộn qua trước khi tới nội dung:
+   đo trên 932×430 (iPhone Pro Max ngang) là 820px trên khung nhìn 430px, tức
+   1,91 màn. Dưới 901px đã có khối @media (max-width: 900px) hạ min-height về
+   auto rồi, nên chỉ cần vá đúng dải còn lại. */
+@media (min-width: 901px) and (max-height: 820px) {
+  main[data-page="home"] .hero { min-height: 100svh; }
+
+  /* Cùng một lỗi ở lớp đệm: 17vh là ý đồ thật ("một phần bảy khung nhìn"),
+     nhưng sàn 8.5rem = 136px của clamp() nuốt mất nó khi máy nằm ngang. Hạ sàn
+     xuống để số vh được quyết định — trên tablet ngang 1024x768 thì 17vh = 130px,
+     gần đúng con số cũ nên bố cục ở đó không xê dịch. */
+  main[data-page="home"] .hero-copy {
+    padding-block: clamp(4rem, 17vh, 10.5rem) clamp(2rem, 8vh, 6rem);
   }
 }

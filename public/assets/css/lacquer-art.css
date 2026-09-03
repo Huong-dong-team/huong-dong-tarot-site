@@ -217,7 +217,7 @@ body:not(.home-page)::before { opacity: .2; }
 [data-page-art="cua-hang"]          { --hero-art-opacity: .135; --hero-art-position: center bottom; }
 
 /* Tablet: .095–.11. */
-@media (max-width: 1023px) {
+@media (max-width: 1100px) {
   [data-page-art="home-content"]      { --art-opacity: .075; }
   [data-page-art="tarot-la-gi"]       { --hero-art-opacity: .11;  --hero-art-position: right 38% top 0%; }
   [data-page-art="la-bai"]            { --hero-art-opacity: .105; --hero-art-position: left 30% top 0%; }
@@ -232,7 +232,7 @@ body:not(.home-page)::before { opacity: .2; }
 }
 
 /* Mobile: .07–.08; gradient theo chiều dọc để bảo vệ cột chữ. */
-@media (max-width: 767px) {
+@media (max-width: 760px) {
   [data-page-art="home-content"]      { --art-opacity: .055; }
   [data-page-art="tarot-la-gi"]       { --hero-art-opacity: .08; }
   [data-page-art="la-bai"]            { --hero-art-opacity: .075; }

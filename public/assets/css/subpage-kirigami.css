@@ -111,9 +111,11 @@ body:has(main[data-page-art]) {
   animation: kirigami-idle 6.8s ease-in-out calc(var(--kirigami-order, 0) * -1.1s) infinite alternate;
 }
 
-.page-hero.lacquer-hero:hover .kirigami-frame {
-  filter: drop-shadow(0 -13px 20px rgb(10 6 4 / 28%));
-  transform: translate3d(0, -2px, 76px) rotateX(1.2deg);
+@media (hover: hover) {
+  .page-hero.lacquer-hero:hover .kirigami-frame {
+    filter: drop-shadow(0 -13px 20px rgb(10 6 4 / 28%));
+    transform: translate3d(0, -2px, 76px) rotateX(1.2deg);
+  }
 }
 
 @keyframes kirigami-idle {
@@ -292,9 +294,13 @@ body:has(main[data-page-art]) {
   background: var(--kirigami-paper-high);
 }
 
-[data-page-art] :is(.v2-card, .price-tier, .news-grid article, .museum-exhibit):hover,
 [data-page-art] :is(.v2-card, .price-tier, .news-grid article, .museum-exhibit):focus-within {
   transform: translateY(-5px) rotateX(.6deg);
+}
+@media (hover: hover) {
+  [data-page-art] :is(.v2-card, .price-tier, .news-grid article, .museum-exhibit):hover {
+    transform: translateY(-5px) rotateX(.6deg);
+  }
 }
 
 [data-page-art] :is(.button, .museum-room-nav a, .museum-dialog-actions a, .museum-dialog-actions button) {
