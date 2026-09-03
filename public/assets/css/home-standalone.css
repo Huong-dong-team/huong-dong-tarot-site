@@ -896,3 +896,107 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
     padding-block: clamp(4rem, 17vh, 10.5rem) clamp(2rem, 8vh, 6rem);
   }
 }
+
+/* --- Màn hình đầu trên điện thoại: tranh vào ngay màn đầu -----------------
+
+   Trên desktop tranh nằm ở cột phải nên khách gặp ngay. Bản dọc xếp theo thứ
+   tự DOM (chữ → nav chương → tranh) nên tranh rơi xuống tận màn thứ hai, và
+   màn đầu chỉ còn chữ trên nền kem trơn.
+
+   Đã thử cho tranh phủ kín Hero làm nền tuyệt đối rồi bỏ: ảnh gốc tỉ lệ 3:2
+   nằm ngang, ép object-fit:cover vào khung dọc 375x812 thì chỉ còn một dải
+   dọc rộng ~30% của ảnh — rơi đúng mảng trời trống, nhìn ra nền kem chứ không
+   ra tranh. Cách dùng đúng tài sản này là để nó nằm ngang.
+
+   Nên: Hero thành cột flex cao 100svh, tranh nhận phần không gian còn lại
+   dưới khối chữ (order đưa nó lên trước nav chương, không đổi HTML), và khối
+   chữ được nén lại đủ để chừa cho tranh một dải thật.
+
+   Ba chỗ nén, đo ở 375x812:
+     - hàng số liệu 78/22/690k đang xếp dọc ba dòng cao 219px → một hàng ba
+       cột, còn 84px. Cũng là chỗ sửa lỗi cột số cứng 84px làm "690k" lấp kín
+       cột trong khi "78"/"22" vẫn có khoảng thở;
+     - hai nút xếp chồng 120px → cạnh nhau 50px, vẫn quá ngưỡng chạm 44px;
+     - h1 từ 18vw xuống 14vw: ba dòng còn hai.
+
+   Header trang chủ là position:absolute chồng lên Hero (nav bị ẩn, chỉ còn
+   logo) nên lớp đệm trên phải tự chừa 90px chiều cao thật của nó. */
+@media (max-width: 900px) {
+  main[data-page="home"] .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    overflow: hidden;
+  }
+
+  main[data-page="home"] .hero-copy {
+    order: 1;
+    flex: none;
+    padding: 5.6rem 1.5rem 1.25rem;
+  }
+
+  /* Tranh nhận toàn bộ chỗ còn lại của màn đầu, chặn sàn để không bị bóp dẹt
+     trên máy thấp. Khung ngang nên cover chỉ cắt nhẹ so với ảnh gốc 3:2. */
+  main[data-page="home"] .hero-visual {
+    order: 2;
+    position: relative;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 210px;
+    height: auto;
+  }
+  main[data-page="home"] .hero-stage { height: 100%; }
+  main[data-page="home"] .hero-stage picture,
+  main[data-page="home"] .hero-stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+  }
+
+  /* Mép trên của dải tranh tan vào nền kem để không thành một đường cắt ngang. */
+  main[data-page="home"] .hero-visual::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 84px;
+    z-index: 1;
+    background: linear-gradient(180deg, var(--paper) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  main[data-page="home"] .hero-chapter-nav { order: 3; margin-top: 0; }
+  main[data-page="home"] .status-note { order: 4; }
+
+  /* Hàng số liệu: một hàng ba cột thay vì ba dòng xếp dọc. */
+  main[data-page="home"] .proof-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--brown) 26%, transparent);
+  }
+  main[data-page="home"] .proof-row div,
+  main[data-page="home"] .proof-row div + div {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+  main[data-page="home"] .proof-row dt { font-size: 1.9rem; line-height: 1.05; }
+  main[data-page="home"] .proof-row dd {
+    margin: 0.2rem 0 0;
+    padding: 0;
+    font-size: 0.68rem;
+    line-height: 1.3;
+  }
+
+  main[data-page="home"] .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  main[data-page="home"] .hero-actions .button { width: 100%; padding-inline: 0.75rem; }
+
+  main[data-page="home"] .hero h1 { font-size: clamp(2.9rem, 14vw, 3.6rem); }
+  main[data-page="home"] .hero-lede { font-size: 1rem; }
+}
