@@ -170,11 +170,17 @@ body:not(.home-page) {
   transition: transform 420ms var(--subpage-ease), box-shadow 420ms var(--subpage-ease), border-color 420ms ease;
 }
 
-[data-page-art] .v2-card:hover,
 [data-page-art] .v2-card:focus-within {
   border-color: rgb(142 91 31 / 50%);
   box-shadow: var(--subpage-shadow);
   transform: translateY(-5px);
+}
+@media (hover: hover) {
+  [data-page-art] .v2-card:hover {
+    border-color: rgb(142 91 31 / 50%);
+    box-shadow: var(--subpage-shadow);
+    transform: translateY(-5px);
+  }
 }
 
 [data-page-art] .v2-num {
@@ -284,9 +290,11 @@ body:not(.home-page) {
 .section-card-fan img:nth-child(1) { transform: translate(12px, 12px) rotate(-7deg); }
 .section-card-fan img:nth-child(2) { z-index: 2; transform: translateY(-14px); }
 .section-card-fan img:nth-child(3) { transform: translate(-12px, 12px) rotate(7deg); }
-.section-card-fan:hover img:nth-child(1) { transform: translate(0, 4px) rotate(-10deg); }
-.section-card-fan:hover img:nth-child(2) { transform: translateY(-24px); }
-.section-card-fan:hover img:nth-child(3) { transform: translate(0, 4px) rotate(10deg); }
+@media (hover: hover) {
+  .section-card-fan:hover img:nth-child(1) { transform: translate(0, 4px) rotate(-10deg); }
+  .section-card-fan:hover img:nth-child(2) { transform: translateY(-24px); }
+  .section-card-fan:hover img:nth-child(3) { transform: translate(0, 4px) rotate(10deg); }
+}
 
 .portrait-card > img {
   width: calc(100% + clamp(44px, 5vw, 68px));
@@ -308,11 +316,17 @@ body:not(.home-page) {
     0 12px 28px rgb(67 39 20 / 7%);
 }
 
-[data-page-art] .portrait-card:hover,
 [data-page-art] .portrait-card:focus-within {
   box-shadow:
     8px 8px 0 #efe1c6,
     var(--subpage-shadow);
+}
+@media (hover: hover) {
+  [data-page-art] .portrait-card:hover {
+    box-shadow:
+      8px 8px 0 #efe1c6,
+      var(--subpage-shadow);
+  }
 }
 
 /* --- Thư viện và tin tức -------------------------------------------- */
@@ -355,7 +369,9 @@ body:not(.home-page) {
 
 [data-page-art="la-bai"] .filters button:last-child { border-right: 0; }
 
-[data-page-art="la-bai"] .filters button:hover { background: var(--subpage-gold-soft); }
+@media (hover: hover) {
+  [data-page-art="la-bai"] .filters button:hover { background: var(--subpage-gold-soft); }
+}
 
 [data-page-art="la-bai"] .filters button[aria-pressed="true"] {
   background: var(--subpage-cinnabar);
@@ -428,10 +444,15 @@ body:not(.home-page) {
   scroll-margin-top: 110px;
 }
 
-.price-tier:hover,
 .price-tier:focus-within {
   transform: translateY(-7px);
   box-shadow: var(--subpage-shadow);
+}
+@media (hover: hover) {
+  .price-tier:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--subpage-shadow);
+  }
 }
 
 .price-tier.is-featured {
@@ -498,8 +519,10 @@ body:not(.home-page) {
   transition: transform 720ms var(--subpage-ease);
 }
 
-.price-tier:hover .price-tier-visual img {
-  transform: scale(1.035) translateY(-3px);
+@media (hover: hover) {
+  .price-tier:hover .price-tier-visual img {
+    transform: scale(1.035) translateY(-3px);
+  }
 }
 
 .price-tier .button {
@@ -536,7 +559,7 @@ body:not(.home-page) {
 
 /* --- Responsive ------------------------------------------------------ */
 
-@media (max-width: 980px) {
+@media (max-width: 900px) {
   [data-page-art] .page-hero.lacquer-hero > :is(h1, p) {
     width: min(760px, 78%);
     max-width: min(760px, 78%);
@@ -577,7 +600,7 @@ body:not(.home-page) {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   [data-page-art] .page-hero.lacquer-hero {
     min-height: 430px;
     justify-content: flex-end;

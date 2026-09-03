@@ -111,7 +111,8 @@ button { cursor: pointer; }
   font-weight: 600;
 }
 #main-nav a { color: var(--ink); opacity: .85; white-space: nowrap; }
-#main-nav a:hover, #main-nav a[aria-current="page"] { color: var(--gold-ink); opacity: 1; }
+#main-nav a[aria-current="page"] { color: var(--gold-ink); opacity: 1; }
+@media (hover: hover) { #main-nav a:hover { color: var(--gold-ink); opacity: 1; } }
 .nav-cta {
   padding: 8px 16px;
   border: 1px solid var(--magenta-ink);
@@ -120,7 +121,8 @@ button { cursor: pointer; }
   color: var(--on-brown);
   font-weight: 600;
 }
-#main-nav .nav-cta, #main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; }
+#main-nav .nav-cta { color: var(--on-brown); opacity: 1; }
+@media (hover: hover) { #main-nav .nav-cta:hover { color: var(--on-brown); opacity: 1; } }
 
 /* Menu con phải có ở critical CSS: header nằm trên màn hình đầu, còn main.css
    tải không chặn render. Thiếu luật ẩn này sẽ làm danh sách con lóe lên. */

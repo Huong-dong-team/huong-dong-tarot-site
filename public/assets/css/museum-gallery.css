@@ -56,11 +56,17 @@ main[data-page="library"] .museum-room-nav a {
   transition: background-color 220ms ease, color 220ms ease, transform 220ms var(--subpage-ease);
 }
 
-main[data-page="library"] .museum-room-nav a:hover,
 main[data-page="library"] .museum-room-nav a:focus-visible {
   background: var(--museum-label);
   color: var(--subpage-cinnabar);
   transform: translateY(-3px);
+}
+@media (hover: hover) {
+  main[data-page="library"] .museum-room-nav a:hover {
+    background: var(--museum-label);
+    color: var(--subpage-cinnabar);
+    transform: translateY(-3px);
+  }
 }
 
 main[data-page="library"] .museum-room-nav a:focus-visible,
@@ -223,10 +229,15 @@ main[data-page="library"] .museum-exhibit {
   transition: transform 360ms var(--subpage-ease);
 }
 
-main[data-page="library"] .museum-exhibit:hover,
 main[data-page="library"] .museum-exhibit:focus-within {
   border-color: transparent;
   transform: translateY(-7px);
+}
+@media (hover: hover) {
+  main[data-page="library"] .museum-exhibit:hover {
+    border-color: transparent;
+    transform: translateY(-7px);
+  }
 }
 
 main[data-page="library"] .museum-frame {
@@ -251,10 +262,15 @@ main[data-page="library"] .museum-frame img {
   transition: filter 300ms ease, transform 480ms var(--subpage-ease);
 }
 
-main[data-page="library"] .museum-exhibit:hover .museum-frame img,
 main[data-page="library"] .museum-exhibit:focus-within .museum-frame img {
   filter: saturate(1.06) contrast(1.06);
   transform: scale(1.012);
+}
+@media (hover: hover) {
+  main[data-page="library"] .museum-exhibit:hover .museum-frame img {
+    filter: saturate(1.06) contrast(1.06);
+    transform: scale(1.012);
+  }
 }
 
 main[data-page="library"] .museum-index {
@@ -495,7 +511,7 @@ main[data-page="library"] .museum-dialog-actions button:disabled {
   cursor: not-allowed;
 }
 
-@media (max-width: 1060px) {
+@media (max-width: 1100px) {
   main[data-page="library"] .museum-wall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   main[data-page="library"] .museum-foreword { grid-template-columns: 1fr; }
   main[data-page="library"] .museum-counts { grid-column: 1; grid-row: auto; }
@@ -511,7 +527,7 @@ main[data-page="library"] .museum-dialog-actions button:disabled {
   main[data-page="library"] .museum-dialog-copy { padding-top: 34px; }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 760px) {
   main[data-page="library"] .museum-hero > :is(h1, p),
   main[data-page="library"] .museum-room-nav { width: 100%; }
   main[data-page="library"] .museum-room-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -522,7 +538,7 @@ main[data-page="library"] .museum-dialog-actions button:disabled {
   main[data-page="library"] .museum-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 460px) {
+@media (max-width: 430px) {
   main[data-page="library"] .museum-hero > h1 { font-size: 59px; }
   main[data-page="library"] .museum-foreword,
   main[data-page="library"] .museum-gallery-heading,
