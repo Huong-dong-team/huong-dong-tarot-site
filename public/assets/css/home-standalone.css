@@ -78,8 +78,14 @@ main[data-page="home"] .button-primary {
   }
 }
 
-body:has(main[data-page="home"]) :is(#main-nav, .menu-toggle) {
-  display: none !important;
+/* Chỉ ẩn từ 901px trở lên. Dưới đó trang chủ dùng lại nút ba gạch + panel của
+   main.css — xem khối "Thanh mục lục ba gạch cho mobile" ở cuối tệp. Luật này
+   dùng :is() nên độ ưu tiên tính theo #main-nav; ghi đè bằng selector class ở
+   dưới sẽ thua kể cả khi cùng !important, nên thu hẹp ngay tại đây. */
+@media (min-width: 901px) {
+  body:has(main[data-page="home"]) :is(#main-nav, .menu-toggle) {
+    display: none !important;
+  }
 }
 
 main[data-page="home"] {
@@ -966,7 +972,6 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
   }
 
   main[data-page="home"] .hero-chapter-nav { order: 3; margin-top: 0; }
-  main[data-page="home"] .status-note { order: 4; }
 
   /* Hàng số liệu: một hàng ba cột thay vì ba dòng xếp dọc. */
   main[data-page="home"] .proof-row {
@@ -999,4 +1004,146 @@ body:has(main[data-page="home"]) .ambient-sound-toggle {
 
   main[data-page="home"] .hero h1 { font-size: clamp(2.9rem, 14vw, 3.6rem); }
   main[data-page="home"] .hero-lede { font-size: 1rem; }
+}
+
+/* --- Tranh làm nền cho headline và subheadline --------------------------
+
+   Dải tranh phía dưới cho khách thấy tác phẩm; khối chữ phía trên vẫn là nền
+   kem trơn. Thêm chính tranh đó làm nền sau headline/subheadline để cả màn đầu
+   là một mặt, không phải hai mảnh rời.
+
+   Hai điều đã thử và hỏng, ghi lại để khỏi làm lại:
+   - phủ ::before lên TRỌN Hero: đuôi gradient đục hẳn ở 82% nên nó sơn đè mất
+     dải tranh phía dưới. Nay chỉ phủ 66% trên.
+   - để nguyên ảnh không làm mờ: ảnh 3:2 nằm ngang bị cover cắt còn dải dọc hẹp,
+     rơi đúng vào một nhân vật nên sau chữ hiện ra một khuôn mặt to mờ. Làm mờ
+     18px biến nó thành chất liệu màu, đúng vai một tấm nền.
+
+   Ảnh mờ nằm ở ::before, màn chắn nằm ở ::after — để filter chỉ ăn vào ảnh chứ
+   không bôi nhoè luôn gradient. Dùng bản 480 (24 KB) vì đằng nào cũng mờ. */
+@media (max-width: 900px) {
+  /* Phải khai từng thuộc tính, không dùng inset gọn: main.css đã đặt sẵn
+     .hero:before{right:9%;top:3%;width:min(720px,55vw);opacity:.22} và
+     .hero:after{left:36%;bottom:3%;opacity:.08} cho lớp hoa văn chìm. Cái
+     width:min(720px,55vw) đó = 206px ở khung 375px, và nó thắng left/right,
+     nên nền tranh bị cắt thành một cột dọc giữa màn hình. */
+  main[data-page="home"] .hero::before,
+  main[data-page="home"] .hero::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: 68%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Lớp tranh: cover để không bao giờ hở mép, độ đậm thấp để thành nền chứ
+     không thành tranh thứ hai tranh chấp với dải tranh phía dưới. */
+  main[data-page="home"] .hero::before {
+    background: url("/assets/img/home-kirigami-480.webp") center 34% / cover no-repeat;
+    opacity: 0.16;  /* ghi đè .22 của lớp hoa văn chìm trong main.css */
+  }
+
+  /* Lớp tan: trong ở trên, về đúng màu giấy ở đáy để nền chìm hẳn trước khi
+     chạm dải tranh, không để lại một đường cắt ngang. */
+  main[data-page="home"] .hero::after {
+    opacity: 1;     /* main.css để .08 cho hoa văn chìm */
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 46%,
+      color-mix(in srgb, var(--paper) 62%, transparent) 76%,
+      var(--paper) 100%
+    );
+  }
+
+  main[data-page="home"] .hero-copy { position: relative; z-index: 2; }
+
+  /* Eyebrow 12px màu --brown vốn đã sát ngưỡng ngay trên nền giấy trơn; thêm
+     lớp tranh phía sau là tụt xuống 4,19 — dưới ngưỡng AA 4,5 cho chữ thường.
+     --ink-soft đưa lên khoảng 7 mà vẫn giữ được sắc nâu. */
+  main[data-page="home"] .hero-copy > .eyebrow { color: var(--ink-soft); }
+  main[data-page="home"] .hero-visual { z-index: 1; }
+  main[data-page="home"] .hero-chapter-nav { position: relative; z-index: 2; }
+}
+
+/* --- Thanh mục lục ba gạch cho mobile ------------------------------------
+
+   Trang chủ vốn ẩn hẳn #main-nav và .menu-toggle (luật display:none !important
+   ở trên) và chỉ điều hướng bằng dải .hero-chapter-nav. Trên điện thoại dải đó
+   nằm dưới đáy Hero, nên trước khi cuộn tới thì trang không có lối đi nào.
+
+   Bật lại đúng bộ nút + panel có sẵn của main.css thay vì dựng cái mới:
+   ui/menu.js đã gắn aria-expanded và data-open, panel ≤900px đã có sẵn kiểu
+   cột. Ở đây chỉ cần cho chúng hiện lại và cho header thành một thanh thật.
+
+   Giữ nguyên luật display:none !important phía trên (tests/landing-layout
+   khoá chuỗi đó), nên phải ghi đè cũng bằng !important. */
+@media (max-width: 900px) {
+  body:has(main[data-page="home"]) .site-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    pointer-events: auto;   /* bản gốc tắt để chỉ còn logo bấm được */
+  }
+
+  body:has(main[data-page="home"]) .menu-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    /* Nền giấy để ba gạch không chìm khi trôi trên tranh. */
+    min-width: 46px;
+    min-height: 46px;
+    border: 1px solid color-mix(in srgb, var(--brown) 42%, transparent);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--ink);
+  }
+
+  body:has(main[data-page="home"]) #main-nav { display: none !important; }
+  body:has(main[data-page="home"]) #main-nav[data-open] {
+    display: flex !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: calc(100svh - 100%);
+    overflow-y: auto;
+    padding: 1rem 1.25rem 1.5rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--ink) 16%, transparent);
+  }
+
+  /* Mọi mục là một đích chạm thật, không phải một dòng chữ 19px. Đo lần đầu:
+     33 link trong panel thì 26 cái cao 38px — toàn bộ là mục con. */
+  body:has(main[data-page="home"]) #main-nav .nav-group-top,
+  body:has(main[data-page="home"]) #main-nav .nav-cta {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+  }
+  body:has(main[data-page="home"]) #main-nav .nav-sub a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* Badge "Đang hoàn thiện" nhường góc phải trên cho nút mục lục. */
+  main[data-page="home"] .status-note {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+  }
 }
