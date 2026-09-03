@@ -517,6 +517,56 @@ function withPageArt(content, artId) {
   return `${head}${body}${closeMain}${tail}`;
 }
 
+/* Mục điều hướng nào đang sáng. main.css và critical.css đều có sẵn luật
+   #main-nav a[aria-current="page"] nhưng nó chưa bao giờ khớp: thanh điều
+   hướng nằm nguyên văn trong _layout.html nên không chỗ nào biết route đang
+   dựng. Chỉ layout() biết, nên đánh dấu ở đây.
+
+   Quy ước: CHỈ mục cấp một mang aria-current, và mỗi trang sáng nhiều nhất một
+   mục. Trang con đánh dấu mục cha chứ không đánh dấu mục trong .nav-sub, vì
+   .nav-sub ẩn cho tới khi hover trên desktop — đánh dấu ở đó thì dấu hiệu
+   "đang ở đâu" không bao giờ hiện ra trên thanh. Đánh dấu cả hai cũng không
+   được: trình đọc màn hình sẽ đọc "trang hiện tại" hai lần trong một menu.
+
+   Bảng đi theo cấu trúc menu con chứ không theo hình dạng URL, nên
+   /la-bai-hom-nay/ thuộc "Trải bài" và /gioi-thieu/ thuộc "Chuyện Hường Đông"
+   dù URL không nằm trong nhánh cha. Cũng vì vậy /huyen-su/ và 34 trang toàn
+   văn của nó thuộc "Bảo tàng 78 lá": Huyền sử không còn mục cấp một riêng, nội
+   dung đã dọn vào /la-bai/#phong-huyen-su và menu chỉ còn đường đó dẫn tới.
+
+   Giống PAGE_ART, route ngoài bảng không bị gán bừa: trang chủ đã có logo
+   thương hiệu làm dấu, còn /quyen-rieng-tu/ và /404.html không thuộc mục nào
+   cả. */
+const NAV_SECTIONS = [
+  { href: "/tarot-la-gi/", match: (p) => p === "/tarot-la-gi/" || p.startsWith("/huong-dan-tarot/") },
+  { href: "/la-bai/",      match: (p) => p.startsWith("/la-bai/") || p.startsWith("/huyen-su/") },
+  { href: "/trai-bai/",    match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
+  { href: "/healing/",     match: (p) => p === "/healing/" },
+  { href: "/tin-tuc/",     match: (p) => p.startsWith("/tin-tuc/") || p === "/gioi-thieu/" },
+  { href: "/cua-hang/",    match: (p) => p.startsWith("/cua-hang/") },
+];
+
+/* Dựng sẵn sáu biến thể _layout thay vì vá lại HTML của từng trang: cả trăm
+   trang cùng nhánh dùng chung một biến thể. Dựng ngay lúc nạp cũng là chốt
+   chặn — đổi tên hay bỏ một mục trong _layout.html mà quên bảng trên thì build
+   dừng ngay, chứ không im lặng phát hành một thanh điều hướng không bao giờ
+   sáng như trước. */
+const layoutVariants = new Map(NAV_SECTIONS.map(({ href }) => {
+  const anchor = `<a class="nav-group-top" href="${href}">`;
+  if (!templates._layout.includes(anchor)) throw new Error(`_layout.html không còn mục điều hướng cấp một ${href}.`);
+  return [href, templates._layout.replace(anchor, `<a class="nav-group-top" href="${href}" aria-current="page">`)];
+}));
+
+/**
+ * Bản _layout đã đánh dấu mục điều hướng của route.
+ * @param {string} routePath
+ * @returns {string}
+ */
+function layoutTemplate(routePath) {
+  const section = NAV_SECTIONS.find((entry) => entry.match(routePath));
+  return section ? layoutVariants.get(section.href) : templates._layout;
+}
+
 /**
  * Dựng một trang hoàn chỉnh từ template _layout.
  *
@@ -558,7 +608,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
       '<link rel="preload" href="/assets/fonts/fontasia-vh.woff2" as="font" type="font/woff2" crossorigin>',
       '<link rel="preload" href="/assets/fonts/dfvn-tan-harmoni.woff2" as="font" type="font/woff2" crossorigin>',
     ];
-  return renderString(templates._layout, {
+  return renderString(layoutTemplate(routePath), {
     ...layoutSettings,
     criticalCss: bodyClass === "home-page" ? criticalBaseCss : criticalInnerCss,
     head: seoHead({ site: data.site, title, description, path: routePath, image, type, jsonLd: schemas, robots }),
