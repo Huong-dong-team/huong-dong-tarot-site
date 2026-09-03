@@ -49,6 +49,19 @@ Kiểm tra đã chạy:
 - `npm run publish:editorial-pr1` — dry-run đúng 8 lá + 2 bài; Firestore không
   bị ghi.
 
+Trạng thái sau khi merge và triển khai ngày 03/09/2026:
+
+- PR #78 đã được chủ dự án merge vào `main` tại commit
+  `0136fd376474ce56e5692046c9eed07bd6b318df`.
+- Lệnh `publish:editorial-pr1 -- --apply` đã merge đúng trường nội dung của 8
+  lá + 2 bài vào Firestore project `huong-dong-tarot-729d2`.
+- Bản production được dựng lại từ Firestore: đủ 78 trang lá, 2 bài tin và 95
+  URL; 153/153 kiểm thử và type-check đều đạt.
+- Firebase Hosting đã release thành công 430 tệp. Kiểm tra ngoài CDN xác nhận
+  nội dung mới xuất hiện tại `https://huongdong.id.vn/` và
+  `https://huongdong.web.app/`, gồm trang Tarot là gì, The Fool và bài RWS.
+- Không chạy lệnh seed toàn bộ và không thay đổi 70 lá ngoài phạm vi PR1.
+
 ## 02/09/2026 · `feat/kirigami-all-subpages-v2`
 
 Phạm vi đã thay đổi:
