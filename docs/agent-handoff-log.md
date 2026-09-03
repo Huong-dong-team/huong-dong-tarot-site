@@ -1,5 +1,54 @@
 # Nhật ký bàn giao tác vụ
 
+## 02/09/2026 · PR #78 · `content/editorial-foundation-beginner`
+
+Phạm vi đã thay đổi:
+
+- Đặt chuẩn biên tập dùng cho toàn website: chúng tôi xưng “chúng tôi”, gọi
+  người đọc là “bạn”, kể trước–giảng sau, giải thích thuật ngữ cho người mới và
+  viết câu nội dung có chủ ngữ–vị ngữ rõ ràng.
+- Viết lại phần nền ở Tarot là gì, bốn trang sổ tay, Trải bài, Healing, Bảo
+  tàng 78 lá, Giới thiệu và Cửa hàng mà không đổi CSS, asset hay chức năng.
+- Chuyển hồ sơ lá sang thứ tự câu chuyện → ý nghĩa; biên tập sâu 8 lá mẫu: The
+  Fool, Justice, Death, Ace of Wands, Queen of Wands, Seven of Cups, Three of
+  Swords và Ten of Pentacles.
+- Sửa các trường ứng dụng bị lệch nghĩa ở Seven of Cups, Three of Swords và
+  Ten of Pentacles; thay bộ từ khóa ngược chung của 8 lá bằng nội dung riêng.
+- Mở rộng hai bài nền trong Chuyện Hường Đông và bổ sung bản đồ content section,
+  sổ nguồn, bộ dò trùng chuỗi với kho Mystic House cùng test biên tập.
+- Thêm lệnh xuất bản Firestore có dry-run mặc định. Chế độ ghi chỉ merge trường
+  nội dung của đúng 8 lá + 2 bài và yêu cầu xác nhận đúng Firebase project.
+
+Không thay đổi:
+
+- Không sửa `templates/home.html` vì PR #65 đang chạm cùng tệp; trang chủ chỉ
+  được kiểm kê và sẽ đồng bộ copy ở một đợt sau khi PR đó kết thúc.
+- Không sửa 70 lá ngoài nhóm mẫu, 34 truyện Lĩnh Nam, nguồn, ảnh, trạng thái
+  duyệt văn hóa, CSS, JavaScript giao diện, workflow hoặc cấu hình Firebase.
+- Không ghi Firestore, không merge `main` và không deploy production trong PR.
+
+Điểm tránh giẫm chân:
+
+- `docs/editorial-voice-guide.md` là hợp đồng giọng văn cho các batch tiếp theo;
+  nếu thay đại từ hoặc thứ tự kể–giảng, cần cập nhật test biên tập cùng lúc.
+- `scripts/publish-editorial-pr1.mjs` là cầu nối hẹp sang Firestore. Không thay
+  bằng `npm run seed`, vì lệnh seed rộng sẽ merge toàn bộ 78 lá và cấu hình site.
+- 70 lá còn lại vẫn mang bộ từ khóa ngược chung và nhiều trường ứng dụng theo
+  khuôn cấp số. Chúng cần được biên tập theo từng batch có thể duyệt, không dùng
+  thao tác thay thế hàng loạt.
+- Bản DOCX người dùng cung cấp đã được đối chiếu: 34 chương trong
+  `data/lncq-chapters.json` trùng nội dung chuẩn hóa, nên không nhập lại.
+
+Kiểm tra đã chạy:
+
+- `npm run build:local` — sinh 78 trang lá, 2 bài tin và 95 URL.
+- `npm test` — 153/153 kiểm thử đạt.
+- `npm run check:types` — đạt.
+- `MYSTIC_HOUSE_ARCHIVE=… npm run audit:content` — 20 phần Hường Đông được đối
+  chiếu với 16 tệp tham khảo; không phát hiện chuỗi trùng 14 từ.
+- `npm run publish:editorial-pr1` — dry-run đúng 8 lá + 2 bài; Firestore không
+  bị ghi.
+
 ## 02/09/2026 · `feat/kirigami-all-subpages-v2`
 
 Phạm vi đã thay đổi:
