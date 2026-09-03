@@ -3,11 +3,17 @@
 Repo này phục vụ **huongdong.id.vn**. Từ 21/08/2026 đây là repo duy nhất; repo cũ
 `Huong-Dong-Claude-Handover-2026-08-09-update` không còn dùng để phát hành.
 
+> **Sắp sửa CSS hay bố cục?** Đọc [`AGENTS.md`](AGENTS.md) trước — desktop,
+> tablet và điện thoại dùng chung một bộ template và một bộ CSS, nên "làm bản
+> desktop khác bản mobile" ở đây nghĩa là thêm luật theo khung nhìn chứ không
+> phải tách nhánh giao diện. Thang breakpoint nằm ở
+> [`docs/breakpoints.md`](docs/breakpoints.md).
+
 ## Bố cục
 
 ```
 /                     mã nguồn site — build ra dist/ rồi deploy
-  templates/          14 template trang
+  templates/          21 template trang
   data/               lncq-22.json, lncq-chapters.json — lớp dẫn nguồn LNCQ
   public/assets/      css, js, ảnh, font tự host
   scripts/            build.js, seed.js, serve.js
@@ -23,7 +29,7 @@ archive/              toàn bộ repo cũ, giữ nguyên để tra cứu — kh�
 ```bash
 npm run build:local   # dựng bằng dữ liệu seed, không cần khoá Firebase
 npm run build         # dựng từ Firestore thật
-npm test              # 22 kiểm thử
+npm test              # 156 kiểm thử (cần chạy build:local trước)
 npm run deploy        # build + firebase deploy --only hosting
 ```
 
