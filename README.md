@@ -9,6 +9,29 @@ Repo này phục vụ **huongdong.id.vn**. Từ 21/08/2026 đây là repo duy nh
 > phải tách nhánh giao diện. Thang breakpoint nằm ở
 > [`docs/breakpoints.md`](docs/breakpoints.md).
 
+## Phạm vi sản phẩm bắt buộc
+
+Hường Đông là website **học Tarot, tra cứu tư liệu và bán sản phẩm**; không phải
+dịch vụ bói toán. Điều hướng công khai chỉ tập trung vào 5 khu vực:
+
+1. Tarot là gì
+2. Bảo tàng 78 lá
+3. Khóa học
+4. Bản tin Hường Đông
+5. Cửa hàng
+
+Mọi thay đổi mới phải tuân thủ các nguyên tắc sau:
+
+- Loại bỏ hoàn toàn tính năng fortune telling: không rút lá ngẫu nhiên, không
+  trải bài trực tuyến, không sinh lời đoán tương lai và không có CTA như
+  “Lá bài hôm nay”, “Rút một lá” hoặc “Trải bài ngay”.
+- Không giữ lại fortune telling dưới dạng route ẩn, API, JavaScript, biểu mẫu,
+  trạng thái kết quả hoặc nội dung có thể được bật lại trên giao diện.
+- Nội dung cũ từ `/trai-bai/`, `/healing/` và `/huyen-su/` chỉ được dùng lại như
+  tài liệu học Tarot trong `/khoa-hoc/` hoặc tư liệu cho Bảo tàng 78 lá.
+- UX copy phải dùng ngôn ngữ học tập, tra cứu, phản tư và kiểm chứng nguồn;
+  không hứa hẹn dự đoán vận mệnh hay quyết định thay người đọc.
+
 ## Bố cục
 
 ```
@@ -38,6 +61,32 @@ npm run deploy        # build + firebase deploy --only hosting
 Bấm tay ở tab **Actions → "Xuất bản website (Firebase)"**. Thứ tự cố ý là
 build → test → deploy: kiểm thử hỏng thì workflow dừng và **không** triển khai,
 nên trang khách giữ bản cũ đang chạy tốt.
+
+### Kiểm tra riêng desktop và mobile trước khi xuất bản
+
+Desktop và mobile là hai bố cục cần được duyệt độc lập; bản desktop đúng không
+đồng nghĩa bản mobile sẽ đúng. Mỗi lần phát hành phải kiểm tra tối thiểu trang
+chủ và 5 khu vực chính ở cả hai viewport:
+
+- Desktop: `1440 × 900` (kiểm tra thêm từ `1280px` nếu bố cục sát ngưỡng).
+- Mobile: `390 × 844` (kiểm tra thêm `360px` cho màn hình hẹp).
+
+Checklist bắt buộc:
+
+- Điều hướng, logo, headline, CTA và thứ tự nội dung đúng ở từng viewport.
+- Không cắt chữ/hình Kirigami, không tràn ngang, không che nội dung và không có
+  vùng bấm quá nhỏ trên thiết bị cảm ứng.
+- Hiệu ứng chuyển động không gây giật bố cục; hỗ trợ `prefers-reduced-motion`
+  và không dùng hover làm cách duy nhất để mở nội dung trên mobile.
+- Ảnh đúng tỉ lệ, không tải nhầm tài nguyên desktop quá nặng cho mobile; kiểm
+  tra cả trạng thái đang tải và sau khi ảnh tải xong.
+- Xác nhận không còn CTA, route hoặc hành vi fortune telling trên cả hai bản.
+- Chạy build, type check và test; sau khi deploy phải smoke-test lại trực tiếp
+  trên `https://huongdong.id.vn/` bằng desktop và mobile, không chỉ localhost.
+
+Không phê duyệt phát hành chỉ dựa trên một ảnh chụp desktop. Nếu desktop và
+mobile khác nhau có chủ đích, khác biệt đó phải được ghi trong PR và kèm ảnh QA
+của cả hai viewport.
 
 ### Chốt an toàn trước khi build
 
