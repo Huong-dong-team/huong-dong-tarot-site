@@ -33,7 +33,7 @@ const readJson = async (name) => JSON.parse(await readFile(path.join(root, "seed
  */
 async function loadData() {
   if (useSeed) return { cards: await readJson("cards.json"), posts: await readJson("posts.json"), site: await readJson("settings.json") };
-  if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) throw new Error("Thiếu GOOGLE_APPLICATION_CREDENTIALS. Dùng npm run build:local để xem dữ liệu mẫu.");
+  if (!process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim()) throw new Error("Thiếu GOOGLE_APPLICATION_CREDENTIALS. Dùng npm run build:local để xem dữ liệu mẫu.");
   if (!getApps().length) initializeApp({ credential: applicationDefault(), projectId: process.env.FIREBASE_PROJECT_ID });
   const db = getFirestore();
   const [cardSnap, postSnap, siteSnap] = await Promise.all([

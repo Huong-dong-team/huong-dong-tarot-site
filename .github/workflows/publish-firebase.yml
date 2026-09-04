@@ -41,6 +41,7 @@ jobs:
             templates/huyen-su.html \
             templates/healing.html \
             templates/tarot-la-gi.html \
+            templates/khoa-hoc.html \
             templates/trai-bai.html \
             templates/daily-card.html \
             templates/spread.html \
@@ -61,7 +62,7 @@ jobs:
             echo "Dừng lại: cây mã nguồn không đủ để dựng site đầy đủ." >&2
             exit 1
           fi
-          echo "Đủ 13 tệp bắt buộc."
+          echo "Đủ các tệp bắt buộc, bao gồm trang Khóa học."
 
       - uses: actions/setup-node@v5
         with:

@@ -1,5 +1,47 @@
 # BÀN GIAO VẬN HÀNH
 
+## PR #86 · Hướng nội dung được xác nhận lại ngày 04/09/2026
+
+Chủ dự án yêu cầu giữ Bản tin + Khóa học, không Healing và không bói tự động.
+Nhánh PR tích hợp main `1ec9432`, giữ logo/favicon/trang download và sửa CI,
+nhưng không nhận việc xóa Khóa học hoặc bật lại trải bài tự động. Xem
+[`docs/pr86-content-direction.md`](docs/pr86-content-direction.md) để biết
+phạm vi, dữ liệu xuất bản và các bước kiểm tra. Chưa merge PR, chưa deploy.
+
+## Nhật ký phối hợp · Khôi phục CI và gia cố trang tải favicon ngày 04/09/2026
+
+Branch: `fix/restore-ci-package-lock`, tách từ `origin/main` tại commit
+`0354808`. Chủ dự án là người review/merge; nhánh này chưa merge và chưa deploy.
+
+### Nguyên nhân và phạm vi sửa
+
+- GitHub Actions run `33834554414` dừng ở `actions/setup-node`, trước khi chạy
+  build/test, vì commit `3f1e993` đã xóa `package-lock.json` trong khi workflow
+  vẫn cache theo lockfile và cài dependency bằng `npm ci`.
+- Khôi phục nguyên trạng `package-lock.json` từ commit đã deploy thành công gần
+  nhất `3daf1dc`; `package.json` không đổi nên không nâng phiên bản dependency.
+- `public/download.html` bỏ ZIP Base64 trùng lặp trong HTML và tải trực tiếp
+  `/favicon-changes.zip`; giữ thêm lựa chọn tar.gz/bản vá, bổ sung viewport,
+  favicon, landmark, alt text và chỉ bật hover trên thiết bị có hover.
+- `tests/build-output.test.mjs` khóa sự hiện diện của trang download, toàn bộ
+  kích thước favicon, ba gói tải xuống, khai báo icon trong HTML phát hành và
+  cấm nhúng lại ZIP bằng data URI.
+
+### Xác minh cục bộ
+
+```text
+npm ci --no-audit --no-fund  PASS — 223 packages từ lockfile
+npm run check:types          PASS
+npm run build:local          PASS — 78 trang lá, 2 bài tin, 95 URL
+npm test                     PASS — 162/162 tests
+git diff --check             PASS
+```
+
+Favicon đã kiểm tra độc lập: SVG parse hợp lệ; PNG đúng 16, 32, 48, 96, 180,
+192 và 512 px; ICO có 3 entry; ZIP trước khi bỏ data URI khớp byte-for-byte với
+`public/favicon-changes.zip` (SHA-256
+`08abcbdf422a5a03287070561112727f93aa1bf773d311d261b3201b2a878331`).
+
 ## Nhật ký phối hợp · Tilt lá bài, Border Beam giá dự kiến và reveal Huyền sử ngày 29/08/2026
 
 Branch: `feat/subtle-card-beam-reveal`, tách từ `origin/main` tại commit

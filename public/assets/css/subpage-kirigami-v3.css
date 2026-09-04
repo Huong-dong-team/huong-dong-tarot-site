@@ -39,11 +39,7 @@ body:has(main[data-page-art]) .site-header {
   box-shadow: 0 8px 28px rgb(61 43 26 / 8%);
 }
 
-body:has(main[data-page-art]) .brand {
-  border-color: rgb(156 109 46 / 22%);
-  background: var(--hd3-paper);
-  box-shadow: 0 6px 18px rgb(61 43 26 / 10%);
-}
+/* Logo dùng nền trong suốt từ main.css, không đặt lại lên tấm giấy V3. */
 
 /* --- Sân khấu mở đầu ------------------------------------------------ */
 

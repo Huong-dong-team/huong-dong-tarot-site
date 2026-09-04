@@ -1,31 +1,24 @@
 :root{--paper:#FFFBEB;--paper-raised:#FFFFFF;--paper-band:#FFEF9F;--ink:#2B1B12;--ink-soft:#5C4433;--muted:#7A6656;--gold:#FFD45A;--hero-lemon:#FEDB44;--hero-bronze-dark:#5E3215;--hero-bronze:#B77A2F;--hero-bronze-light:#E4B45E;--hero-champagne:#C9A96E;--hero-coral:#C84040;--hero-yellow:#F5C842;--hero-pearl:#FAF8D0;--hero-warm-brown:#3D2B1A;--hero-label:#8B7355;--hero-metal:linear-gradient(112deg,var(--hero-bronze-dark) 0%,#A66527 20%,var(--hero-bronze-light) 34%,var(--hero-pearl) 40%,#C57E30 48%,#75401A 68%,#D59B46 84%,#6F3B18 100%);--amber:#FFA95A;--orange:#FF8B5A;--coral:#FF5A5A;--peach:#F8966A;--rose:#F0557B;--brown:#8B6339;--gold-ink:#8B6600;--coral-ink:#DB0000;--rose-ink:#D51343;--magenta-ink:#CF1F61;--tre:#46843E;--tre-ink:#407939;--dau:#C0272D;--dau-ink:#C0272D;--sen:#E1407C;--sen-ink:#CE2061;--lua:#F89E31;--lua-ink:#A15B05;--on-brown:#FFFBEB;--line:rgb(139 99 57 / 22%);--shadow:0 24px 70px rgb(139 99 57 / 14%);--danger:#C0272D;--img-radius:clamp(10px,1.4vw,18px);--shell:min(1180px,calc(100% - 32px));--display:"DFVN TAN Harmoni",Georgia,serif;--body:"Be Vietnam Pro","Inter",system-ui,sans-serif;--script:"Fontasia VH","DFVN TAN Harmoni",Georgia,serif;--editorial:"DFVN TAN Mon Cheri","Ganh",sans-serif;--sans-display:"Ganh","Be Vietnam Pro",system-ui,sans-serif;--hero-ui:"Inter","Be Vietnam Pro",system-ui,sans-serif;--hd-scroll:0;--hd-hero:0;--lacquer-son:color-mix(in srgb,var(--dau) 72%,var(--brown));--lacquer-gold:color-mix(in srgb,var(--gold) 72%,var(--brown));--lacquer-ink:color-mix(in srgb,var(--ink) 86%,var(--brown));--lacquer-wash:color-mix(in srgb,var(--paper) 94%,transparent);--lacquer-band:color-mix(in srgb,var(--paper-band) 88%,transparent)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;text-rendering:optimizeLegibility}img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}:focus-visible{outline:3px solid #4285f4;outline-offset:3px}.skip-link{position:fixed;z-index:1000;left:16px;top:12px;padding:10px 14px;background:#fff;color:#000;transform:translateY(-160%)}.skip-link:focus{transform:none}
-.site-header{position:sticky;z-index:60;top:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;min-height:76px;padding:10px max(16px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);color:var(--ink);backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;color:var(--ink)}.brand img{width:85px;height:45px;object-fit:contain}.site-header nav{display:flex;align-items:center;gap:28px;font-size:14px;font-weight:600}.site-header nav a:not(.nav-cta){border-bottom:1px solid transparent}@media (hover:hover){.site-header nav a:hover{border-color:var(--magenta-ink)}}.nav-cta{padding:9px 16px;border:1px solid var(--magenta-ink);border-radius:999px;background:var(--magenta-ink);color:var(--on-brown)}.menu-toggle{display:none;border:1px solid var(--magenta-ink);background:transparent;padding:8px 12px;border-radius:999px;color:var(--ink)}
+.site-header{position:sticky;z-index:60;top:0;display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;min-height:76px;padding:10px max(16px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);color:var(--ink);backdrop-filter:blur(18px)}.brand{display:inline-flex;align-items:center;color:var(--ink);background:transparent}.brand img{width:115px;height:auto;max-height:65px;object-fit:contain}.site-header nav{display:flex;align-items:center;gap:28px;font-size:14px;font-weight:600}.site-header nav a:not(.nav-cta){border-bottom:1px solid transparent}@media (hover:hover){.site-header nav a:hover{border-color:var(--magenta-ink)}}.nav-cta{padding:9px 16px;border:1px solid var(--magenta-ink);border-radius:999px;background:var(--magenta-ink);color:var(--on-brown)}.menu-toggle{display:none;border:1px solid var(--magenta-ink);background:transparent;padding:8px 12px;border-radius:999px;color:var(--ink)}
 .menu-toggle-bars{display:inline-block;width:16px;height:2px;background:currentColor;vertical-align:middle;box-shadow:0 -5px currentColor,0 5px currentColor}
 h1,h2,h3,h4,p{margin-top:0}h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.025em}h1{font-size:clamp(50px,7vw,90px);line-height:.94;font-weight:600}h2{font-size:clamp(40px,5.6vw,68px);line-height:1;font-weight:600}h3{font-size:30px;line-height:1.08}.eyebrow{margin-bottom:16px;color:var(--brown);font:700 12px/1.2 var(--body);letter-spacing:.16em;text-transform:uppercase}
 
-/* Logo như một mảnh giấy vừa cắt: bốn góc xén chéo + một khía nhỏ giữa cạnh
-   dưới, đặt trên tấm nền giấy lùi phía sau (::before) chứ không cắt thẳng
-   vào ảnh logo — ảnh có thể có chữ/nét sát mép, cắt trực tiếp dễ mất nét.
-   Cùng ngôn ngữ với .hero-chapter-nav (lệch góc nhẹ, bóng đổ kiểu giấy rời). */
+/* Logo Hường Đông trong suốt, không viền, không phông nền hộp */
 .brand {
   position: relative;
-  isolation: isolate;
-  padding: 7px 11px;
-  transform: rotate(-1.1deg);
-  transition: transform 220ms ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: transparent;
+  transform: none;
+  transition: opacity 220ms ease;
 }
 .brand::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: var(--paper-raised);
-  clip-path: polygon(8% 0%, 92% 0%, 100% 18%, 100% 82%, 92% 100%, 55% 100%, 50% 87%, 8% 100%, 0% 82%, 0% 18%);
-  box-shadow: 2px 4px 0 rgb(139 99 57 / 12%), 0 6px 16px rgb(61 43 26 / 12%);
+  display: none;
 }
-.brand:focus-visible { transform: rotate(0deg); }
-@media (hover: hover) { .brand:hover { transform: rotate(0deg); } }
+.brand:focus-visible { opacity: 0.85; outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (hover: hover) { .brand:hover { opacity: 0.85; } }
 @media (prefers-reduced-motion: reduce) {
   .brand { transition: none; }
 }
@@ -1393,7 +1386,7 @@ blockquote {
   #main-nav { gap: 12px; }
   #main-nav a { font-size: 0.86rem; }
   .nav-cta { padding: 7px 13px; }
-  .brand img { width: 74px; height: 39px; }   /* header hẹp lại ở mobile */
+  .brand img { width: 92px; height: auto; max-height: 52px; }   /* header hẹp lại ở tablet */
 }
 
 /* ============================================================
