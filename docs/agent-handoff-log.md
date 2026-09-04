@@ -1,6 +1,6 @@
 # Nhật ký bàn giao tác vụ
 
-## 03/09/2026 · Pull request · `feat/kirigami-subpages-v3`
+## 04/09/2026 · PR #83 · `feat/kirigami-subpages-v3`
 
 Phạm vi đã thay đổi:
 
