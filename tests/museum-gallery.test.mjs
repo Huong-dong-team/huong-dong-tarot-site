@@ -18,14 +18,16 @@ test("Bảo tàng render đủ 78 hiện vật và gộp Phòng Huyền sử", a
   assert.match(html, /<dialog class="museum-dialog"/);
 });
 
-test("navigation hợp nhất Huyền sử vào Bảo tàng, không còn CTA riêng ở Hero nhưng vẫn giữ route cũ", async () => {
-  const [home, history] = await Promise.all([
+test("navigation hợp nhất Huyền sử vào Bảo tàng và chuyển route cũ về Khóa học", async () => {
+  const [home, oldHistory, source] = await Promise.all([
     read("dist/index.html"),
     read("dist/huyen-su/index.html"),
+    read("dist/la-bai/huyen-su/hong-bang-thi/index.html"),
   ]);
   assert.match(home, /href="\/la-bai\/#phong-huyen-su">Phòng Huyền sử<\/a>/, "vẫn phải vào được Phòng Huyền sử qua menu chính dù đã gỡ CTA ở Hero");
-  assert.match(history, /data-page="huyen-su"/);
-  assert.match(history, /id="nguyen-tac"/);
+  assert.match(oldHistory, /location\.replace\("\/khoa-hoc\/"\)/);
+  assert.match(source, /data-page="library-source"/);
+  assert.match(source, /href="\/la-bai\/#phong-huyen-su">Đủ 34 truyện<\/a>/);
 });
 
 test("lightbox bảo tàng có keyboard, teardown và reduced motion", async () => {
