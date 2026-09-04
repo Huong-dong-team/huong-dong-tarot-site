@@ -9,6 +9,11 @@ name: Xuất bản website (Firebase)
 
 on:
   workflow_dispatch:
+    inputs:
+      publish_news_course:
+        description: 'Tạo bài Bản tin còn thiếu từ bộ nội dung 04/09; giữ nguyên bài đã có trong admin'
+        type: boolean
+        default: false
 
 # Không cho hai lần xuất bản chạy chồng lên nhau.
 concurrency:
@@ -73,6 +78,12 @@ jobs:
       - name: Kiểm kiểu scripts/
         run: npm run check:types
 
+      - name: Kiểm thử bộ nội dung trước khi ghi Firestore
+        if: ${{ inputs.publish_news_course }}
+        run: |
+          npm run build:local
+          npm test
+
       # Service account chỉ tồn tại trong bộ nhớ tạm của runner, không bao giờ
       # nằm trong repo. RUNNER_TEMP bị xóa khi job kết thúc.
       - name: Ghi service account ra tệp tạm
@@ -84,6 +95,23 @@ jobs:
             exit 1
           fi
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/service-account.json"
+
+      - name: Xuất bản bài Bản tin còn thiếu (không ghi đè nội dung admin)
+        if: ${{ inputs.publish_news_course }}
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/service-account.json
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          NEWS_PUBLISH_CONFIRM: huong-dong-tarot-729d2
+        run: node scripts/publish-news-course.mjs --apply
+
+      - name: Lưu biên nhận xuất bản (không chứa khóa hoặc dữ liệu riêng tư)
+        if: ${{ always() && inputs.publish_news_course }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-publication-report
+          path: news-publication-report.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Build từ Firestore thật
         env:

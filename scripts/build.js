@@ -22,7 +22,7 @@ async function loadEnv() {
 }
 
 await loadEnv();
-const useSeed = process.env.USE_SEED_DATA === "true";
+const useSeed = process.env.USE_SEED_DATA === "true" || process.argv.includes("--seed");
 const readJson = async (name) => JSON.parse(await readFile(path.join(root, "seed", name), "utf8"));
 
 /**
@@ -302,6 +302,7 @@ const cards = data.cards.map((card, index) => ({
   museumSummary: truncateWords(plainTextFromHtml(card.story)),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
+const reflectionPosts = posts.filter((post) => post.tags?.includes("phản tư"));
 
 function organizationSchema() {
   return { "@context": "https://schema.org", "@type": "Organization", name: data.site.siteName, url: data.site.baseUrl, logo: absoluteUrl(data.site.baseUrl, "/assets/img/logo-huong-dong-600.png") };
@@ -770,7 +771,7 @@ await emit("/", layout({
 
 const renderedHistoryPage = renderString(
   templates["huyen-su"].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
-  { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() },
+  { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml(), reflectionPosts: reflectionPosts.length ? reflectionPosts : null },
 );
 const historySectionsStart = renderedHistoryPage.indexOf('<section class="v2-prose" id="nguyen-tac">');
 const historySectionsEnd = renderedHistoryPage.lastIndexOf("</main>");
@@ -821,10 +822,11 @@ for (let index = 0; index < cards.length; index += 1) {
 }
 
 const pageCount = Math.max(1, Math.ceil(posts.length / 10));
+const postListRoutes = Array.from({ length: pageCount }, (_, i) => i === 0 ? "/tin-tuc/" : `/tin-tuc/trang/${i + 1}/`);
 for (let page = 1; page <= pageCount; page += 1) {
   const pagePosts = posts.slice((page - 1) * 10, page * 10);
   const paginationHtml = pageCount > 1 ? `<nav class="pagination" aria-label="Phân trang">${Array.from({ length: pageCount }, (_, i) => `<a ${i + 1 === page ? 'aria-current="page"' : ""} href="${i === 0 ? "/tin-tuc/" : `/tin-tuc/trang/${i + 1}/`}">${i + 1}</a>`).join("")}</nav>` : "";
-  const content = renderString(templates["post-list"], { posts: pagePosts, paginationHtml });
+  const content = renderString(templates["post-list"], { posts: pagePosts, paginationHtml, reflectionHighlights: page === 1 && reflectionPosts.length ? reflectionPosts.slice(0, 4) : null });
   const route = page === 1 ? "/tin-tuc/" : `/tin-tuc/trang/${page}/`;
   await emit(route, layout({ title: page === 1 ? "Bản tin Hường Đông" : `Bản tin Hường Đông – trang ${page}`, description: "Nhật ký phát triển bộ bài, phương pháp Việt hóa và câu chuyện hậu trường Hường Đông Tarot.", path: route, schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bản tin Hường Đông", path: "/tin-tuc/" }])], content }));
 }
@@ -888,7 +890,7 @@ for (const route of retiredRoutes) await emit(route, redirectDocument("/khoa-hoc
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
 
-const routes = ["/", "/tarot-la-gi/", "/la-bai/", "/khoa-hoc/", "/cua-hang/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...lncqChapters.map((chapter) => `/la-bai/huyen-su/${chapter.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
+const routes = ["/", "/tarot-la-gi/", "/la-bai/", "/khoa-hoc/", "/cua-hang/", ...postListRoutes, "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...lncqChapters.map((chapter) => `/la-bai/huyen-su/${chapter.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${escapeHtml(absoluteUrl(data.site.baseUrl, route))}</loc></url>`).join("")}</urlset>`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap);
 await writeFile(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${absoluteUrl(data.site.baseUrl, "/sitemap.xml")}\n`);

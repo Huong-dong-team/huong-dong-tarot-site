@@ -1,4 +1,5 @@
 node_modules/
+news-publication-report.json
 dist/
 # Cache của lệnh firebase deploy, sinh lại mỗi lần xuất bản.
 .firebase/

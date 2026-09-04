@@ -11,7 +11,7 @@
     "dev": "node scripts/serve.js",
     "seed": "node scripts/seed.js",
     "build": "node scripts/build.js",
-    "build:local": "USE_SEED_DATA=true node scripts/build.js",
+    "build:local": "node scripts/build.js --seed",
     "test": "node --test tests/*.test.mjs",
     "check:types": "tsc -p tsconfig.check.json",
     "audit:content": "node scripts/audit-editorial-content.mjs",

@@ -50,8 +50,9 @@ test("các content section xưng chúng tôi và không mở câu bằng mệnh 
 });
 
 test("hai bài nền có cảnh mở, chủ thể thương hiệu và độ dài hữu ích", () => {
-  assert.equal(posts.length, 2);
-  for (const post of posts) {
+  const foundation = posts.filter(post => ["vi-sao-huong-dong-giu-he-nghia-rws", "bon-nha-an-phu-tre-dau-tam-sen-lua"].includes(post.slug));
+  assert.equal(foundation.length, 2);
+  for (const post of foundation) {
     assert.match(post.contentHtml, /[Cc]húng tôi/, post.slug);
     assert.ok(post.contentHtml.length > 1_000, post.slug);
     const opening = post.contentHtml.match(/^<p>([\s\S]*?)<\/p>/)?.[1] ?? "";
