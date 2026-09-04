@@ -34,17 +34,19 @@
        xong sẽ bị kéo ngược về opacity 0 rồi mới sáng lại. -->
   <link rel="stylesheet" href="/assets/css/scroll-fade.css">
   <!-- Bản bàn giao trang chủ được đặt sau các lớp cũ để khớp đúng mẫu;
-       selector có scope data-page nên không thay đổi bảy nhóm sub-page. -->
+       selector có scope data-page nên không thay đổi năm đường nội dung. -->
   <link rel="stylesheet" href="/assets/css/home-standalone.css">
-  <!-- Hệ thị giác dùng chung cho 7 nhóm trang trong; selector được scope bằng
+  <!-- Hệ thị giác dùng chung cho 5 nhóm nội dung; selector được scope bằng
        data-page-art nên không thay đổi trang chủ và các trang pháp lý. -->
   <link rel="stylesheet" href="/assets/css/subpage-remake.css">
   <!-- Bảo tàng 78 lá có tường trưng bày, nhãn hiện vật và lightbox riêng;
        selector khóa vào data-page=library nên các trang khác không đổi. -->
   <link rel="stylesheet" href="/assets/css/museum-gallery.css">
-  <!-- Lớp Kirigami dùng chung đặt cuối để biến Hero và bề mặt nội dung thành
-       sân khấu giấy, nhưng vẫn giữ tranh sơn mài và hành vi từng route. -->
+  <!-- Lớp Kirigami V2 giữ các component giấy và hành vi route hiện hữu. -->
   <link rel="stylesheet" href="/assets/css/subpage-kirigami.css">
+  <!-- V3 hoàn thiện toàn bộ phần thân: mục lục giấy, folio cắt lớp và nhịp
+       chuyển động đồng nhất với trang chủ. Tách file để V2 vẫn là đường lui. -->
+  <link rel="stylesheet" href="/assets/css/subpage-kirigami-v3.css">
   <noscript><style>.entrance-copy,.entrance-visual{opacity:1!important;transform:none!important}</style></noscript>
   <link rel="stylesheet" href="/assets/css/landing-drag.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="/assets/css/landing-drag.css"></noscript>
@@ -56,16 +58,14 @@
   <header class="site-header">
     <a class="brand" href="/"><picture><source srcset="/assets/img/logo-huong-dong.avif" type="image/avif"><img src="/assets/img/logo-huong-dong.webp" width="85" height="45" alt="Hường Đông"></picture></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Mục lục"><span class="menu-toggle-bars" aria-hidden="true"></span></button>
-    <!-- Menu con của Trải bài mở bằng :hover và :focus-within, không cần JS —
-         giữ progressive enhancement, và bàn phím tab vào là menu hiện ra. -->
+    <!-- Menu con mở bằng :hover và :focus-within, không cần JS; bàn phím tab
+         vào vẫn nhìn thấy đầy đủ liên kết. -->
     <nav id="main-nav" aria-label="Điều hướng chính">
       <div class="nav-group"><a class="nav-group-top" href="/tarot-la-gi/">Tarot là gì</a><ul class="nav-sub"><li><a href="/tarot-la-gi/#thu-mot-la">Thử một lá</a></li><li><a href="/tarot-la-gi/#vi-sao">Vì sao nhớ được</a></li><li><a href="/tarot-la-gi/#he-nghia-rws">Hệ nghĩa RWS</a></li></ul></div>
       <div class="nav-group"><a class="nav-group-top" href="/la-bai/">Bảo tàng 78 lá</a><ul class="nav-sub"><li><a href="/la-bai/#bo-suu-tap">Đại sảnh 78 lá</a></li><li><a href="/la-bai/?arcana=major#bo-suu-tap">Ẩn Chính · 22 lá</a></li><li><a href="/la-bai/?arcana=minor#bo-suu-tap">Ẩn Phụ · 56 lá</a></li><li><a href="/la-bai/?suit=wands#bo-suu-tap">Nhà Tre</a></li><li><a href="/la-bai/?suit=swords#bo-suu-tap">Nhà Dâu tằm</a></li><li><a href="/la-bai/?suit=cups#bo-suu-tap">Nhà Sen</a></li><li><a href="/la-bai/?suit=pentacles#bo-suu-tap">Nhà Lúa</a></li><li><a href="/la-bai/#phong-huyen-su">Phòng Huyền sử</a></li></ul></div>
-      <div class="nav-group"><a class="nav-group-top" href="/trai-bai/">Trải bài</a><ul class="nav-sub"><li><a href="/trai-bai/co-khong/">Có hoặc Không</a></li><li><a href="/trai-bai/ba-la/">Ba Lá</a></li><li><a href="/trai-bai/tinh-yeu/">Tình Yêu</a></li><li><a href="/la-bai-hom-nay/">Lá Bài Hôm Nay</a></li></ul></div>
-      <div class="nav-group"><a class="nav-group-top" href="/healing/">Healing</a><ul class="nav-sub"><li><a href="/healing/#soi-chieu">Soi chiếu</a></li><li><a href="/healing/#phan-tu">Phản tư</a></li><li><a href="/healing/#nhat-ky">Nhật ký</a></li></ul></div>
-      <div class="nav-group"><a class="nav-group-top" href="/tin-tuc/">Chuyện Hường Đông</a><ul class="nav-sub">{{{navPostsHtml}}}</ul></div>
+      <div class="nav-group"><a class="nav-group-top" href="/khoa-hoc/">Khóa học</a><ul class="nav-sub"><li><a href="/khoa-hoc/#lo-trinh">Lộ trình học</a></li><li><a href="/khoa-hoc/#nen-tang-rws">Nền tảng RWS</a></li><li><a href="/khoa-hoc/#bo-cuc-trai-bai">Đọc bố cục</a></li><li><a href="/khoa-hoc/#huyen-su">Đọc nguồn Việt</a></li></ul></div>
+      <div class="nav-group"><a class="nav-group-top" href="/tin-tuc/">Bản tin Hường Đông</a><ul class="nav-sub">{{{navPostsHtml}}}</ul></div>
       <div class="nav-group"><a class="nav-group-top" href="/cua-hang/">Cửa hàng</a><ul class="nav-sub"><li><a href="/cua-hang/#bo-bai">Bộ bài Hường Đông</a></li><li><a href="/cua-hang/#sach-nho">Sách nhỏ 96 trang</a></li><li><a href="/cua-hang/#hoc-qua-email">Học qua email</a></li><li><a href="/cua-hang/#danh-sach-cho-gioi-thieu">Danh sách chờ</a></li></ul></div>
-      <a class="nav-cta" href="/#danh-sach-cho">Danh sách chờ</a>
     </nav>
   </header>
   {{{content}}}
