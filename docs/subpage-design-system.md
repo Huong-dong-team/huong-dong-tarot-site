@@ -1,68 +1,71 @@
-# Hệ thị giác 5 đường nội dung · Hường Đông Tarot
+# Hệ thị giác 7 trang trong · Hường Đông Tarot
 
-Ngày chốt: 03/09/2026
-Phong cách: sân khấu Kirigami 3D, đồng nhất với homepage.
+Ngày chốt: 31/08/2026  
+Phạm vi: `/tarot-la-gi/`, `/la-bai/`, `/trai-bai/`, `/healing/`, `/huyen-su/`, `/tin-tuc/`, `/cua-hang/`.
+Chế độ thay đổi: `extend` — lớp Kirigami V2 mở rộng hệ sơn mài hiện hữu, không thay design system gốc.
 
-## Kiến trúc thông tin
+## Nguyên tắc
 
-| Mục | Route | Vai trò |
+- Giữ nguyên bảy tranh sơn mài route hiện có trong `public/assets/img/subpage/`.
+- Hero cùng một cấu trúc: nhãn mục, headline Fontasia, subheadline Harmoni và tranh route phía sau.
+- Headline dùng vàng pastel `#e8c783`, viền trắng ngà `#fffaf0`; subheadline dùng vàng dịu `#f2dfb7` và không dùng viền.
+- Nội dung dùng nền giấy ngà, đường kẻ nâu nhạt, góc gần vuông và đổ bóng tiết chế; tránh bề mặt tròn/generic.
+- Minh họa tiểu mục phải là ảnh thật từ thư viện Hường Đông hoặc ảnh sản phẩm được tạo riêng; không dùng CSS art, emoji hay placeholder.
+
+## Token chính
+
+| Vai trò | Token | Giá trị |
 |---|---|---|
-| 1 | `/tarot-la-gi/` | Nhập môn Tarot và hệ nghĩa RWS |
-| 2 | `/la-bai/` | Bảo tàng 78 lá + 34 truyện nguồn |
-| 3 | `/khoa-hoc/` | Giáo trình Tarot có cấu trúc |
-| 4 | `/tin-tuc/` | Bản tin Hường Đông |
-| 5 | `/cua-hang/` | Sản phẩm và danh sách chờ |
+| Nền giấy | `--subpage-paper` | `#fbf6e8` |
+| Bề mặt nâng | `--subpage-paper-raised` | `#fffdf6` |
+| Mực | `--subpage-ink` | `#2f2118` |
+| Chữ phụ | `--subpage-muted` | `#715e4d` |
+| Headline | `--subpage-gold-pastel` | `#e8c783` |
+| Subheadline | `--subpage-gold-soft` | `#f2dfb7` |
+| Viền headline | `--subpage-ivory` | `#fffaf0` |
+| Đỏ son/CTA | `--subpage-cinnabar` | `#8f2f2d` |
+| Xanh sơn mài | `--subpage-jade` | `#173d35` |
 
-`/trai-bai/`, `/healing/`, `/huyen-su/`, `/la-bai-hom-nay/` và
-`/huong-dan-tarot/*` là route đã nghỉ. Chúng không có trong sitemap, không nạp
-module tương tác và được chuyển hướng về nội dung mới.
+## Thành phần dùng chung
 
-## Hero và màu sắc
+- `.kirigami-hero-depth`: sân khấu chung nằm trên tranh sơn mài, gồm hiện vật
+  theo route và ảnh khung giấy thật `kirigami-frame-v2.png`.
+- `.kirigami-stage`: lớp giữa có parallax tối đa 12px ngang / 8px dọc; không
+  nhận sự kiện và không làm thay đổi luồng đọc của Hero.
+- `.kirigami-piece`: hiện vật ảnh thật của từng trang; entrance lệch nhau 70ms,
+  sau đó chỉ trôi 2–3px để giữ nhịp tĩnh tại.
+- `.section-feature`: bố cục chữ + minh họa hai cột, chuyển một cột dưới 980px.
+- `.section-visual`: ảnh tiểu mục 4:3 có đường viền vàng cổ và chiều sâu nhẹ.
+- `.section-card-fan`: ba lá 2:3 xếp quạt, dùng ảnh bài hiện có.
+- `.portrait-card`: thẻ chân dung cho Tứ Bất Tử.
+- `.pricing-grid` / `.price-tier`: ba phiên bản Standard, Premium, Signature; Premium có ribbon “Được đề xuất”.
 
-- Hero cao 610–760px; copy trái khoảng 39%, cảnh Kirigami toàn khung.
-- Nhãn giấy ở góc phải dưới và mục lục bốn liên kết nằm chồng mép Hero.
-- Giấy `#FFFBEB`, giấy sâu `#F4EAD1`, mực `#3D2B1A`, xanh ngọc `#173F37`,
-  đỏ son `#C92332`, vàng kim `#D6AD49`.
-- Headline vàng pastel `#E8C783` có viền trắng ngà; subheadline `#F2DFB7`
-  không dùng viền headline.
-- Tranh Hero hiển thị nguyên màu, không wash và không `mix-blend-mode` sơn mài.
+## Chuyển động và khả năng truy cập
 
-## Component
+- Entrance Kirigami dài 980–1040ms, stagger 70ms; khung giấy và hiện vật có
+  chủ sở hữu transform riêng để không giật khi chuyển route.
+- Hover Hero gập khung giấy khoảng 1.2°; pointer parallax chỉ chạy trên desktop.
+- `subpage-motion.js` chỉ nghiêng tối đa khoảng 3° theo con trỏ, dùng `transform` và tự dọn listener khi Swup đổi trang.
+- Không kích hoạt tilt trên cảm ứng.
+- `prefers-reduced-motion: reduce` tắt toàn bộ tilt/hover transition mới.
+- Mỗi trang có đúng một `h1`, một `main#noi-dung-chinh`, ảnh có `alt`, điều hướng mobile giữ nút chạm 45px.
 
-- `.kirigami-3d-artwork`: cảnh giấy cắt toàn khung, eager và high priority.
-- `.kirigami-page-label`: nhãn số mục/tên chương kiểu giấy gấp.
-- `.kirigami-chapter-bar`: mục lục anchor, bốn ô trên desktop và hai ô mobile.
-- `.course-module-grid`: bốn mô-đun giấy xanh ngọc có chuyển động gập nhẹ.
-- `.course-principles`, `.course-source-layers`: thẻ giấy ba lớp, góc son.
-- `.course-reading-steps`: năm bước đọc một lá; chuyển về một cột trên mobile.
-- `.section-feature`, `.section-card-fan`: chữ + ảnh minh họa hoặc quạt ba lá.
-- `.pricing-grid`: Standard 390.000đ, Premium 690.000đ, Signature 990.000đ.
+## Biến thể theo route
 
-## Chuyển động và accessibility
+| Route | Hiện vật lớp giữa |
+|---|---|
+| Tarot là gì | Mặt sau lá bài + tờ dẫn nhập |
+| Bảo tàng 78 lá | Ba tác phẩm Ẩn Chính |
+| Trải bài | Ba lá úp mở thành quạt |
+| Healing | Lá The Star + Tứ chất Việt |
+| Huyền sử | Tranh sông núi + lá The Chariot |
+| Chuyện Hường Đông | Tư liệu làm bài + lá The Empress |
+| Cửa hàng | Ba ảnh gói Standard / Premium / Signature |
 
-- Entrance/fade hiện hữu tiếp tục điều khiển Hero và nội dung.
-- Cảnh có nhịp camera 1.2–3.2% trong 14 giây; hover folio tối đa 5–7px.
-- `prefers-reduced-motion: reduce` tắt animation/transition/transform mới.
-- Mỗi trang có một `main#noi-dung-chinh`, một `h1`; điều hướng mobile dùng nút
-  menu riêng; không có overflow ở 390px.
+## Gói sản phẩm
 
-## Nội dung Khóa học
+- Standard · 390.000đ: 78 lá, hộp giấy mỹ thuật, thẻ hướng dẫn nhanh.
+- Premium · 690.000đ: Standard + Reader Guide + bookmark; là gói được đề xuất.
+- Signature · 990.000đ: Premium + hộp gỗ sơn mài khóa đồng + túi gấm thêu tay + thẻ chứng nhận đánh số.
 
-Khóa học không rút bài hoặc đưa phán quyết. Bốn mô-đun là:
-
-1. Nền tảng RWS — 78 lá, bốn chất, nghĩa xuôi/ngược.
-2. Đọc hình ảnh — quan sát, cảm nhận, đặt vị trí, đối chiếu, trở về dữ kiện.
-3. Bố cục — học vị trí như ngữ pháp; người học tự thực hành bằng bộ bài riêng.
-4. Nguồn Việt — phân biệt văn bản, chuyển thể và liên tưởng Tarot.
-
-Phần Healing cũ là bài thực hành phản tư, không được mô tả như trị liệu. Phần
-Huyền sử cũ là tài liệu đọc nguồn; toàn văn nằm trong Bảo tàng.
-
-## Asset và mã nguồn
-
-- Ảnh tải thật: `public/assets/img/subpage-3d/*-kirigami-3d.webp`.
-- Ánh xạ route/nhãn/mục lục: `PAGE_ART`, `KIRIGAMI_PAGE_META` trong
-  `scripts/build.js`.
-- CSS V3: `public/assets/css/subpage-kirigami-v3.css`.
-- Module registry không được khôi phục `daily-card`, `spread-deck` hoặc
-  `huyen-su-reveal` nếu chưa có quyết định sản phẩm mới.
+Giá giao diện, FAQ và Product JSON-LD cùng đọc từ `PACK_TIERS` trong `scripts/build.js`.

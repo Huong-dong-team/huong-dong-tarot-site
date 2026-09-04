@@ -10,16 +10,6 @@
     "cleanUrls": true,
     "trailingSlash": true,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "redirects": [
-      { "source": "/la-bai-hom-nay", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/trai-bai", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/trai-bai/**", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/healing", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/huyen-su", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/huyen-su/:slug", "destination": "/la-bai/huyen-su/:slug/", "type": 301 },
-      { "source": "/huong-dan-tarot", "destination": "/khoa-hoc/", "type": 301 },
-      { "source": "/huong-dan-tarot/**", "destination": "/khoa-hoc/", "type": 301 }
-    ],
     "headers": [
       {
         "source": "**",

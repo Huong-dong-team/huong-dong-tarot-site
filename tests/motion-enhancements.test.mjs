@@ -11,9 +11,10 @@ test("registry nạp đúng các nâng cấp chuyển động và bảo tàng th
   const registry = await read("public/assets/js/page/registry.js");
   assert.match(registry, /library: \["card-filters", "card-tilt", "museum-gallery"\]/);
   assert.match(registry, /card: \["symbol-tooltips", "card-tilt"\]/);
+  assert.match(registry, /"huyen-su": \["huyen-su-reveal"\]/);
   assert.match(registry, /"card-tilt": \(\) => import\("\.\.\/ui\/card-tilt\.js"\)/);
   assert.match(registry, /"museum-gallery": \(\) => import\("\.\.\/ui\/museum-gallery\.js"\)/);
-  assert.doesNotMatch(registry, /spread-deck|daily-card|huyen-su-reveal/);
+  assert.match(registry, /"huyen-su-reveal": \(\) => import\("\.\.\/ui\/huyen-su-reveal\.js"\)/);
 });
 
 test("nghiêng lá có giới hạn, hỗ trợ chạm và dọn listener", async () => {
@@ -38,11 +39,24 @@ test("CSS giữ tilt và Border Beam ở mức tiết chế, có đường lui g
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test("trang toàn văn Huyền sử thuộc namespace của Bảo tàng", async () => {
-  const html = await read("dist/la-bai/huyen-su/hong-bang-thi/index.html");
-  assert.match(html, /<main id="noi-dung-chinh" class="transition-page" data-page="library-source"/);
+test("Huyền sử reveal dùng motion-mini và chỉ ẩn sau khi module sẵn sàng", async () => {
+  const [source, css, html] = await Promise.all([
+    read("public/assets/js/ui/huyen-su-reveal.js"),
+    read("public/assets/css/main.css"),
+    read("dist/huyen-su/index.html"),
+  ]);
+  assert.match(source, /import \{ animate as animateMini \} from "\/assets\/vendor\/motion-mini\.mjs"/);
+  assert.match(source, /IntersectionObserver/);
+  assert.match(source, /hd-reveal-enabled/);
+  assert.match(css, /\.hd-reveal-enabled \.hd-reveal-item/);
+  assert.match(html, /data-page="huyen-su"/);
+  assert.match(html, /id="nguyen-tac"/);
+});
+
+test("trang toàn văn từng chương cũng đi qua reveal và Swup", async () => {
+  const html = await read("dist/huyen-su/hong-bang-thi/index.html");
+  assert.match(html, /<main id="noi-dung-chinh" class="transition-page" data-page="huyen-su"/);
   assert.match(html, /class="v2-prose lncq-full"/);
-  assert.match(html, /data-page-art="la-bai"/);
 });
 
 test("Border Beam bám thẻ giá dự kiến, không biến thành đặt cọc", async () => {

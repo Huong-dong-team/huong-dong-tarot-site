@@ -102,7 +102,7 @@ button { cursor: pointer; }
 /* Wordmark thay cho cụm icon + chữ. Khoá luôn width/height theo tỉ lệ 2:1 của
    bản vẽ tay để trình duyệt giữ chỗ trước khi ảnh về — header là sticky, một
    lần layout shift ở đây đẩy toàn bộ trang xuống. */
-.brand img { width: 85px; height: 45px; object-fit: contain; }
+.brand img { width: 115px; height: auto; max-height: 65px; object-fit: contain; }
 .site-header nav {
   display: flex;
   align-items: center;

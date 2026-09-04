@@ -1,0 +1,6 @@
+{
+  "name": "Hường Đông Tarot",
+  "description": "Bộ Tarot Việt 78 lá kết nối hệ nghĩa Rider-Waite-Smith với thần thoại, lịch sử và biểu tượng Việt Nam.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

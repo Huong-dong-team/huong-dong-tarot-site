@@ -35,11 +35,11 @@ test("Hero giữ đúng nội dung và hai CTA điều hướng thẳng vào n�
   const home = await read("dist/index.html");
   assert.match(home, /<h1>Hường Đông kể Tarot bằng câu chuyện Việt<\/h1>/);
   assert.match(home, /href="\/tarot-la-gi\/">Tarot là gì\?<\/a>/);
-  assert.match(home, /href="\/khoa-hoc\/">Khám phá khóa học<\/a>/);
+  assert.match(home, /href="\/la-bai-hom-nay\/">Lá Bài hôm nay<\/a>/);
   assert.doesNotMatch(home, /data-draw-card|data-card-dialog/);
   assert.match(home, /78<\/dt><dd>Lá, đủ bộ RWS/);
   assert.match(home, /<nav class="hero-chapter-nav" aria-label="Khám phá Hường Đông">/);
-  assert.equal((home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a href=/g) || []).length, 5);
+  assert.equal((home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a href=/g) || []).length, 6);
   assert.doesNotMatch(home.match(/class="hero-chapter-nav"[\s\S]*?<\/nav>/)?.[0] || "", /Huyền sử/, "CTA Huyền sử phải được gỡ khỏi dải điều hướng Hero — nội dung đã gộp vào Bảo tàng 78 lá");
 });
 

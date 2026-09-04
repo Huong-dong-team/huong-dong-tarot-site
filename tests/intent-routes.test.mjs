@@ -1,28 +1,63 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
-const read = (file) => readFile(path.join(root, file), "utf8");
-const retired = ["trai-bai", "trai-bai/co-khong", "trai-bai/ba-la", "trai-bai/tinh-yeu", "healing", "huyen-su"];
+const intentRoutes = [
+  "/trai-bai/co-khong/",
+  "/trai-bai/ba-la/",
+  "/trai-bai/tinh-yeu/",
+];
 
-test("toàn bộ route bói cũ chỉ còn chuyển hướng đến Khóa học", async () => {
-  for (const route of retired) {
-    const html = await read(`dist/${route}/index.html`);
-    assert.match(html, /<meta name="robots" content="noindex,follow">/, route);
-    assert.match(html, /location\.replace\("\/khoa-hoc\/"\)/, route);
-    assert.doesNotMatch(html, /data-draw|data-spread|data-daily/, route);
+const outputPath = (route) => path.join(root, "dist", route.replace(/^\//, ""), "index.html");
+
+test("1.1 giữ đúng ba URL đang phát triển", async () => {
+  for (const route of intentRoutes) await access(outputPath(route));
+});
+
+test("trang đang phát triển có canonical, breadcrumb và noindex", async () => {
+  for (const route of intentRoutes) {
+    const html = await readFile(outputPath(route), "utf8");
+    assert.match(html, /<span class="v2-pending">Đang phát triển thêm<\/span>/);
+    assert.match(html, new RegExp(`<link rel="canonical" href="[^"]+${route.replaceAll("/", "\\/")}">`));
+    assert.match(html, /<meta name="robots" content="noindex,follow">/);
+    assert.match(html, /"@type":"BreadcrumbList"/);
   }
 });
 
-test("sitemap và điều hướng công khai chỉ dùng năm đường nội dung", async () => {
-  const [sitemap, home] = await Promise.all([read("dist/sitemap.xml"), read("dist/index.html")]);
-  for (const route of ["trai-bai", "healing", "huyen-su", "la-bai-hom-nay"]) {
-    assert.doesNotMatch(sitemap, new RegExp(`<loc>https://huongdong\\.id\\.vn/${route}/</loc>`));
+/* Khẳng định cũ ở đây là `doesNotMatch(html, /trai-bai\.js|data-draw/)` — "trang
+   chờ không được kích hoạt sớm chức năng rút bài". Nó đúng khi ba trang mới chỉ
+   là trang tạm của 1.1, và nay đã lỗi thời: Lớp 2 của 1.2–1.4 kích hoạt bộ rút
+   bài một cách có chủ đích, trong khi phần nội dung biên tập vẫn để trống có
+   nhãn. Thay bằng khẳng định nói đúng điều cần giữ: trang vẫn noindex và vẫn
+   ngoài sitemap chừng nào Lớp 3 chưa xong. Chi tiết ở tests/spread-frames.test.mjs. */
+test("trang chờ vẫn đóng với công cụ tìm kiếm dù đã có bộ rút bài", async () => {
+  const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
+  for (const route of intentRoutes) {
+    const html = await readFile(outputPath(route), "utf8");
+    assert.match(html, /<meta name="robots" content="noindex,follow">/, route);
+    assert.ok(!sitemap.includes(route), route);
   }
-  const nav = home.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)?.[0] || "";
-  assert.equal((nav.match(/class="nav-group"/g) || []).length, 5);
-  for (const route of ["/tarot-la-gi/", "/la-bai/", "/khoa-hoc/", "/tin-tuc/", "/cua-hang/"]) assert.ok(nav.includes(`href="${route}"`));
+});
+
+test("trang Trải bài liên kết đủ bốn URL và phân biệt trang đã duyệt", async () => {
+  const html = await readFile(path.join(root, "dist/trai-bai/index.html"), "utf8");
+  for (const route of intentRoutes) assert.match(html, new RegExp(`href="${route.replaceAll("/", "\\/")}"`));
+  assert.match(html, /href="\/la-bai-hom-nay\/"/);
+  // Ba trang trải bài đã rút bài được (Lớp 2), nội dung biên tập còn dở. Nhãn
+  // phải nói đúng điều đó: để nguyên "Đang phát triển thêm" thì người đọc không
+  // có lý do bấm vào một trang đã dùng được.
+  assert.equal((html.match(/Dùng thử được/g) || []).length, 3);
+  assert.equal((html.match(/Đã duyệt nội dung/g) || []).length, 1);
+  assert.doesNotMatch(html, /Đang phát triển thêm/, "trang Trải bài không còn nhãn chờ nào");
+});
+
+test("route chờ chưa vào sitemap và trang hoàn chỉnh vẫn được index", async () => {
+  const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
+  for (const route of intentRoutes) assert.ok(!sitemap.includes(route));
+  assert.ok(sitemap.includes("/la-bai-hom-nay/"));
+  const home = await readFile(path.join(root, "dist/index.html"), "utf8");
+  assert.doesNotMatch(home, /<meta name="robots" content="noindex,follow">/);
 });

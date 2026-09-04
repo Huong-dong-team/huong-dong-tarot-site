@@ -45,13 +45,12 @@ test("mọi trang lá xuất bản đều có góc soi chiếu và ranh giới a
   }
 });
 
-test("khóa học giữ phản tư nhưng không biến nó thành chức năng bói", async () => {
-  const html = await readFile(path.join(root, "dist/khoa-hoc/index.html"), "utf8");
-  for (const heading of ["Nhìn lại, soi chiếu, ghi chép", "Huyền sử là tư liệu học", "Học bố cục, không nhận lời phán"]) {
+test("trang trải bài có ba khung soi chiếu và không gắn tên nguồn lý thuyết", async () => {
+  const html = await readFile(path.join(root, "dist/trai-bai/index.html"), "utf8");
+  for (const heading of ["Điều đang thể hiện", "Bốn tiếng nói bên trong", "Bước qua ngưỡng cửa"]) {
     assert.match(html, new RegExp(heading, "u"));
   }
-  assert.match(html, /không phải trị liệu tâm lý/i);
-  assert.doesNotMatch(html, /data-draw|data-spread|data-daily/);
+  assert.match(html, /không thay thế hỗ trợ từ chuyên gia sức khỏe tâm thần/i);
   assert.doesNotMatch(html, forbiddenAttribution);
 });
 

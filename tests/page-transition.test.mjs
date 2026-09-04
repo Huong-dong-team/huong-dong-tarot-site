@@ -13,7 +13,8 @@ test("mọi trang công khai có đúng một container Swup", async () => {
   // báo gì — kiểu hỏng chỉ lộ ra khi có người bấm đúng vào đó.
   const pages = [
     "dist/index.html", "dist/la-bai/index.html", "dist/la-bai/the-star/index.html",
-    "dist/la-bai/huyen-su/hong-bang-thi/index.html", "dist/khoa-hoc/index.html", "dist/cua-hang/index.html",
+    "dist/la-bai-hom-nay/index.html", "dist/trai-bai/index.html", "dist/trai-bai/ba-la/index.html",
+    "dist/huyen-su/index.html", "dist/healing/index.html", "dist/cua-hang/index.html",
     "dist/tin-tuc/index.html", "dist/tarot-la-gi/index.html", "dist/quyen-rieng-tu/index.html",
     "dist/404.html",
   ];
@@ -30,7 +31,7 @@ test("không trang nào còn nhúng cứng script tương tác ngoài điểm v�
   // Thẻ <script> nằm ngoài container Swup không bao giờ chạy lại sau lần điều
   // hướng đầu tiên; nằm trong container thì bị cloneNode và cũng không chạy.
   // Cả hai đường đều dẫn tới một trang im lặng hỏng, nên chỉ điểm vào được phép.
-  for (const page of ["dist/index.html", "dist/khoa-hoc/index.html", "dist/la-bai/index.html"]) {
+  for (const page of ["dist/index.html", "dist/trai-bai/index.html", "dist/la-bai-hom-nay/index.html"]) {
     const html = await read(page);
     const sources = [...html.matchAll(/<script[^>]*src="([^"]+)"/g)].map((match) => match[1].split("?")[0]);
     for (const source of sources) {
