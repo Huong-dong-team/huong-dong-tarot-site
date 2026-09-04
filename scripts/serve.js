@@ -1,18 +1,18 @@
 import http from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { existsSync } from "node:fs";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import path from "node:path";
 
 const root = path.resolve("dist");
 
 if (!existsSync(path.join(root, "index.html"))) {
-  console.log("dist chưa có sẵn, đang tiến hành dựng trang tĩnh...");
-  execSync("node scripts/build.js", { stdio: "inherit" });
+  console.log("dist chưa có sẵn; dựng bản xem thử bằng dữ liệu mẫu, không ghi Firestore.");
+  execFileSync(process.execPath, ["scripts/build.js", "--seed"], { stdio: "inherit" });
 }
 
 const portFlag = process.argv.indexOf("--port");
-const port = Number(portFlag >= 0 ? process.argv[portFlag + 1] : 3000);
+const port = Number(portFlag >= 0 ? process.argv[portFlag + 1] : process.env.PORT || 3000);
 const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8", ".json": "application/json", ".xml": "application/xml", ".webp": "image/webp", ".png": "image/png", ".svg": "image/svg+xml" };
 http.createServer(async (request, response) => {
   try {

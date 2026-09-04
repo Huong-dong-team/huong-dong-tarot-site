@@ -1,4 +1,12 @@
-# Design QA · Hệ Kirigami bảy sub-page Hường Đông
+# Hướng hiện hành của PR #86
+
+Chủ dự án đã xác nhận lại ngày 04/09/2026: năm mục Tarot là gì, Bảo tàng 78 lá,
+Khóa học, Bản tin và Cửa hàng; không Healing, không bói tự động. Các ghi chép
+bên dưới về bảy nhóm là lịch sử thiết kế, không phải yêu cầu khôi phục tính
+năng. Đặc tả hiện hành nằm ở `docs/subpage-design-system.md` và
+`docs/pr86-content-direction.md`.
+
+# Design QA · Hệ Kirigami bảy sub-page Hường Đông (lịch sử)
 
 final result: passed
 

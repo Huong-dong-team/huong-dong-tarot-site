@@ -7,9 +7,8 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const outputPath = (route) => path.join(root, "dist", route === "/" ? "index.html" : `${route.replace(/^\//, "")}index.html`);
 
-/* Chỉ soi bên trong <nav id="main-nav">. Chuỗi aria-current="page" còn nằm ở
-   hai chỗ khác của cùng một trang: critical CSS nhúng trong <head> và thanh
-   phân trang của /tin-tuc/ — đếm cả trang thì hai chỗ đó làm sai kết quả. */
+/* Chỉ soi bên trong #main-nav: chuỗi aria-current còn có thể nằm trong CSS
+   nhúng hoặc các điều hướng phân trang khác. */
 async function mainNav(route) {
   const html = await readFile(outputPath(route), "utf8");
   const nav = html.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)?.[0];
@@ -20,21 +19,17 @@ async function mainNav(route) {
 // [route đang mở, mục cấp một phải sáng]
 const sections = [
   ["/tarot-la-gi/", "/tarot-la-gi/"],
-  ["/huong-dan-tarot/xao-bai/", "/tarot-la-gi/"],
   ["/la-bai/", "/la-bai/"],
   ["/la-bai/the-star/", "/la-bai/"],
-  ["/trai-bai/", "/trai-bai/"],
-  ["/trai-bai/ba-la/", "/trai-bai/"],
-  ["/la-bai-hom-nay/", "/trai-bai/"],
-  ["/huyen-su/", "/la-bai/"],
-  ["/huyen-su/hong-bang-thi/", "/la-bai/"],
-  ["/healing/", "/healing/"],
+  ["/la-bai/huyen-su/hong-bang-thi/", "/la-bai/"],
+  ["/khoa-hoc/", "/khoa-hoc/"],
   ["/tin-tuc/", "/tin-tuc/"],
+  ["/tin-tuc/vi-sao-huong-dong-giu-he-nghia-rws/", "/tin-tuc/"],
   ["/gioi-thieu/", "/tin-tuc/"],
   ["/cua-hang/", "/cua-hang/"],
 ];
 
-test("trang đang mở làm sáng đúng mục điều hướng cấp một", async () => {
+test("trang đang mở làm sáng đúng một trong năm mục điều hướng", async () => {
   for (const [route, href] of sections) {
     const nav = await mainNav(route);
     assert.match(nav, new RegExp(`<a class="nav-group-top" href="${href.replaceAll("/", "\\/")}" aria-current="page">`), route);
@@ -48,13 +43,14 @@ test("mỗi trang chỉ sáng một mục điều hướng", async () => {
   }
 });
 
-test("trang con đánh dấu mục cha, không đánh dấu mục trong menu con", async () => {
-  const nav = await mainNav("/trai-bai/ba-la/");
-  assert.match(nav, /<a class="nav-group-top" href="\/trai-bai\/" aria-current="page">/);
-  assert.match(nav, /<a href="\/trai-bai\/ba-la\/">Ba Lá<\/a>/);
+test("trang con đánh dấu mục cha, không đánh dấu liên kết trong menu con", async () => {
+  const nav = await mainNav("/la-bai/huyen-su/hong-bang-thi/");
+  assert.match(nav, /<a class="nav-group-top" href="\/la-bai\/" aria-current="page">/);
+  assert.match(nav, /<a href="\/la-bai\/#phong-huyen-su">Phòng Huyền sử<\/a>/);
+  assert.doesNotMatch(nav, /<a href="\/la-bai\/#phong-huyen-su" aria-current=/);
 });
 
-test("trang ngoài sáu mục không làm sáng mục nào", async () => {
+test("trang ngoài năm mục không làm sáng mục nào", async () => {
   for (const route of ["/", "/quyen-rieng-tu/"]) {
     assert.doesNotMatch(await mainNav(route), /aria-current/, route);
   }

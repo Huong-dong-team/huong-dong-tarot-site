@@ -1,5 +1,13 @@
 # BÀN GIAO VẬN HÀNH
 
+## PR #86 · Hướng nội dung được xác nhận lại ngày 04/09/2026
+
+Chủ dự án yêu cầu giữ Bản tin + Khóa học, không Healing và không bói tự động.
+Nhánh PR tích hợp main `1ec9432`, giữ logo/favicon/trang download và sửa CI,
+nhưng không nhận việc xóa Khóa học hoặc bật lại trải bài tự động. Xem
+[`docs/pr86-content-direction.md`](docs/pr86-content-direction.md) để biết
+phạm vi, dữ liệu xuất bản và các bước kiểm tra. Chưa merge PR, chưa deploy.
+
 ## Nhật ký phối hợp · Khôi phục CI và gia cố trang tải favicon ngày 04/09/2026
 
 Branch: `fix/restore-ci-package-lock`, tách từ `origin/main` tại commit

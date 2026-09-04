@@ -43,25 +43,26 @@ test("critical CSS được nhúng và stylesheet thiết yếu không phụ thu
 
 test("trang trong nhận đúng critical CSS theo loại nội dung", async () => {
   const card = await read("dist/la-bai/the-star/index.html");
-  const spread = await read("dist/trai-bai/index.html");
+  const course = await read("dist/khoa-hoc/index.html");
   const cardCritical = card.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
-  const spreadCritical = spread.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
+  const courseCritical = course.match(/<style data-critical>([\s\S]*?)<\/style>/)?.[1] || "";
 
   assert.ok(cardCritical.length < 20_000, "critical CSS trang lá vượt ngân sách 20 KB");
-  assert.ok(spreadCritical.length < 20_000, "critical CSS trang nội dung vượt ngân sách 20 KB");
-  for (const critical of [cardCritical, spreadCritical]) {
+  assert.ok(courseCritical.length < 20_000, "critical CSS trang nội dung vượt ngân sách 20 KB");
+  for (const critical of [cardCritical, courseCritical]) {
     assert.doesNotMatch(critical, /\n/, "critical CSS trang trong phải được gộp dòng");
     assert.ok(critical.includes(".page-hero"), "trang trong thiếu khung page hero");
     assert.match(critical, /font-family:\s*"Fontasia VH"/, "trang trong thiếu @font-face Fontasia cho page hero");
   }
   assert.ok(cardCritical.includes(".card-detail"), "trang lá thiếu khung card-detail");
-  assert.ok(spreadCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
+  assert.ok(courseCritical.includes(".v2-prose"), "trang nội dung thiếu khung v2-prose");
 });
 
-test("mỗi route preload đúng tranh Hero", async () => {
+test("mỗi route preload đúng cảnh Hero", async () => {
   const home = await read("dist/index.html");
   const card = await read("dist/la-bai/the-star/index.html");
-  // Đúng MỘT preload, và nó phải đi qua cùng logic chọn ảnh với <img>. Preload
+  // Đúng MỘT preload. Trang chủ vẫn đi qua responsive srcset; cảnh Kirigami
+  // của trang trong chỉ có một WebP 1536 tối ưu nên preload thẳng cùng URL.
   // bằng href cố định (hoặc chia theo media) khiến hai bên chọn hai bản khác
   // nhau và trình duyệt tải cả hai: đo được 106 KB trên một điện thoại 375px
   // DPR 3 — preload bản 800w rồi srcset lại lấy bản 1200w.
@@ -74,9 +75,10 @@ test("mỗi route preload đúng tranh Hero", async () => {
   const heroSource = home.match(/<source type="image\/webp" srcset="[^"]*home-kirigami[^"]*" sizes="[^"]*">/)?.[0] || "";
   assert.match(heroSource, /sizes="100vw"/);
   const cardPreloads = [...card.matchAll(/<link rel="preload" as="image"[^>]*>/g)].map((match) => match[0]);
-  assert.equal(cardPreloads.length, 1, "route lá chỉ preload một tranh Hero route");
-  assert.match(cardPreloads[0], /subpage\/la-bai-1024\.avif 1024w/);
-  assert.match(cardPreloads[0], /subpage\/la-bai-1536\.avif 1536w/);
+  assert.equal(cardPreloads.length, 1, "route lá chỉ preload một cảnh Hero route");
+  assert.match(cardPreloads[0], /href="\/assets\/img\/subpage-3d\/la-bai-kirigami-3d\.webp"/);
+  assert.doesNotMatch(cardPreloads[0], /imagesrcset=/,
+    "không khai srcset giả khi route chỉ có một WebP đã tối ưu");
   assert.doesNotMatch(card, /rel="preload" as="image"[^>]+\/hero-/);
   assert.doesNotMatch(home, /home-content-/, "trang chủ bàn giao không còn khung tranh route cũ");
 });

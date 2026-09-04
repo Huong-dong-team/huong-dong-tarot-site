@@ -1,5 +1,4 @@
 import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
-import { existsSync } from "node:fs";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -23,7 +22,7 @@ async function loadEnv() {
 }
 
 await loadEnv();
-const useSeed = process.env.USE_SEED_DATA === "true";
+const useSeed = process.env.USE_SEED_DATA === "true" || process.argv.includes("--seed");
 const readJson = async (name) => JSON.parse(await readFile(path.join(root, "seed", name), "utf8"));
 
 /**
@@ -33,32 +32,21 @@ const readJson = async (name) => JSON.parse(await readFile(path.join(root, "seed
  * @returns {Promise<import("./lib/types.js").SiteData>}
  */
 async function loadData() {
-  const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  const hasValidCreds = credPath && existsSync(credPath);
-  if (useSeed || !hasValidCreds) {
-    if (!useSeed && !hasValidCreds) {
-      console.warn("Không tìm thấy GOOGLE_APPLICATION_CREDENTIALS hợp lệ. Dùng dữ liệu mẫu (seed data).");
-    }
-    return { cards: await readJson("cards.json"), posts: await readJson("posts.json"), site: await readJson("settings.json") };
-  }
-  try {
-    if (!getApps().length) initializeApp({ credential: applicationDefault(), projectId: process.env.FIREBASE_PROJECT_ID });
-    const db = getFirestore();
-    const [cardSnap, postSnap, siteSnap] = await Promise.all([
-      db.collection("cards").where("status", "==", "published").orderBy("order").get(),
-      db.collection("posts").where("status", "==", "published").orderBy("publishedAt", "desc").get(),
-      db.collection("settings").doc("site").get(),
-    ]);
-    const normalize = (data) => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, value?.toDate ? value.toDate().toISOString() : value]));
-    // Firestore là nguồn ưu tiên; seed chỉ bù trường chi tiết Ẩn Phụ còn trống,
-    // không đè giá trị đang có. Xem lib/minor-details-fallback.js.
-    const liveCards = /** @type {import("./lib/types.js").Card[]} */ (cardSnap.docs.map((doc) => normalize(doc.data())));
-    const livePosts = /** @type {import("./lib/types.js").Post[]} */ (postSnap.docs.map((doc) => normalize(doc.data())));
-    return { cards: fillMinorDetails(liveCards, await readJson("cards.json")), posts: livePosts, site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
-  } catch (err) {
-    console.warn("Không thể kết nối Firestore, dùng dữ liệu mẫu:", err?.message || err);
-    return { cards: await readJson("cards.json"), posts: await readJson("posts.json"), site: await readJson("settings.json") };
-  }
+  if (useSeed) return { cards: await readJson("cards.json"), posts: await readJson("posts.json"), site: await readJson("settings.json") };
+  if (!process.env.GOOGLE_APPLICATION_CREDENTIALS?.trim()) throw new Error("Thiếu GOOGLE_APPLICATION_CREDENTIALS. Dùng npm run build:local để xem dữ liệu mẫu.");
+  if (!getApps().length) initializeApp({ credential: applicationDefault(), projectId: process.env.FIREBASE_PROJECT_ID });
+  const db = getFirestore();
+  const [cardSnap, postSnap, siteSnap] = await Promise.all([
+    db.collection("cards").where("status", "==", "published").orderBy("order").get(),
+    db.collection("posts").where("status", "==", "published").orderBy("publishedAt", "desc").get(),
+    db.collection("settings").doc("site").get(),
+  ]);
+  const normalize = (data) => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, value?.toDate ? value.toDate().toISOString() : value]));
+  // Firestore là nguồn ưu tiên; seed chỉ bù trường chi tiết Ẩn Phụ còn trống,
+  // không đè giá trị đang có. Xem lib/minor-details-fallback.js.
+  const liveCards = /** @type {import("./lib/types.js").Card[]} */ (cardSnap.docs.map((doc) => normalize(doc.data())));
+  const livePosts = /** @type {import("./lib/types.js").Post[]} */ (postSnap.docs.map((doc) => normalize(doc.data())));
+  return { cards: fillMinorDetails(liveCards, await readJson("cards.json")), posts: livePosts, site: siteSnap.exists ? normalize(siteSnap.data()) : await readJson("settings.json") };
 }
 
 const data = await loadData();
@@ -124,13 +112,13 @@ function lncqBlock(slug) {
 }
 const lncqChapters = JSON.parse(await readFile(path.join(root, "data", "lncq-chapters.json"), "utf8"));
 
-// Mục lục 34 truyện Lĩnh Nam chích quái, chèn vào trang Huyền sử.
+// Mục lục 34 truyện Lĩnh Nam chích quái, chèn vào phòng tư liệu của Bảo tàng.
 function lncqIndexHtml() {
   const rows = lncqChapters.map((c) => {
     const cards = c.cards.length
       ? c.cards.map((k) => `<a class="v2-link" href="/la-bai/${k.slug}/">${escapeHtml(k.roman)}</a>`).join(" · ")
       : '<span class="lncq-nocard">—</span>';
-    return `<tr><td>${c.n}</td><td><a class="v2-link" href="/huyen-su/${c.slug}/">${escapeHtml(c.title)}</a></td><td>${cards}</td></tr>`;
+    return `<tr><td>${c.n}</td><td><a class="v2-link" href="/la-bai/huyen-su/${c.slug}/">${escapeHtml(c.title)}</a></td><td>${cards}</td></tr>`;
   }).join("");
   return `<table class="v2-table lncq-index"><thead><tr><th>Chương</th><th>Truyện</th><th>Lá Ẩn chính</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
@@ -141,11 +129,11 @@ function lncqChapterHtml(c, prev, next) {
   const cards = c.cards.length
     ? `<p class="lncq-cards"><strong>Truyện này ứng với:</strong> ${c.cards.map((k) => `<a class="v2-link" href="/la-bai/${k.slug}/">${escapeHtml(k.roman)}</a>`).join(" · ")}</p>`
     : `<p class="lncq-cards lncq-nocard">Truyện này chưa gắn với lá Ẩn chính nào.</p>`;
-  const nav = `<nav class="card-pagination" aria-label="Điều hướng truyện">${prev ? `<a href="/huyen-su/${prev.slug}/">← ${escapeHtml(prev.title)}</a>` : "<span></span>"}<a href="/huyen-su/">Đủ 34 truyện</a>${next ? `<a href="/huyen-su/${next.slug}/">${escapeHtml(next.title)} →</a>` : "<span></span>"}</nav>`;
-  return `<main id="noi-dung-chinh" class="transition-page" data-page="huyen-su"><section class="page-hero drum-watermark"><p class="eyebrow">Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
+  const nav = `<nav class="card-pagination" aria-label="Điều hướng truyện">${prev ? `<a href="/la-bai/huyen-su/${prev.slug}/">← ${escapeHtml(prev.title)}</a>` : "<span></span>"}<a href="/la-bai/#phong-huyen-su">Đủ 34 truyện</a>${next ? `<a href="/la-bai/huyen-su/${next.slug}/">${escapeHtml(next.title)} →</a>` : "<span></span>"}</nav>`;
+  return `<main id="noi-dung-chinh" class="transition-page" data-page="library-source"><section class="page-hero drum-watermark"><p class="eyebrow">Bảo tàng 78 lá · Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "huong-dan-tarot", "huong-dan-dat-cau-hoi", "huong-dan-xao-bai", "huong-dan-doc-la-bai", "trai-bai", "huyen-su", "healing", "cua-hang", "development", "daily-card", "spread"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "khoa-hoc", "huyen-su", "cua-hang", "development"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 // Critical CSS nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
 // trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn.
@@ -314,6 +302,7 @@ const cards = data.cards.map((card, index) => ({
   museumSummary: truncateWords(plainTextFromHtml(card.story)),
 }));
 const posts = data.posts.map((post) => ({ ...post, dateLabel: dateLabel(post.publishedAt) }));
+const reflectionPosts = posts.filter((post) => post.tags?.includes("phản tư"));
 
 function organizationSchema() {
   return { "@context": "https://schema.org", "@type": "Organization", name: data.site.siteName, url: data.site.baseUrl, logo: absoluteUrl(data.site.baseUrl, "/assets/img/logo-huong-dong-600.png") };
@@ -356,8 +345,8 @@ const layoutSettings = {
     : "",
 };
 
-/* Tranh sơn mài gắn theo route. Đặc tả v2 ngày 27/08/2026 thay thế hai điều
-   của bản v1: tranh của bảy nhóm trang trong nằm ở Hero và có entrance.
+/* Cảnh Kirigami 3D gắn theo route. Năm nhóm nội dung dùng cùng một hệ
+   giấy cắt vật lý, bảng màu Hường Đông và entrance/fade animation.
    Trang chủ bàn giao tự quản lý toàn bộ tranh trong templates/home.html.
 
    Đặt ở đây thay vì rải vào 14 template vì hai lý do. Một: bàn giao đã nói
@@ -368,99 +357,89 @@ const layoutSettings = {
    Không tự gắn tranh cho route ngoài bảng: /gioi-thieu/, /quyen-rieng-tu/ và
    /404.html giữ nguyên Layer 0 thay vì mượn sai tranh home-content. */
 const PAGE_ART = [
-  { id: "trai-bai",          match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
+  { id: "khoa-hoc",          match: (p) => p.startsWith("/khoa-hoc/") },
   { id: "la-bai",            match: (p) => p.startsWith("/la-bai/") },
   { id: "tarot-la-gi",       match: (p) => p === "/tarot-la-gi/" },
-  { id: "tarot-la-gi",       match: (p) => p.startsWith("/huong-dan-tarot/") },
-  { id: "huyen-su",          match: (p) => p.startsWith("/huyen-su/") },
-  { id: "healing",           match: (p) => p === "/healing/" },
   { id: "chuyen-huong-dong", match: (p) => p.startsWith("/tin-tuc/") },
   { id: "cua-hang",          match: (p) => p === "/cua-hang/" },
 ];
 
 /**
- * Tranh nào thuộc route này.
+ * Cảnh Kirigami nào thuộc route này.
  * @param {string} routePath
- * @returns {string} id trong PAGE_ART, hoặc chuỗi rỗng nếu route không có tranh
+ * @returns {string} id trong PAGE_ART, hoặc chuỗi rỗng nếu route không có cảnh
  */
 function pageArtId(routePath) {
   return PAGE_ART.find((entry) => entry.match(routePath))?.id || "";
 }
 
 /**
- * Tạo picture responsive cho một bức tranh route.
+ * Tạo picture cho cảnh Kirigami 3D của route. PNG được giữ local làm nguồn
+ * bàn giao; WebP là bản duy nhất được xuất bản để năm Hero không đội dung lượng.
  * @param {string} artId
  * @param {"hero"|"content"} placement
  * @returns {string}
  */
 function pageArtworkPicture(artId, placement) {
-  const src = (w, ext) => `/assets/img/subpage/${artId}-${w}.${ext}`;
+  const src = (ext) => `/assets/img/subpage-3d/${artId}-kirigami-3d.${ext}`;
   const isHero = placement === "hero";
-  const className = isHero ? "subpage-hero-artwork" : "subpage-artwork";
+  const className = isHero ? "subpage-hero-artwork kirigami-3d-artwork" : "subpage-artwork";
   const loading = isHero
     ? 'loading="eager" decoding="async" fetchpriority="high"'
     : 'loading="lazy" decoding="async" fetchpriority="low"';
 
   return `<picture class="${className}" aria-hidden="true">`
-    + `<source type="image/avif" srcset="${src(1024, "avif")} 1024w, ${src(1536, "avif")} 1536w" sizes="100vw">`
-    + `<source type="image/webp" srcset="${src(1024, "webp")} 1024w, ${src(1536, "webp")} 1536w" sizes="100vw">`
-    + `<img src="${src(1536, "webp")}" srcset="${src(1024, "webp")} 1024w, ${src(1536, "webp")} 1536w" sizes="100vw" width="1536" height="1024" alt="" ${loading}>`
+    + `<source type="image/webp" srcset="${src("webp")}">`
+    + `<img src="${src("webp")}" width="1536" height="1024" alt="" ${loading}>`
     + "</picture>";
 }
 
-/*
- * Hiện vật tiền cảnh cho sân khấu Kirigami. Mỗi route dùng ảnh thật đã có
- * trong thư viện Hường Đông; lớp khung giấy dùng chung chỉ bổ sung chiều sâu,
- * không thay hoặc vẽ đè lên tranh sơn mài gốc.
- */
-const KIRIGAMI_HERO_SCENES = {
-  "tarot-la-gi": [
-    ["/assets/img/sec-card-back-cut-400.avif", "piece-card-back"],
-    ["/assets/img/ref-bo-bai-illus-400.avif", "piece-paper-round"],
-  ],
-  "la-bai": [
-    ["/assets/img/cards/major-03-the-empress-400.avif", "piece-card piece-card-left"],
-    ["/assets/img/cards/major-19-the-sun-400.avif", "piece-card piece-card-centre"],
-    ["/assets/img/cards/major-07-the-chariot-400.avif", "piece-card piece-card-right"],
-  ],
-  "trai-bai": [
-    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-left"],
-    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-centre"],
-    ["/assets/img/sec-card-back-cut-400.avif", "piece-spread piece-spread-right"],
-  ],
-  healing: [
-    ["/assets/img/cards/major-17-the-star-400.avif", "piece-healing-card"],
-    ["/assets/img/sec-illustration-bon-nha-an-phu-cut.webp", "piece-healing-lotus"],
-  ],
-  "huyen-su": [
-    ["/assets/img/ref-legend-bg-800.webp", "piece-history-landscape"],
-    ["/assets/img/cards/major-07-the-chariot-400.avif", "piece-history-card"],
-  ],
-  "chuyen-huong-dong": [
-    ["/assets/img/ref-hoc-tarot-900.avif", "piece-story-paper"],
-    ["/assets/img/cards/major-03-the-empress-400.avif", "piece-story-card"],
-  ],
-  "cua-hang": [
-    ["/assets/img/shop/standard-pack-v1-640.webp", "piece-pack piece-pack-left"],
-    ["/assets/img/shop/premium-pack-v1-640.webp", "piece-pack piece-pack-centre"],
-    ["/assets/img/shop/signature-pack-v1-640.webp", "piece-pack piece-pack-right"],
-  ],
+/* V3 biến mỗi trang trong thành một chương trong cùng một cuốn sách Kirigami.
+   Dải mục lục dùng anchor đã có trong nội dung nên không tạo route hay thay đổi
+   hành vi. Nhãn cuối Hero là bản dịch trực tiếp của component nhãn giấy trong
+   mockup hệ năm đường nội dung. */
+const KIRIGAMI_PAGE_META = {
+  "tarot-la-gi": {
+    label: "Tarot là gì?",
+    chapter: "Mục 1",
+    links: [["#lich-su", "Nguồn gốc"], ["#cau-truc", "Cấu trúc"], ["#vi-sao", "Cách kể Việt"], ["#thu-mot-la", "Thử một lá"]],
+  },
+  "la-bai": {
+    label: "Bảo tàng 78 lá",
+    chapter: "Mục 2",
+    links: [["#bo-suu-tap", "Đại sảnh"], ["?arcana=major#bo-suu-tap", "Ẩn Chính"], ["?arcana=minor#bo-suu-tap", "Ẩn Phụ"], ["#phong-huyen-su", "Huyền sử"]],
+  },
+  "khoa-hoc": {
+    label: "Khóa học Tarot",
+    chapter: "Mục 3",
+    links: [["#lo-trinh", "Lộ trình"], ["#nen-tang-rws", "Nền tảng RWS"], ["#bo-cuc-trai-bai", "Đọc bố cục"], ["#huyen-su", "Đọc nguồn Việt"]],
+  },
+  "chuyen-huong-dong": {
+    label: "Bản tin Hường Đông",
+    chapter: "Mục 4",
+    links: [["/tin-tuc/", "Ghi chép mới"], ["/tarot-la-gi/", "Cách chúng tôi kể"], ["/la-bai/#phong-huyen-su", "Nguồn huyền sử"]],
+  },
+  "cua-hang": {
+    label: "Cửa hàng",
+    chapter: "Mục 5",
+    links: [["#bo-bai", "Ba phiên bản"], ["#sach-nho", "Reader Guide"], ["#danh-sach-cho-gioi-thieu", "Danh sách chờ"], ["#hoc-qua-email", "Học qua email"]],
+  },
 };
 
-function kirigamiHeroDecor(artId) {
-  const pieces = KIRIGAMI_HERO_SCENES[artId] || [];
-  if (!pieces.length) return "";
+function kirigamiPageLabel(artId) {
+  const meta = KIRIGAMI_PAGE_META[artId];
+  if (!meta) return "";
+  return `<div class="kirigami-page-label" aria-hidden="true"><span>${meta.chapter}</span><strong>${meta.label}</strong></div>`;
+}
 
-  const pieceHtml = pieces.map(([src, className], index) => (
-    `<span class="kirigami-piece ${className}" style="--kirigami-order:${index}">`
-      + `<img src="${src}" loading="eager" decoding="async" alt="">`
-    + "</span>"
+function kirigamiChapterNav(artId) {
+  const meta = KIRIGAMI_PAGE_META[artId];
+  if (!meta) return "";
+  const links = meta.links.map(([href, label], index) => (
+    `<a href="${href}"><span>${String(index + 1).padStart(2, "0")}</span>${label}</a>`
   )).join("");
-
-  return `<div class="kirigami-hero-depth" data-kirigami-scene="${artId}" aria-hidden="true">`
-    + `<div class="kirigami-stage">${pieceHtml}</div>`
-    + `<img class="kirigami-frame" src="/assets/img/subpage/kirigami-frame-v2.webp" width="1536" height="1024" loading="eager" decoding="async" alt="">`
-    + "</div>";
+  return `<nav class="kirigami-chapter-bar" aria-label="Mục lục ${meta.label}">`
+    + `<p><span>${meta.chapter}</span><strong>${meta.label}</strong></p><div>${links}</div></nav>`;
 }
 
 function addClass(openTag, className) {
@@ -511,58 +490,40 @@ function withPageArt(content, artId) {
     const end = body.indexOf(closeTag, openTag.length);
     if (end !== -1) {
       const leadEnd = end + closeTag.length;
-      const decoratedOpen = addClass(openTag, "lacquer-hero");
+      // lacquer-hero là hook tương thích cho animation cũ; kirigami-hero đánh
+      // dấu hệ hình ảnh mới. Không còn asset sơn mài nào được gắn vào Hero.
+      const decoratedOpen = addClass(addClass(openTag, "lacquer-hero"), "kirigami-hero");
       const hero = body.slice(0, start)
-        + decoratedOpen + heroArt + kirigamiHeroDecor(artId)
-        + body.slice(start + openTag.length, leadEnd);
+        + decoratedOpen + heroArt
+        + body.slice(start + openTag.length, end)
+        + kirigamiPageLabel(artId) + closeTag;
       body = body.slice(leadEnd);
-      return `${head}${hero}<div class="subpage-content-frame">${body}</div>${closeMain}${tail}`;
+      return `${head}${hero}<div class="subpage-content-frame">${kirigamiChapterNav(artId)}${body}</div>${closeMain}${tail}`;
     }
   }
 
   // Bài viết giữ nguyên cấu trúc article để schema và chiều rộng bài đọc không
   // đổi; chỉ header đầu bài trở thành bề mặt Hero.
   if (/^\s*<article\b[^>]*class="[^"]*\bpost-detail\b/.test(body)) {
-    body = body.replace(/<header\b[^>]*>/, (openTag) => `${addClass(openTag, "lacquer-hero")}${heroArt}`);
+    body = body.replace(/<header\b[^>]*>/, (openTag) => `${addClass(addClass(openTag, "lacquer-hero"), "kirigami-hero")}${heroArt}`);
   }
 
   return `${head}${body}${closeMain}${tail}`;
 }
 
-/* Mục điều hướng nào đang sáng. main.css và critical.css đều có sẵn luật
-   #main-nav a[aria-current="page"] nhưng nó chưa bao giờ khớp: thanh điều
-   hướng nằm nguyên văn trong _layout.html nên không chỗ nào biết route đang
-   dựng. Chỉ layout() biết, nên đánh dấu ở đây.
-
-   Quy ước: CHỈ mục cấp một mang aria-current, và mỗi trang sáng nhiều nhất một
-   mục. Trang con đánh dấu mục cha chứ không đánh dấu mục trong .nav-sub, vì
-   .nav-sub ẩn cho tới khi hover trên desktop — đánh dấu ở đó thì dấu hiệu
-   "đang ở đâu" không bao giờ hiện ra trên thanh. Đánh dấu cả hai cũng không
-   được: trình đọc màn hình sẽ đọc "trang hiện tại" hai lần trong một menu.
-
-   Bảng đi theo cấu trúc menu con chứ không theo hình dạng URL, nên
-   /la-bai-hom-nay/ thuộc "Trải bài" và /gioi-thieu/ thuộc "Chuyện Hường Đông"
-   dù URL không nằm trong nhánh cha. Cũng vì vậy /huyen-su/ và 34 trang toàn
-   văn của nó thuộc "Bảo tàng 78 lá": Huyền sử không còn mục cấp một riêng, nội
-   dung đã dọn vào /la-bai/#phong-huyen-su và menu chỉ còn đường đó dẫn tới.
-
-   Giống PAGE_ART, route ngoài bảng không bị gán bừa: trang chủ đã có logo
-   thương hiệu làm dấu, còn /quyen-rieng-tu/ và /404.html không thuộc mục nào
-   cả. */
+/* Mục điều hướng cấp một đang đại diện cho route hiện tại. Chỉ mục cấp một
+   mang aria-current để trạng thái luôn nhìn thấy và trình đọc màn hình không
+   phải thông báo "trang hiện tại" hai lần trong cùng một nhóm menu. */
 const NAV_SECTIONS = [
-  { href: "/tarot-la-gi/", match: (p) => p === "/tarot-la-gi/" || p.startsWith("/huong-dan-tarot/") },
-  { href: "/la-bai/",      match: (p) => p.startsWith("/la-bai/") || p.startsWith("/huyen-su/") },
-  { href: "/trai-bai/",    match: (p) => p.startsWith("/trai-bai/") || p === "/la-bai-hom-nay/" },
-  { href: "/healing/",     match: (p) => p === "/healing/" },
+  { href: "/tarot-la-gi/", match: (p) => p === "/tarot-la-gi/" },
+  { href: "/la-bai/",      match: (p) => p.startsWith("/la-bai/") },
+  { href: "/khoa-hoc/",    match: (p) => p.startsWith("/khoa-hoc/") },
   { href: "/tin-tuc/",     match: (p) => p.startsWith("/tin-tuc/") || p === "/gioi-thieu/" },
   { href: "/cua-hang/",    match: (p) => p.startsWith("/cua-hang/") },
 ];
 
-/* Dựng sẵn sáu biến thể _layout thay vì vá lại HTML của từng trang: cả trăm
-   trang cùng nhánh dùng chung một biến thể. Dựng ngay lúc nạp cũng là chốt
-   chặn — đổi tên hay bỏ một mục trong _layout.html mà quên bảng trên thì build
-   dừng ngay, chứ không im lặng phát hành một thanh điều hướng không bao giờ
-   sáng như trước. */
+/* Dựng sẵn năm biến thể layout và dừng build nếu một mục điều hướng đã bị
+   đổi mà bảng route chưa được cập nhật. */
 const layoutVariants = new Map(NAV_SECTIONS.map(({ href }) => {
   const anchor = `<a class="nav-group-top" href="${href}">`;
   if (!templates._layout.includes(anchor)) throw new Error(`_layout.html không còn mục điều hướng cấp một ${href}.`);
@@ -570,7 +531,7 @@ const layoutVariants = new Map(NAV_SECTIONS.map(({ href }) => {
 }));
 
 /**
- * Bản _layout đã đánh dấu mục điều hướng của route.
+ * Bản layout đã đánh dấu mục điều hướng của route.
  * @param {string} routePath
  * @returns {string}
  */
@@ -645,8 +606,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
         + ' imagesizes="100vw" href="/assets/img/home-kirigami-1536.webp">'
       : artId
         ? '<link rel="preload" as="image" fetchpriority="high"'
-          + ` imagesrcset="/assets/img/subpage/${artId}-1024.avif 1024w, /assets/img/subpage/${artId}-1536.avif 1536w"`
-          + ` imagesizes="100vw" href="/assets/img/subpage/${artId}-1536.avif">`
+          + ` href="/assets/img/subpage-3d/${artId}-kirigami-3d.webp">`
         : "",
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID || "HUONG-DONG-PROJECT-ID",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
@@ -659,10 +619,7 @@ function layout({ title, description, path: routePath, image, type, schemas, con
 // theo; nội dung không đổi thì URL giữ nguyên và cache vẫn phát huy tác dụng.
 const assetStamps = new Map();
 async function stampAssets(html) {
-  // data-astronomy-src cũng phải được đóng dấu: gói thiên văn giờ do
-  // daily-card/page.js nạp lúc chạy, nên nó không còn nằm trong một thẻ <script>
-  // để regex src= bắt được, mà vẫn cần vân tay nội dung như mọi tệp JS khác.
-  const pattern = /(?:src|href|data-astronomy-src)="(\/(?:assets|admin)\/[^"?]+\.(?:css|js))"/g;
+  const pattern = /(?:src|href)="(\/(?:assets|admin)\/[^"?]+\.(?:css|js))"/g;
   const files = [...new Set([...html.matchAll(pattern)].map((match) => match[1]))];
   for (const file of files) {
     if (!assetStamps.has(file)) {
@@ -682,14 +639,14 @@ async function emit(route, html) {
   await writeFile(target, await stampAssets(html));
 }
 
+function redirectDocument(destination) {
+  const url = escapeHtml(destination);
+  return `<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><link rel="canonical" href="${escapeHtml(absoluteUrl(data.site.baseUrl, destination))}"><meta http-equiv="refresh" content="0;url=${url}"><title>Đang chuyển trang · Hường Đông</title></head><body><p>Nội dung đã được sắp xếp lại. <a href="${url}">Tiếp tục đến trang mới</a>.</p><script>location.replace(${JSON.stringify(destination)})</script></body></html>`;
+}
+
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 await cp(path.join(root, "public"), dist, { recursive: true });
-await mkdir(path.join(dist, "assets", "vendor"), { recursive: true });
-await cp(
-  path.join(root, "node_modules", "astronomy-engine", "astronomy.browser.min.js"),
-  path.join(dist, "assets", "vendor", "astronomy.browser.min.js"),
-);
 
 const featuredSlugs = ["the-fool", "the-empress", "the-chariot", "the-tower", "the-star", "the-world"];
 const featuredCards = featuredSlugs.map((slug) => cards.find((card) => card.slug === slug)).filter(Boolean);
@@ -814,7 +771,7 @@ await emit("/", layout({
 
 const renderedHistoryPage = renderString(
   templates["huyen-su"].replace("<!--LNCQ-INDEX-->", lncqIndexHtml()),
-  { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() },
+  { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml(), reflectionPosts: reflectionPosts.length ? reflectionPosts : null },
 );
 const historySectionsStart = renderedHistoryPage.indexOf('<section class="v2-prose" id="nguyen-tac">');
 const historySectionsEnd = renderedHistoryPage.lastIndexOf("</main>");
@@ -849,7 +806,7 @@ for (let index = 0; index < cards.length; index += 1) {
     return `<span data-symbol-trigger data-symbol-source="${symbol.domId}" aria-describedby="${symbol.domId}">${escapeHtml(item)}</span>`;
   }).join("");
   card.symbolHtml = symbols.map((item) => `<article id="${item.domId}" data-symbol-source><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
-  const readingGuide = '<section class="v2-prose"><p class="eyebrow">Đọc có trách nhiệm</p><h2>Đưa lá bài trở về câu hỏi của bạn</h2><p>Phân biệt điều hình ảnh gợi ra với điều bạn biết bằng dữ kiện. Hãy dùng câu hỏi phản tư ở trên để mở thêm một góc nhìn, không dùng lá bài để kết luận thay người khác hoặc quyết định hộ mình.</p><p><a class="v2-link" href="/huong-dan-tarot/doc-la-bai/">Xem phương pháp đọc một lá →</a></p></section>';
+  const readingGuide = '<section class="v2-prose"><p class="eyebrow">Học có phương pháp</p><h2>Đưa lá bài về đúng hệ nghĩa</h2><p>Phân biệt điều hình ảnh gợi ra với dữ kiện và hệ nghĩa Rider–Waite–Smith. Lá bài được dùng như học liệu để luyện quan sát, đối chiếu biểu tượng và diễn giải có căn cứ.</p><p><a class="v2-link" href="/khoa-hoc/#doc-la-bai">Xem phương pháp đọc một lá →</a></p></section>';
   const content = renderString(templates["card-detail"], { card, previous, next })
     .replace("<!--LNCQ-->", `${card.reflectionHtml}${lncqBlock(card.slug)}${readingGuide}`);
   const creativeWork = { "@context": "https://schema.org", "@type": "CreativeWork", name: `${card.nameFolk} – ${card.nameEn}`, description: card.seo.description, image: absoluteUrl(data.site.baseUrl, card.image.url), inLanguage: "vi", isPartOf: data.site.siteName };
@@ -865,27 +822,26 @@ for (let index = 0; index < cards.length; index += 1) {
 }
 
 const pageCount = Math.max(1, Math.ceil(posts.length / 10));
+const postListRoutes = Array.from({ length: pageCount }, (_, i) => i === 0 ? "/tin-tuc/" : `/tin-tuc/trang/${i + 1}/`);
 for (let page = 1; page <= pageCount; page += 1) {
   const pagePosts = posts.slice((page - 1) * 10, page * 10);
   const paginationHtml = pageCount > 1 ? `<nav class="pagination" aria-label="Phân trang">${Array.from({ length: pageCount }, (_, i) => `<a ${i + 1 === page ? 'aria-current="page"' : ""} href="${i === 0 ? "/tin-tuc/" : `/tin-tuc/trang/${i + 1}/`}">${i + 1}</a>`).join("")}</nav>` : "";
-  const content = renderString(templates["post-list"], { posts: pagePosts, paginationHtml });
+  const content = renderString(templates["post-list"], { posts: pagePosts, paginationHtml, reflectionHighlights: page === 1 && reflectionPosts.length ? reflectionPosts.slice(0, 4) : null });
   const route = page === 1 ? "/tin-tuc/" : `/tin-tuc/trang/${page}/`;
-  await emit(route, layout({ title: page === 1 ? "Chuyện Hường Đông" : `Chuyện Hường Đông – trang ${page}`, description: "Nhật ký phát triển bộ bài, phương pháp Việt hóa và câu chuyện hậu trường Hường Đông Tarot.", path: route, schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Tin tức", path: "/tin-tuc/" }])], content }));
+  await emit(route, layout({ title: page === 1 ? "Bản tin Hường Đông" : `Bản tin Hường Đông – trang ${page}`, description: "Nhật ký phát triển bộ bài, phương pháp Việt hóa và câu chuyện hậu trường Hường Đông Tarot.", path: route, schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bản tin Hường Đông", path: "/tin-tuc/" }])], content }));
 }
 
 for (const post of posts) {
   const content = renderString(templates["post-detail"], { post });
   const article = { "@context": "https://schema.org", "@type": "Article", headline: post.title, description: post.excerpt, image: absoluteUrl(data.site.baseUrl, post.seo.ogImage || post.coverImage?.url || data.site.defaultOgImage), datePublished: post.publishedAt, dateModified: post.updatedAt, author: { "@type": "Person", name: post.author }, publisher: organizationSchema() };
-  await emit(`/tin-tuc/${post.slug}/`, layout({ title: post.seo.title, description: post.seo.description, path: `/tin-tuc/${post.slug}/`, image: post.seo.ogImage, type: "article", schemas: [article, breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Tin tức", path: "/tin-tuc/" }, { name: post.title, path: `/tin-tuc/${post.slug}/` }])], content }));
+  await emit(`/tin-tuc/${post.slug}/`, layout({ title: post.seo.title, description: post.seo.description, path: `/tin-tuc/${post.slug}/`, image: post.seo.ogImage, type: "article", schemas: [article, breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bản tin Hường Đông", path: "/tin-tuc/" }, { name: post.title, path: `/tin-tuc/${post.slug}/` }])], content }));
 }
 
 await emit("/gioi-thieu/", layout({ title: "Về dự án Hường Đông", description: "Tìm hiểu định vị, phương pháp Việt hóa và cam kết phân định truyền thuyết với sử liệu của Hường Đông Tarot.", path: "/gioi-thieu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Giới thiệu", path: "/gioi-thieu/" }])], content: templates.about }));
-// Bốn mục mới của cơ cấu 7 mục (nội dung trước, ảnh sau).
+// Ba route nội dung độc lập; Bảo tàng và Bản tin đã được sinh ở phía trên.
 const newPages = [
   { route: "/tarot-la-gi/", tpl: "tarot-la-gi", title: "Tarot là gì?", crumb: "Tarot là gì", description: "Tarot không nói thay tương lai. Giải thích hệ nghĩa Rider-Waite-Smith nguyên bản và cách Hường Đông Việt hóa mà vẫn giữ chuẩn." },
-  { route: "/trai-bai/", tpl: "trai-bai", title: "Trải bài", crumb: "Trải bài", description: "Các kiểu trải bài Hường Đông, nghi thức trước khi rút và hiệu ứng lật bài." },
-  { route: "/huyen-su/", tpl: "huyen-su", title: "Huyền sử", crumb: "Huyền sử", description: "Tứ Bất Tử và Tứ đại thiền sư. Những câu chuyện từ Lĩnh Nam chích quái nối vào 22 lá Ẩn chính - mỗi truyện đứng riêng, không gộp thành một cốt truyện tuyến tính." },
-  { route: "/healing/", tpl: "healing", title: "Healing", crumb: "Healing", description: "Phản tư, soi chiếu và nhật ký - dùng tarot như một tấm gương, không phải một lời phán." },
+  { route: "/khoa-hoc/", tpl: "khoa-hoc", title: "Khóa học Tarot", crumb: "Khóa học", description: "Lộ trình học Tarot bằng hình ảnh và câu chuyện Việt: nền tảng RWS, đọc lá, đọc bố cục, phản tư và kiểm chứng nguồn." },
   { route: "/cua-hang/", tpl: "cua-hang", title: "Cửa hàng", crumb: "Cửa hàng", description: "Giới thiệu bộ bài Hường Đông Tarot và danh sách chờ. Chưa mở bán, không thu tiền trước." },
 ];
 for (const page of newPages) {
@@ -897,141 +853,44 @@ for (const page of newPages) {
     description: page.description,
     path: page.route,
     schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: page.crumb, path: page.route }])],
-    content: renderString(pageTemplate.replace("<!--LNCQ-INDEX-->", lncqIndexHtml()), { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() }),
+    content: renderString(pageTemplate, { packPrice: PACK_PRICE, priceTiersHtml: priceTiersHtml() }),
   }));
 }
 
-// Giáo trình nguồn chỉ làm khung kiểm kê chủ đề. Bốn trang dưới đây được viết
-// lại theo nguyên tắc Hường Đông: quan sát trước, diễn giải sau; không phán số
-// phận; luôn đưa người đọc trở về với dữ kiện, quyền lựa chọn và trách nhiệm.
-const guidePages = [
-  { route: "/huong-dan-tarot/", tpl: "huong-dan-tarot", title: "Hướng dẫn Tarot cho người mới", crumb: "Hướng dẫn Tarot", description: "Lộ trình học Tarot bằng câu chuyện Việt: từ câu hỏi, xáo bài đến cách đọc 78 lá và trải bài có trách nhiệm." },
-  { route: "/huong-dan-tarot/dat-cau-hoi/", tpl: "huong-dan-dat-cau-hoi", title: "Cách đặt câu hỏi Tarot", crumb: "Đặt câu hỏi", description: "Cách chuyển câu hỏi đóng và nỗi lo mơ hồ thành câu hỏi Tarot mở, cụ thể và có ích cho hành động." },
-  { route: "/huong-dan-tarot/xao-bai/", tpl: "huong-dan-xao-bai", title: "Cách xáo và rút bài Tarot", crumb: "Xáo và rút bài", description: "Ba cách xáo bài dễ thực hành, cách chọn lá và một nghi thức tối giản không thần bí hóa Tarot." },
-  { route: "/huong-dan-tarot/doc-la-bai/", tpl: "huong-dan-doc-la-bai", title: "Cách đọc một lá Tarot", crumb: "Đọc một lá bài", description: "Phương pháp năm lớp để đọc hình ảnh, vị trí, nghĩa RWS và liên tưởng Việt mà không học vẹt từ khóa." },
-];
-for (const page of guidePages) {
-  const breadcrumbs = [{ name: "Trang chủ", path: "/" }, { name: "Hướng dẫn Tarot", path: "/huong-dan-tarot/" }];
-  if (page.route !== "/huong-dan-tarot/") breadcrumbs.push({ name: page.crumb, path: page.route });
-  await emit(page.route, layout({ title: page.title, description: page.description, path: page.route, schemas: [breadcrumbSchema(data.site, breadcrumbs)], content: templates[page.tpl] }));
-}
-
-// 1.1 — Chốt URL trước khi viết chức năng. 1.2–1.4 Lớp 2 — khung tương tác.
-//
-// Ba trang giữ nguyên `noindex,follow` và vẫn nằm ngoài sitemap: khung rút bài
-// đã chạy được, nhưng phần nội dung biên tập (Lớp 3) còn chờ ba quyết định của
-// người — quy tắc Có/Không, nhãn ba vị trí của Tình Yêu, và 0.7. Mở index khi
-// trang mới có nửa nội dung là tự bắn vào chân mình về SEO.
-//
-// Khung chỉ dùng dữ liệu ĐÃ chốt: 22 Ẩn Chính trong deck-data.js, sinh từ
-// content/major-arcana.mjs. Không đụng tới 56 Ẩn Phụ đang chờ 0.7.
-const intentPages = [
-  {
-    route: "/trai-bai/co-khong/",
-    title: "Trải bài Có hoặc Không",
-    heading: "Có hoặc Không",
-    intro: "Một lá bài giúp bạn dừng lại, nhìn rõ điều đang nghiêng về phía nào và tự kiểm tra lý do của mình.",
-    howTo: "Giữ câu hỏi trong đầu — dạng câu hỏi có thể trả lời bằng có hoặc không — rồi bấm Xáo và rút. Bấm vào lá úp để lật.",
-    spreadSize: 1,
-    positions: "",
-    verdict: true,
-    // §4 của KE-HOACH-1.2-1.4: chưa có quy tắc "lá nào → Có/Không" trong dữ liệu.
-    // Khung cố ý KHÔNG tự chế ra quy tắc; khi người chốt thì chỉ thêm một cột dữ
-    // liệu và nối vào đúng chỗ này, khung không phải viết lại.
-    verdictNote: "Quy tắc phân cực Có/Không chưa được chốt, nên trang chưa đưa ra kết luận. Lá rút được và phần đọc bên dưới đã dùng dữ liệu thật.",
-    nextStep: "Hạng mục 1.2 Lớp 3 sẽ bổ sung kết luận Có/Không có điều kiện và chia sẻ kết quả, sau khi quy tắc phân cực được chốt.",
-    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Có hoặc Không", path: "/trai-bai/co-khong/" }],
-  },
-  {
-    route: "/trai-bai/ba-la/",
-    title: "Trải bài Ba Lá",
-    heading: "Ba Lá",
-    intro: "Ba vị trí cho quá khứ, hiện tại và hướng đi — một khung đọc ngắn để nhìn sự việc theo dòng thời gian.",
-    howTo: "Giữ câu hỏi trong đầu rồi bấm Xáo và rút. Ba lá hiện theo thứ tự Quá khứ, Hiện tại, Hướng đi. Bấm vào từng lá úp để lật.",
-    spreadSize: 3,
-    positions: "Quá khứ|Hiện tại|Hướng đi",
-    nextStep: "Hạng mục 1.3 Lớp 3 sẽ bổ sung phần đọc liền mạch ba lá và nội dung biên tập, sau khi 0.7 được duyệt.",
-    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Ba Lá", path: "/trai-bai/ba-la/" }],
-  },
-  {
-    route: "/trai-bai/tinh-yeu/",
-    title: "Trải bài Tình Yêu",
-    heading: "Tình Yêu",
-    intro: "Một khung soi chiếu mối quan hệ bằng câu hỏi rõ ràng, không phán thay cảm xúc hay lựa chọn của bạn.",
-    howTo: "Giữ câu hỏi về mối quan hệ trong đầu rồi bấm Xáo và rút. Ba lá hiện theo thứ tự vị trí. Bấm vào từng lá úp để lật.",
-    spreadSize: 3,
-    // §5.3: nhãn ba vị trí của Tình Yêu là quyết định của người, chưa chốt. Dùng
-    // nhãn trung tính để không lá nào thiếu nhãn, và nêu bộ nhãn đang đề nghị ở
-    // khối "Bước tiếp theo" để người duyệt trong một lần nhìn.
-    positions: "Vị trí 1|Vị trí 2|Vị trí 3",
-    nextStep: "Hạng mục 1.4 Lớp 3 chờ bạn chốt tên ba vị trí. Bộ đang đề nghị: Điều bạn mang vào · Điều đối phương mang vào · Điều cả hai đang tạo ra.",
-    breadcrumbs: [{ name: "Trang chủ", path: "/" }, { name: "Trải bài", path: "/trai-bai/" }, { name: "Tình Yêu", path: "/trai-bai/tinh-yeu/" }],
-  },
-];
-for (const page of intentPages) {
-  const content = renderString(templates.spread, page);
-  await emit(page.route, layout({
-    title: page.title,
-    description: `${page.intro} Tính năng đang được Hường Đông phát triển thêm.`,
-    path: page.route,
-    robots: "noindex,follow",
-    schemas: [breadcrumbSchema(data.site, page.breadcrumbs)],
-    content,
-  }));
-}
-
-// 1.5 — Nội dung và ánh xạ đã được chủ dự án duyệt ngày 24/08/2026.
-// Chỉ đưa các trường tối thiểu vào trình duyệt; không để dữ liệu quản trị hoặc
-// chuỗi HTML không cần thiết lọt vào gói JSON của trang.
-const dailyCards = cards.map((card) => ({
-  slug: card.slug,
-  nameEn: card.nameEn,
-  nameVi: card.nameVi,
-  nameFolk: card.nameFolk,
-  arcana: card.arcana,
-  suit: card.suit,
-  image: {
-    url: card.image?.url || "/assets/img/default-og.webp",
-    alt: card.image?.alt || `Minh họa lá ${card.nameFolk || card.nameVi || card.nameEn}`,
-    width: Number(card.image?.width) || 768,
-    height: Number(card.image?.height) || 1152,
-  },
-  keywordsUpright: card.keywordsUpright || [],
-  keywordsReversed: card.keywordsReversed || [],
-  meaningUpright: card.meaningUpright || "",
-  meaningReversed: card.meaningReversed || "",
-}));
-const dailyCardsJson = JSON.stringify(dailyCards).replaceAll("<", "\\u003c");
-const dailyContent = renderString(templates["daily-card"], { dailyCardsJson });
-await emit("/la-bai-hom-nay/", layout({
-  title: "Lá Bài Hôm Nay",
-  description: "Bốc một lá Tarot cố định trong ngày, kết hợp thời điểm bốc bài để nhận một lời đọc ngắn dành cho tự phản tư.",
-  path: "/la-bai-hom-nay/",
-  schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Lá Bài Hôm Nay", path: "/la-bai-hom-nay/" }])],
-  content: dailyContent,
-  bodyClass: "daily-card-page",
-  // Không nhúng script cứng nữa: page/registry.js đọc <main data-page="daily">
-  // rồi tự import module và tự nạp astronomy. Thẻ <script> nằm ngoài container
-  // Swup sẽ không bao giờ chạy lại sau một lần chuyển cảnh, nên nhúng cứng là
-  // đúng một lần đầu rồi im lặng hỏng từ lần thứ hai trở đi.
-}));
-
-// 34 trang toàn văn Lĩnh Nam chích quái.
+// 34 trang toàn văn là một phòng tư liệu của Bảo tàng 78 lá.
 for (let i = 0; i < lncqChapters.length; i += 1) {
   const c = lncqChapters[i];
-  await emit(`/huyen-su/${c.slug}/`, layout({
+  const route = `/la-bai/huyen-su/${c.slug}/`;
+  await emit(route, layout({
     title: `${c.title} – Lĩnh Nam chích quái`,
     description: `Toàn văn ${c.title} (chương ${c.n}) trong Lĩnh Nam chích quái của Trần Thế Pháp.`,
-    path: `/huyen-su/${c.slug}/`,
-    schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Huyền sử", path: "/huyen-su/" }, { name: c.title, path: `/huyen-su/${c.slug}/` }])],
+    path: route,
+    schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bảo tàng 78 lá", path: "/la-bai/" }, { name: "Phòng Huyền sử", path: "/la-bai/#phong-huyen-su" }, { name: c.title, path: route }])],
     content: lncqChapterHtml(c, lncqChapters[i - 1], lncqChapters[i + 1]),
   }));
+  await emit(`/huyen-su/${c.slug}/`, redirectDocument(route));
 }
+
+// Giữ liên kết cũ hoạt động nhưng không còn xuất bản giao diện bói/rút bài.
+const retiredRoutes = [
+  "/la-bai-hom-nay/",
+  "/trai-bai/",
+  "/trai-bai/co-khong/",
+  "/trai-bai/ba-la/",
+  "/trai-bai/tinh-yeu/",
+  "/healing/",
+  "/huyen-su/",
+  "/huong-dan-tarot/",
+  "/huong-dan-tarot/dat-cau-hoi/",
+  "/huong-dan-tarot/xao-bai/",
+  "/huong-dan-tarot/doc-la-bai/",
+];
+for (const route of retiredRoutes) await emit(route, redirectDocument("/khoa-hoc/"));
 
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
 
-const routes = ["/", "/tarot-la-gi/", "/huong-dan-tarot/", "/huong-dan-tarot/dat-cau-hoi/", "/huong-dan-tarot/xao-bai/", "/huong-dan-tarot/doc-la-bai/", "/la-bai/", "/la-bai-hom-nay/", "/trai-bai/", "/huyen-su/", "/healing/", "/cua-hang/", "/tin-tuc/", "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
+const routes = ["/", "/tarot-la-gi/", "/la-bai/", "/khoa-hoc/", "/cua-hang/", ...postListRoutes, "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...lncqChapters.map((chapter) => `/la-bai/huyen-su/${chapter.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${escapeHtml(absoluteUrl(data.site.baseUrl, route))}</loc></url>`).join("")}</urlset>`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap);
 await writeFile(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${absoluteUrl(data.site.baseUrl, "/sitemap.xml")}\n`);

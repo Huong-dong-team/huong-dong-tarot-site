@@ -46,7 +46,8 @@ const cardPatches = PILOT_CARD_SLUGS.map((slug) => {
   const fields = card.arcana === "minor" ? [...cardFields, ...minorFields] : cardFields;
   return { slug, data: { ...pick(card, fields), editorialRevision: revision } };
 });
-const postPatches = posts.map((post) => ({
+const pilotPostSlugs = new Set(["vi-sao-huong-dong-giu-he-nghia-rws", "bon-nha-an-phu-tre-dau-tam-sen-lua"]);
+const postPatches = posts.filter((post) => pilotPostSlugs.has(post.slug)).map((post) => ({
   slug: post.slug,
   data: { ...pick(post, postFields), editorialRevision: revision },
 }));

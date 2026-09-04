@@ -45,7 +45,7 @@ test("trang quyền riêng tư nằm trong sitemap và được liên kết ở 
 });
 test("sinh đủ 78 trang chi tiết", async () => {
   const entries = await readdir(path.join(root, "dist/la-bai"), { withFileTypes: true });
-  assert.equal(entries.filter((entry) => entry.isDirectory()).length, 78);
+  assert.equal(entries.filter((entry) => entry.isDirectory() && entry.name !== "huyen-su").length, 78);
 });
 test("OG và JSON-LD nằm trong HTML tĩnh", async () => {
   const html = await readFile(path.join(root, "dist/la-bai/the-star/index.html"), "utf8");
