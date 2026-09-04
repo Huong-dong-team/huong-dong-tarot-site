@@ -3,10 +3,11 @@
 Repo này phục vụ **huongdong.id.vn**. Từ 21/08/2026 đây là repo duy nhất; repo cũ
 `Huong-Dong-Claude-Handover-2026-08-09-update` không còn dùng để phát hành.
 
-Sắp sửa CSS hay bố cục? Đọc `AGENTS.md` trước — desktop, tablet và điện thoại
-dùng chung một bộ template và một bộ CSS, nên "làm bản desktop khác bản mobile"
-ở đây nghĩa là thêm luật theo khung nhìn chứ không phải tách nhánh giao diện.
-Thang breakpoint nằm ở `docs/breakpoints.md`.
+> **Sắp sửa CSS hay bố cục?** Đọc [`AGENTS.md`](AGENTS.md) trước — desktop,
+> tablet và điện thoại dùng chung một bộ template và một bộ CSS, nên "làm bản
+> desktop khác bản mobile" ở đây nghĩa là thêm luật theo khung nhìn chứ không
+> phải tách nhánh giao diện. Thang breakpoint nằm ở
+> [`docs/breakpoints.md`](docs/breakpoints.md).
 
 ## Phạm vi sản phẩm bắt buộc
 
