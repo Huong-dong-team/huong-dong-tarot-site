@@ -11,7 +11,7 @@ export function absoluteUrl(baseUrl, path = "/") {
  * never[] và mọi lời gọi truyền mảng thật đều bị từ chối.
  *
  * @param {object} options
- * @param {{ baseUrl: string, siteName: string, defaultOgImage: string }} options.site
+ * @param {{ baseUrl: string, siteName: string, defaultOgImage: string, defaultOgImageAlt?: string, defaultOgImageWidth?: number, defaultOgImageHeight?: number }} options.site
  * @param {string} options.title
  * @param {string} options.description
  * @param {string} options.path
@@ -25,6 +25,20 @@ export function seoHead({ site, title, description, path, image, type = "website
   const canonical = absoluteUrl(site.baseUrl, path);
   const ogImage = absoluteUrl(site.baseUrl, image || site.defaultOgImage);
   const pageTitle = title === site.siteName ? title : `${title} | ${site.siteName}`;
+  const usesDefaultImage = !image || image === site.defaultOgImage;
+  const ogImageAlt = usesDefaultImage
+    ? site.defaultOgImageAlt || `Ảnh nền nhận diện ${site.siteName}`
+    : `Ảnh chia sẻ cho ${pageTitle}`;
+  const defaultImageWidth = Number(site.defaultOgImageWidth);
+  const defaultImageHeight = Number(site.defaultOgImageHeight);
+  const hasDefaultImageDimensions = usesDefaultImage
+    && Number.isInteger(defaultImageWidth) && defaultImageWidth > 0
+    && Number.isInteger(defaultImageHeight) && defaultImageHeight > 0;
+  const defaultImageDimensions = hasDefaultImageDimensions
+    ? `
+    <meta property="og:image:width" content="${defaultImageWidth}">
+    <meta property="og:image:height" content="${defaultImageHeight}">`
+    : "";
   const schemas = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
   return `
     <title>${escapeHtml(pageTitle)}</title>
@@ -35,6 +49,8 @@ export function seoHead({ site, title, description, path, image, type = "website
     <meta property="og:title" content="${escapeHtml(pageTitle)}">
     <meta property="og:description" content="${escapeHtml(description)}">
     <meta property="og:image" content="${escapeHtml(ogImage)}">
+    <meta property="og:image:secure_url" content="${escapeHtml(ogImage)}">
+    <meta property="og:image:alt" content="${escapeHtml(ogImageAlt)}">${defaultImageDimensions}
     <meta property="og:url" content="${escapeHtml(canonical)}">
     <meta property="og:locale" content="vi_VN">
     <meta property="og:site_name" content="${escapeHtml(site.siteName)}">
@@ -42,6 +58,7 @@ export function seoHead({ site, title, description, path, image, type = "website
     <meta name="twitter:title" content="${escapeHtml(pageTitle)}">
     <meta name="twitter:description" content="${escapeHtml(description)}">
     <meta name="twitter:image" content="${escapeHtml(ogImage)}">
+    <meta name="twitter:image:alt" content="${escapeHtml(ogImageAlt)}">
     ${schemas.filter(Boolean).map((schema) => `<script type="application/ld+json">${JSON.stringify(schema).replaceAll("<", "\\u003c")}</script>`).join("\n")}`;
 }
 

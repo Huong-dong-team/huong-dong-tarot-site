@@ -1,5 +1,51 @@
 # BÀN GIAO VẬN HÀNH
 
+## Nhật ký phối hợp · Favicon bình minh và ảnh chia sẻ website ngày 04/09/2026
+
+Branch: `feat/sunrise-favicon-social-preview`, tách từ `origin/main` tại commit
+`671c4ff`. Chủ dự án là người review/merge; nhánh này chưa merge và chưa deploy.
+
+### Phạm vi và nguồn hình ảnh
+
+- Nguồn nhận diện favicon do chủ dự án cung cấp:
+  `776200070_1418451790129140_7321442329094247149_n.png`. Chỉ lấy ngôn ngữ tạo
+  hình của biểu tượng bên trái: bán nguyệt bình minh, 9 tia dài ngắn khác nhau
+  và ba đường chân trời; không đưa chữ Hường Đông vào favicon vì không đọc được
+  ở 16–32 px. Số tia và nhịp tia đã được chỉnh theo phản hồi review của chủ dự
+  án ngày 04/09/2026.
+- `public/favicon.svg` được dựng lại bằng hình học SVG, gradient vàng
+  `#FFE780` → đào `#F7A07C` → hồng `#E94F7A`, nền trong suốt. Toàn bộ PNG
+  16/32/48/96/192/512, Apple Touch 180 và ICO 16/32/48 được sinh lại từ cùng
+  hình học; ZIP, tar.gz và patch trên `/download/` cũng đã đồng bộ.
+- `public/assets/img/social-share.jpg` là crop 1200×630 từ chính ảnh Hero
+  `home-kirigami-1536.webp`, không vẽ thêm chữ hoặc chi tiết. Đây là ảnh nền
+  xuất hiện khi chia sẻ các trang không có ảnh OG riêng.
+
+### Metadata và tương thích dữ liệu thật
+
+- Seed đổi `defaultOgImage` sang `/assets/img/social-share.jpg`, kèm alt và kích
+  thước 1200×630. Khi Firestore còn giữ đường dẫn mặc định cũ
+  `/assets/img/default-og.webp`, build tự chuyển sang ảnh mới; ảnh tùy chỉnh do
+  admin đặt không bị ghi đè.
+- Open Graph có `og:image`, `og:image:secure_url`, alt và kích thước; Twitter
+  giữ `summary_large_image` và có `twitter:image:alt`. Trang/lá/bài viết có ảnh
+  riêng vẫn tiếp tục dùng ảnh riêng.
+- Test build khóa file ảnh chia sẻ, URL tuyệt đối production, kích thước, alt và
+  toàn bộ favicon/gói download để tránh hồi quy.
+
+### Xác minh
+
+```text
+npm run check:types  PASS
+npm run build:local  PASS — 78 trang lá, 38 bài tin, 161 URL
+npm test             PASS — 158/158 tests
+git diff --check     PASS
+```
+
+Kiểm tra asset độc lập: SVG parse hợp lệ; tất cả PNG là RGBA có góc trong suốt;
+ICO có đủ 16/32/48; ảnh chia sẻ đúng 1200×630; ZIP/tar không lỗi; patch có thể
+reverse-apply lên cây hiện tại.
+
 ## PR #86 · Hướng nội dung được xác nhận lại ngày 04/09/2026
 
 Chủ dự án yêu cầu giữ Bản tin + Khóa học, không Healing và không bói tự động.

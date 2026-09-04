@@ -51,6 +51,14 @@ async function loadData() {
 
 const data = await loadData();
 data.site.baseUrl = process.env.SITE_BASE_URL || data.site.baseUrl;
+// Firestore có thể vẫn giữ đường dẫn ảnh OG cũ. Chuyển riêng giá trị mặc định
+// cũ sang ảnh chia sẻ 1200×630 mới, nhưng không đè ảnh tùy chỉnh trong admin.
+if (!data.site.defaultOgImage || data.site.defaultOgImage === "/assets/img/default-og.webp") {
+  data.site.defaultOgImage = "/assets/img/social-share.jpg";
+  data.site.defaultOgImageAlt = "Phong cảnh bình minh Hường Đông với bộ bài Tarot Việt";
+  data.site.defaultOgImageWidth = 1200;
+  data.site.defaultOgImageHeight = 630;
+}
 // Giá bộ bài là một quyết định sản phẩm, không phải câu chữ rải rác. Giữ cả
 // giá trị máy đọc và hai cách hiển thị ở một chỗ để HTML, FAQ và JSON-LD luôn
 // đổi cùng nhau khi chủ dự án chốt giá mới.
