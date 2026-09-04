@@ -104,6 +104,9 @@
  * @property {string} description
  * @property {string} baseUrl
  * @property {string} defaultOgImage
+ * @property {string} [defaultOgImageAlt]
+ * @property {number} [defaultOgImageWidth]
+ * @property {number} [defaultOgImageHeight]
  * @property {string} [ga4Id]
  * @property {string} [contactEmail]
  * @property {Record<string, string>} [social]

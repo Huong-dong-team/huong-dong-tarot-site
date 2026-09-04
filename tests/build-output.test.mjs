@@ -37,6 +37,18 @@ test("favicon đa kích thước và gói tải xuống cùng có trong bản ph
   assert.doesNotMatch(download, /data:application\/zip;base64,/,
     "trang tải xuống không được nhúng lặp lại toàn bộ tệp ZIP");
 });
+test("ảnh nền website được dùng làm thẻ chia sẻ mặc định", async () => {
+  await access(path.join(root, "dist/assets/img/social-share.jpg"));
+  const home = await readFile(path.join(root, "dist/index.html"), "utf8");
+  assert.match(home, /property="og:image" content="https:\/\/huongdong\.id\.vn\/assets\/img\/social-share\.jpg"/);
+  assert.match(home, /property="og:image:secure_url" content="https:\/\/huongdong\.id\.vn\/assets\/img\/social-share\.jpg"/);
+  assert.match(home, /property="og:image:alt" content="Phong cảnh bình minh Hường Đông với bộ bài Tarot Việt"/);
+  assert.match(home, /property="og:image:width" content="1200"/);
+  assert.match(home, /property="og:image:height" content="630"/);
+  assert.match(home, /name="twitter:card" content="summary_large_image"/);
+  assert.match(home, /name="twitter:image" content="https:\/\/huongdong\.id\.vn\/assets\/img\/social-share\.jpg"/);
+  assert.match(home, /name="twitter:image:alt" content="Phong cảnh bình minh Hường Đông với bộ bài Tarot Việt"/);
+});
 test("trang quyền riêng tư nằm trong sitemap và được liên kết ở chân trang", async () => {
   const sitemap = await readFile(path.join(root, "dist/sitemap.xml"), "utf8");
   assert.match(sitemap, /\/quyen-rieng-tu\//);

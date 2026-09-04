@@ -1,16 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="sun-grad" cx="50%" cy="46%" r="52%">
-      <stop offset="0%" stop-color="#FF4D4D"/>
-      <stop offset="35%" stop-color="#E52B2B"/>
-      <stop offset="75%" stop-color="#C61A1A"/>
-      <stop offset="100%" stop-color="#9E0C0C"/>
-    </radialGradient>
-    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
+    <linearGradient id="sunrise" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="0" y2="365">
+      <stop offset="0" stop-color="#ffe780"/>
+      <stop offset="0.55" stop-color="#f7a07c"/>
+      <stop offset="1" stop-color="#e94f7a"/>
+    </linearGradient>
   </defs>
-  <!-- Vầng dương mặt trời đỏ Hường Đông thuần khiết, không viền -->
-  <circle cx="256" cy="256" r="236" fill="url(#sun-grad)" filter="url(#soft-glow)"/>
+  <g fill="none" stroke="url(#sunrise)" stroke-linecap="round" stroke-width="12">
+    <path d="M256 54v58"/>
+    <path d="m205 67 15 56"/>
+    <path d="m159 89 29 50"/>
+    <path d="m120 124 42 40"/>
+    <path d="m92 168 51 27"/>
+    <path d="m78 218 57 13"/>
+    <path d="m307 67-15 56"/>
+    <path d="m353 89-29 50"/>
+    <path d="m392 124-42 40"/>
+    <path d="m420 168-51 27"/>
+    <path d="m434 218-57 13"/>
+  </g>
+  <path d="M142 316a114 114 0 0 1 228 0Z" fill="url(#sunrise)"/>
+  <g fill="none" stroke="url(#sunrise)" stroke-linecap="round">
+    <path d="M64 316h384" stroke-width="12"/>
+    <path d="M96 342h320" stroke-width="9"/>
+    <path d="M136 365h240" stroke-width="7"/>
+  </g>
 </svg>
