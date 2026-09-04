@@ -1,5 +1,90 @@
 # Nhật ký bàn giao tác vụ
 
+## 04/09/2026 · PR #83 · `feat/kirigami-subpages-v3`
+
+Phạm vi đã thay đổi:
+
+- Chốt kiến trúc năm mục: Tarot là gì, Bảo tàng 78 lá, Khóa học, Bản tin Hường
+  Đông, Cửa hàng; toàn bộ navigation desktop/mobile và dải điều hướng homepage
+  cùng đọc theo cấu trúc này.
+- Tạo `/khoa-hoc/` bằng cách biên tập Trải bài, Healing và Huyền sử thành giáo
+  trình: nền tảng RWS, đọc hình ảnh, bố cục, phản tư và kiểm chứng nguồn.
+- Xóa CTA “Lá bài hôm nay”; ngừng sinh giao diện rút/xáo bài và gỡ loader
+  `daily-card`, `spread-deck`, `huyen-su-reveal` khỏi registry.
+- Chuyển 34 trang truyện sang `/la-bai/huyen-su/<slug>/`; URL cũ có HTML
+  fallback và Firebase 301 để bảo toàn backlink.
+- Hoàn thiện năm Hero Kirigami 3D; `/khoa-hoc/` tạm dùng cảnh Trải bài theo yêu
+  cầu nhưng asset mang tên trung tính theo route mới.
+- Cập nhật sitemap, test hồi quy, tài liệu hệ thiết kế và báo cáo QA.
+- Đã đối chiếu `main` mới nhất trước khi mở PR: giữ logic `aria-current` vừa
+  được bổ sung, ánh xạ lại cho đúng năm mục và bọc toàn bộ hover mới trong
+  `@media (hover: hover)` theo chuẩn thiết bị cảm ứng hiện hành.
+
+Không thay đổi:
+
+- Không sửa dữ liệu 78 lá, toàn văn 34 truyện, bài Bản tin, ba mức giá hay
+  workflow triển khai.
+- Không merge và không deploy; chủ dự án là người review/merge PR.
+- PNG nguồn ImageGen và ảnh QA trung gian không đưa vào commit.
+
+Điểm tránh giẫm chân:
+
+- Không thêm lại CTA `/la-bai-hom-nay/` hoặc loader bói vào registry.
+- Route canonical của truyện nguồn nằm dưới `/la-bai/huyen-su/`; route
+  `/huyen-su/` cấp một thuộc nhóm đã nghỉ và chuyển về Khóa học.
+- Khi thay ảnh tạm của Khóa học, giữ tên
+  `khoa-hoc-kirigami-3d.webp` để không phải sửa route mapping.
+
+Kiểm tra đã chạy:
+
+- `npm run build:local` và `npm run check:types` — đạt.
+- 35/36 tệp test đạt; lỗi còn lại là giới hạn child-process của sandbox trong
+  `editorial-publish.test.mjs`, không liên quan thay đổi.
+- Browser QA năm route tại 1440×1000 và 390×844: không overflow, đúng năm mục,
+  Hero hiện đủ sau entrance và console không có error/warning.
+
+## 03/09/2026 · Local only · `feat/kirigami-subpages-v3`
+
+Phạm vi đã thay đổi:
+
+- Thay toàn bộ ảnh Hero sơn mài của bảy nhóm sub-page bằng bảy cảnh Kirigami
+  3D riêng, tạo bằng built-in ImageGen từ system board đã duyệt.
+- Giữ PNG nguồn 1536×1024 trên máy local để tinh chỉnh; chỉ stage bảy WebP
+  quality 88 trong `public/assets/img/subpage-3d/` để tránh tăng repo 20MB.
+- Loại bỏ `KIRIGAMI_HERO_SCENES`, `kirigamiHeroDecor()` và các hiện vật sơn
+  mài ghép lớp khỏi DOM Hero; giữ hook `lacquer-hero` chỉ để animation cũ không
+  gãy, đồng thời thêm class ngữ nghĩa `kirigami-hero`.
+- Giữ entrance/fade; thêm nhịp thở rất nhẹ cho cảnh 3D và reduced-motion.
+- Giữ hệ nhãn chương/mục lục/folio Kirigami V3, sửa chiều cao Hero Bảo tàng và
+  khóa overflow desktop/mobile.
+- Cập nhật test, tài liệu hệ thiết kế, comparison board và `design-qa.md`.
+
+Không thay đổi:
+
+- Không sửa nội dung 78 lá, truyện Huyền sử, bài viết, giá ba gói, homepage,
+  workflow GitHub hoặc cấu hình Firebase.
+- Không commit, không push, không mở PR và không deploy; toàn bộ thay đổi chỉ
+  nằm trên máy local theo yêu cầu người dùng.
+
+Điểm tránh giẫm chân:
+
+- Nguồn Hero mới được ánh xạ trực tiếp bằng `artId` trong
+  `pageArtworkPicture()`; preload trong `layout()` phải đổi cùng lúc nếu đổi tên
+  asset.
+- `public/assets/css/subpage-kirigami-v3.css` tải cuối để tắt wash/multiply của
+  hệ Hero cũ mà không ảnh hưởng homepage.
+- Không khôi phục `kirigamiHeroDecor()` hoặc gắn lại asset trong
+  `public/assets/img/subpage/` nếu chưa có yêu cầu quay lại tranh sơn mài.
+
+Kiểm tra đã chạy:
+
+- `npm run build:local` — sinh 95 URL.
+- Test Hero/Kirigami/critical CSS — đạt.
+- `npm test` — 35/36 đạt; `editorial-publish` bị giới hạn môi trường stream fd,
+  không liên quan UI và không bị sửa.
+- Browser QA đủ bảy route tại 1440×1000 và 390×844: không overflow; menu,
+  chapter anchor, filter Ẩn Chính 22 lá và console đều đạt.
+
 ## 02/09/2026 · PR #78 · `content/editorial-foundation-beginner`
 
 Phạm vi đã thay đổi:

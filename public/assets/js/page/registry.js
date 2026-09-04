@@ -23,9 +23,6 @@ const PAGES = {
   home: ["home-standalone", "card-tilt", "hero-parallax"],
   library: ["card-filters", "card-tilt", "museum-gallery"],
   card: ["symbol-tooltips", "card-tilt"],
-  daily: ["daily-card"],
-  spread: ["spread-deck", "card-tilt"],
-  "huyen-su": ["huyen-su-reveal"],
 };
 
 /* Có mặt ở gần như mọi trang; rẻ và tự thoát ngay nếu không tìm thấy phần tử. */
@@ -41,9 +38,6 @@ const LOADERS = {
   share: () => import("../ui/share.js"),
   waitlist: () => import("../ui/waitlist.js"),
   "landing-drag": () => import("../landing-drag/init.js"),
-  "daily-card": () => import("../daily-card/page.js"),
-  "spread-deck": () => import("../trai-bai.js"),
-  "huyen-su-reveal": () => import("../ui/huyen-su-reveal.js"),
   "subpage-motion": () => import("../ui/subpage-motion.js"),
 };
 

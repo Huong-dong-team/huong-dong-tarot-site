@@ -31,51 +31,36 @@ test("nền sơn mài dùng token thương hiệu và không thêm thư viện r
   assert.doesNotMatch(layout, /gsap|lenis|patternbolt|made-in-india/i);
 });
 
-test("Hero v2 xếp đúng Layer 1 → tranh multiply → gradient bảo vệ chữ", async () => {
-  const [lacquer, motion, critical] = await Promise.all([
-    read("public/assets/css/lacquer-art.css"),
+test("Hero Kirigami 3D hiển thị nguyên màu, giữ entrance và reduced motion", async () => {
+  const [kirigami, motion, critical] = await Promise.all([
+    read("public/assets/css/subpage-kirigami-v3.css"),
     read("public/assets/css/page-transition.css"),
     read("public/assets/css/critical.css"),
   ]);
 
-  assert.match(lacquer, /\.lacquer-hero::before\s*\{[\s\S]*z-index:\s*0/);
-  assert.match(lacquer, /\.subpage-hero-artwork\s*\{[\s\S]*z-index:\s*1[\s\S]*mix-blend-mode:\s*multiply/);
-  assert.match(lacquer, /\.lacquer-hero::after\s*\{[\s\S]*z-index:\s*2[\s\S]*linear-gradient/);
-  assert.match(lacquer, /\.lacquer-hero > :not\(\.subpage-hero-artwork\)[\s\S]*z-index:\s*3/);
-  const heroRule = lacquer.match(/(?:^|\n)\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
-  assert.doesNotMatch(heroRule, /--hero-art-(?:opacity|position):/,
-    "giá trị mặc định trên Hero con sẽ chặn biến route kế thừa từ main");
-  // Tranh phải bắt đầu sau khi Layer 1 màu đã ổn định — nếu không, hai lớp
-  // cùng sáng lên một lúc và không còn đọc ra thành hai lớp nữa. Canh quan hệ
-  // giữa hai con số, không canh chính con số: thời lượng còn được tinh chỉnh.
+  assert.match(kirigami, /\.page-hero\.kirigami-hero::before,[\s\S]*display:\s*none/,
+    "hai lớp wash sơn mài phải bị tắt trên Hero Kirigami");
+  assert.match(kirigami, /\.kirigami-3d-artwork\s*\{[\s\S]*opacity:\s*1[\s\S]*mix-blend-mode:\s*normal/);
+  assert.match(kirigami, /hd3-scene-breathe 14s/);
   const baseDuration = Number(motion.match(/--hero-base-duration:\s*(\d+)ms/)?.[1]);
   const artDelay = Number(motion.match(/--hero-art-delay:\s*(\d+)ms/)?.[1]);
-  assert.ok(baseDuration > 0 && artDelay > 0, "thiếu mốc thời gian của Layer 1 hoặc tranh");
+  assert.ok(baseDuration > 0 && artDelay > 0, "thiếu mốc thời gian entrance của Hero");
   assert.ok(artDelay >= baseDuration * .6,
-    `tranh bắt đầu ở ${artDelay}ms, quá sớm so với Layer 1 dài ${baseDuration}ms`);
+    `cảnh bắt đầu ở ${artDelay}ms, quá sớm so với nền dài ${baseDuration}ms`);
   assert.match(motion, /\.subpage-hero-artwork[\s\S]*hero-art-in \d+ms/);
   assert.match(motion,
     /@keyframes hero-art-in\s*\{\s*from\s*\{\s*opacity:\s*0;[^}]*\}\s*to\s*\{\s*opacity:\s*var\(--hero-art-opacity,\s*1\);[^}]*\}\s*\}/,
-    "tranh phải tăng thẳng từ 0 đến đúng opacity cuối, không có mốc nhấp sáng");
+    "cảnh phải tăng thẳng từ 0 đến đúng opacity cuối, không có mốc nhấp sáng");
   assert.match(motion, /prefers-reduced-motion:\s*reduce[\s\S]*\.subpage-hero-artwork[\s\S]*animation:\s*none !important/);
-  assert.doesNotMatch(lacquer, /\.hero::before/,
-    "tranh trang trong không được mượn pseudo của Hero trang chủ");
   assert.match(critical, /\.subpage-hero-artwork\s*\{[\s\S]*opacity:\s*0/);
-  assert.match(lacquer, /body:not\(\.home-page\)::before\s*\{\s*opacity:\s*\.2;\s*\}/);
-  assert.doesNotMatch(
-    lacquer.match(/body:not\(\.home-page\)::before[^}]*\}/)?.[0] || "",
-    /--hd-scroll/,
-    "độ đậm của Layer 1 không được nối vào cuộn",
-  );
+  assert.match(kirigami, /prefers-reduced-motion:\s*reduce[\s\S]*kirigami-3d-artwork img/);
 });
 
-test("bảy nhóm route nhận đúng tranh trong Hero và không lặp Layer 2 sau Hero", async () => {
+test("năm nhóm nội dung nhận đúng cảnh Kirigami trong Hero và không lặp ảnh sau Hero", async () => {
   const routes = [
     ["dist/tarot-la-gi/index.html", "tarot-la-gi"],
     ["dist/la-bai/index.html", "la-bai"],
-    ["dist/trai-bai/index.html", "trai-bai"],
-    ["dist/huyen-su/index.html", "huyen-su"],
-    ["dist/healing/index.html", "healing"],
+    ["dist/khoa-hoc/index.html", "khoa-hoc"],
     ["dist/tin-tuc/index.html", "chuyen-huong-dong"],
     ["dist/cua-hang/index.html", "cua-hang"],
   ];
@@ -84,25 +69,25 @@ test("bảy nhóm route nhận đúng tranh trong Hero và không lặp Layer 2 
     const html = await read(file);
     assert.match(html, new RegExp(`data-page-art="${artId}"`), `${file}: sai data-page-art`);
     const hero = html.match(/<(?:section|article|header)[^>]*lacquer-hero[^>]*>[\s\S]*?<\/(?:section|article|header)>/)?.[0] || "";
-    assert.match(hero, new RegExp(`<picture class="subpage-hero-artwork"[\\s\\S]*${artId}-1536\\.webp`),
-      `${file}: tranh không nằm trong Hero`);
+    assert.match(hero, new RegExp(`<picture class="subpage-hero-artwork kirigami-3d-artwork"[\\s\\S]*${artId}-kirigami-3d\\.webp`),
+      `${file}: cảnh Kirigami không nằm trong Hero`);
     assert.match(hero, /loading="eager"[\s\S]*fetchpriority="high"/);
     assert.doesNotMatch(html, /<div class="subpage-content-frame"><picture class="subpage-hero-artwork"/,
       `${file}: Layer 2 bị lặp sau Hero`);
   }
 
-  const [card, post, spread] = await Promise.all([
+  const [card, post, course] = await Promise.all([
     read("dist/la-bai/the-star/index.html"),
     read("dist/tin-tuc/vi-sao-huong-dong-giu-he-nghia-rws/index.html"),
-    read("dist/trai-bai/ba-la/index.html"),
+    read("dist/khoa-hoc/index.html"),
   ]);
-  assert.match(card, /<article class="card-detail[^"]*lacquer-hero">[\s\S]*la-bai-1536\.webp/);
-  assert.match(post, /<header class="lacquer-hero">[\s\S]*chuyen-huong-dong-1536\.webp/);
-  assert.match(spread, /<section class="page-hero[^"]*lacquer-hero">[\s\S]*trai-bai-1536\.webp/);
+  assert.match(card, /<article class="card-detail[^"]*kirigami-hero">[\s\S]*la-bai-kirigami-3d\.webp/);
+  assert.match(post, /<header class="lacquer-hero kirigami-hero">[\s\S]*chuyen-huong-dong-kirigami-3d\.webp/);
+  assert.match(course, /<section class="page-hero[^"]*kirigami-hero">[\s\S]*khoa-hoc-kirigami-3d\.webp/);
 });
 
 test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không mượn tranh", async () => {
-  const [home, history, about] = await Promise.all([
+  const [home, retiredHistory, about] = await Promise.all([
     read("dist/index.html"),
     read("dist/huyen-su/index.html"),
     read("dist/gioi-thieu/index.html"),
@@ -117,8 +102,8 @@ test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không
   assert.ok(heroStart >= 0 && heroEnd > heroStart);
   assert.match(home.slice(heroStart, heroEnd), /class="hero-stage"[\s\S]*home-kirigami/);
 
-  assert.doesNotMatch(history, /page-hero-cover|huyen-su-cover/,
-    "bìa Huyền sử cũ không được chồng lên tranh Hero route");
+  assert.match(retiredHistory, /location\.replace\("\/khoa-hoc\/"\)/,
+    "route Huyền sử cũ phải chuyển về giáo trình mới");
   const aboutMain = about.match(/<main\b[\s\S]*?<\/main>/)?.[0] || "";
   assert.doesNotMatch(aboutMain, /data-page-art=|subpage-artwork/,
     "route ngoài bảng không được mượn tranh home-content");
@@ -127,26 +112,15 @@ test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không
     "CSS bàn giao phải được đóng dấu cache và tải trên trang chủ");
 });
 
-test("Hero đầu trang đạt opacity 1 nguyên khung, không mask hay gradient kem", async () => {
-  const css = await read("public/assets/css/lacquer-art.css");
-  for (const value of [".12", ".13", ".135", ".14", ".095", ".10", ".105", ".11", ".07", ".075", ".08", "1"]) {
-    const literal = value.replace(".", "\\.");
-    assert.match(css, new RegExp(`--hero-art-opacity:\\s*${literal}(?:;|\\b)`));
-  }
-  const peakRules = [...css.matchAll(/\.page-hero\.lacquer-hero\s*\{[^}]*--hero-art-opacity:\s*1;/g)];
-  assert.equal(peakRules.length, 1,
-    "một override đủ áp opacity 1 đồng đều cho desktop, tablet và mobile");
-  const artRule = css.match(/\.page-hero\.lacquer-hero \.subpage-hero-artwork\s*\{([^}]*)\}/)?.[1] || "";
-  assert.match(artRule, /-webkit-mask-image:\s*none/);
-  assert.match(artRule, /mask-image:\s*none/,
-    "tranh Hero đầu trang không được hạ alpha cục bộ bằng mask");
-  const washRule = css.match(/\.page-hero\.lacquer-hero::after\s*\{([^}]*)\}/)?.[1] || "";
-  assert.match(washRule, /background:\s*none/,
-    "Hero đầu trang không được phủ gradient kem lên tranh");
-
-  const heroRule = css.match(/\.page-hero\.lacquer-hero\s*\{([^}]*)\}/)?.[1] || "";
-  assert.match(heroRule, /--brown:\s*#5E3F19/i,
-    "giữ nguyên màu Eyebrow đã chốt ở đợt trước");
+test("Hero Kirigami giữ ảnh nguyên khung và tương phản chữ đạt AA", async () => {
+  const css = await read("public/assets/css/subpage-kirigami-v3.css");
+  const artRule = css.match(/\.page-hero \.kirigami-3d-artwork\s*\{([^}]*)\}/)?.[1] || "";
+  assert.match(artRule, /opacity:\s*1/);
+  assert.match(artRule, /mix-blend-mode:\s*normal/,
+    "cảnh Kirigami không được trộn multiply như tranh sơn mài cũ");
+  const washRule = css.match(/\.page-hero\.kirigami-hero::before,[\s\S]*?\{([^}]*)\}/)?.[1] || "";
+  assert.match(washRule, /display:\s*none/,
+    "Hero Kirigami không được phủ wash sơn mài");
 
   const luminance = (rgb) => {
     const [r, g, b] = rgb.map((value) => {
@@ -159,9 +133,7 @@ test("Hero đầu trang đạt opacity 1 nguyên khung, không mask hay gradient
     const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
     return (bright + .05) / (dark + .05);
   };
-  // Headline/Subheadline #FEDB44 tiếp tục được tách khỏi tranh bằng biên bóng
-  // nâu kín bốn phía; đợt này không thêm lớp kem làm nhạt toàn bức tranh.
-  assert.ok(contrast([254, 219, 68], [43, 27, 18]) >= 4.5,
-    "vàng chanh #FEDB44 không tách được khỏi biên bóng");
+  assert.ok(contrast([232, 199, 131], [23, 63, 55]) >= 4.5,
+    "vàng pastel không tách được khỏi nền giấy xanh ngọc");
   assert.ok(contrast([43, 27, 18], [255, 212, 90]) >= 4.5, "CTA vàng không đạt AA");
 });
