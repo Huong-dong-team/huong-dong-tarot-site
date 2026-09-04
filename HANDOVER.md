@@ -9,8 +9,10 @@ Branch: `feat/sunrise-favicon-social-preview`, tách từ `origin/main` tại co
 
 - Nguồn nhận diện favicon do chủ dự án cung cấp:
   `776200070_1418451790129140_7321442329094247149_n.png`. Chỉ lấy ngôn ngữ tạo
-  hình của biểu tượng bên trái: bán nguyệt bình minh, 11 tia và ba đường chân
-  trời; không đưa chữ Hường Đông vào favicon vì không đọc được ở 16–32 px.
+  hình của biểu tượng bên trái: bán nguyệt bình minh, 9 tia dài ngắn khác nhau
+  và ba đường chân trời; không đưa chữ Hường Đông vào favicon vì không đọc được
+  ở 16–32 px. Số tia và nhịp tia đã được chỉnh theo phản hồi review của chủ dự
+  án ngày 04/09/2026.
 - `public/favicon.svg` được dựng lại bằng hình học SVG, gradient vàng
   `#FFE780` → đào `#F7A07C` → hồng `#E94F7A`, nền trong suốt. Toàn bộ PNG
   16/32/48/96/192/512, Apple Touch 180 và ICO 16/32/48 được sinh lại từ cùng
