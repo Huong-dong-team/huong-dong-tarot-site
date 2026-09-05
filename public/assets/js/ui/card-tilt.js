@@ -36,6 +36,9 @@ function resetTilt(element) {
 
 export function init() {
   const scope = document.querySelector("#noi-dung-chinh") || document;
+  // Museum works are hung still. In particular, touch browsing must not
+  // capture the pointer or run a tilt observer across a long catalogue.
+  if (scope instanceof Element && scope.hasAttribute("data-museum-world")) return () => {};
   const elements = new Set();
   const listeners = new Map();
   let frame = 0;

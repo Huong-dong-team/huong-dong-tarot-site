@@ -7,10 +7,9 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("năm đường chính dùng chung hero Kirigami 3D và có subheadline", async () => {
+test("bốn đường nội dung ngoài bảo tàng giữ hero Kirigami và subheadline", async () => {
   const pages = [
     ["tarot-la-gi", "tarot-la-gi"],
-    ["la-bai", "la-bai"],
     ["khoa-hoc", "khoa-hoc"],
     ["tin-tuc", "chuyen-huong-dong"],
     ["cua-hang", "cua-hang"],
@@ -46,10 +45,9 @@ test("hệ sub-page giữ token, minh họa thật và reduced motion", async ()
   assert.doesNotMatch(`${tarot}\n${course}`, /data:image\/svg\+xml|<svg/i, "minh họa không được thay bằng SVG/CSS art giả");
 });
 
-test("năm Hero dùng cảnh Kirigami 3D thật và không còn hiện vật sơn mài cũ", async () => {
+test("bốn Hero ngoài bảo tàng dùng cảnh Kirigami thật, không còn hiện vật sơn mài cũ", async () => {
   const pages = [
     ["tarot-la-gi", "tarot-la-gi"],
-    ["la-bai", "la-bai"],
     ["khoa-hoc", "khoa-hoc"],
     ["tin-tuc", "chuyen-huong-dong"],
     ["cua-hang", "cua-hang"],
@@ -71,10 +69,9 @@ test("năm Hero dùng cảnh Kirigami 3D thật và không còn hiện vật sơ
   }
 });
 
-test("V3 biến đủ năm đường chính thành chương Kirigami có mục lục và nhãn Hero", async () => {
+test("bốn đường ngoài bảo tàng giữ mục lục và nhãn Hero Kirigami", async () => {
   const pages = [
     ["tarot-la-gi", "Tarot là gì?"],
-    ["la-bai", "Bảo tàng 78 lá"],
     ["khoa-hoc", "Khóa học Tarot"],
     ["tin-tuc", "Bản tin Hường Đông"],
     ["cua-hang", "Cửa hàng"],

@@ -56,10 +56,10 @@ test("Hero Kirigami 3D hiển thị nguyên màu, giữ entrance và reduced mot
   assert.match(kirigami, /prefers-reduced-motion:\s*reduce[\s\S]*kirigami-3d-artwork img/);
 });
 
-test("năm nhóm nội dung nhận đúng cảnh Kirigami trong Hero và không lặp ảnh sau Hero", async () => {
+test("các trang Kirigami giữ đúng cảnh trong Hero; bảo tàng độc lập không dùng lớp cũ", async () => {
   const routes = [
     ["dist/tarot-la-gi/index.html", "tarot-la-gi"],
-    ["dist/la-bai/index.html", "la-bai"],
+    ["dist/la-bai/the-star/index.html", "la-bai"],
     ["dist/khoa-hoc/index.html", "khoa-hoc"],
     ["dist/tin-tuc/index.html", "chuyen-huong-dong"],
     ["dist/cua-hang/index.html", "cua-hang"],
@@ -84,6 +84,9 @@ test("năm nhóm nội dung nhận đúng cảnh Kirigami trong Hero và không 
   assert.match(card, /<article class="card-detail[^"]*kirigami-hero">[\s\S]*la-bai-kirigami-3d\.webp/);
   assert.match(post, /<header class="lacquer-hero kirigami-hero">[\s\S]*chuyen-huong-dong-kirigami-3d\.webp/);
   assert.match(course, /<section class="page-hero[^"]*kirigami-hero">[\s\S]*khoa-hoc-kirigami-3d\.webp/);
+  const hub = await read("dist/la-bai/index.html");
+  assert.match(hub, /data-museum-world="hub"/);
+  assert.doesNotMatch(hub, /data-page-art="la-bai"|la-bai-kirigami-3d\.webp/);
 });
 
 test("trang chủ tự quản lý tranh bàn giao và route ngoài bảng không mượn tranh", async () => {

@@ -20,6 +20,9 @@ async function mainNav(route) {
 const sections = [
   ["/tarot-la-gi/", "/tarot-la-gi/"],
   ["/la-bai/", "/la-bai/"],
+  ["/la-bai/an-chinh/", "/la-bai/"],
+  ["/la-bai/an-phu/sen/", "/la-bai/"],
+  ["/la-bai/linh-nam-chich-quai/3d/", "/la-bai/"],
   ["/la-bai/the-star/", "/la-bai/"],
   ["/la-bai/huyen-su/hong-bang-thi/", "/la-bai/"],
   ["/khoa-hoc/", "/khoa-hoc/"],
@@ -46,8 +49,8 @@ test("mỗi trang chỉ sáng một mục điều hướng", async () => {
 test("trang con đánh dấu mục cha, không đánh dấu liên kết trong menu con", async () => {
   const nav = await mainNav("/la-bai/huyen-su/hong-bang-thi/");
   assert.match(nav, /<a class="nav-group-top" href="\/la-bai\/" aria-current="page">/);
-  assert.match(nav, /<a href="\/la-bai\/#phong-huyen-su">Phòng Huyền sử<\/a>/);
-  assert.doesNotMatch(nav, /<a href="\/la-bai\/#phong-huyen-su" aria-current=/);
+  assert.match(nav, /<a href="\/la-bai\/linh-nam-chich-quai\/">Lĩnh Nam chích quái<\/a>/);
+  assert.doesNotMatch(nav, /<a href="\/la-bai\/linh-nam-chich-quai\/" aria-current=/);
 });
 
 test("trang ngoài năm mục không làm sáng mục nào", async () => {

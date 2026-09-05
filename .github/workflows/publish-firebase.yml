@@ -50,6 +50,17 @@ jobs:
             templates/card-list.html \
             templates/home.html \
             templates/_layout.html \
+            scripts/lib/museum-worlds.js \
+            public/assets/css/museum-worlds.css \
+            public/assets/js/ui/museum-rooms.js \
+            public/assets/js/ui/museum-3d.js \
+            public/assets/js/museum-3d/scene.js \
+            public/assets/js/museum-3d/model.js \
+            public/assets/vendor/three/three.module.min.js \
+            public/assets/vendor/three/three.core.min.js \
+            public/assets/img/museum/major-gallery.webp \
+            public/assets/img/museum/minor-gallery.webp \
+            public/assets/img/museum/history-gallery.webp \
             data/lncq-22.json \
             data/lncq-chapters.json
           do

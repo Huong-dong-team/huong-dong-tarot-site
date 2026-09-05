@@ -8,6 +8,7 @@ import { renderString, escapeHtml } from "./lib/render.js";
 import { absoluteUrl, analyticsSnippet, breadcrumbSchema, seoHead } from "./lib/seo.js";
 import { fillMinorDetails } from "./lib/minor-details-fallback.js";
 import { reflectionLens } from "../content/reflection-lenses.mjs";
+import { createMuseumPages, museumRoomForCard, museumBreadcrumbForCard } from "./lib/museum-worlds.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
@@ -137,7 +138,7 @@ function lncqChapterHtml(c, prev, next) {
   const cards = c.cards.length
     ? `<p class="lncq-cards"><strong>Truyện này ứng với:</strong> ${c.cards.map((k) => `<a class="v2-link" href="/la-bai/${k.slug}/">${escapeHtml(k.roman)}</a>`).join(" · ")}</p>`
     : `<p class="lncq-cards lncq-nocard">Truyện này chưa gắn với lá Ẩn chính nào.</p>`;
-  const nav = `<nav class="card-pagination" aria-label="Điều hướng truyện">${prev ? `<a href="/la-bai/huyen-su/${prev.slug}/">← ${escapeHtml(prev.title)}</a>` : "<span></span>"}<a href="/la-bai/#phong-huyen-su">Đủ 34 truyện</a>${next ? `<a href="/la-bai/huyen-su/${next.slug}/">${escapeHtml(next.title)} →</a>` : "<span></span>"}</nav>`;
+  const nav = `<nav class="card-pagination" aria-label="Điều hướng truyện">${prev ? `<a href="/la-bai/huyen-su/${prev.slug}/">← ${escapeHtml(prev.title)}</a>` : "<span></span>"}<a href="/la-bai/linh-nam-chich-quai/#truyen-nguon">Đủ 34 truyện</a>${next ? `<a href="/la-bai/huyen-su/${next.slug}/">${escapeHtml(next.title)} →</a>` : "<span></span>"}</nav>`;
   return `<main id="noi-dung-chinh" class="transition-page" data-page="library-source"><section class="page-hero drum-watermark"><p class="eyebrow">Bảo tàng 78 lá · Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
@@ -415,7 +416,7 @@ const KIRIGAMI_PAGE_META = {
   "la-bai": {
     label: "Bảo tàng 78 lá",
     chapter: "Mục 2",
-    links: [["#bo-suu-tap", "Đại sảnh"], ["?arcana=major#bo-suu-tap", "Ẩn Chính"], ["?arcana=minor#bo-suu-tap", "Ẩn Phụ"], ["#phong-huyen-su", "Huyền sử"]],
+    links: [["/la-bai/", "Ba bảo tàng"], ["/la-bai/an-chinh/", "Ẩn Chính"], ["/la-bai/an-phu/", "Ẩn Phụ"], ["/la-bai/linh-nam-chich-quai/", "Lĩnh Nam chích quái"]],
   },
   "khoa-hoc": {
     label: "Khóa học Tarot",
@@ -425,7 +426,7 @@ const KIRIGAMI_PAGE_META = {
   "chuyen-huong-dong": {
     label: "Bản tin Hường Đông",
     chapter: "Mục 4",
-    links: [["/tin-tuc/", "Ghi chép mới"], ["/tarot-la-gi/", "Cách chúng tôi kể"], ["/la-bai/#phong-huyen-su", "Nguồn huyền sử"]],
+    links: [["/tin-tuc/", "Ghi chép mới"], ["/tarot-la-gi/", "Cách chúng tôi kể"], ["/la-bai/linh-nam-chich-quai/", "Nguồn huyền sử"]],
   },
   "cua-hang": {
     label: "Cửa hàng",
@@ -569,7 +570,9 @@ function layoutTemplate(routePath) {
  * @returns {string} HTML đầy đủ của trang
  */
 function layout({ title, description, path: routePath, image, type, schemas, content, bodyClass = "", robots = "", pageScripts = "" }) {
-  const artId = pageArtId(routePath);
+  // New museums own their scene and masthead; legacy card/source documents
+  // retain the existing artwork. No Kirigami wrapper or preload on mw pages.
+  const artId = /<main\b[^>]*\bdata-museum-world=/.test(content) ? "" : pageArtId(routePath);
   const bodyFontPreloads = bodyClass === "home-page"
     ? [
       '<link rel="preload" href="/assets/fonts/be-vietnam-pro-400-vietnamese.woff2" as="font" type="font/woff2" crossorigin>',
@@ -787,14 +790,18 @@ if (historySectionsStart === -1 || historySectionsEnd === -1) {
   throw new Error("Không tách được nội dung Huyền sử để đưa vào Bảo tàng 78 lá.");
 }
 const museumHistoryHtml = `<section class="museum-history-wing" id="phong-huyen-su" aria-labelledby="museum-history-title"><header class="museum-history-header"><p class="eyebrow">Phòng chuyên đề</p><h2 id="museum-history-title">Huyền sử trong 78 lá bài</h2><p>Tranh, hệ nghĩa RWS và truyện nguồn được đặt cạnh nhau như hồ sơ giám tuyển — để người xem biết điều gì thuộc văn bản, điều gì là chuyển thể.</p></header>${renderedHistoryPage.slice(historySectionsStart, historySectionsEnd)}</section>`;
-const listContent = renderString(templates["card-list"], { cards, cardCount: cards.length, museumHistoryHtml });
-await emit("/la-bai/", layout({
-  title: "Bảo tàng 78 lá Tarot Hường Đông",
-  description: "Khám phá 78 lá Tarot Hường Đông như một bảo tàng nghệ thuật: tranh, nghĩa RWS, huyền sử Việt và 34 truyện nguồn trong cùng một hành trình.",
-  path: "/la-bai/",
-  schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "78 lá bài", path: "/la-bai/" }])],
-  content: listContent,
-}));
+const museumPages = createMuseumPages(cards, lncqChapters, museumHistoryHtml);
+for (const page of museumPages) {
+  await emit(page.path, layout({
+    title: page.title,
+    description: page.description,
+    path: page.path,
+    image: page.image,
+    schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, ...page.crumbs])],
+    content: page.content,
+    bodyClass: "museum-worlds-page",
+  }));
+}
 
 for (let index = 0; index < cards.length; index += 1) {
   const card = cards[index];
@@ -815,8 +822,11 @@ for (let index = 0; index < cards.length; index += 1) {
   }).join("");
   card.symbolHtml = symbols.map((item) => `<article id="${item.domId}" data-symbol-source><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.meaning)}</p></article>`).join("");
   const readingGuide = '<section class="v2-prose"><p class="eyebrow">Học có phương pháp</p><h2>Đưa lá bài về đúng hệ nghĩa</h2><p>Phân biệt điều hình ảnh gợi ra với dữ kiện và hệ nghĩa Rider–Waite–Smith. Lá bài được dùng như học liệu để luyện quan sát, đối chiếu biểu tượng và diễn giải có căn cứ.</p><p><a class="v2-link" href="/khoa-hoc/#doc-la-bai">Xem phương pháp đọc một lá →</a></p></section>';
+  const cardRoom = museumRoomForCard(card);
   const content = renderString(templates["card-detail"], { card, previous, next })
-    .replace("<!--LNCQ-->", `${card.reflectionHtml}${lncqBlock(card.slug)}${readingGuide}`);
+    .replace("<!--LNCQ-->", `${card.reflectionHtml}${lncqBlock(card.slug)}${readingGuide}`)
+    .replace('<a href="/la-bai/">Đủ 78 lá</a>', `<a href="${cardRoom.path}">Về ${escapeHtml(cardRoom.shortTitle)}</a>`)
+    .replace('<section class="story-detail', `${museumBreadcrumbForCard(card)}<section class="story-detail`);
   const creativeWork = { "@context": "https://schema.org", "@type": "CreativeWork", name: `${card.nameFolk} – ${card.nameEn}`, description: card.seo.description, image: absoluteUrl(data.site.baseUrl, card.image.url), inLanguage: "vi", isPartOf: data.site.siteName };
   await emit(`/la-bai/${card.slug}/`, layout({
     title: card.seo.title,
@@ -824,7 +834,7 @@ for (let index = 0; index < cards.length; index += 1) {
     path: `/la-bai/${card.slug}/`,
     image: card.seo.ogImage || card.image.url,
     type: "article",
-    schemas: [creativeWork, breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "78 lá bài", path: "/la-bai/" }, { name: card.nameFolk, path: `/la-bai/${card.slug}/` }])],
+    schemas: [creativeWork, breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bảo tàng Hường Đông", path: "/la-bai/" }, ...(cardRoom.parent ? [{ name: "Ẩn Phụ", path: "/la-bai/an-phu/" }] : []), { name: cardRoom.shortTitle, path: cardRoom.path }, { name: card.nameFolk, path: `/la-bai/${card.slug}/` }])],
     content,
   }));
 }
@@ -873,7 +883,7 @@ for (let i = 0; i < lncqChapters.length; i += 1) {
     title: `${c.title} – Lĩnh Nam chích quái`,
     description: `Toàn văn ${c.title} (chương ${c.n}) trong Lĩnh Nam chích quái của Trần Thế Pháp.`,
     path: route,
-    schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bảo tàng 78 lá", path: "/la-bai/" }, { name: "Phòng Huyền sử", path: "/la-bai/#phong-huyen-su" }, { name: c.title, path: route }])],
+    schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Bảo tàng Hường Đông", path: "/la-bai/" }, { name: "Lĩnh Nam chích quái", path: "/la-bai/linh-nam-chich-quai/" }, { name: c.title, path: route }])],
     content: lncqChapterHtml(c, lncqChapters[i - 1], lncqChapters[i + 1]),
   }));
   await emit(`/huyen-su/${c.slug}/`, redirectDocument(route));
@@ -898,7 +908,7 @@ for (const route of retiredRoutes) await emit(route, redirectDocument("/khoa-hoc
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
 
-const routes = ["/", "/tarot-la-gi/", "/la-bai/", "/khoa-hoc/", "/cua-hang/", ...postListRoutes, "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...lncqChapters.map((chapter) => `/la-bai/huyen-su/${chapter.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
+const routes = ["/", "/tarot-la-gi/", ...museumPages.map((page) => page.path), "/khoa-hoc/", "/cua-hang/", ...postListRoutes, "/gioi-thieu/", "/quyen-rieng-tu/", ...cards.map((card) => `/la-bai/${card.slug}/`), ...lncqChapters.map((chapter) => `/la-bai/huyen-su/${chapter.slug}/`), ...posts.map((post) => `/tin-tuc/${post.slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>${escapeHtml(absoluteUrl(data.site.baseUrl, route))}</loc></url>`).join("")}</urlset>`;
 await writeFile(path.join(dist, "sitemap.xml"), sitemap);
 await writeFile(path.join(dist, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${absoluteUrl(data.site.baseUrl, "/sitemap.xml")}\n`);
