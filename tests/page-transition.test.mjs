@@ -21,7 +21,7 @@ test("mọi trang công khai có đúng một container Swup", async () => {
     const html = await read(page);
     const containers = [...html.matchAll(/<main id="noi-dung-chinh"/g)];
     assert.equal(containers.length, 1, `${page}: phải có đúng một #noi-dung-chinh`);
-    assert.match(html, /<main id="noi-dung-chinh" class="transition-page"/,
+    assert.match(html, /<main id="noi-dung-chinh" class="(?:[^"\s]+\s+)*transition-page(?:\s+[^"\s]+)*"/,
       `${page}: container phải mang lớp transition-page để Swup đo được thời lượng`);
   }
 });

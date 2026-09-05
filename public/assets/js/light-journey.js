@@ -17,6 +17,9 @@
   var ticking = false;
   function update() {
     ticking = false;
+    // A quiet museum has fixed wall colours. Do not measure or repaint the
+    // entire document while a visitor scrolls its 2D collection.
+    if (document.querySelector("main[data-museum-world]")) return;
     var vh = window.innerHeight || 1;
     var max = Math.max(1, document.documentElement.scrollHeight - vh);
     var y = window.scrollY || window.pageYOffset || 0;
@@ -28,6 +31,7 @@
   }
 
   function onScroll() {
+    if (document.querySelector("main[data-museum-world]")) return;
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(update);

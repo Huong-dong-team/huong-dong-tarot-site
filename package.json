@@ -21,8 +21,10 @@
     "deploy": "npm run build && firebase deploy --only hosting"
   },
   "dependencies": {
+    "@fontsource/source-serif-4": "5.3.0",
     "astronomy-engine": "2.1.19",
-    "firebase-admin": "^14.2.0"
+    "firebase-admin": "^14.2.0",
+    "three": "0.185.1"
   },
   "overrides": {
     "uuid": "^11.1.1"

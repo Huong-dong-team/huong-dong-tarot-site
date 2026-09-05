@@ -7,15 +7,17 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const read = (file) => readFile(path.join(root, file), "utf8");
 
-test("Bảo tàng render đủ 78 hiện vật và gộp Phòng Huyền sử", async () => {
-  const html = await read("dist/la-bai/index.html");
-  assert.equal((html.match(/class="tarot-card museum-exhibit"/g) || []).length, 78);
+test("catalog giữ đủ 78 hồ sơ, tư liệu Huyền sử có bảo tàng riêng", async () => {
+  const catalog = await read("dist/la-bai/bo-suu-tap/index.html");
+  assert.equal((catalog.match(/class="tarot-card museum-exhibit mw-exhibit"/g) || []).length, 78);
+  assert.match(catalog, /<dialog class="museum-dialog mw-dialog"/);
+  const html = await read("dist/la-bai/linh-nam-chich-quai/index.html");
   assert.match(html, /id="phong-huyen-su"/);
   assert.match(html, /id="nguyen-tac"/);
   assert.match(html, /id="tu-bat-tu"/);
   assert.match(html, /id="lnc-toan-van"/);
   assert.match(html, /id="ban-do"/);
-  assert.match(html, /<dialog class="museum-dialog"/);
+  assert.match(html, /class="mw-story-index"/);
 });
 
 test("navigation hợp nhất Huyền sử vào Bảo tàng và chuyển route cũ về Khóa học", async () => {
@@ -24,10 +26,10 @@ test("navigation hợp nhất Huyền sử vào Bảo tàng và chuyển route c
     read("dist/huyen-su/index.html"),
     read("dist/la-bai/huyen-su/hong-bang-thi/index.html"),
   ]);
-  assert.match(home, /href="\/la-bai\/#phong-huyen-su">Phòng Huyền sử<\/a>/, "vẫn phải vào được Phòng Huyền sử qua menu chính dù đã gỡ CTA ở Hero");
+  assert.match(home, /href="\/la-bai\/linh-nam-chich-quai\/">Lĩnh Nam chích quái<\/a>/, "bảo tàng tư liệu phải truy cập được từ menu chính");
   assert.match(oldHistory, /location\.replace\("\/khoa-hoc\/"\)/);
   assert.match(source, /data-page="library-source"/);
-  assert.match(source, /href="\/la-bai\/#phong-huyen-su">Đủ 34 truyện<\/a>/);
+  assert.match(source, /href="\/la-bai\/linh-nam-chich-quai\/#truyen-nguon">Đủ 34 truyện<\/a>/);
 });
 
 test("lightbox bảo tàng có keyboard, teardown và reduced motion", async () => {

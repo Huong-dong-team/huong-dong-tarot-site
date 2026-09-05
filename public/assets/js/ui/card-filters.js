@@ -11,6 +11,9 @@ const normalize = (value) => String(value || "").normalize("NFD").replace(/[\u03
 export function init() {
   const filters = document.querySelector("[data-card-filters]");
   if (!filters) return () => {};
+  // New museum rooms own pagination and filters together, avoiding two
+  // modules alternately hiding/revealing the same works during navigation.
+  if (filters.closest("[data-museum-world]")) return () => {};
   const grid = document.querySelector("[data-card-grid]");
   if (!grid) return () => {};
 

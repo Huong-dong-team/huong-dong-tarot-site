@@ -1,71 +1,152 @@
-# Hướng hiện hành của PR #86
+# Museum worlds — design and interaction QA
 
-Chủ dự án đã xác nhận lại ngày 04/09/2026: năm mục Tarot là gì, Bảo tàng 78 lá,
-Khóa học, Bản tin và Cửa hàng; không Healing, không bói tự động. Các ghi chép
-bên dưới về bảy nhóm là lịch sử thiết kế, không phải yêu cầu khôi phục tính
-năng. Đặc tả hiện hành nằm ở `docs/subpage-design-system.md` và
-`docs/pr86-content-direction.md`.
+Date: 2026-09-05. Local implementation: http://localhost:8127/la-bai/.
+Branch: feat/museum-worlds-3d-20260904. No production publication performed.
 
-# Design QA · Hệ Kirigami bảy sub-page Hường Đông (lịch sử)
+Earlier design history is preserved in [PR 86 QA](docs/design-qa-pr86.md).
 
-final result: passed
+## Source visual truth and scope
 
-## Nguồn và bằng chứng
+The user selected all three displayed concepts, each as an independent museum.
+The agreed mapping is 01 light/timber → Ẩn Chính, 02 dark jade → Ẩn Phụ,
+03 courtyard → Lĩnh Nam chích quái. Four houses are children of Ẩn Phụ.
+The user subsequently requested 2D-only mobile with this exact note:
+“hãy mở bản desktop để đạt chất lượng phòng 3d cao nhất”.
 
-- Source visual truth: `/home/asus/Desktop/peak images/Codex Image Sep 1, 2026, 12_46_15 PM.png` — bảng hệ thống 7 sub-page Kirigami, 1536 × 1024 px.
-- Local implementation: `http://localhost:4173/` với các route `/tarot-la-gi/`, `/la-bai/`, `/trai-bai/`, `/healing/`, `/huyen-su/`, `/tin-tuc/`, `/cua-hang/`.
-- Desktop evidence: `qa/kirigami-*-desktop-final.png`; Browser viewport đặt 1536 × 1024 CSS px, vùng nội dung chụp được 1521 × 828 px, device density 1.
-- Mobile evidence: `qa/kirigami-tarot-la-gi-mobile-final.png`, `qa/kirigami-la-bai-mobile-final.png`, `qa/kirigami-cua-hang-mobile-final.png`; Browser viewport đặt 390 × 844 CSS px, vùng nội dung chụp được 375 × 804 px, device density 1.
-- Same-input comparison: `qa/kirigami-system-comparison.png`, 3072 × 1024 px. Nửa trái là source board; nửa phải là implementation board dựng từ bảy ảnh desktop cuối, chuẩn hóa về cùng canvas 1536 × 1024.
-- State: seed data local, animation đã về trạng thái nghỉ, chưa deploy.
+Source directory:
+`C:/Users/admin'/.codex/generated_images/01a06bb8-596d-7a83-943d-90e3ea6a17a3/`
 
-Source là system board chứ không phải một frame route 1:1, nên QA đối chiếu ngôn ngữ chung, phân cấp, palette, hình tượng và nhịp Hero; không tuyên bố pixel-perfect cho vị trí copy riêng của từng thumbnail.
+| Museum | Source visual truth | Final implementation screenshot |
+|---|---|---|
+| Ẩn Chính | `exec-e4630f54-e5dd-41d4-b3d6-4094bde044c8.png` | `output/museum-qa/major-final.jpg` |
+| Ẩn Phụ | `exec-79f1ffd9-a0c7-4ba5-9a6d-060e78f7d92d.png` | `output/museum-qa/minor-final.jpg` |
+| Lĩnh Nam | `exec-52b79e79-61df-48fa-b79e-1d7568897750.png` | `output/museum-qa/history-final.jpg` |
 
-## Findings
+All final screenshots are browser-rendered at the top of the respective 2D
+entrance route, menu closed, desktop theme, CSS viewport 1488 × 1058.
+Source and final captures are both 1488 × 1058 pixels, effective 1 pixel per
+CSS pixel. Explicit screenshot clipping gives equal dimensions; no density
+resampling or surrounding browser chrome is included. Initial diagnostic
+screenshots used a 1440 × 1024 viewport but the browser's default capture
+returned 1425 × 995 images; those were used to identify wrapping and missing
+navigation, not to make pixel-level claims.
 
-Không còn finding P0/P1/P2.
+The final comparison input contained each source image immediately followed
+by its implementation image, all in one tool response. This is a paired
+full-view comparison, not a claim of an overlaid pixel diff. Typography,
+navigation labels and primary buttons were readable at this size, so no
+additional focused crop was needed. Modal and mobile collection states were
+also inspected directly in the browser.
 
-- **Fonts and typography:** Fontasia giữ headline thư pháp; nhãn dùng Be Vietnam Pro chữ hoa; headline vàng pastel và subheadline vàng dịu vẫn có phân cấp rõ. Không có cắt chữ hoặc hai `h1` trên bảy route.
-- **Spacing and layout rhythm:** Hero desktop cao 540–660px, chia vùng copy trái và sân khấu phải; khung mây/sóng tạo tiền cảnh liên tục. Museum mobile cao 720px để đủ chỗ cho headline, subheadline và bốn cửa phòng. Bề mặt nội dung cắt góc 18px thay cho thẻ tròn generic.
-- **Colors and tokens:** `#F2E8D4`, `#1E3B34`, `#8F2F2D`, `#E8C783` bám bảng nguồn; tranh sơn mài đen–vàng hiện hữu vẫn là lớp nền và không bị đổi màu.
-- **Image quality and asset fidelity:** Khung giấy là raster RGBA thật tạo bằng ImageGen, không có green halo nhìn thấy; trình duyệt tải WebP 176KB. Hiện vật route dùng ảnh thật/ảnh Hường Đông có sẵn; shop dùng ba ảnh 640px tối ưu. Không có SVG tự vẽ, emoji, placeholder hoặc CSS illustration thay cho hình ảnh.
-- **Copy and content:** Giữ nguyên headline, subheadline, 78 lá, Huyền sử, nội dung bài viết và giá ba gói. Nhãn mục trở thành nhãn giấy nhưng nội dung không bị sửa.
-- **States and interactions:** Menu mobile mở đúng `aria-expanded=true`; bộ lọc Museum chọn Ẩn Chính hiển thị đúng 22 hiện vật; hover/pointer chỉ thay transform trang trí, không chặn link/CTA.
-- **Responsiveness:** Kiểm tra đủ bảy route tại mobile; một `h1`, đúng scene route, `overflow-x: clip`. Ba route đại diện có ảnh chụp cuối và không có chồng chữ sau iteration 2.
-- **Accessibility:** Lớp trang trí `aria-hidden`, ảnh trang trí `alt=""`, nội dung DOM giữ thứ tự đọc; reduced-motion tắt entrance, idle, tilt và parallax; menu/filter giữ semantic button và focus hiện hữu.
-- **Console:** Không có error/warning trên cả bảy route desktop và ba route mobile đại diện.
+## Comparison history and fixes
 
-## Focused region comparison
+- [P1, resolved] The portrait Ẩn Chính image initially expanded the hero beyond
+  the viewport. Give the desktop hero a definite height and remove the image's
+  intrinsic grid contribution. Final evidence: `major-final.jpg`; hero and
+  room navigation both fit in the first viewport.
+- [P2, resolved] Long headings wrapped to five lines in Ẩn Chính and four lines
+  in Lĩnh Nam, changing the selected compositions. Restore the selected major
+  and courtyard headlines and tune the display scale. Final evidence: three
+  lines in `major-final.jpg`, two in `history-final.jpg`.
+- [P2, resolved] The dark museum heading dominated its artwork. Widen the
+  title measure and reduce its desktop size; it now occupies two lines in the
+  lower-left panel. Final evidence: `minor-final.jpg`.
+- [P2, resolved] The selected designs offered direct onward room navigation,
+  but the first implementation required returning to the hub. Add the shared
+  four-link room rail, with current-page indication and a two-column mobile
+  layout. Visible in all three final captures.
+- [P2, resolved] A static body class could keep the ordinary site header hidden
+  after Swup navigation out of a museum. Scope the header treatment to the
+  actual museum main element with `:has`. Browser navigation from a museum to
+  Mai An Tiêm now restores the ordinary header (`display: grid`).
+- [P2, resolved] The old global article pseudo-label stamped every work as
+  unfinished. Remove that blanket stamp only in the new museum, while keeping
+  actual per-work editorial notes and the shared-house-art disclosure.
+- [P2, resolved] Short landscape viewports inherited a 620px hero floor.
+  Remove the floor and reduce typography/padding at the existing height
+  breakpoint. At 932 × 430 the major hero is content-sized at 479px, with
+  ordinary document scrolling rather than a forced full-screen interaction.
+- [P2, resolved] Desktop movement help appeared on the mobile fallback. Show
+  this help only during an active 3D session.
 
-Không cần crop chi tiết riêng: source board chỉ đặc tả Hero và component label ở cấp hệ thống. Bảy ảnh desktop riêng đã được mở để kiểm tra headline, nhãn giấy, crop hiện vật và khung tiền cảnh ở kích thước đọc được; ba ảnh mobile riêng kiểm tra wrapping và vùng chạm.
+## Required fidelity surfaces
 
-## Comparison history
+- Fonts/typography: locally served Source Serif 4 gives the selected editorial
+  serif hierarchy, with Be Vietnam Pro for small UI and prose. Vietnamese
+  glyphs, heading wraps, button labels and card plaques were visually checked.
+- Spacing/layout: the 37/63 split, dark immersive entrance and courtyard's
+  split introduction over a wide scene are preserved. The museum-specific
+  breadcrumb and one consistent masthead are intentional functional additions.
+- Colors/tokens: warm ivory, forest/jade ink, timber and restrained brass
+  remain consistent across the three concepts. The dark room uses a solid
+  translucent copy surface for reliable text contrast.
+- Image quality: supplied logo and actual card/house artwork are retained.
+  Three generated entrance images follow the selected architecture and are
+  saved as local WebP assets. They are not CSS/SVG substitutes. Minor artwork
+  deliberately shows house emblems because distinct illustrations are absent.
+- Copy/content: museum names and counts match the data: 22 majors, 56 minor
+  records across four houses, 34 source stories. The selected concept's generic
+  labels are adapted to these actual collections. Existing artwork notes and
+  original record/story URLs are retained. Mobile note matches the user's text.
 
-### Iteration 1
+Accepted adaptations: the supplied real logo and a labelled “Mục lục” control
+replace concept-specific logo/menu sketches; breadcrumbs support the expanded
+hierarchy; content and artwork are collection-specific. The real-time 3D rooms
+use simplified modeled architecture and materials, while entrance images are
+art-directed renders. They are not represented as screenshots of the WebGL
+scene, and live 3D is not claimed to be photorealistic.
 
-- **P2 · Museum mobile bị dày và giao nhau:** source giữ nhịp rõ giữa copy, nhãn phòng và hiện vật; bản đầu để subheadline, bốn cửa phòng và ba lá chồng cùng vùng giữa.
-- **Fix:** tăng riêng Hero Museum lên 720px, đổi cửa phòng thành lưới 2 × 2, hạ và làm dịu sân khấu lá bài.
-- **Post-fix evidence:** `qa/kirigami-la-bai-mobile-final.png`; copy kết thúc trước dải nhãn, bốn cửa đọc được và hiện vật nằm sau ở mức opacity 0.52.
+## Interaction and responsive verification
 
-### Iteration 2
+- Opened all three desktop 3D scenes successfully; actual artwork textures
+  loaded upright and details dialogs showed their titles, sources and links.
+- Ẩn Chính next/previous navigation crossed the six-item batch boundary to
+  item 7/22, and leaving restored the start control.
+- Ẩn Phụ displayed four house exhibits; “Mở bảo tàng con” opened Nhà Tre.
+  Navigation disposed the old canvas (zero canvases on the 2D destination).
+- Lĩnh Nam details opened successfully; resizing an active 3D scene to
+  390 × 844 disposed its canvas, hid entry controls and showed the exact note.
+- A fresh direct mobile `/3d/` route offered the 2D link with no canvas or
+  start button. The executable mobile-gate test and import ordering verify
+  that the engine cannot load through the mobile entry handler.
+- Mobile 2D anchor navigation scrolled to the collection (`scrollY: 1060`),
+  initially showing 12 records. “Au Co” found exactly Âu Cơ; close-up opened
+  and closed. Catalogue “Xem thêm” showed 24/78; Nhà Sen filtered to 14; empty
+  search results recovered when cleared; the final batch moved focus to its
+  first newly exposed work.
+- Mobile “Mục lục” opened and navigated to a museum. Existing detail links
+  remained usable after internal page transitions.
+- Major entrance: no horizontal overflow at 375×812, 430×932, 744×1133,
+  768×1024, 900×900, 901×900, 932×430, 1024×768, 1100×900, 1101×900, 1440×900.
+- Minor and courtyard entrances: no horizontal overflow at 375×812,
+  744×1133, 932×430, 1100×900, 1440×900. Catalogue also checked at 390×844.
+- Browser console error/warning inspection after the 3D flows returned no
+  errors or warnings. Checks used Codex's in-app browser, not physical iOS
+  Safari/Android devices; those remain useful release smoke-test coverage.
 
-- **P2 · Khung giấy mobile lên quá cao:** Tarot và Cửa hàng có tiền cảnh chạm subheadline.
-- **Fix:** giảm khung tiền cảnh từ 56% xuống 48% chiều cao Hero; sân khấu giảm còn 42%, neo vào đáy và giữ khoảng trống cho copy.
-- **Post-fix evidence:** `qa/kirigami-tarot-la-gi-mobile-final.png`, `qa/kirigami-cua-hang-mobile-final.png`.
+Additional evidence: `output/museum-qa/history-3d.jpg`,
+`output/museum-qa/major-3d.png`, `output/museum-qa/mobile-3d-fallback.png`,
+`output/museum-qa/mobile-collection.png`. Earlier `.png` filenames contain
+the browser-returned JPEG bytes and open as images; final captures use `.jpg`.
 
-### Iteration 3
+## Build verification
 
-- **P2 · Filter/drop-shadow trang trí có thể tạo overflow ngang 7px trên một số route mobile.**
-- **Fix:** giới hạn paint của sân khấu, lùi stage 12px và khóa `overflow-x: clip` chỉ trên `body` có `main[data-page-art]`.
-- **Post-fix evidence:** Browser báo `overflowX: clip` ở ba route đại diện; không có phần tử tương tác bị cắt hoặc console error.
-
-## Primary interactions tested
-
-- Mở menu mobile: `aria-expanded` đổi thành `true`.
-- Chọn `button[data-filter="major"]`: nút Ẩn Chính có `aria-pressed=true`, bộ đếm và số card hiện đều là 22.
-- Điều hướng trực tiếp đủ bảy route ở desktop và mobile; scene Kirigami đổi đúng theo `data-page-art`.
-- Kiểm tra console error/warning sau animation trên đủ bảy route desktop.
+- `npm run build:local`: passed; 176 URLs, including all existing card/story
+  routes and new museum hierarchy.
+- `npm test`: 175 passed, 0 failed.
+- `npm run check:types`: passed.
+- `git diff --check`: passed (Git line-ending notices only).
+- The isolated checkout's unchanged page-transition stylesheet was normalized
+  to LF to match its committed 7881-byte source and preserve the 8000-byte
+  budget. No stylesheet semantics changed; the original checkout was untouched.
 
 ## Follow-up polish
 
-- P3: Source board dùng hạc và kiến trúc riêng ở một vài màn hình; implementation ưu tiên hiện vật Hường Đông có sẵn để giữ tính xác thực và tải nhẹ. Có thể tạo thêm cutout hạc/đền ở vòng sau nếu cần tăng mức khớp minh họa.
+P3: richer physically based textures and lighting can refine the real-time
+3D rooms later. Distinct minor illustrations can replace shared emblems as
+the artwork becomes available. Neither blocks the implemented navigation,
+2D collection, mobile gate or functioning 3D tour.
+
+No actionable P0/P1/P2 findings remain in the tested scope.
+
+final result: passed
