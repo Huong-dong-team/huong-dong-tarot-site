@@ -59,6 +59,15 @@ function roomDirectory(rooms, house = false) {
   </a>`).join("")}</div>`;
 }
 
+function dailyCardInvitation() {
+  // Public invitation in the museum hub only. The destination keeps its gate;
+  // this link must work without JavaScript and must never carry a password.
+  return `<section class="mw-daily-invitation" aria-labelledby="mw-daily-title">
+    <div class="mw-daily-copy"><p class="mw-eyebrow">Góc trải nghiệm</p><h2 id="mw-daily-title">Lá bài hôm nay</h2><p>Bạn có thể bốc một lá và đọc lời gợi ý cho ngày hôm nay, trước khi tiếp tục dạo qua ba bảo tàng.</p></div>
+    <div class="mw-daily-action"><a class="mw-button" href="/thanh-vien/la-bai-hom-nay/" aria-describedby="mw-daily-note">Khám phá lá bài hôm nay</a><p id="mw-daily-note">Trang trải nghiệm cần mật khẩu thành viên.</p></div>
+  </section>`;
+}
+
 function artworkNote(card) {
   // Firestore may temporarily omit imageStatus while still publishing the
   // shared house emblem. Never turn that omission into a claim of unique art.
@@ -129,7 +138,7 @@ function viewer(room, cards) {
 export function createMuseumPages(cards, chapters, historyHtml = "") {
   const pages = [{
     path: "/la-bai/", title: "Bảo tàng Hường Đông — Ba không gian nghệ thuật", description: "Ba bảo tàng nghệ thuật Hường Đông: Ẩn Chính, Ẩn Phụ và Lĩnh Nam chích quái. Chọn không gian của bạn, khám phá tranh và hồ sơ nguồn.", image: majorRoom.image, crumbs: [hubCrumb],
-    content: `<main id="noi-dung-chinh" class="transition-page mw-main" data-page="library" data-museum-world="hub" data-museum-view="entry"><section class="mw-hub-intro"><p class="mw-eyebrow">Hường Đông · Bảo tàng nghệ thuật số</p><h1>Ba bảo tàng.<br>Ba cách bước vào.</h1><p class="mw-intro">Một bộ bài, nhiều thế giới. Chọn khoảng sáng của Ẩn Chính, chiều sâu của Ẩn Phụ hoặc sân đình lưu giữ những truyện xưa.</p></section>${roomDirectory(MUSEUM_ROOMS.slice(0, 3))}<section class="mw-hub-footer"><p>Tranh trước. Câu chuyện sau. Mỗi không gian có nhịp điệu riêng để bạn thong thả khám phá.</p><a class="mw-link" href="/la-bai/bo-suu-tap/">Tra cứu toàn bộ 78 lá</a><p class="mw-3d-mobile-note">${mobileNote}</p></section></main>`,
+    content: `<main id="noi-dung-chinh" class="transition-page mw-main" data-page="library" data-museum-world="hub" data-museum-view="entry"><section class="mw-hub-intro"><p class="mw-eyebrow">Hường Đông · Bảo tàng nghệ thuật số</p><h1>Ba bảo tàng.<br>Ba cách bước vào.</h1><p class="mw-intro">Một bộ bài, nhiều thế giới. Chọn khoảng sáng của Ẩn Chính, chiều sâu của Ẩn Phụ hoặc sân đình lưu giữ những truyện xưa.</p></section>${dailyCardInvitation()}${roomDirectory(MUSEUM_ROOMS.slice(0, 3))}<section class="mw-hub-footer"><p>Tranh trước. Câu chuyện sau. Mỗi không gian có nhịp điệu riêng để bạn thong thả khám phá.</p><a class="mw-link" href="/la-bai/bo-suu-tap/">Tra cứu toàn bộ 78 lá</a><p class="mw-3d-mobile-note">${mobileNote}</p></section></main>`,
   }];
   for (const room of MUSEUM_ROOMS) {
     const selected = roomCards(room, cards, chapters);
