@@ -15,7 +15,10 @@ test("bố cục trải bài chỉ còn là học liệu tĩnh", async () => {
   assert.doesNotMatch(section, /data-draw|data-spread|hd-deck|Xáo và rút/);
 });
 
-test("registry không thể nạp lại tính năng bói", async () => {
+test("registry không thể nạp lại tính năng trải bài", async () => {
   const registry = await read("public/assets/js/page/registry.js");
-  assert.doesNotMatch(registry, /spread-deck|daily-card|\.\.\/trai-bai\.js/);
+  // Trải bài và bói Có/Không đã bỏ hẳn. "Lá bài hôm nay" là ngoại lệ duy nhất và
+  // chỉ nạp cho <main data-page="daily"> của trang thành viên có mật khẩu.
+  assert.doesNotMatch(registry, /spread-deck|\.\.\/trai-bai\.js/);
+  assert.match(registry, /daily: \[[^\]]*"daily-card"[^\]]*\]/);
 });

@@ -1,4 +1,18 @@
-import { CARD_INTRO_TEMPLATES, COLLISION_COPY, copyVariant } from "./copy.js";
+import {
+  ADVICE_COPY,
+  DAY_SHAPE,
+  FORTUNE_LEVELS,
+  HOUR_PLAIN,
+  LOVE_COPY,
+  LUCKY_COLOR,
+  LUCKY_HOUR,
+  MONEY_COPY,
+  MOON_ELEMENT_PLAIN,
+  MOON_PHASE_PLAIN,
+  SUN_SIGN_PLAIN,
+  WORK_COPY,
+  pickVariant,
+} from "./copy.js";
 import {
   PLANETS,
   correspondenceForCard,
@@ -7,7 +21,6 @@ import {
 } from "./correspondences.js";
 import { calculateSkyMoment } from "./time.js";
 
-const AXES = Object.freeze(["B", "C", "D", "E", "F", "G", "H"]);
 const MODALITY_INDEX = Object.freeze({ starting: 0, steady: 1, changing: 2 });
 const RESONANCE_INDEX = Object.freeze({ none: 0, "same-sign": 1, exact: 2 });
 const RELATION_DIRECTION = Object.freeze({ same: "advance", supporting: "advance", tension: "retreat", "cross-current": "hold" });
@@ -53,15 +66,43 @@ function firstSentence(value) {
   return text.split(/(?<=[.!?])\s+/u)[0] || text;
 }
 
-function trimSentence(value, maxWords) {
+/* Ranh giới từ cho tiếng Việt.
+
+   \b của JavaScript chỉ biết [A-Za-z0-9_], nên "\bđầu tư\b" KHÔNG bao giờ khớp
+   "đầu tư": chữ đ và ư nằm ngoài bảng đó. Mọi lệnh cấm từ vựng viết bằng \b mà
+   từ khóa bắt đầu hoặc kết thúc bằng chữ có dấu đều im lặng không chạy. Lookaround
+   theo \p{L}\p{N} thì đúng cho cả hai bảng chữ. */
+const WORD_START = "(?<![\\p{L}\\p{N}])";
+const WORD_END = "(?![\\p{L}\\p{N}])";
+const UNSAFE_ADVICE = new RegExp(`${WORD_START}(?:chẩn đoán|mua|bán|đầu tư|pháp lý)${WORD_END}`, "iu");
+
+function finishSentence(value) {
+  const text = String(value).trim().replace(/[,;:.!?…]+$/u, "");
+  return text ? `${text}.` : "";
+}
+
+/**
+ * Cắt câu xuống dưới ngưỡng chữ, chỉ cắt ở dấu phẩy hoặc dấu chấm phẩy.
+ * @param {string} value câu gốc
+ * @param {number} maxWords số chữ tối đa
+ * @returns {string|null} câu đã cắt, hoặc null nếu không có chỗ ngắt sạch
+ */
+function shortenAtBoundary(value, maxWords) {
   const words = String(value).trim().split(/\s+/u).filter(Boolean);
-  if (words.length <= maxWords) return /[.!?…]$/u.test(value.trim()) ? value.trim() : `${value.trim()}.`;
+  if (!words.length) return null;
+  if (words.length <= maxWords) return finishSentence(words.join(" "));
   const window = words.slice(0, maxWords);
-  let cut = window.length;
-  for (let index = window.length - 1; index >= Math.ceil(maxWords * 0.35); index -= 1) {
-    if (/[,;:]$/u.test(window[index - 1])) { cut = index; break; }
+  // Lấy chỗ ngắt xa nhất còn nằm trong ngưỡng: giữ được nhiều ý nhất mà câu vẫn trọn.
+  for (let index = window.length - 1; index >= 1; index -= 1) {
+    if (/[,;:]$/u.test(window[index - 1])) return finishSentence(window.slice(0, index).join(" "));
   }
-  return `${window.slice(0, cut).join(" ").replace(/[,;:.!?…]+$/u, "")}.`;
+  return null;
+}
+
+/** Viết hoa chữ đầu; tên pha trăng trong dữ liệu vốn viết thường. */
+function capitalise(value) {
+  const text = String(value);
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 export function countWords(value) {
@@ -80,41 +121,55 @@ function alignment(cardDirection, direction) {
   return cardDirection === direction ? "resonance" : "tension";
 }
 
-function salienceFor(axis, values, correspondence, seed) {
-  const relationScore = Object.freeze({ same: 0.38, supporting: 0.36, tension: 0.52, "cross-current": 0.34 });
-  const moonRelationScore = Object.freeze({ same: 0.4, supporting: 0.36, tension: 0.52, "cross-current": 0.34 });
-  const phaseScore = values.moonPhaseSalience >= 0.9 ? 0.62 : values.moonPhaseSalience >= 0.8 ? 0.48 : 0.33;
-  const bases = {
-    B: relationScore[values.B],
-    C: 0.36,
-    D: correspondence.planetKey === values.D ? 0.78 : 0.35,
-    E: phaseScore,
-    F: moonRelationScore[values.moonRelation],
-    G: values.G === "exact" ? 0.98 : values.G === "same-sign" ? 0.74 : 0.28,
-    H: 0.37,
-  };
-  const jitter = hashedFraction(seed, `salience:${axis}`) * 0.34;
-  return Math.min(1, bases[axis] + jitter);
+/* Điểm vận ngày. Bốn tín hiệu, mỗi tín hiệu một phiếu:
+   chiều lá, lá có hợp mùa Mặt Trời không, trăng đang lên hay đang xuống, và lá
+   có rơi đúng đoạn trời đang đứng không. Cộng lại ra khoảng -3 đến +4. */
+const RELATION_SCORE = Object.freeze({ same: 1, supporting: 1, tension: -1, "cross-current": 0 });
+const RESONANCE_SCORE = Object.freeze({ exact: 1, "same-sign": 0, none: 0 });
+
+function fortuneScore({ reversed, relation, moonDirection, resonance }) {
+  return (reversed ? -1 : 1)
+    + RELATION_SCORE[relation]
+    + DIRECTION_NUMBER[moonDirection]
+    + RESONANCE_SCORE[resonance];
 }
 
-function selectAxes(values, correspondence, seed) {
-  return AXES.map((axis) => ({
-    axis,
-    value: values[axis],
-    salience: salienceFor(axis, values, correspondence, seed),
-    tie: hashString(`${seed}|tie:${axis}`),
-  }))
-    .sort((left, right) => right.salience - left.salience || left.tie - right.tie)
-    .slice(0, 3)
-    .map(({ axis, value, salience }) => Object.freeze({ axis, value, salience }));
+function fortuneLevel(score) {
+  return FORTUNE_LEVELS.find((level) => score >= level.min) || FORTUNE_LEVELS[FORTUNE_LEVELS.length - 1];
+}
+
+/* Bốn nhóm pha trăng thay cho tám pha: người đọc chỉ cần biết trăng đang lên,
+   đang tròn, đang xuống hay đang tối. */
+const PHASE_GROUP = Object.freeze({
+  new: "new",
+  "waxing-crescent": "waxing",
+  "first-half": "waxing",
+  "waxing-gibbous": "waxing",
+  full: "full",
+  "waning-gibbous": "waning",
+  "last-half": "waning",
+  "waning-crescent": "waning",
+});
+
+/* Lá nào cũng phải ra được một hành tinh để tra giờ hợp. Lá Át và lá hình người
+   không gắn hành tinh nên lấy theo chất của lá. */
+const ELEMENT_PLANET = Object.freeze({ fire: "mars", earth: "venus", air: "mercury", water: "moon" });
+const MINOR_RANK = Object.freeze({
+  ace: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7,
+  eight: 8, nine: 9, ten: 10, page: 11, knight: 12, queen: 13, king: 14,
+});
+
+/* Số hợp: số của lá rút về một chữ số. Lá Khờ mang số 0 nên nhận 9 — không có
+   số 0 trong bảng, và 9 là số cuối vòng, hợp với lá đứng ngoài thứ tự. */
+function luckyNumber(card) {
+  const rank = card.arcana === "major"
+    ? Number(card.number) || 0
+    : MINOR_RANK[String(card.slug).split("-")[0]] || 0;
+  return rank === 0 ? 9 : ((rank - 1) % 9) + 1;
 }
 
 function encodeNumber(value) {
   return Number(value).toString(36).padStart(2, "0");
-}
-
-function selectedMask(selectedAxes) {
-  return selectedAxes.reduce((mask, item) => mask | (1 << AXES.indexOf(item.axis)), 0);
 }
 
 export function encodeTraceId(trace) {
@@ -130,7 +185,7 @@ export function encodeTraceId(trace) {
     trace.modalityIndex,
     trace.resonanceIndex,
     trace.hiddenStageIndex,
-    trace.selectedMask,
+    trace.fortuneScore + 10,
   ];
   const payload = values.map(encodeNumber).join("");
   const body = `HD2-${date}-${payload}`.toUpperCase();
@@ -157,14 +212,22 @@ export function decodeTraceId(traceId) {
     modalityIndex: values[7],
     resonanceIndex: values[8],
     hiddenStageIndex: values[9],
-    selectedMask: values[10],
+    fortuneScore: values[10] - 10,
   });
 }
 
+/* Câu mở đầu của lời đọc.
+
+   Nghĩa lá lấy từ Firestore nên dài ngắn không đoán trước được, và người biên
+   tập không viết nó cho khung này. Vì vậy có hai đường lui, theo thứ tự:
+
+   1. Cắt ở dấu phẩy gần nhất còn trong ngưỡng. Bản trước cắt cứng đúng chữ thứ
+      11 và cho ra "…hoặc tiếp tục chỉ vì." — câu cụt, người đọc không hiểu gì.
+   2. Không có chỗ ngắt sạch, hoặc phần cắt ra còn dính lời khuyên ngoài phạm vi
+      (tiền nong, sức khỏe, kiện tụng) thì bỏ hẳn câu và dùng từ khóa của lá.
+      Từ khóa luôn ngắn, luôn trọn nghĩa và do người biên tập chọn sẵn. */
 function cardMeaning(card, reversed) {
   const source = reversed ? card.meaningReversed : card.meaningUpright;
-  const fallback = reversed ? card.keywordsReversed : card.keywordsUpright;
-  const sentence = firstSentence(source) || (Array.isArray(fallback) ? fallback.slice(0, 3).join(", ") : "");
   const replacements = [
     [/chăm sóc/giu, "vun bồi"],
     [/hy vọng/giu, "niềm tin"],
@@ -188,8 +251,13 @@ function cardMeaning(card, reversed) {
     [/vọng/giu, "trăng tròn"],
     [/mệnh/giu, "đời"],
   ];
-  const westernSentence = replacements.reduce((text, [pattern, value]) => text.replace(pattern, value), sentence);
-  return trimSentence(westernSentence, 14);
+  const cleaned = replacements.reduce((text, [pattern, value]) => text.replace(pattern, value), firstSentence(source));
+  const shortened = shortenAtBoundary(cleaned, 13);
+  if (shortened && !UNSAFE_ADVICE.test(shortened)) return shortened;
+
+  const keywords = (reversed ? card.keywordsReversed : card.keywordsUpright) || [];
+  const safe = keywords.filter((word) => typeof word === "string" && !UNSAFE_ADVICE.test(word)).slice(0, 3);
+  return finishSentence(capitalise(safe.join(", ")));
 }
 
 function validateSky(sky) {
@@ -208,37 +276,62 @@ export function composeDailyReading({ cards, deviceId, sky }) {
   const card = cards[cardIndex];
   const correspondence = correspondenceForCard(card);
   const relation = elementRelation(correspondence.element, sky.sunSign.element);
-  const moonRelation = elementRelation(correspondence.element, sky.moonSign.element);
   const resonance = decanResonance(card, sky.sunSign.index, sky.sunDecan);
-  const values = Object.freeze({
-    B: relation,
-    C: sky.sunSign.modality,
-    D: sky.planetaryHour.planetKey,
-    E: sky.moonPhase.key,
-    F: sky.moonSign.element,
-    G: resonance,
-    H: sky.hiddenStage.key,
-    moonRelation,
-    moonPhaseSalience: sky.moonPhase.salience,
-  });
-  const selectedAxes = selectAxes(values, correspondence, seed);
-  const cardDirection = reversed ? "retreat" : "advance";
+  const stage = sky.hiddenStage.key;
+  const phaseGroup = PHASE_GROUP[sky.moonPhase.key];
+  const orientationKey = reversed ? "reversed" : "upright";
+
+  const score = fortuneScore({ reversed, relation, moonDirection: sky.moonPhase.direction, resonance });
+  const level = fortuneLevel(score);
   const combinedDirection = skyDirection(relation, sky.moonPhase.direction);
-  const frame = alignment(cardDirection, combinedDirection);
-  const orientation = reversed ? "ở chiều ngược" : "theo chiều xuôi";
-  const introTemplate = CARD_INTRO_TEMPLATES[hashedIndex(seed, "intro", CARD_INTRO_TEMPLATES.length)];
-  const intro = introTemplate({ name: card.nameFolk || card.nameVi || card.nameEn, orientation, meaning: cardMeaning(card, reversed) });
-  const collision = COLLISION_COPY[`${frame}:${relation}`];
-  const axisSentences = selectedAxes.map(({ axis, value }) => copyVariant(axis, value, hashedIndex(seed, `copy:${axis}`, 3)));
-  const sentences = [
-    trimSentence(intro, 24),
-    trimSentence(collision, 20),
-    ...axisSentences.map((sentence) => trimSentence(sentence, 17)),
+  const frame = alignment(reversed ? "retreat" : "advance", combinedDirection);
+
+  const name = card.nameFolk || card.nameVi || card.nameEn;
+  const headline = cardMeaning(card, reversed);
+
+  const dayShape = pickVariant(DAY_SHAPE, `${sky.moonPhase.direction}:${stage}`, hashedIndex(seed, "shape", 3));
+  const work = pickVariant(WORK_COPY, `${relation}:${stage}`, hashedIndex(seed, "work", 3));
+  const love = pickVariant(LOVE_COPY, `${sky.moonSign.element}:${phaseGroup}`, hashedIndex(seed, "love", 3));
+  const money = pickVariant(MONEY_COPY, `${sky.sunSign.modality}:${orientationKey}`, hashedIndex(seed, "money", 3));
+  const advice = pickVariant(ADVICE_COPY, `${frame}:${combinedDirection}`, hashedIndex(seed, "advice", 3));
+
+  const planetKey = correspondence.planetKey || ELEMENT_PLANET[correspondence.element];
+  const colorVariants = LUCKY_COLOR[correspondence.element];
+  const omens = Object.freeze({
+    hour: LUCKY_HOUR[planetKey],
+    color: colorVariants[hashedIndex(seed, "color", colorVariants.length)],
+    number: luckyNumber(card),
+  });
+
+  const areas = Object.freeze([
+    Object.freeze({ key: "work", label: "Công việc", line: work }),
+    Object.freeze({ key: "love", label: "Tình cảm", line: love }),
+    Object.freeze({ key: "money", label: "Tiền bạc", line: money }),
+  ]);
+
+  const fortune = Object.freeze({ key: level.key, label: level.label, line: dayShape, score });
+  const omenLine = `Giờ hợp ${omens.hour} · Màu hợp ${omens.color} · Số hợp ${omens.number}.`;
+
+  /* Bản chữ phẳng dùng cho nút Chia sẻ và Sao chép. Đây cũng là chuỗi mà
+     tests/daily-reading.test.mjs soi: 50 đến 99 chữ, không chữ khó, không lời
+     khuyên về sức khỏe hay tiền nong. Thứ tự dòng đúng như trên màn hình để
+     người nhận bản sao đọc thấy y hệt người bốc. */
+  const lines = [
+    `Lá hôm nay: ${name} (${reversed ? "ngược" : "xuôi"}).`,
+    headline,
+    `${level.label}. ${dayShape}`,
+    omenLine,
+    ...areas.map((area) => `${area.label}: ${area.line}`),
+    `Lời khuyên: ${advice}`,
   ];
-  let text = sentences.join(" ");
-  if (countWords(text) < 45) {
-    sentences[4] = `${sentences[4].replace(/[.!?…]+$/u, "")}; hãy để tín hiệu ấy dẫn bạn về một việc vừa sức và có thể gọi tên.`;
-    text = sentences.join(" ");
+  let text = lines.join(" ");
+
+  /* Sàn 50 chữ. Câu mở đầu lấy nghĩa lá từ Firestore nên có lá rất ngắn; khi
+     rơi xuống dưới sàn thì thêm một dòng nhắc đọc kỹ hơn thay vì kéo dài câu
+     đã có — kéo dài câu ngắn làm nó gãy nghĩa. */
+  if (countWords(text) < 50) {
+    lines.push(`Muốn hiểu kỹ hơn, đọc trang riêng của ${name}.`);
+    text = lines.join(" ");
   }
 
   const trace = Object.freeze({
@@ -253,12 +346,11 @@ export function composeDailyReading({ cards, deviceId, sky }) {
     modalityIndex: MODALITY_INDEX[sky.sunSign.modality],
     resonanceIndex: RESONANCE_INDEX[resonance],
     hiddenStageIndex: sky.hiddenStage.index,
-    selectedMask: selectedMask(selectedAxes),
+    fortuneScore: score,
   });
-  const traceId = encodeTraceId(trace);
 
   return Object.freeze({
-    version: 2,
+    version: 3,
     dateKey: sky.dateKey,
     drawnAt: sky.drawnAt || null,
     timeZone: sky.timeZone || "Asia/Ho_Chi_Minh",
@@ -272,17 +364,29 @@ export function composeDailyReading({ cards, deviceId, sky }) {
     }),
     reversed,
     orientationLabel: reversed ? "Lá ngược" : "Lá xuôi",
+    headline,
+    fortune,
+    omens,
+    omenLine,
+    areas,
+    advice,
     text,
-    sentences: Object.freeze(sentences),
+    lines: Object.freeze(lines),
     wordCount: countWords(text),
-    selectedAxes: Object.freeze(selectedAxes),
+    /* Khối thời điểm viết bằng tiếng thường, thay cho bảng chữ chiêm tinh cũ. */
+    sky: Object.freeze({
+      sun: `Mặt Trời đang ở ${sky.sunSign.name} — ${SUN_SIGN_PLAIN[sky.sunSign.key]}.`,
+      moon: `Mặt Trăng ở ${sky.moonSign.name} — ${MOON_ELEMENT_PLAIN[sky.moonSign.element]}.`,
+      phase: `${capitalise(sky.moonPhase.name)} — ${MOON_PHASE_PLAIN[sky.moonPhase.key]}.`,
+      hour: `Giờ ${sky.planetaryHour.planetName} — ${HOUR_PLAIN[sky.planetaryHour.planetKey]}.`,
+    }),
     context: Object.freeze({
       sunSign: sky.sunSign.name,
       moonSign: sky.moonSign.name,
       moonPhase: sky.moonPhase.name,
       planetaryHour: sky.planetaryHour.planetName,
     }),
-    traceId,
+    traceId: encodeTraceId(trace),
     trace,
   });
 }

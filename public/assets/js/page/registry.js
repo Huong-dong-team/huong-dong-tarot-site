@@ -23,6 +23,9 @@ const PAGES = {
   home: ["home-standalone", "card-tilt", "hero-parallax"],
   library: ["card-filters", "card-tilt", "museum-gallery", "museum-rooms", "museum-3d"],
   card: ["symbol-tooltips", "card-tilt"],
+  // daily: trang thành viên /thanh-vien/la-bai-hom-nay/. member-gate mở khoá phần
+  // bốc bài; daily-card dựng lời đọc. Cả hai đều tự thoát nếu không thấy DOM của mình.
+  daily: ["member-gate", "daily-card", "card-tilt"],
 };
 
 /* Có mặt ở gần như mọi trang; rẻ và tự thoát ngay nếu không tìm thấy phần tử. */
@@ -37,6 +40,8 @@ const LOADERS = {
   "hero-parallax": () => import("../ui/hero-parallax.js"),
   "home-standalone": () => import("../ui/home-standalone.js"),
   "symbol-tooltips": () => import("../ui/symbol-tooltips.js"),
+  "member-gate": () => import("../ui/member-gate.js"),
+  "daily-card": () => import("../daily-card/page.js"),
   share: () => import("../ui/share.js"),
   waitlist: () => import("../ui/waitlist.js"),
   "landing-drag": () => import("../landing-drag/init.js"),

@@ -142,7 +142,7 @@ function lncqChapterHtml(c, prev, next) {
   return `<main id="noi-dung-chinh" class="transition-page" data-page="library-source"><section class="page-hero drum-watermark"><p class="eyebrow">Bảo tàng 78 lá · Lĩnh Nam chích quái · Chương ${c.n}</p><h1>${escapeHtml(c.title)}</h1></section><section class="v2-prose lncq-full">${cards}${body}<p class="lncq-cite"><strong>Dẫn nguồn:</strong> Trần Thế Pháp, <em>Lĩnh Nam chích quái</em>, ${escapeHtml(c.title)} (chương ${c.n}). Nguyên tác thế kỷ XIV, đã thuộc phạm vi công cộng. Trích theo bản tiếng Việt hiệu chỉnh chính tả 2026. <span class="lncq-caveat">Bản này <strong>không phải ấn bản khảo dị/dịch chú học thuật</strong> và <strong>không có số trang</strong>; để trích dẫn theo trang, dùng bản dịch Đinh Gia Khánh – Nguyễn Ngọc San (NXB Văn học).</span></p>${nav}</section></main>`;
 }
 
-const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "khoa-hoc", "huyen-su", "cua-hang", "development"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
+const templates = Object.fromEntries(await Promise.all(["_layout", "home", "card-list", "card-detail", "post-list", "post-detail", "about", "privacy", "404", "tarot-la-gi", "khoa-hoc", "huyen-su", "cua-hang", "development", "daily-card"].map(async (name) => [name, await readFile(path.join(root, "templates", `${name}.html`), "utf8")])));
 // Critical CSS nằm trên đường tải quan trọng nhất. Chú thích trong tệp nguồn
 // đáng giữ — chúng ghi lý do của từng luật — nhưng nhúng ra thì vô dụng với
 // trình duyệt. Gỡ chú thích khi nhúng: tệp nguồn vẫn đọc được, bản gửi đi gọn.
@@ -658,6 +658,13 @@ function redirectDocument(destination) {
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 await cp(path.join(root, "public"), dist, { recursive: true });
+// astronomy-engine chỉ nằm trong node_modules (script cổ điển gán window.Astronomy).
+// Trang thành viên "Lá bài hôm nay" nạp trễ tệp này qua data-astronomy-src.
+await mkdir(path.join(dist, "assets", "vendor"), { recursive: true });
+await cp(
+  path.join(root, "node_modules", "astronomy-engine", "astronomy.browser.min.js"),
+  path.join(dist, "assets", "vendor", "astronomy.browser.min.js"),
+);
 
 const featuredSlugs = ["the-fool", "the-empress", "the-chariot", "the-tower", "the-star", "the-world"];
 const featuredCards = featuredSlugs.map((slug) => cards.find((card) => card.slug === slug)).filter(Boolean);
@@ -904,6 +911,53 @@ const retiredRoutes = [
   "/huong-dan-tarot/doc-la-bai/",
 ];
 for (const route of retiredRoutes) await emit(route, redirectDocument("/khoa-hoc/"));
+
+/* Trang thành viên: "Lá bài hôm nay" sống lại sau một cổng mật khẩu.
+
+   Route công khai /la-bai-hom-nay/ vẫn nghỉ và vẫn chuyển về /khoa-hoc/ — định
+   hướng "học Tarot, không bói" ở mặt tiền không đổi. Bản bốc bài chỉ còn ở đây:
+   không có trong điều hướng, không có trong sitemap, đặt robots noindex,nofollow.
+
+   Cổng mật khẩu là rào phân biệt chứ không phải bảo mật: HTML tĩnh đã chứa sẵn
+   dữ liệu 78 lá, ai mở Developer Tools cũng đọc được. Xem ui/member-gate.js. */
+const MEMBER_ROUTE = "/thanh-vien/la-bai-hom-nay/";
+const MEMBER_GATE_SALT = "huong-dong-thanh-vien-v1";
+const memberGatePassword = process.env.MEMBER_GATE_PASSWORD || "123456";
+const memberGateHash = createHash("sha256").update(`${MEMBER_GATE_SALT}:${memberGatePassword}`).digest("hex");
+const dailyCards = cards.map((card) => ({
+  slug: card.slug,
+  number: Number(card.number) || 0,
+  nameEn: card.nameEn,
+  nameVi: card.nameVi,
+  nameFolk: card.nameFolk,
+  arcana: card.arcana,
+  suit: card.suit,
+  image: {
+    url: card.image?.url || "/assets/img/default-og.webp",
+    alt: card.image?.alt || `Minh họa lá ${card.nameFolk || card.nameVi || card.nameEn}`,
+    width: Number(card.image?.width) || 768,
+    height: Number(card.image?.height) || 1152,
+  },
+  keywordsUpright: card.keywordsUpright || [],
+  keywordsReversed: card.keywordsReversed || [],
+  meaningUpright: card.meaningUpright || "",
+  meaningReversed: card.meaningReversed || "",
+}));
+await emit(MEMBER_ROUTE, layout({
+  title: "Lá Bài Hôm Nay · Khu vực thành viên",
+  description: "Trang nội bộ Hường Đông: bốc một lá cố định trong ngày để tự phản tư.",
+  path: MEMBER_ROUTE,
+  robots: "noindex,nofollow",
+  schemas: [],
+  content: renderString(templates["daily-card"], {
+    dailyCardsJson: JSON.stringify(dailyCards).replaceAll("<", "\\u003c"),
+    gateHash: memberGateHash,
+  }),
+  bodyClass: "daily-card-page",
+  // Không nhúng script cứng: page/registry.js đọc <main data-page="daily"> rồi tự
+  // import module. Thẻ <script> ngoài container Swup sẽ không chạy lại sau lần
+  // chuyển cảnh đầu tiên.
+}));
 
 await emit("/quyen-rieng-tu/", layout({ title: "Quyền riêng tư", description: "Website Hường Đông lưu những dữ liệu nào, vì sao lưu và cách bạn yêu cầu xóa.", path: "/quyen-rieng-tu/", schemas: [breadcrumbSchema(data.site, [{ name: "Trang chủ", path: "/" }, { name: "Quyền riêng tư", path: "/quyen-rieng-tu/" }])], content: templates.privacy }));
 await emit("/404.html", layout({ title: "Không tìm thấy trang", description: "Trang bạn tìm không tồn tại.", path: "/404.html", schemas: [], content: templates["404"] }));
