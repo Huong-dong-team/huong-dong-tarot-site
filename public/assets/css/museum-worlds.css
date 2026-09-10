@@ -225,6 +225,14 @@ main[data-museum-world="hub"] .mw-directory { padding-block: 50px; }
 .mw-hub-intro, .mw-catalog-intro { padding: 58px var(--mw-gutter) 44px; }
 .mw-hub-intro h1, .mw-catalog-intro h1 { margin: 0 0 24px; font-size: clamp(50px, 5.6vw, 84px); line-height: 1.08; white-space: pre-line; }
 .mw-hub-intro .mw-intro { max-width: 64ch; margin: 0; font-size: 15px; }
+main[data-museum-world="hub"] .mw-daily-invitation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .65fr); align-items: center; gap: 28px 48px; margin: 0 var(--mw-gutter) 40px; padding: 30px 36px; border: 1px solid var(--mw-line); background: #eee6d6; }
+.mw-daily-copy, .mw-daily-action { min-width: 0; }
+.mw-daily-copy .mw-eyebrow { margin-bottom: 12px; }
+.mw-daily-copy h2 { margin: 0 0 12px; font-size: clamp(30px, 3vw, 42px); line-height: 1.2; }
+.mw-daily-copy > p:last-child { max-width: 58ch; margin: 0; color: var(--mw-muted); font-size: 14px; line-height: 1.8; }
+.mw-daily-action { justify-self: end; max-width: 100%; }
+.mw-daily-action .mw-button { width: 100%; }
+.mw-daily-action p { max-width: 36ch; margin: 12px 0 0; color: var(--mw-muted); font-size: 12px; line-height: 1.7; }
 .mw-room-image { width: 100%; height: 280px; object-fit: cover; margin: 6px 0 14px; }
 .mw-room-invitation { display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; color: var(--mw-gold); }
 .mw-hub-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: 38px var(--mw-gutter) 56px; }
@@ -265,6 +273,8 @@ main[data-museum-world] [data-museum-more].mw-button { color: var(--mw-ink); bac
   .mw-house-index { gap: 20px; }
 }
 @media (max-width: 900px) {
+  main[data-museum-world="hub"] .mw-daily-invitation { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 28px; }
+  .mw-daily-action { justify-self: start; }
   .mw-masthead { height: 82px; gap: 18px; }
   .mw-masthead img { width: 118px; height: 60px; }
   .mw-masthead-nav { margin-left: auto; }
@@ -299,6 +309,8 @@ main[data-museum-world] [data-museum-more].mw-button { color: var(--mw-ink); bac
   .mw-viewer-intro h1 { font-size: 42px; }
 }
 @media (max-width: 620px) {
+  main[data-museum-world="hub"] .mw-daily-invitation { margin-inline: 22px; padding: 24px 20px; }
+  .mw-daily-action { justify-self: stretch; }
   .mw-room-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px 22px; }
   .mw-room-rail a { padding: 12px 10px; font-size: 15px; }
   .mw-room-rail a:nth-child(3) { border-left: 0; }

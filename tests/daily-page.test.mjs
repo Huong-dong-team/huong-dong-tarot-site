@@ -68,7 +68,7 @@ test("cổng đóng băm chứ không đóng mật khẩu vào trang", async () 
   assert.doesNotMatch(html.replace(/data-gate-hash="[a-f0-9]{64}"/, ""), /123456/);
 });
 
-test("trang thành viên không lộ ra ở điều hướng công khai, sitemap hay trang chủ", async () => {
+test("CTA chỉ công khai trong bảo tàng; trang thành viên vẫn ngoài sitemap, trang chủ và Khóa học", async () => {
   const [sitemap, home, course] = await Promise.all([
     read("dist/sitemap.xml"),
     read("dist/index.html"),
@@ -77,6 +77,12 @@ test("trang thành viên không lộ ra ở điều hướng công khai, sitemap
   assert.doesNotMatch(sitemap, /\/la-bai-hom-nay\//);
   assert.doesNotMatch(sitemap, /\/thanh-vien\//);
   for (const html of [home, course]) assert.doesNotMatch(html, /\/thanh-vien\/|Lá Bài Hôm Nay/);
+});
+
+test("lời dẫn ở cổng mật khẩu khớp với lối vào công khai từ bảo tàng", async () => {
+  const html = await read(MEMBER_PAGE);
+  assert.match(html, /Bạn có thể mở trang này từ <a href="\/la-bai\/">Bảo tàng 78 lá<\/a>/);
+  assert.doesNotMatch(html, /không nằm trong điều hướng công khai/);
 });
 
 test("module cổng chỉ so băm và không giữ mật khẩu trong mã", async () => {

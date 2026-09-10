@@ -1,5 +1,46 @@
 # Nhật ký bàn giao tác vụ
 
+## 10/09/2026 · `feat/museum-daily-card-cta-20260910` · CTA Lá bài hôm nay
+
+Yêu cầu đã chốt:
+
+- Người dùng thay yêu cầu `onlystaff` bằng CTA công khai trong subpage Bảo tàng
+  78 lá. Giữ nguyên cổng mật khẩu của trang đích; không công khai mật khẩu.
+- Agent chỉ code và mở PR; chủ dự án tự merge. Không deploy trong tác vụ này.
+
+Phạm vi và điểm tránh giẫm chân:
+
+- Làm trên nhánh riêng từ `origin/main` tại `8615652`, sau PR #88 (bảo tàng)
+  và PR #89 (Lá Bài Hôm Nay). Đã rà PR đang mở; không chạm Hero trang chủ.
+- `scripts/lib/museum-worlds.js`: một khối CTA ngay sau lời giới thiệu đại
+  sảnh `/la-bai/`, trước ba phòng để dễ tìm trên mobile. Liên kết HTML thường
+  tới `/thanh-vien/la-bai-hom-nay/`, không kiểm tra staff, không cần JavaScript.
+- `public/assets/css/museum-worlds.css`: khối nền giấy, nút xanh theo hệ bảo
+  tàng, một cột từ 900px trở xuống. Không thêm breakpoint, hiệu ứng hay thư viện.
+- `templates/daily-card.html`: sửa câu cũ “không nằm trong điều hướng công
+  khai” để khớp với CTA mới; liên kết về Bảo tàng 78 lá ngay trong lời dẫn.
+- `tests/museum-worlds.test.mjs`, `tests/daily-page.test.mjs`: kiểm tra CTA
+  chỉ ở đại sảnh, có nhắc cần mật khẩu, không bị ẩn sau staff và không đổi
+  cổng mật khẩu, sitemap hay điều hướng toàn site.
+- Không đổi mật khẩu, module cổng, thuật toán/lời đọc bốc bài, nội dung 78 lá,
+  ba phòng 3D, dữ liệu Firestore, workflow hoặc cấu hình Firebase.
+- Cổng hiện tại chỉ là rào giao diện phía trình duyệt, không phải xác thực
+  bảo vệ dữ liệu riêng tư. Đã báo rõ giới hạn này cho người dùng.
+
+Kiểm tra đã chạy:
+
+- `npm run build:local` — đạt; sinh 78 trang lá, 38 bài tin, 176 URL từ seed.
+- `npm test` — 188/188 đạt; `npm run check:types` và `git diff --check` đạt.
+- Kiểm tra trình duyệt ở 13 khổ từ 375px đến 1440px: không tràn ngang, nút
+  CTA nằm trong khung nhìn và cao 52px; một cột tới 900px, hai cột từ 901px.
+- Bấm CTA bằng chuột và Enter đều mở đúng trang thành viên qua Swup; cổng
+  mật khẩu hiện, phần bốc bài vẫn ẩn. Liên kết quay lại bảo tàng hoạt động.
+- Không có cảnh báo/lỗi console trong luồng thử. Ảnh desktop/mobile và ghi
+  chú kiểm tra nằm ở `qa/museum-daily-card/`.
+
+Trạng thái: code đã sẵn sàng cho PR để chủ dự án duyệt và tự merge. Không
+merge, không chạy workflow xuất bản và không ghi dữ liệu production.
+
 ## 02/09/2026 · PR #78 · `content/editorial-foundation-beginner`
 
 Phạm vi đã thay đổi:

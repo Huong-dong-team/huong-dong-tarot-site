@@ -41,6 +41,21 @@ test("ba mẫu có thuộc tính theme riêng; bốn nhà là route con thật c
   assert.equal((minor.match(/class="mw-house-image"/g) || []).length, 4);
 });
 
+test("đại sảnh có CTA Lá bài hôm nay công khai, không phụ thuộc staff hay JavaScript", async () => {
+  const html = main(await routeHtml("/la-bai/"));
+  const invitation = html.match(/<section class="mw-daily-invitation"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(invitation, "CTA phải nằm trong nội dung bảo tàng");
+  assert.match(invitation, /aria-labelledby="mw-daily-title"/);
+  assert.match(invitation, /<h2 id="mw-daily-title">Lá bài hôm nay<\/h2>/);
+  assert.match(invitation, /<a class="mw-button" href="\/thanh-vien\/la-bai-hom-nay\/" aria-describedby="mw-daily-note">Khám phá lá bài hôm nay<\/a>/);
+  assert.match(invitation, /id="mw-daily-note">Trang trải nghiệm cần mật khẩu thành viên\./);
+  assert.doesNotMatch(invitation, /\bhidden\b|aria-hidden|data-member|staff|onclick|<script|123456/i);
+  assert.equal((html.match(/href="\/thanh-vien\/la-bai-hom-nay\/"/g) || []).length, 1);
+  assert.ok(html.indexOf(invitation) < html.indexOf('class="mw-directory"'), "điện thoại thấy CTA trước danh mục ba phòng dài");
+  const otherPaths = ["/la-bai/bo-suu-tap/", ...MUSEUM_ROOMS.flatMap((room) => [room.path, `${room.path}3d/`])];
+  for (const route of otherPaths) assert.doesNotMatch(await routeHtml(route), /mw-daily-invitation|href="\/thanh-vien\/la-bai-hom-nay\/"/, route);
+});
+
 test("mọi museum dùng masthead có menu HTML, đúng một h1 và không chồng lớp Kirigami", async () => {
   const paths = ["/la-bai/", "/la-bai/bo-suu-tap/", ...MUSEUM_ROOMS.flatMap((room) => [room.path, `${room.path}3d/`])];
   for (const route of paths) {
