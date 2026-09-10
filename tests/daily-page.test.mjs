@@ -28,6 +28,30 @@ test("trang thành viên có đủ cổng mật khẩu và phần bốc bài", a
   assert.match(html, /data-page="daily"/);
 });
 
+test("khối kết quả có đủ chỗ cho vận ngày, điềm, ba mảng và lời khuyên", async () => {
+  const html = await read(MEMBER_PAGE);
+  for (const hook of [
+    "data-daily-headline",
+    "data-daily-fortune-label",
+    "data-daily-fortune-line",
+    "data-daily-omen-hour",
+    "data-daily-omen-color",
+    "data-daily-omen-number",
+    "data-daily-areas",
+    "data-daily-advice",
+    "data-daily-sky",
+  ]) assert.match(html, new RegExp(hook), hook);
+  // Bản trước đổ cả lời đọc vào một đoạn văn duy nhất; cấu trúc mới thay hẳn nó.
+  assert.doesNotMatch(html, /data-daily-reading|data-daily-context(?![-\w])/);
+});
+
+test("gói dữ liệu 78 lá có số của lá để tính số hợp", async () => {
+  const html = await read(MEMBER_PAGE);
+  const payload = JSON.parse(html.match(/id="daily-card-data">([\s\S]*?)<\/script>/)[1].replaceAll("\\u003c", "<"));
+  assert.equal(payload.length, 78);
+  for (const card of payload) assert.equal(typeof card.number, "number");
+});
+
 test("phần bốc bài ẩn sẵn để trang không mở toang khi thiếu JavaScript", async () => {
   const html = await read(MEMBER_PAGE);
   assert.match(html, /<div class="member-only" data-member-content hidden>/);

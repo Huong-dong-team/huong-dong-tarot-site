@@ -46,7 +46,7 @@ export function init() {
   const readingPanel = root.querySelector(".daily-card-reading");
   const dataElement = document.querySelector("#daily-card-data");
   let dateKey = vietnamDateKey(new Date());
-  let resultKey = `huong-dong-daily-card-v2:${dateKey}`;
+  let resultKey = `huong-dong-daily-card-v3:${dateKey}`;
   const deviceKey = "huong-dong-device-id-v1";
   let memoryResult = null;
   let storageAvailable = true;
@@ -114,19 +114,25 @@ export function init() {
   }
 
   function validSavedReading(value, cards) {
-    return value?.version === 2
+    return value?.version === 3
       && value.dateKey === dateKey
       && typeof value.text === "string"
       && typeof value.traceId === "string"
       && typeof value.orientationLabel === "string"
+      && typeof value.headline === "string"
+      && typeof value.advice === "string"
+      && typeof value.fortune?.label === "string"
+      && typeof value.fortune?.line === "string"
+      && typeof value.omens?.hour === "string"
+      && typeof value.omens?.color === "string"
+      && Number.isInteger(value.omens?.number)
+      && Array.isArray(value.areas) && value.areas.length === 3
+      && value.areas.every((area) => typeof area?.label === "string" && typeof area?.line === "string")
+      && typeof value.sky?.sun === "string"
       && typeof value.card?.image?.url === "string"
       && typeof value.card?.image?.alt === "string"
       && Number(value.card?.image?.width) > 0
       && Number(value.card?.image?.height) > 0
-      && typeof value.context?.sunSign === "string"
-      && typeof value.context?.moonSign === "string"
-      && typeof value.context?.moonPhase === "string"
-      && typeof value.context?.planetaryHour === "string"
       && cards.some((card) => card.slug === value.card?.slug);
   }
 
@@ -134,26 +140,32 @@ export function init() {
     const currentDateKey = vietnamDateKey(now);
     if (currentDateKey === dateKey) return;
     dateKey = currentDateKey;
-    resultKey = `huong-dong-daily-card-v2:${dateKey}`;
+    resultKey = `huong-dong-daily-card-v3:${dateKey}`;
     const savedForCurrentDate = readJson(resultKey);
     memoryResult = validSavedReading(savedForCurrentDate, cards) ? savedForCurrentDate : null;
   }
 
-  function setContext(reading) {
-    const list = root.querySelector("[data-daily-context]");
-    const rows = [
-      ["Cung Mặt Trời", reading.context.sunSign],
-      ["Cung Mặt Trăng", reading.context.moonSign],
-      ["Pha Trăng", reading.context.moonPhase],
-      ["Giờ hành tinh", reading.context.planetaryHour],
-    ];
-    list.replaceChildren(...rows.map(([label, value]) => {
+  function setSky(reading) {
+    const list = root.querySelector("[data-daily-sky]");
+    const rows = [reading.sky.sun, reading.sky.moon, reading.sky.phase, reading.sky.hour];
+    list.replaceChildren(...rows.map((line) => {
       const item = document.createElement("li");
-      const strong = document.createElement("strong");
-      strong.textContent = `${label}: `;
-      item.append(strong, document.createTextNode(value));
+      item.textContent = line;
       return item;
     }));
+  }
+
+  function setAreas(reading) {
+    const list = root.querySelector("[data-daily-areas]");
+    const nodes = [];
+    for (const area of reading.areas) {
+      const term = document.createElement("dt");
+      term.textContent = area.label;
+      const detail = document.createElement("dd");
+      detail.textContent = area.line;
+      nodes.push(term, detail);
+    }
+    list.replaceChildren(...nodes);
   }
 
   function formatDrawnAt(reading) {
@@ -256,10 +268,17 @@ export function init() {
     root.querySelector("[data-daily-date]").textContent = formatDrawnAt(reading);
     resultTitle.textContent = reading.card.nameFolk;
     root.querySelector("[data-daily-original]").textContent = [reading.card.nameVi, reading.card.nameEn].filter(Boolean).join(" · ");
-    root.querySelector("[data-daily-reading]").textContent = reading.text;
+    root.querySelector("[data-daily-headline]").textContent = reading.headline;
+    root.querySelector("[data-daily-fortune-label]").textContent = reading.fortune.label;
+    root.querySelector("[data-daily-fortune-line]").textContent = reading.fortune.line;
+    root.querySelector("[data-daily-omen-hour]").textContent = reading.omens.hour;
+    root.querySelector("[data-daily-omen-color]").textContent = reading.omens.color;
+    root.querySelector("[data-daily-omen-number]").textContent = String(reading.omens.number);
+    root.querySelector("[data-daily-advice]").textContent = reading.advice;
     root.querySelector("[data-daily-trace]").textContent = reading.traceId;
     root.querySelector("[data-daily-card-link]").href = `/la-bai/${encodeURIComponent(reading.card.slug)}/`;
-    setContext(reading);
+    setAreas(reading);
+    setSky(reading);
     const shouldAnimate = animated && motionAllowed;
     if (shouldAnimate) prepareReveal();
     else resetRevealStyles();
@@ -276,7 +295,7 @@ export function init() {
   }
 
   async function shareReading(reading, copyOnly = false) {
-    const url = new URL("/la-bai-hom-nay/", location.origin).toString();
+    const url = new URL("/thanh-vien/la-bai-hom-nay/", location.origin).toString();
     const text = `${reading.card.nameFolk} · ${reading.orientationLabel}\n${reading.text}\n${url}`;
     try {
       if (!copyOnly && typeof navigator.share === "function") {

@@ -926,6 +926,7 @@ const memberGatePassword = process.env.MEMBER_GATE_PASSWORD || "123456";
 const memberGateHash = createHash("sha256").update(`${MEMBER_GATE_SALT}:${memberGatePassword}`).digest("hex");
 const dailyCards = cards.map((card) => ({
   slug: card.slug,
+  number: Number(card.number) || 0,
   nameEn: card.nameEn,
   nameVi: card.nameVi,
   nameFolk: card.nameFolk,

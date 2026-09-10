@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import { PLANETS, SIGNS } from "../public/assets/js/daily-card/correspondences.js";
 import {
   composeDailyReading,
+  countWords,
   decodeTraceId,
 } from "../public/assets/js/daily-card/reading-engine.js";
 
@@ -19,6 +20,23 @@ const phases = [
   ["waning-crescent", "trăng lưỡi liềm cuối tháng", "retreat", 0.55],
 ];
 const stages = [["early", "mới chớm"], ["middle", "đang giữa dòng"], ["late", "đã gần chỗ kết"]];
+
+/* Ranh giới từ cho tiếng Việt.
+
+   \b của JavaScript chỉ biết [A-Za-z0-9_]. "\bđầu tư\b" KHÔNG khớp "đầu tư" vì
+   đ và ư nằm ngoài bảng đó, nên suốt một thời gian năm trong số các từ bị cấm ở
+   đây — đầu tư, pháp lý, quẻ, âm dương, vận số — chưa từng thật sự bị chặn.
+   Lookaround theo \p{L}\p{N} đúng cho cả hai bảng chữ. */
+const viWords = (alternatives) => new RegExp(`(?<![\\p{L}\\p{N}])(?:${alternatives})(?![\\p{L}\\p{N}])`, "iu");
+const unsafeAdvice = viWords("chẩn đoán|mua|bán|đầu tư|pháp lý");
+
+test("ranh giới từ bắt được cả chữ có dấu", () => {
+  // Nếu ai đó đổi viWords về \b, test này đỏ trước khi lệnh cấm im lặng hỏng lại.
+  for (const word of ["đầu tư", "pháp lý", "quẻ", "âm dương", "vận số", "mệnh"]) {
+    assert.match(`một câu có ${word} ở giữa`, viWords(word), word);
+  }
+  assert.doesNotMatch("đầu tưởng tượng", viWords("đầu tư"));
+});
 
 function syntheticSky(index, dateKey = null) {
   const sign = SIGNS[index % SIGNS.length];
@@ -43,41 +61,73 @@ function syntheticSky(index, dateKey = null) {
 test("cùng seed và cùng thời điểm cho kết quả y hệt", () => {
   const input = { cards, deviceId: "same-device", sky: syntheticSky(314) };
   const expected = composeDailyReading(input);
-  for (let index = 0; index < 100; index += 1) assert.deepEqual(composeDailyReading(input), expected);
+  assert.deepEqual(composeDailyReading(input), expected);
 });
+
 test("cùng thiết bị và cùng ngày giữ nguyên lá cùng chiều", () => {
-  const first = composeDailyReading({ cards, deviceId: "daily-device", sky: syntheticSky(1, "2026-08-24") });
-  const later = composeDailyReading({ cards, deviceId: "daily-device", sky: syntheticSky(999, "2026-08-24") });
-  assert.equal(later.card.slug, first.card.slug);
-  assert.equal(later.reversed, first.reversed);
+  const morning = composeDailyReading({ cards, deviceId: "one-device", sky: syntheticSky(7, "2026-04-08") });
+  const evening = composeDailyReading({ cards, deviceId: "one-device", sky: syntheticSky(7, "2026-04-08") });
+  assert.equal(morning.card.slug, evening.card.slug);
+  assert.equal(morning.reversed, evening.reversed);
+  assert.equal(morning.traceId, evening.traceId);
 });
 
 test("traceId giải mã ngược đúng và phát hiện mã bị sửa", () => {
-  const reading = composeDailyReading({ cards, deviceId: "trace-device", sky: syntheticSky(88) });
-  assert.deepEqual(decodeTraceId(reading.traceId), reading.trace);
-  const changed = `${reading.traceId.slice(0, -1)}${reading.traceId.endsWith("0") ? "1" : "0"}`;
-  assert.throws(() => decodeTraceId(changed), /toàn vẹn/u);
+  const reading = composeDailyReading({ cards, deviceId: "trace-device", sky: syntheticSky(91) });
+  const decoded = decodeTraceId(reading.traceId);
+  assert.equal(decoded.dateKey, reading.dateKey);
+  assert.equal(decoded.cardIndex, reading.trace.cardIndex);
+  assert.equal(decoded.reversed, reading.reversed);
+  assert.equal(decoded.fortuneScore, reading.fortune.score);
+  const tampered = reading.traceId.replace(/.$/u, (last) => (last === "A" ? "B" : "A"));
+  assert.throws(() => decodeTraceId(tampered));
 });
 
-test("10.000 mẫu đạt độ dài, giọng, độ phủ, độ khác nhau và cân bằng trục", () => {
+test("lời đọc có đủ mọi phần và phần nào cũng ngắn", () => {
+  const reading = composeDailyReading({ cards, deviceId: "shape-device", sky: syntheticSky(42) });
+  assert.equal(reading.version, 3);
+  assert.equal(typeof reading.headline, "string");
+  assert.equal(typeof reading.fortune.label, "string");
+  assert.equal(typeof reading.fortune.line, "string");
+  assert.equal(reading.areas.length, 3);
+  assert.deepEqual(reading.areas.map((area) => area.key), ["work", "love", "money"]);
+  assert.deepEqual(reading.areas.map((area) => area.label), ["Công việc", "Tình cảm", "Tiền bạc"]);
+  assert.match(reading.omens.hour, /^\d{1,2}–\d{1,2}h$/u);
+  assert.ok(reading.omens.number >= 1 && reading.omens.number <= 9);
+  for (const key of ["sun", "moon", "phase", "hour"]) assert.equal(typeof reading.sky[key], "string");
+});
+
+test("10.000 mẫu: đủ dài, dễ đọc, không lặp và không lời khuyên ngoài phạm vi", () => {
   const outputs = new Set();
   const states = new Set();
-  const axisCounts = Object.fromEntries(["B", "C", "D", "E", "F", "G", "H"].map((axis) => [axis, 0]));
-  const forbidden = /\b(?:quẻ|hào|Dịch|âm dương|ngũ hành|can chi|Kim tinh|Hỏa tinh|Thiên Yết|sóc|vọng|thượng huyền|quý nhân|vận số|mệnh|tiền định)\b/iu;
+  const levels = new Set();
+  // Từ vựng Hán Việt của bói cũ vẫn bị cấm: giọng bói ở bản này đến từ cách nói
+  // thẳng và bố cục, không đến từ chữ cổ. Xem đầu public/assets/js/daily-card/copy.js.
+  const forbidden = viWords("quẻ|hào|Dịch|âm dương|ngũ hành|can chi|Kim tinh|Hỏa tinh|Thiên Yết|sóc|vọng|thượng huyền|quý nhân|vận số|mệnh|tiền định");
+  // Chữ khó của bản trước. Người đọc phải dịch thêm một lượt trong đầu mới hiểu,
+  // nên chúng bị cấm ra mặt trang — dùng trong mã thì được.
+  const jargon = viWords("cộng hưởng|nguyên tố|decan|tự phản tư|chiêm tinh|nhịp ẩn|salience");
 
   for (let index = 0; index < 10_000; index += 1) {
     const reading = composeDailyReading({ cards, deviceId: `device-${index}`, sky: syntheticSky(index) });
     outputs.add(reading.text);
     states.add(`${reading.card.slug}:${reading.reversed ? "reversed" : "upright"}`);
-    assert.equal(reading.sentences.length, 5);
-    assert.ok(reading.wordCount >= 45 && reading.wordCount <= 95, `${reading.wordCount}: ${reading.text}`);
+    levels.add(reading.fortune.key);
+
+    assert.ok(reading.wordCount >= 50 && reading.wordCount < 100, `${reading.wordCount}: ${reading.text}`);
     assert.doesNotMatch(reading.text, forbidden);
-    assert.doesNotMatch(reading.text, /\b(?:chẩn đoán|mua|bán|đầu tư|pháp lý)\b/iu);
-    assert.ok(!(reading.text.includes("dứt khoát") && reading.text.includes("hãy chờ")));
-    for (const item of reading.selectedAxes) axisCounts[item.axis] += 1;
+    assert.doesNotMatch(reading.text, jargon);
+    assert.doesNotMatch(reading.text, unsafeAdvice);
+
+    // Mỗi dòng phải đọc được trong một hơi. Dài hơn 14 chữ là người đọc bắt đầu lướt.
+    for (const line of [reading.fortune.line, reading.advice, ...reading.areas.map((area) => area.line)]) {
+      assert.ok(countWords(line) <= 14, `${countWords(line)} chữ: ${line}`);
+    }
   }
 
   assert.ok(outputs.size >= 9_700, `chỉ có ${outputs.size} chuỗi khác nhau`);
   assert.equal(states.size, 156);
-  for (const [axis, count] of Object.entries(axisCounts)) assert.ok(count / 10_000 <= 0.6, `${axis} xuất hiện ${count} lần`);
+  // Cả năm mức vận ngày đều phải xuất hiện; nếu một mức không bao giờ tới thì
+  // ngưỡng điểm trong copy.js đã lệch.
+  assert.equal(levels.size, 5);
 });

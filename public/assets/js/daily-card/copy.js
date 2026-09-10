@@ -1,206 +1,395 @@
-const freezeVariants = (items) => Object.freeze(items);
+/* Bộ câu chữ cho Lá Bài Hôm Nay — bản dành cho thành viên.
 
-export const COLLISION_COPY = Object.freeze({
-  "resonance:same": "Lá và nhịp trời đang cùng hướng, vì thế điểm đáng giữ là một bước rõ ràng thay vì cố làm mọi thứ cùng lúc.",
-  "resonance:supporting": "Hai dòng lực đang nâng nhau, nên một việc nhỏ được làm tới nơi sẽ có ý nghĩa hơn nhiều ý định để ngỏ.",
-  "resonance:tension": "Sự đồng nhịp xuất hiện ngay trong một cặp vốn dễ va nhau, nhắc bạn dùng sức vừa đủ và để phần còn lại có chỗ thở.",
-  "resonance:cross-current": "Lá và bầu trời gặp nhau ở nhịp đi, dù mỗi bên nhìn về một phía khác; hãy chọn điểm chung trước.",
-  "tension:same": "Nền tảng có vẻ quen thuộc nhưng hai nhịp đang kéo ngược nhau, vì vậy cảm giác chắc chắn đầu tiên vẫn cần được kiểm tra.",
-  "tension:supporting": "Điều kiện có thể hỗ trợ, còn hướng đi lại chưa đồng lòng; chậm một nhịp giúp bạn nhận ra phần nào đang bị thúc ép.",
-  "tension:tension": "Cả chất liệu lẫn nhịp đi đều đang cọ vào nhau, nên hôm nay hợp với việc nhìn thẳng vào điểm khó thay vì phủ lên nó một câu trả lời đẹp.",
-  "tension:cross-current": "Một phía muốn tiến còn phía kia muốn lùi, trong khi câu chuyện vẫn rẽ ngang; hãy thu hẹp câu hỏi trước khi chọn hướng.",
-  "mixed:same": "Lá và cung Mặt Trời có chung chất liệu nhưng nhịp chưa hẳn trùng nhau, nên điều quen thuộc vẫn có thể cần một cách làm mới.",
-  "mixed:supporting": "Các yếu tố đang hỗ trợ nhau theo cách nhẹ, không ép bạn phải đi nhanh; một lựa chọn vừa sức là đủ cho hôm nay.",
-  "mixed:tension": "Có một độ căng hữu ích giữa lá và bầu trời, giống như hai ý kiến khác nhau buộc bạn gọi đúng tên điều mình cần.",
-  "mixed:cross-current": "Các tín hiệu không đối đầu cũng không nhập làm một, vì thế khoảng trống giữa chúng là nơi thích hợp để bạn tự quan sát.",
-});
+   Bản trước viết theo giọng tự phản tư và mượn nhiều chữ chiêm tinh: "nhịp
+   trăng non hợp với việc bắt đầu kín đáo", "hai nguyên tố đang cọ vào nhau".
+   Đúng về mặt hệ thống nhưng người đọc phải dịch thêm một lượt trong đầu mới
+   hiểu, và phần lớn thì không dịch nổi.
 
-export const AXIS_COPY = Object.freeze({
-  B: Object.freeze({
-    same: freezeVariants([
-      "Nguyên tố của lá gặp đúng chất của cung Mặt Trời, làm nổi bật điều bạn đã cảm thấy từ trước.",
-      "Lá và cung Mặt Trời nói cùng một ngôn ngữ, nên tín hiệu quen thuộc hôm nay đáng được nghe kỹ.",
-      "Cùng một nguyên tố đang lặp lại ở lá và bầu trời, giúp trọng tâm hiện ra gọn hơn.",
-    ]),
-    supporting: freezeVariants([
-      "Hai nguyên tố đang nâng đỡ nhau, phù hợp với một hành động nhỏ có điểm bắt đầu và điểm dừng rõ ràng.",
-      "Chất của lá được cung Mặt Trời tiếp sức, nhưng phần hữu ích nhất vẫn là việc bạn thật sự làm được.",
-      "Lá và cung Mặt Trời đang tạo một thế hỗ trợ, mời bạn dùng thuận lợi này thật có chừng mực.",
-    ]),
-    tension: freezeVariants([
-      "Hai nguyên tố đang cọ vào nhau, làm lộ rõ chỗ bạn vừa muốn giữ vừa muốn thay đổi.",
-      "Chất của lá không đứng cùng phía với cung Mặt Trời, nên phản ứng đầu tiên chưa chắc là điều cần làm theo.",
-      "Sự khác biệt nguyên tố khiến câu hỏi sắc hơn, đặc biệt ở phần bạn thường né tránh gọi tên.",
-    ]),
-    "cross-current": freezeVariants([
-      "Hai nguyên tố đi ngang qua nhau, gợi ý rằng câu trả lời có thể nằm ngoài lựa chọn quen thuộc.",
-      "Lá và cung Mặt Trời không chống nhau nhưng cũng không đẩy nhau đi, để lại một khoảng tự do đáng quý.",
-      "Chất của lá và bầu trời đang đứng ở hai mặt khác nhau, mời bạn nối chúng bằng một điều cụ thể.",
-    ]),
-  }),
-  C: Object.freeze({
-    starting: freezeVariants([
-      "Cung Mặt Trời đang mang nhịp khởi đầu, hợp với việc mở một cánh cửa thay vì đòi thấy cả con đường.",
-      "Nhịp khởi của ngày khuyến khích bạn đặt viên đầu tiên, chưa cần ép mọi phần phải hoàn chỉnh.",
-      "Bầu trời đang thiên về bắt đầu, nên một lời nói thật hoặc một bước thử nhỏ đã là đủ.",
-    ]),
-    steady: freezeVariants([
-      "Cung Mặt Trời giữ nhịp bền, nhắc bạn ở lại đủ lâu với điều quan trọng để thấy nó rõ hơn.",
-      "Nhịp vững của ngày không đòi thay đổi lớn, chỉ cần bạn chăm đúng phần đã chọn.",
-      "Bầu trời đang nghiêng về sự ổn định, phù hợp với việc củng cố thay vì mở thêm quá nhiều hướng.",
-    ]),
-    changing: freezeVariants([
-      "Cung Mặt Trời mang nhịp chuyển, vì thế cách tiếp cận linh hoạt có ích hơn một kế hoạch quá cứng.",
-      "Ngày đang có chất biến đổi, mời bạn điều chỉnh cách làm mà không bỏ quên mục đích ban đầu.",
-      "Nhịp chuyển của cung Mặt Trời mời bạn thử một góc nhìn khác trước khi kết luận.",
-    ]),
-  }),
-  D: Object.freeze({
-    sun: freezeVariants([
-      "Giờ của Mặt Trời đặt sự rõ ràng lên trước, nên hãy nhìn xem điều gì xứng đáng được bạn đứng tên.",
-      "Mặt Trời đang giữ nhịp giờ này, làm nổi bật lòng tự trọng và cách bạn hiện diện trước người khác.",
-      "Ánh sáng của Mặt Trời hợp với việc nói một điều đơn giản, thẳng và không phô trương.",
-    ]),
-    moon: freezeVariants([
-      "Giờ của Mặt Trăng đưa cảm nhận lên gần bề mặt, nên một khoảng yên có thể nói nhiều hơn phản ứng vội.",
-      "Mặt Trăng đang giữ nhịp giờ này, mời bạn nhận ra cảm xúc trước khi biến nó thành quyết định.",
-      "Nhịp của Mặt Trăng hợp với việc lắng nghe điều cơ thể và ký ức nhắc lại.",
-    ]),
-    mars: freezeVariants([
-      "Giờ của Sao Hỏa có nhiều lực đẩy, nhưng sức mạnh hữu ích nhất là sức biết dừng đúng chỗ.",
-      "Sao Hỏa đang giữ nhịp giờ này, làm rõ nơi bạn cần can đảm mà không cần gây thêm va chạm.",
-      "Năng lượng Sao Hỏa hợp với một việc cần làm ngay, miễn là mục tiêu đã được gọi đúng tên.",
-    ]),
-    mercury: freezeVariants([
-      "Giờ của Sao Thủy làm lời nói và chi tiết nổi bật, thích hợp để hỏi lại điều còn mơ hồ.",
-      "Sao Thủy đang giữ nhịp giờ này, nhắc bạn đọc kỹ tín hiệu nhỏ trước khi nối chúng thành câu chuyện.",
-      "Nhịp Sao Thủy phù hợp với việc viết xuống, trao đổi hoặc sắp xếp lại một ý nghĩ rối.",
-    ]),
-    jupiter: freezeVariants([
-      "Giờ của Sao Mộc mở rộng tầm nhìn, nhưng điều lớn chỉ có ích khi vẫn chạm được vào thực tế.",
-      "Sao Mộc đang giữ nhịp giờ này, mời bạn nhìn rộng hơn mà không hứa quá tay với chính mình.",
-      "Nhịp Sao Mộc giúp thấy thêm khả năng, còn lựa chọn nào phù hợp vẫn cần một giới hạn rõ.",
-    ]),
-    venus: freezeVariants([
-      "Giờ của Sao Kim làm giá trị và sự hòa hợp nổi bật, nên hãy để điều đẹp đi cùng điều thật.",
-      "Sao Kim đang giữ nhịp giờ này, nhắc bạn xem mình đang trân trọng điều gì bằng hành động cụ thể.",
-      "Nhịp Sao Kim hợp với việc làm mềm cách nói mà không làm nhạt nội dung.",
-    ]),
-    saturn: freezeVariants([
-      "Giờ của Sao Thổ đặt ranh giới lên trước, giúp bạn phân biệt trách nhiệm với gánh nặng tự nhận thêm.",
-      "Sao Thổ đang giữ nhịp giờ này, phù hợp với một quyết định bền hơn là một lời hứa lớn.",
-      "Nhịp Sao Thổ mời bạn thu gọn, sắp thứ tự và giữ lại phần thật sự cần thiết.",
-    ]),
-  }),
-  E: Object.freeze({
-    new: freezeVariants([
-      "Trăng non giữ mọi thứ ở dạng hạt giống, nên điều chưa rõ chưa cần bị ép thành câu trả lời.",
-      "Ánh trăng đang khuất, tạo khoảng yên để ý định mới hình thành, chưa cần công bố.",
-      "Nhịp trăng non hợp với việc bắt đầu kín đáo và ấp ủ, kết quả đến sau.",
-    ]),
-    "waxing-crescent": freezeVariants([
-      "Trăng lưỡi liềm đang lớn, gợi bước tiến nhỏ để kiểm tra điều bạn vừa khởi động.",
-      "Ánh trăng đang dày thêm từng chút, phù hợp với việc nuôi một ý định bằng hành động đều đặn.",
-      "Nhịp trăng đang lớn nhắc rằng sức bền hôm nay quan trọng hơn khởi đầu ồn ào.",
-    ]),
-    "first-half": freezeVariants([
-      "Nửa trăng đang lớn tạo một điểm xoay, nơi lựa chọn cần được thử bằng việc làm cụ thể.",
-      "Ánh trăng đang đi lên và gặp lực cản, thích hợp để sửa hướng thay vì bỏ cuộc quá sớm.",
-      "Nhịp nửa trăng đặt câu hỏi về cam kết: phần nào đáng được bạn tiếp tục nuôi dưỡng.",
-    ]),
-    "waxing-gibbous": freezeVariants([
-      "Trăng gần tròn làm chi tiết còn thiếu lộ rõ, mời bạn chỉnh lại trước khi khép một vòng.",
-      "Ánh trăng đang đầy thêm, nên sự tinh chỉnh quý hơn việc mở một mục tiêu mới.",
-      "Nhịp trăng gần tròn nhắc bạn nhìn lại khoảng cách nhỏ giữa gần xong và hoàn tất.",
-    ]),
-    full: freezeVariants([
-      "Trăng tròn đưa cảm xúc và kết quả ra ánh sáng, vì thế điều đã rõ không cần được phóng đại thêm.",
-      "Ánh trăng đang đầy, làm phần cao trào dễ thấy nhưng cũng dễ bị nhìn quá lớn.",
-      "Nhịp trăng tròn hợp với việc chứng kiến điều đang có, trước khi giữ hay buông.",
-    ]),
-    "waning-gibbous": freezeVariants([
-      "Trăng bắt đầu khuyết, mời bạn chia sẻ điều đã hiểu và bỏ bớt phần thừa.",
-      "Ánh trăng rút dần, hợp với việc tiêu hóa trải nghiệm hơn là chạy sang chuyện mới.",
-      "Nhịp trăng sau cao trào giúp bạn thấy điều gì đáng giữ sau khi cảm xúc lắng.",
-    ]),
-    "last-half": freezeVariants([
-      "Nửa trăng đang vơi tạo một điểm nhìn lại, nơi thói quen cũ có thể được đặt xuống nhẹ nhàng.",
-      "Ánh trăng đang giảm và gặp một khúc rẽ, thích hợp để sửa điều đã biết là không còn hợp.",
-      "Nhịp nửa trăng đang vơi mời bạn rút năng lượng khỏi phần chỉ còn do quán tính.",
-    ]),
-    "waning-crescent": freezeVariants([
-      "Trăng lưỡi liềm cuối tháng giữ nhịp nghỉ, nhắc bạn để một vòng thật sự khép trước khi mở vòng khác.",
-      "Ánh trăng chỉ còn mảnh nhỏ, phù hợp với việc lắng lại và không ép mình phải có thêm câu trả lời.",
-      "Nhịp trăng cuối tháng mời bạn dành chỗ cho nghỉ ngơi, hồi tưởng và một lần thở sâu.",
-    ]),
-  }),
-  F: Object.freeze({
-    fire: freezeVariants([
-      "Mặt Trăng đang ở cung Lửa, khiến cảm xúc muốn được chuyển thành chuyển động thay vì nằm yên.",
-      "Chất Lửa của Mặt Trăng làm phản ứng đến nhanh, nên một nhịp thở giúp bạn chọn đúng việc để làm.",
-      "Cảm xúc hôm nay mang sắc Lửa, rõ và trực tiếp nhưng vẫn cần một nơi đặt xuống an toàn.",
-    ]),
-    earth: freezeVariants([
-      "Mặt Trăng đang ở cung Đất, kéo sự chú ý về cơ thể, nhịp sống và những gì có thể chạm tới.",
-      "Chất Đất của Mặt Trăng hợp với một việc thực tế, nhỏ và có thể hoàn thành trong tầm tay.",
-      "Cảm xúc hôm nay cần nền vững hơn lời giải thích, như một bữa ăn đủ hoặc một khoảng nghỉ thật.",
-    ]),
-    air: freezeVariants([
-      "Mặt Trăng đang ở cung Khí, khiến suy nghĩ và lời nói chạy nhanh hơn cảm giác bên dưới.",
-      "Chất Khí của Mặt Trăng mời bạn gọi tên điều đang nghĩ, rồi nghe xem câu nói ấy để lại gì.",
-      "Cảm xúc hôm nay đi qua ý tưởng và trò chuyện, nhưng không phải ý nghĩ nào cũng cần được tin ngay.",
-    ]),
-    water: freezeVariants([
-      "Mặt Trăng đang ở cung Nước, làm trực giác và ký ức gần hơn, đồng thời khiến ranh giới dễ mềm đi.",
-      "Chất Nước của Mặt Trăng khuyến khích sự dịu dàng, miễn là bạn vẫn nhận ra đâu là phần của mình.",
-      "Cảm xúc hôm nay có chiều sâu của Nước, phù hợp với việc lắng nghe mà chưa cần giải thích hết.",
-    ]),
-  }),
-  G: Object.freeze({
-    exact: freezeVariants([
-      "Lá vừa bốc trùng đúng decan của Mặt Trời, một điểm cộng hưởng hiếm khiến chủ đề của lá đáng được nhìn thật kỹ.",
-      "Decan Mặt Trời đang gọi đúng tên lá này, tạo một khoảnh khắc trùng khớp hiếm nhưng không thay bạn đưa ra lựa chọn.",
-      "Lá và decan Mặt Trời gặp nhau chính xác, làm thông điệp nổi bật hơn mà vẫn giữ nó trong phạm vi tự phản tư.",
-    ]),
-    "same-sign": freezeVariants([
-      "Lá không trùng decan nhưng cùng cung với Mặt Trời, vì thế hai biểu tượng đang soi vào cùng một vùng trải nghiệm.",
-      "Cung của lá và cung Mặt Trời đang gặp nhau, tạo một tiếng vọng vừa đủ để bạn chú ý tới chủ đề lặp lại.",
-      "Lá đang cùng cung với Mặt Trời dù khác decan, nên điểm chung quan trọng hơn khác biệt nhỏ giữa chúng.",
-    ]),
-    none: freezeVariants([
-      "Lá và decan Mặt Trời không trùng nhau, để thông điệp đứng độc lập và tránh bị ép vào một dấu hiệu duy nhất.",
-      "Không có sự trùng khớp decan, vì vậy giá trị của lá nằm ở điều nó giúp bạn tự nhận ra ngay lúc này.",
-      "Lá đi ngoài vùng decan hiện tại, mở một góc nhìn bổ sung thay vì lặp lại điều bầu trời đã nhấn mạnh.",
-    ]),
-  }),
-  H: Object.freeze({
-    early: freezeVariants([
-      "Câu chuyện còn mới chớm, nên cho nó thêm dữ kiện trước khi gọi tên kết quả.",
-      "Việc này vẫn ở đoạn đầu, phù hợp với quan sát và thử nhẹ hơn là tự buộc mình phải biết hết.",
-      "Nhịp ẩn cho thấy cánh cửa mới mở, vì vậy bước đầu tiên cần rõ hơn bước cuối cùng.",
-    ]),
-    middle: freezeVariants([
-      "Câu chuyện đang giữa dòng, điều chỉnh cách đi hữu ích hơn quay lại vạch xuất phát.",
-      "Việc này đã qua đoạn đầu nhưng chưa tới chỗ kết, nên phần đang diễn ra cần được nhìn đúng như nó có.",
-      "Nhịp ẩn đặt bạn ở quãng giữa, mời bạn sửa tay lái mà không phủ nhận chặng đường đã đi.",
-    ]),
-    late: freezeVariants([
-      "Câu chuyện đã gần chỗ kết, nên điều cần thiết là hoàn tất tử tế thay vì mở thêm một vòng rối mới.",
-      "Việc này đang ở đoạn muộn, phù hợp với thu gọn, xác nhận và để phần đã xong được nằm yên.",
-      "Nhịp ẩn cho thấy một vòng sắp khép, mời bạn nhìn lại điều muốn mang theo sau điểm dừng.",
-    ]),
-  }),
-});
+   Bản này nói thẳng: vận ngày, giờ hợp, màu hợp, số hợp, rồi ba mảng đời sống
+   và một lời khuyên. Luật viết câu ở đây có ba điều, đừng phá:
 
-export const CARD_INTRO_TEMPLATES = freezeVariants([
-  ({ name, orientation, meaning }) => `Hôm nay, ${name} xuất hiện ${orientation}: ${meaning}`,
-  ({ name, orientation, meaning }) => `Lá dành cho hôm nay là ${name}, ${orientation}: ${meaning}`,
-  ({ name, orientation, meaning }) => `${name} bước vào ngày hôm nay ${orientation}, mang theo lời nhắc này: ${meaning}`,
-  ({ name, orientation, meaning }) => `Bạn gặp ${name} ${orientation} trong lần bốc hôm nay: ${meaning}`,
+   1. Mỗi dòng tối đa 14 chữ. Dài hơn là người đọc bắt đầu lướt.
+   2. Chỉ dùng chữ đời thường. Cấm "nhịp", "cộng hưởng", "nguyên tố", "trục",
+      "decan", "tự phản tư" — những chữ đó ở lại trong mã, không ra mặt trang.
+   3. Không hứa chuyện sẽ xảy ra với người khác, không đụng tới sức khỏe, tiền
+      đầu tư hay chuyện kiện tụng. Nói về việc người đọc tự làm được thôi.
+
+   Bộ từ vựng Hán Việt của bói cũ (mệnh, vận số, tiền định, người trên giúp
+   theo lối cũ) vẫn bị tests/daily-reading.test.mjs cấm. Giữ nguyên lệnh cấm đó:
+   giọng bói ở đây đến từ cách nói thẳng và bố cục, không đến từ chữ cổ. */
+
+const v = (items) => Object.freeze(items);
+
+/* Vận ngày. Điểm do reading-engine tính từ chiều lá, quan hệ lá với Mặt Trời,
+   chiều trăng và độ trùng decan; ở đây chỉ còn việc đặt tên cho khoảng điểm. */
+export const FORTUNE_LEVELS = Object.freeze([
+  Object.freeze({ min: 3, key: "very-good", label: "Ngày tốt" }),
+  Object.freeze({ min: 1, key: "good", label: "Ngày khá" }),
+  Object.freeze({ min: 0, key: "even", label: "Ngày bình thường" }),
+  Object.freeze({ min: -2, key: "slow", label: "Ngày chậm" }),
+  Object.freeze({ min: Number.NEGATIVE_INFINITY, key: "careful", label: "Ngày nên giữ mình" }),
 ]);
 
-export function copyVariant(axis, value, index) {
-  const variants = AXIS_COPY[axis]?.[value];
-  if (!variants?.length) throw new RangeError(`Thiếu câu cho trục ${axis}:${value}.`);
+/* Hình dáng của ngày: sáng hay chiều dễ thở hơn.
+   Khóa là `${chiều trăng}:${chặng của câu chuyện}`. */
+export const DAY_SHAPE = Object.freeze({
+  "advance:early": v([
+    "Sáng còn lơ mơ, chiều mới rõ việc.",
+    "Đầu ngày chậm, càng về sau càng chạy.",
+    "Sáng dò đường, chiều mới đi được.",
+  ]),
+  "advance:middle": v([
+    "Ngày đi lên đều. Cứ theo đà đang có.",
+    "Việc đang chạy thì để cho chạy tiếp.",
+    "Ngày thuận. Không cần đổi cách làm.",
+  ]),
+  "advance:late": v([
+    "Sắp xong rồi. Ráng thêm một đoạn nữa.",
+    "Chặng cuối. Hôm nay về đích được.",
+    "Gần tới nơi. Đừng buông lúc này.",
+  ]),
+  "hold:early": v([
+    "Ngày đứng yên. Chưa vội cũng không sao.",
+    "Chưa có gì rõ. Cứ để đó đã.",
+    "Đầu việc còn mờ. Chờ thêm tin.",
+  ]),
+  "hold:middle": v([
+    "Cả ngày một nhịp đều. Không nhanh, không chậm.",
+    "Mọi thứ giữ nguyên. Đừng cố đẩy.",
+    "Ngày phẳng. Làm cho xong phần đang dở.",
+  ]),
+  "hold:late": v([
+    "Việc gần khép nhưng chưa khép. Chờ thêm.",
+    "Đến đây là đủ. Đừng thêm gì nữa.",
+    "Ngày dừng. Để mọi thứ lắng xuống.",
+  ]),
+  "retreat:early": v([
+    "Sáng nhiều sức nhất. Làm sớm đi.",
+    "Đầu ngày còn được. Chiều đuối dần.",
+    "Tranh thủ buổi sáng. Chiều nên nhẹ tay.",
+  ]),
+  "retreat:middle": v([
+    "Ngày trôi xuống. Bớt việc là vừa.",
+    "Sức có hạn. Chọn một việc thôi.",
+    "Đừng ôm thêm. Giữ phần đang có.",
+  ]),
+  "retreat:late": v([
+    "Ngày để dọn dẹp, không phải để mở mang.",
+    "Khép lại cho gọn. Mai tính tiếp.",
+    "Cuối chặng rồi. Nghỉ tay sớm càng tốt.",
+  ]),
+});
+
+/* Giờ hợp lấy theo hành tinh của lá. Đây là quy ước biên tập của Hường Đông
+   cho nhất quán, không phải giờ tốt theo lịch nào cả. */
+export const LUCKY_HOUR = Object.freeze({
+  sun: "11–13h",
+  moon: "21–23h",
+  mars: "13–15h",
+  mercury: "9–11h",
+  jupiter: "15–17h",
+  venus: "17–19h",
+  saturn: "5–7h",
+});
+
+export const LUCKY_COLOR = Object.freeze({
+  fire: v(["đỏ gạch", "cam đất", "vàng nghệ"]),
+  earth: v(["vàng đất", "nâu gỗ", "xanh rêu"]),
+  air: v(["trắng ngà", "xanh da trời", "ghi sáng"]),
+  water: v(["xanh biển", "tím than", "xanh ngọc"]),
+});
+
+/* Công việc. Khóa là `${quan hệ lá với Mặt Trời}:${chặng của câu chuyện}`. */
+export const WORK_COPY = Object.freeze({
+  "same:early": v([
+    "Việc mới hợp tay bạn. Cứ nhận.",
+    "Đầu việc thuận. Bắt tay vào là chạy.",
+    "Thứ vừa tới đúng nghề bạn. Đừng ngại.",
+  ]),
+  "same:middle": v([
+    "Đang đúng hướng. Làm tiếp như đang làm.",
+    "Không cần đổi gì. Cứ thế mà đi.",
+    "Giữa chặng mà thuận. Cứ yên tâm.",
+  ]),
+  "same:late": v([
+    "Việc cũ sắp có kết quả. Chờ thêm chút.",
+    "Khâu cuối nhẹ nhàng. Xong trong nay mai.",
+    "Gần xong và xong đẹp. Cứ hoàn tất.",
+  ]),
+  "supporting:early": v([
+    "Có người đỡ bạn đoạn đầu. Cứ hỏi.",
+    "Mở lời trước đi. Sẽ có người nhận.",
+    "Việc mới cần một người cùng làm.",
+  ]),
+  "supporting:middle": v([
+    "Nhờ được thì nhờ. Đừng ôm một mình.",
+    "Chia bớt việc ra. Ai cũng nhẹ hơn.",
+    "Giữa chặng có người phụ. Nhận đi.",
+  ]),
+  "supporting:late": v([
+    "Sắp xong. Có người phụ khâu cuối.",
+    "Nhờ một tay là kết thúc gọn.",
+    "Đoạn cuối dễ hơn nếu có người xem cùng.",
+  ]),
+  "tension:early": v([
+    "Việc mới hơi trái tay. Đừng nhận vội.",
+    "Nghe qua thì hay, làm mới biết. Hỏi kỹ.",
+    "Chưa hợp lúc này. Hoãn được thì hoãn.",
+  ]),
+  "tension:middle": v([
+    "Có chỗ vướng. Gỡ từng cái một.",
+    "Đừng cố đẩy. Càng đẩy càng kẹt.",
+    "Giữa chặng gặp đá. Đi vòng cũng được.",
+  ]),
+  "tension:late": v([
+    "Khâu cuối dễ sai. Rà lại một lượt.",
+    "Gần xong đừng chủ quan. Kiểm lại đã.",
+    "Chốt sổ thì đọc kỹ trước khi ký.",
+  ]),
+  "cross-current:early": v([
+    "Chưa rõ đầu đuôi. Hỏi cho kỹ đã.",
+    "Thông tin còn thiếu. Đừng quyết hôm nay.",
+    "Việc mới đến từ hướng lạ. Cứ nghe trước.",
+  ]),
+  "cross-current:middle": v([
+    "Việc rẽ sang hướng khác. Để yên xem sao.",
+    "Kế hoạch đổi giữa chừng. Không phải lỗi bạn.",
+    "Giữa chặng thấy đường khác. Ghi lại đã.",
+  ]),
+  "cross-current:late": v([
+    "Kết quả không như tính. Không sao cả.",
+    "Xong theo kiểu khác. Vẫn là xong.",
+    "Đoạn cuối lệch một chút. Nhận rồi đi tiếp.",
+  ]),
+});
+
+/* Tình cảm. Khóa là `${chất của cung Mặt Trăng}:${nhóm pha trăng}`.
+   Nhóm pha: new, waxing, full, waning. */
+export const LOVE_COPY = Object.freeze({
+  "fire:new": v([
+    "Muốn nói mà chưa tới lúc. Giữ lại đã.",
+    "Trong lòng nóng. Ngoài mặt cứ bình thường.",
+    "Chưa phải lúc mở chuyện. Để vài hôm.",
+  ]),
+  "fire:waxing": v([
+    "Nói thẳng được rồi. Người kia đang nghe.",
+    "Chủ động một chút là có tin vui.",
+    "Rủ đi đâu đó đi. Hợp hôm nay.",
+  ]),
+  "fire:full": v([
+    "Dễ nóng lời. Đếm tới ba rồi hãy nói.",
+    "Chuyện cũ dễ bùng. Đừng khơi lại.",
+    "Cảm xúc mạnh. Đừng quyết gì lúc đang giận.",
+  ]),
+  "fire:waning": v([
+    "Bớt hỏi lại chuyện cũ. Để nó qua.",
+    "Người kia đang mệt. Cho họ yên.",
+    "Giận thì giận, đừng nói câu nặng.",
+  ]),
+  "earth:new": v([
+    "Chưa cần nói. Làm cho họ thấy là được.",
+    "Một việc nhỏ giúp họ hơn trăm câu hứa.",
+    "Bắt đầu lại từ chuyện ăn uống, ngủ nghỉ.",
+  ]),
+  "earth:waxing": v([
+    "Rủ ăn một bữa tử tế. Đủ rồi.",
+    "Giữ lời hẹn nhỏ là người ta nhớ.",
+    "Đều đặn thắng bất ngờ. Cứ đều thôi.",
+  ]),
+  "earth:full": v([
+    "Cả hai đều mỏi. Nghỉ chung một buổi.",
+    "Đừng bàn chuyện lớn khi đang đói.",
+    "Nói ít, ngồi cạnh nhiều. Vậy là ổn.",
+  ]),
+  "earth:waning": v([
+    "Dọn bớt việc chung cho nhẹ đầu.",
+    "Trả lại thứ đang mượn. Sòng phẳng cho dễ thở.",
+    "Bỏ một thói quen làm phiền người kia.",
+  ]),
+  "air:new": v([
+    "Nhắn một câu hỏi thăm. Ngắn thôi.",
+    "Chưa hiểu ý nhau. Hỏi cho rõ.",
+    "Đừng đoán bụng người ta. Cứ hỏi thẳng.",
+  ]),
+  "air:waxing": v([
+    "Nói chuyện hôm nay dễ vào. Tranh thủ.",
+    "Đây là lúc bày tỏ. Nói gọn thôi.",
+    "Một câu đùa đúng lúc gỡ được nhiều thứ.",
+  ]),
+  "air:full": v([
+    "Nghe nhiều hơn nói. Đừng cãi lý.",
+    "Nói nhiều dễ hớ. Bớt lại một nửa.",
+    "Đừng nhắn lúc nửa đêm. Sáng hãy nhắn.",
+  ]),
+  "air:waning": v([
+    "Có hiểu lầm cũ. Nói cho xong đi.",
+    "Đừng kể chuyện của mình cho người thứ ba.",
+    "Im lặng lúc này không phải là lạnh nhạt.",
+  ]),
+  "water:new": v([
+    "Nhớ ai thì cứ nhắn. Không mất gì.",
+    "Lòng đang mềm. Đừng hứa điều quá tay.",
+    "Giữ cho mình một khoảng yên.",
+  ]),
+  "water:waxing": v([
+    "Người kia đang cần bạn hỏi một câu.",
+    "Nói được câu thật thì nói hôm nay.",
+    "Gần lại một chút. Đừng chờ họ trước.",
+  ]),
+  "water:full": v([
+    "Dễ tủi thân. Đừng suy diễn thêm.",
+    "Nước mắt hôm nay không có lỗi.",
+    "Cảm giác đang phóng to. Ngủ một giấc đã.",
+  ]),
+  "water:waning": v([
+    "Buông một chuyện cũ. Nhẹ được phần nào.",
+    "Đừng đọc lại tin nhắn cũ. Không giúp gì.",
+    "Cho mình quyền không trả lời ngay.",
+  ]),
+});
+
+/* Tiền bạc. Chỉ nói về thói quen tiêu và cách giữ sổ sách — không bàn chuyện
+   sinh lời, không khuyên bỏ tiền vào đâu. Khóa là
+   `${tính chất cung Mặt Trời}:${chiều lá}`. */
+export const MONEY_COPY = Object.freeze({
+  "starting:upright": v([
+    "Khoản mới xuất hiện. Ghi lại cho rõ.",
+    "Tiền vào có, nhưng chưa nhiều. Cứ mừng.",
+    "Có việc phát sinh chi. Nằm trong dự tính.",
+  ]),
+  "starting:reversed": v([
+    "Dễ tiêu tay hơn thường ngày. Chậm lại.",
+    "Đừng chốt khoản lớn trong hôm nay.",
+    "Có món phát sinh ngoài ý. Bình tĩnh.",
+  ]),
+  "steady:upright": v([
+    "Sổ sách gọn. Giữ nguyên nếp đang có.",
+    "Tiền ổn định. Không cần xoay xở gì.",
+    "Một khoản cũ quay lại. Tin tốt.",
+  ]),
+  "steady:reversed": v([
+    "Tiền vào chậm hơn bạn nghĩ. Đừng lo sớm.",
+    "Có khoản treo lâu ngày. Hỏi lại một tiếng.",
+    "Giữ nguyên là hơn. Đừng xoay hôm nay.",
+  ]),
+  "changing:upright": v([
+    "Thu chi lên xuống. Cuối ngày vẫn hòa.",
+    "Có cơ hội nhỏ. Xem kỹ rồi hãy nhận.",
+    "Ghi lại từng khoản. Sẽ thấy chỗ rò.",
+  ]),
+  "changing:reversed": v([
+    "Dễ quên một khoản phải trả. Xem lại.",
+    "Đừng cho ai vay trong hôm nay.",
+    "Con số đang lệch. Cộng lại một lần nữa.",
+  ]),
+});
+
+/* Lời khuyên chốt. Khóa là `${lá và trời có cùng chiều không}:${chiều chung}`. */
+export const ADVICE_COPY = Object.freeze({
+  "resonance:advance": v([
+    "Việc gì định làm thì làm hôm nay.",
+    "Đang thuận thì đi tiếp, đừng dừng lại hỏi.",
+    "Chọn một việc và làm cho tới.",
+  ]),
+  "resonance:hold": v([
+    "Giữ nguyên những gì đang có là đủ.",
+    "Không cần thêm gì mới hôm nay.",
+    "Ở yên một chỗ cũng là một cách đi.",
+  ]),
+  "resonance:retreat": v([
+    "Làm cho xong việc cũ rồi hãy nghỉ.",
+    "Dọn bớt đi. Nhẹ tay được chừng nào hay chừng đó.",
+    "Kết thúc một việc thay vì mở việc mới.",
+  ]),
+  "tension:advance": v([
+    "Muốn nhanh thì phải chậm một nhịp trước đã.",
+    "Đi tiếp được, nhưng xem kỹ chân mình.",
+    "Có sức thì dùng, đừng dùng hết.",
+  ]),
+  "tension:hold": v([
+    "Chưa rõ thì đừng quyết. Chờ thêm một ngày.",
+    "Đứng lại không phải là thua.",
+    "Để đó đã. Mai nhìn sẽ khác.",
+  ]),
+  "tension:retreat": v([
+    "Hôm nay lùi một bước cho đỡ mệt.",
+    "Bỏ bớt một việc. Không ai trách bạn.",
+    "Đừng ép mình. Ngày mai vẫn còn.",
+  ]),
+  "mixed:advance": v([
+    "Làm phần dễ trước. Phần khó để sau.",
+    "Bắt đầu bằng việc nhỏ nhất trong danh sách.",
+    "Đi từng bước. Đừng nhìn cả quãng đường.",
+  ]),
+  "mixed:hold": v([
+    "Việc đang dở thì làm cho xong đã.",
+    "Không thêm, không bớt. Giữ nguyên hôm nay.",
+    "Làm hết phần của mình rồi thôi.",
+  ]),
+  "mixed:retreat": v([
+    "Ngủ sớm một hôm. Việc gì cũng nhẹ hơn.",
+    "Cắt bớt một cuộc hẹn cho mình thở.",
+    "Về sớm được thì về sớm.",
+  ]),
+});
+
+/* Khối thời điểm, viết bằng tiếng thường. Đây là phần thay cho bảng
+   "Thông tin lần bốc" đầy chữ chiêm tinh của bản trước. */
+export const SUN_SIGN_PLAIN = Object.freeze({
+  aries: "mùa của việc mở đầu và làm nhanh",
+  taurus: "mùa của sự chắc chắn và bền lâu",
+  gemini: "mùa của trò chuyện và tin tức",
+  cancer: "mùa của nhà cửa và người thân",
+  leo: "mùa của tự tin và được nhìn thấy",
+  virgo: "mùa của việc tỉ mỉ và sắp xếp",
+  libra: "mùa của hòa thuận và cân bằng",
+  scorpio: "mùa của chuyện sâu kín và thật lòng",
+  sagittarius: "mùa của đi xa và học điều mới",
+  capricorn: "mùa của kỷ luật và đường dài",
+  aquarius: "mùa của cách nghĩ khác thường",
+  pisces: "mùa của mơ mộng và thương người",
+});
+
+export const MOON_ELEMENT_PLAIN = Object.freeze({
+  fire: "lòng người dễ nóng, muốn làm ngay",
+  earth: "lòng người cần chỗ dựa thật",
+  air: "lòng người muốn nói ra thành lời",
+  water: "lòng người mềm, dễ xúc động",
+});
+
+export const MOON_PHASE_PLAIN = Object.freeze({
+  new: "lúc gieo, chưa phải lúc gặt",
+  "waxing-crescent": "mới nhú, cần nuôi thêm",
+  "first-half": "đang lên, gặp cản là thường",
+  "waxing-gibbous": "gần đầy, sửa nốt chỗ còn thiếu",
+  full: "tròn đầy, mọi thứ lộ hết ra",
+  "waning-gibbous": "bắt đầu vơi, chia bớt cho nhẹ",
+  "last-half": "đang xuống, bỏ dần thứ không cần",
+  "waning-crescent": "sắp hết, để một vòng khép lại",
+});
+
+export const HOUR_PLAIN = Object.freeze({
+  sun: "hợp việc cần đứng tên, nói trước đám đông",
+  moon: "hợp chuyện gia đình, nghỉ ngơi, nấu nướng",
+  mars: "hợp việc cần dứt khoát, làm cho xong",
+  mercury: "hợp giấy tờ, nhắn tin, tính toán",
+  jupiter: "hợp việc lớn, xin xỏ, mở rộng",
+  venus: "hợp chuyện tình cảm, làm đẹp, ăn ngon",
+  saturn: "hợp việc dọn dẹp, sắp xếp, kết sổ",
+});
+
+/* Câu mở đầu chỉ còn phần nghĩa của lá. Tên lá và chiều lá đã đứng ngay trên đó
+   ở dòng tiêu đề, nhắc lại lần nữa là tốn chữ mà không thêm gì. */
+
+/**
+ * Chọn một biến thể trong bảng theo khóa và chỉ số đã băm.
+ * @param {Record<string, readonly string[]>} table bảng câu
+ * @param {string} key khóa tra cứu
+ * @param {number} index chỉ số đã băm, tự quay vòng
+ * @returns {string} câu đã chọn
+ */
+export function pickVariant(table, key, index) {
+  const variants = table[key];
+  if (!variants?.length) throw new RangeError(`Thiếu câu cho khóa "${key}".`);
   return variants[index % variants.length];
 }

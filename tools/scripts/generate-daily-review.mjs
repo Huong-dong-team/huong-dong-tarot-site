@@ -19,15 +19,6 @@ if (!output) throw new Error("Cách dùng: node tools/scripts/generate-daily-rev
 const cards = JSON.parse(await readFile(path.join(root, "seed/cards.json"), "utf8"));
 const cardBySlug = new Map(cards.map((card) => [card.slug, card]));
 const kindLabel = Object.freeze({ sign: "Cung", planet: "Hành tinh", element: "Nguyên tố" });
-const axisLabel = Object.freeze({
-  B: "quan hệ nguyên tố với Mặt Trời",
-  C: "tính chất cung Mặt Trời",
-  D: "giờ hành tinh",
-  E: "pha Trăng",
-  F: "nguyên tố cung Mặt Trăng",
-  G: "độ trùng decan",
-  H: "nhịp ẩn của thời điểm",
-});
 const vietnamMoment = new Intl.DateTimeFormat("vi-VN", {
   timeZone: "Asia/Ho_Chi_Minh",
   dateStyle: "long",
@@ -70,18 +61,18 @@ const samples = Array.from({ length: 50 }, (_, index) => {
   });
 });
 
-const sampleRows = samples.map((reading, index) => {
-  const axes = reading.selectedAxes.map((item) => axisLabel[item.axis]).join(" · ");
-  return [
-    `### Mẫu ${String(index + 1).padStart(2, "0")} — ${cardName(reading.card.slug)} — ${reading.orientationLabel}`,
-    "",
-    `- Thời điểm: ${vietnamMoment.format(new Date(reading.drawnAt))} (Asia/Ho_Chi_Minh)`,
-    `- Bối cảnh: Mặt Trời ${reading.context.sunSign}; Mặt Trăng ${reading.context.moonSign}, ${reading.context.moonPhase}; giờ ${reading.context.planetaryHour}.`,
-    `- Ba trục nổi bật: ${axes}.`,
-    `- Lời đọc (${reading.wordCount} từ): ${reading.text}`,
-    `- Mã truy vết: \`${reading.traceId}\``,
-  ].join("\n");
-}).join("\n\n");
+const sampleRows = samples.map((reading, index) => [
+  `### Mẫu ${String(index + 1).padStart(2, "0")} — ${cardName(reading.card.slug)} — ${reading.orientationLabel}`,
+  "",
+  `- Thời điểm: ${vietnamMoment.format(new Date(reading.drawnAt))} (Asia/Ho_Chi_Minh)`,
+  `- Bối cảnh: Mặt Trời ${reading.context.sunSign}; Mặt Trăng ${reading.context.moonSign}, ${reading.context.moonPhase}; giờ ${reading.context.planetaryHour}.`,
+  `- Vận ngày: ${reading.fortune.label} (điểm ${reading.fortune.score}). ${reading.fortune.line}`,
+  `- Điềm: ${reading.omenLine}`,
+  `- Ba mảng: ${reading.areas.map((area) => `${area.label} — ${area.line}`).join(" ")}`,
+  `- Lời khuyên: ${reading.advice}`,
+  `- Bản chữ phẳng (${reading.wordCount} từ): ${reading.text}`,
+  `- Mã truy vết: \`${reading.traceId}\``,
+].join("\n")).join("\n\n");
 
 const wordCounts = samples.map((sample) => sample.wordCount);
 const uniqueCards = new Set(samples.map((sample) => sample.card.slug)).size;
