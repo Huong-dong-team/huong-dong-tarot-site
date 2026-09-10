@@ -165,15 +165,41 @@ export function init() {
     }).format(value);
   }
 
+  /* Đường thoát bắt buộc cho mọi lần chờ animation.
+
+     Trình duyệt KHÔNG khởi động animation trên phần tử đang nằm ngoài khung
+     nhìn: nó đứng mãi ở playState "running" với currentTime 0, nên `finished`
+     không bao giờ giải quyết. Chuyện này xảy ra thật khi người đọc bấm "Bốc lá"
+     lúc khối kết quả còn nằm dưới màn hình — cổng chuyển động chỉ theo dõi cả
+     section nên vẫn cho phép chạy, trong khi riêng khung lời đọc thì chưa hiện.
+
+     Hệ quả trước bản sửa này: chuỗi lật treo giữa chừng, lời đọc ở lại
+     opacity 0 và nút bốc kẹt disabled — kết quả có trong DOM nhưng người dùng
+     không đọc được gì. complete(), cancel() và stop() của bản motion-mini đang
+     vendor đều KHÔNG giải phóng `finished` (đã đo trong trình duyệt), nên cách
+     duy nhất là ngừng chờ sau khi đã quá thời lượng của chính animation đó. */
+  function revealDeadline(seconds) {
+    let id = 0;
+    return {
+      promise: new Promise((resolve) => { id = setTimeout(resolve, seconds * 1000 + 250); }),
+      clear: () => clearTimeout(id),
+    };
+  }
+
   async function playRevealStep(element, keyframes, options, generation) {
     if (!element || generation !== revealGeneration) return false;
     const animation = animateMini(element, keyframes, options);
     activeAnimations.add(animation);
+    const deadline = revealDeadline(options.duration ?? 0.3);
     try {
-      await animation.finished;
+      await Promise.race([animation.finished, deadline.promise]);
     } catch {
       // Lỗi animation không được phép chặn việc hiển thị kết quả tĩnh.
     } finally {
+      deadline.clear();
+      // Nếu thoát bằng hạn chót thì lá vẫn đang đứng ở khung hình đầu; kéo nó
+      // về trạng thái cuối để không có gì mắc kẹt giữa hai tư thế.
+      try { animation.complete(); } catch { /* animation chưa chạy thì không có gì để chốt */ }
       activeAnimations.delete(animation);
     }
     return generation === revealGeneration;

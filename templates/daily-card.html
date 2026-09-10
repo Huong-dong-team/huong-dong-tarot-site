@@ -1,10 +1,28 @@
 <main id="noi-dung-chinh" class="transition-page" data-page="daily">
   <section class="page-hero drum-watermark">
-    <p class="eyebrow">Đợt 1 · Hạng mục 1.5</p>
+    <p class="eyebrow">Khu vực thành viên Hường Đông</p>
     <h1>Lá Bài Hôm Nay</h1>
     <p>Một lá bài cho riêng ngày này, ghép với nhịp Mặt Trời, Mặt Trăng và thời điểm bạn bốc.</p>
   </section>
 
+  <!-- Cổng thành viên. Mặc định KHÔNG có JavaScript thì cổng hiện và phần bốc bài
+       ẩn: trang tĩnh không tự mở khoá được. Đây là rào phân biệt khách với thành
+       viên, không phải lớp bảo mật — xem ui/member-gate.js. -->
+  <section class="member-gate" data-member-gate data-gate-hash="{{gateHash}}" aria-labelledby="member-gate-title">
+    <form class="member-gate-form" data-member-gate-form novalidate>
+      <p class="eyebrow">Chỉ dành cho thành viên</p>
+      <h2 id="member-gate-title">Nhập mật khẩu để mở trang</h2>
+      <p>Trang này không nằm trong điều hướng công khai và không được lập chỉ mục tìm kiếm. Hỏi ban điều hành Hường Đông nếu bạn chưa có mật khẩu.</p>
+      <label class="member-gate-label" for="member-gate-input">Mật khẩu thành viên</label>
+      <div class="member-gate-row">
+        <input id="member-gate-input" name="member-gate-input" type="password" inputmode="numeric" autocomplete="current-password" data-member-gate-input required>
+        <button class="button primary" type="submit">Mở khoá</button>
+      </div>
+      <p class="member-gate-status" data-member-gate-status role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <div class="member-only" data-member-content hidden>
   <section class="daily-card-shell" data-daily-card data-astronomy-src="/assets/vendor/astronomy.browser.min.js" aria-labelledby="daily-card-title">
     <div class="daily-draw-panel drum-watermark">
       <p class="eyebrow">Một lần mỗi ngày</p>
@@ -49,4 +67,5 @@
 
     <script type="application/json" id="daily-card-data">{{{dailyCardsJson}}}</script>
   </section>
+  </div>
 </main>

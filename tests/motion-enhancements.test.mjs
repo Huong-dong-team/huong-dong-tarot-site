@@ -13,7 +13,11 @@ test("registry nạp đúng các nâng cấp chuyển động và bảo tàng th
   assert.match(registry, /card: \["symbol-tooltips", "card-tilt"\]/);
   assert.match(registry, /"card-tilt": \(\) => import\("\.\.\/ui\/card-tilt\.js"\)/);
   assert.match(registry, /"museum-gallery": \(\) => import\("\.\.\/ui\/museum-gallery\.js"\)/);
-  assert.doesNotMatch(registry, /spread-deck|daily-card|huyen-su-reveal/);
+  // daily-card đã sống lại nhưng chỉ ở trang thành viên có mật khẩu; giao diện bói
+  // cũ (spread-deck, huyen-su-reveal) vẫn không có đường quay lại. Ràng buộc của
+  // trang thành viên nằm ở tests/daily-page.test.mjs.
+  assert.doesNotMatch(registry, /spread-deck|huyen-su-reveal/);
+  assert.match(registry, /daily: \[[^\]]*"member-gate"[^\]]*\]/);
 });
 
 test("nghiêng lá có giới hạn, hỗ trợ chạm và dọn listener", async () => {
